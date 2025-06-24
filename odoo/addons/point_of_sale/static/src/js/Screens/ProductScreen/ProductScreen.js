@@ -296,7 +296,7 @@ odoo.define('point_of_sale.ProductScreen', function(require) {
             }
         }
         async _onClickCustomer() {
-            alert('TESTE').
+            alert('TESTE');
             // IMPROVEMENT: This code snippet is very similar to selectClient of PaymentScreen.
             // const currentClient = this.currentOrder.get_client();
             // const { confirmed, payload: newClient } = await this.showTempScreen(

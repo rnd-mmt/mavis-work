@@ -12019,3 +12019,152 @@ psycopg2.InterfaceError: connection already closed
 2025-06-24 11:39:50,878 11696 DEBUG mavis_prod odoo.addons.base.models.ir_cron: 0.002s (cron Post process payment transactions, server action 264 with uid 1) 
 2025-06-24 11:39:50,879 11696 INFO mavis_prod odoo.addons.base.models.ir_cron: Job `Post process payment transactions` done. 
 2025-06-24 11:39:55,720 11696 DEBUG ? odoo.service.server: cron1 polling for jobs 
+2025-06-24 11:40:25,697 11696 INFO mavis_prod werkzeug: 127.0.0.1 - - [24/Jun/2025 11:40:25] "POST /longpolling/poll HTTP/1.1" 200 - 9 0.006 50.017
+2025-06-24 11:40:26,012 11696 DEBUG mavis_prod odoo.modules.registry: Multiprocess signaling check: [Registry - 59 -> 59] [Cache - 170 -> 170] 
+2025-06-24 11:40:34,388 11696 DEBUG mavis_prod odoo.modules.registry: Multiprocess signaling check: [Registry - 59 -> 59] [Cache - 170 -> 170] 
+2025-06-24 11:40:34,399 11696 INFO mavis_prod werkzeug: 127.0.0.1 - - [24/Jun/2025 11:40:34] "POST /longpolling/im_status HTTP/1.1" 200 - 5 0.005 0.006
+2025-06-24 11:40:50,885 11696 DEBUG ? odoo.service.server: cron0 polling for jobs 
+2025-06-24 11:40:50,885 11696 INFO mavis_prod odoo.addons.base.models.ir_cron: Starting job `Clear Appointment`. 
+2025-06-24 11:40:50,890 11696 DEBUG mavis_prod odoo.modules.registry: Multiprocess signaling check: [Registry - 59 -> 59] [Cache - 170 -> 170] 
+2025-06-24 11:40:50,890 11696 DEBUG mavis_prod odoo.addons.base.models.ir_cron: cron.object.execute('mavis_prod', 1, '*', 'Clear Appointment', 892) 
+2025-06-24 11:40:50,916 11696 DEBUG mavis_prod odoo.addons.base.models.ir_cron: 0.027s (cron Clear Appointment, server action 892 with uid 1) 
+2025-06-24 11:40:50,917 11696 INFO mavis_prod odoo.addons.base.models.ir_cron: Job `Clear Appointment` done. 
+2025-06-24 11:40:50,918 11696 INFO mavis_prod odoo.addons.base.models.ir_cron: Starting job `Send WhatsApp Messages`. 
+2025-06-24 11:40:50,923 11696 DEBUG mavis_prod odoo.modules.registry: Multiprocess signaling check: [Registry - 59 -> 59] [Cache - 170 -> 170] 
+2025-06-24 11:40:50,923 11696 DEBUG mavis_prod odoo.addons.base.models.ir_cron: cron.object.execute('mavis_prod', 1, '*', 'Send WhatsApp Messages', 735) 
+2025-06-24 11:40:50,929 11696 DEBUG mavis_prod odoo.addons.base.models.ir_cron: 0.006s (cron Send WhatsApp Messages, server action 735 with uid 1) 
+2025-06-24 11:40:50,930 11696 INFO mavis_prod odoo.addons.base.models.ir_cron: Job `Send WhatsApp Messages` done. 
+2025-06-24 11:40:50,930 11696 INFO mavis_prod odoo.addons.base.models.ir_cron: Starting job `Send SMS`. 
+2025-06-24 11:40:50,935 11696 DEBUG mavis_prod odoo.modules.registry: Multiprocess signaling check: [Registry - 59 -> 59] [Cache - 170 -> 170] 
+2025-06-24 11:40:50,936 11696 DEBUG mavis_prod odoo.addons.base.models.ir_cron: cron.object.execute('mavis_prod', 1, '*', 'Send SMS', 729) 
+2025-06-24 11:40:50,944 11696 DEBUG mavis_prod odoo.addons.base.models.ir_cron: 0.008s (cron Send SMS, server action 729 with uid 1) 
+2025-06-24 11:40:50,945 11696 INFO mavis_prod odoo.addons.base.models.ir_cron: Job `Send SMS` done. 
+2025-06-24 11:40:56,727 11696 DEBUG ? odoo.service.server: cron1 polling for jobs 
+2025-06-24 11:41:16,060 11696 INFO mavis_prod werkzeug: 127.0.0.1 - - [24/Jun/2025 11:41:16] "POST /longpolling/poll HTTP/1.1" 200 - 9 0.003 50.045
+2025-06-24 11:41:16,418 11696 DEBUG mavis_prod odoo.modules.registry: Multiprocess signaling check: [Registry - 59 -> 59] [Cache - 170 -> 170] 
+2025-06-24 11:41:25,400 11696 DEBUG mavis_prod odoo.modules.registry: Multiprocess signaling check: [Registry - 59 -> 59] [Cache - 170 -> 170] 
+2025-06-24 11:41:25,412 11696 INFO mavis_prod werkzeug: 127.0.0.1 - - [24/Jun/2025 11:41:25] "POST /longpolling/im_status HTTP/1.1" 200 - 5 0.003 0.011
+2025-06-24 11:41:50,951 11696 DEBUG ? odoo.service.server: cron0 polling for jobs 
+2025-06-24 11:41:57,741 11696 DEBUG ? odoo.service.server: cron1 polling for jobs 
+2025-06-24 11:42:06,447 11696 INFO mavis_prod werkzeug: 127.0.0.1 - - [24/Jun/2025 11:42:06] "POST /longpolling/poll HTTP/1.1" 200 - 9 0.004 50.027
+2025-06-24 11:42:06,759 11696 DEBUG mavis_prod odoo.modules.registry: Multiprocess signaling check: [Registry - 59 -> 59] [Cache - 170 -> 170] 
+2025-06-24 11:42:16,398 11696 DEBUG mavis_prod odoo.modules.registry: Multiprocess signaling check: [Registry - 59 -> 59] [Cache - 170 -> 170] 
+2025-06-24 11:42:16,412 11696 INFO mavis_prod werkzeug: 127.0.0.1 - - [24/Jun/2025 11:42:16] "POST /longpolling/im_status HTTP/1.1" 200 - 5 0.009 0.006
+2025-06-24 11:42:50,958 11696 DEBUG ? odoo.service.server: cron0 polling for jobs 
+2025-06-24 11:42:56,781 11696 INFO mavis_prod werkzeug: 127.0.0.1 - - [24/Jun/2025 11:42:56] "POST /longpolling/poll HTTP/1.1" 200 - 9 0.000 50.022
+2025-06-24 11:42:57,098 11696 DEBUG mavis_prod odoo.modules.registry: Multiprocess signaling check: [Registry - 59 -> 59] [Cache - 170 -> 170] 
+2025-06-24 11:42:58,756 11696 DEBUG ? odoo.service.server: cron1 polling for jobs 
+2025-06-24 11:43:07,090 11696 DEBUG mavis_prod odoo.modules.registry: Multiprocess signaling check: [Registry - 59 -> 59] [Cache - 170 -> 170] 
+2025-06-24 11:43:07,105 11696 INFO mavis_prod werkzeug: 127.0.0.1 - - [24/Jun/2025 11:43:07] "POST /longpolling/im_status HTTP/1.1" 200 - 5 0.006 0.012
+2025-06-24 11:43:47,112 11696 INFO mavis_prod werkzeug: 127.0.0.1 - - [24/Jun/2025 11:43:47] "POST /longpolling/poll HTTP/1.1" 200 - 9 0.006 50.009
+2025-06-24 11:43:47,443 11696 DEBUG mavis_prod odoo.modules.registry: Multiprocess signaling check: [Registry - 59 -> 59] [Cache - 170 -> 170] 
+2025-06-24 11:43:50,975 11696 DEBUG ? odoo.service.server: cron0 polling for jobs 
+2025-06-24 11:43:58,081 11696 DEBUG mavis_prod odoo.modules.registry: Multiprocess signaling check: [Registry - 59 -> 59] [Cache - 170 -> 170] 
+2025-06-24 11:43:58,112 11696 INFO mavis_prod werkzeug: 127.0.0.1 - - [24/Jun/2025 11:43:58] "POST /longpolling/im_status HTTP/1.1" 200 - 5 0.000 0.031
+2025-06-24 11:43:59,768 11696 DEBUG ? odoo.service.server: cron1 polling for jobs 
+2025-06-24 11:44:37,466 11696 INFO mavis_prod werkzeug: 127.0.0.1 - - [24/Jun/2025 11:44:37] "POST /longpolling/poll HTTP/1.1" 200 - 9 0.004 50.022
+2025-06-24 11:44:37,793 11696 DEBUG mavis_prod odoo.modules.registry: Multiprocess signaling check: [Registry - 59 -> 59] [Cache - 170 -> 170] 
+2025-06-24 11:44:49,406 11696 DEBUG mavis_prod odoo.modules.registry: Multiprocess signaling check: [Registry - 59 -> 59] [Cache - 170 -> 170] 
+2025-06-24 11:44:49,423 11696 INFO mavis_prod werkzeug: 127.0.0.1 - - [24/Jun/2025 11:44:49] "POST /longpolling/im_status HTTP/1.1" 200 - 5 0.004 0.015
+2025-06-24 11:44:50,985 11696 DEBUG ? odoo.service.server: cron0 polling for jobs 
+2025-06-24 11:44:50,992 11696 INFO mavis_prod odoo.addons.base.models.ir_cron: Starting job `Lunch: alert chat notification`. 
+2025-06-24 11:44:51,010 11696 DEBUG mavis_prod odoo.modules.registry: Multiprocess signaling check: [Registry - 59 -> 59] [Cache - 170 -> 170] 
+2025-06-24 11:44:51,012 11696 DEBUG mavis_prod odoo.addons.base.models.ir_cron: cron.object.execute('mavis_prod', 1, '*', 'Lunch: alert chat notification', 1149) 
+2025-06-24 11:44:51,021 11696 DEBUG mavis_prod odoo.addons.base.models.ir_cron: 0.010s (cron Lunch: alert chat notification, server action 1149 with uid 1) 
+2025-06-24 11:44:51,023 11696 INFO mavis_prod odoo.addons.base.models.ir_cron: Job `Lunch: alert chat notification` done. 
+2025-06-24 11:45:00,788 11696 DEBUG ? odoo.service.server: cron1 polling for jobs 
+2025-06-24 11:45:08,704 11696 DEBUG mavis_prod odoo.modules.registry: Multiprocess signaling check: [Registry - 59 -> 59] [Cache - 170 -> 170] 
+2025-06-24 11:45:10,226 11696 INFO mavis_prod werkzeug: 127.0.0.1 - - [24/Jun/2025 11:45:10] "GET /pos/ui?config_id=1 HTTP/1.1" 200 - 1103 0.343 1.183
+2025-06-24 11:45:10,711 11696 DEBUG mavis_prod odoo.modules.registry: Multiprocess signaling check: [Registry - 59 -> 59] [Cache - 170 -> 170] 
+2025-06-24 11:45:10,713 11696 DEBUG mavis_prod odoo.api: call ir.config_parameter().get_fcm_config() 
+2025-06-24 11:45:10,714 11696 INFO mavis_prod werkzeug: 127.0.0.1 - - [24/Jun/2025 11:45:10] "POST /web/dataset/call_kw/ir.config_parameter/get_fcm_config HTTP/1.1" 200 - 1 0.000 0.003
+2025-06-24 11:45:27,820 11696 INFO mavis_prod werkzeug: 127.0.0.1 - - [24/Jun/2025 11:45:27] "POST /longpolling/poll HTTP/1.1" 200 - 9 0.006 50.023
+2025-06-24 11:45:28,137 11696 DEBUG mavis_prod odoo.modules.registry: Multiprocess signaling check: [Registry - 59 -> 59] [Cache - 170 -> 170] 
+2025-06-24 11:45:32,756 11696 DEBUG mavis_prod odoo.modules.registry: Multiprocess signaling check: [Registry - 59 -> 59] [Cache - 170 -> 170] 
+2025-06-24 11:45:33,396 11696 INFO mavis_prod werkzeug: 127.0.0.1 - - [24/Jun/2025 11:45:33] "GET / HTTP/1.1" 200 - 372 0.220 0.422
+2025-06-24 11:45:33,722 11696 DEBUG mavis_prod odoo.modules.registry: Multiprocess signaling check: [Registry - 59 -> 59] [Cache - 170 -> 170] 
+2025-06-24 11:45:33,800 11696 INFO mavis_prod werkzeug: 127.0.0.1 - - [24/Jun/2025 11:45:33] "GET /web/content/614-fde1899/1/website.assets_editor.css HTTP/1.1" 200 - 2 0.001 0.079
+2025-06-24 11:45:34,145 11696 DEBUG mavis_prod odoo.modules.registry: Multiprocess signaling check: [Registry - 59 -> 59] [Cache - 170 -> 170] 
+2025-06-24 11:45:34,152 11696 INFO mavis_prod werkzeug: 127.0.0.1 - - [24/Jun/2025 11:45:34] "GET /website/translations/65ef158005b132c73a705dabe93d25fe91a46662?mods=&lang=en_US HTTP/1.1" 200 - 5 0.002 0.005
+2025-06-24 11:45:34,258 11696 INFO ? werkzeug: 127.0.0.1 - - [24/Jun/2025 11:45:34] "GET /base/static/img/country_flags/us.png?height=25 HTTP/1.1" 200 - - - -
+2025-06-24 11:45:34,258 11696 DEBUG mavis_prod odoo.modules.registry: Multiprocess signaling check: [Registry - 59 -> 59] [Cache - 170 -> 170] 
+2025-06-24 11:45:34,429 11696 INFO mavis_prod werkzeug: 127.0.0.1 - - [24/Jun/2025 11:45:34] "GET /web/content/617-fde1899/1/website.assets_editor.js HTTP/1.1" 200 - 2 0.001 0.173
+2025-06-24 11:45:34,802 11696 INFO ? werkzeug: 127.0.0.1 - - [24/Jun/2025 11:45:34] "GET /website/static/src/xml/website.xml HTTP/1.1" 200 - - - -
+2025-06-24 11:45:35,118 11696 DEBUG mavis_prod odoo.modules.registry: Multiprocess signaling check: [Registry - 59 -> 59] [Cache - 170 -> 170] 
+2025-06-24 11:45:35,120 11696 DEBUG mavis_prod odoo.api: call ir.ui.view().render_public_asset('web_editor.compiled_assets_wysiwyg', {'debug': ''}) 
+2025-06-24 11:45:35,142 11696 INFO ? werkzeug: 127.0.0.1 - - [24/Jun/2025 11:45:35] "GET /website/static/src/xml/website.editor.xml HTTP/1.1" 200 - - - -
+2025-06-24 11:45:35,169 11696 INFO mavis_prod werkzeug: 127.0.0.1 - - [24/Jun/2025 11:45:35] "POST /web/dataset/call_kw/ HTTP/1.1" 200 - 41 0.015 0.037
+2025-06-24 11:45:35,481 11696 DEBUG mavis_prod odoo.modules.registry: Multiprocess signaling check: [Registry - 59 -> 59] [Cache - 170 -> 170] 
+2025-06-24 11:45:35,481 11696 DEBUG mavis_prod odoo.modules.registry: Multiprocess signaling check: [Registry - 59 -> 59] [Cache - 170 -> 170] 
+2025-06-24 11:45:35,482 11696 DEBUG mavis_prod odoo.modules.registry: Multiprocess signaling check: [Registry - 59 -> 59] [Cache - 170 -> 170] 
+2025-06-24 11:45:35,531 11696 INFO mavis_prod werkzeug: 127.0.0.1 - - [24/Jun/2025 11:45:35] "GET /web/content/370-b69dc2e/1/web_editor.assets_summernote.css HTTP/1.1" 200 - 2 0.001 0.052
+2025-06-24 11:45:35,548 11696 INFO mavis_prod werkzeug: 127.0.0.1 - - [24/Jun/2025 11:45:35] "GET /web/content/372-868fff2/1/web_editor.assets_wysiwyg.css HTTP/1.1" 200 - 2 0.018 0.050
+2025-06-24 11:45:35,597 11696 INFO mavis_prod werkzeug: 127.0.0.1 - - [24/Jun/2025 11:45:35] "GET /web/content/371-b69dc2e/1/web_editor.assets_summernote.js HTTP/1.1" 200 - 2 0.001 0.115
+2025-06-24 11:45:35,921 11696 DEBUG mavis_prod odoo.modules.registry: Multiprocess signaling check: [Registry - 59 -> 59] [Cache - 170 -> 170] 
+2025-06-24 11:45:36,222 11696 INFO mavis_prod werkzeug: 127.0.0.1 - - [24/Jun/2025 11:45:36] "GET /web/content/373-868fff2/1/web_editor.assets_wysiwyg.js HTTP/1.1" 200 - 2 0.000 0.302
+2025-06-24 11:45:36,567 11696 DEBUG mavis_prod odoo.modules.registry: Multiprocess signaling check: [Registry - 59 -> 59] [Cache - 170 -> 170] 
+2025-06-24 11:45:36,569 11696 DEBUG mavis_prod odoo.api: call ir.ui.view().render_public_asset('website.compiled_assets_wysiwyg', {'debug': ''}) 
+2025-06-24 11:45:36,600 11696 INFO mavis_prod werkzeug: 127.0.0.1 - - [24/Jun/2025 11:45:36] "POST /web/dataset/call_kw/ HTTP/1.1" 200 - 26 0.014 0.020
+2025-06-24 11:45:36,830 11696 DEBUG mavis_prod odoo.modules.registry: Multiprocess signaling check: [Registry - 59 -> 59] [Cache - 170 -> 170] 
+2025-06-24 11:45:36,846 11696 INFO mavis_prod werkzeug: 127.0.0.1 - - [24/Jun/2025 11:45:36] "GET /web/content/618-9976c7f/1/website.assets_wysiwyg.css HTTP/1.1" 200 - 2 0.000 0.016
+2025-06-24 11:45:36,905 11696 DEBUG mavis_prod odoo.modules.registry: Multiprocess signaling check: [Registry - 59 -> 59] [Cache - 170 -> 170] 
+2025-06-24 11:45:36,938 11696 INFO mavis_prod werkzeug: 127.0.0.1 - - [24/Jun/2025 11:45:36] "GET /web/content/619-9976c7f/1/website.assets_wysiwyg.js HTTP/1.1" 200 - 2 0.000 0.034
+2025-06-24 11:45:37,704 11696 DEBUG mavis_prod odoo.modules.registry: Multiprocess signaling check: [Registry - 59 -> 59] [Cache - 170 -> 170] 
+2025-06-24 11:45:37,706 11696 DEBUG mavis_prod odoo.api: call web_tour.tour().get_consumed_tours() 
+2025-06-24 11:45:37,713 11696 INFO mavis_prod werkzeug: 127.0.0.1 - - [24/Jun/2025 11:45:37] "POST /web/dataset/call_kw/web_tour.tour/get_consumed_tours HTTP/1.1" 200 - 10 0.001 0.008
+2025-06-24 11:45:51,033 11696 DEBUG ? odoo.service.server: cron0 polling for jobs 
+2025-06-24 11:45:51,042 11696 INFO mavis_prod odoo.addons.base.models.ir_cron: Starting job `Clear Appointment`. 
+2025-06-24 11:45:51,057 11696 DEBUG mavis_prod odoo.modules.registry: Multiprocess signaling check: [Registry - 59 -> 59] [Cache - 170 -> 170] 
+2025-06-24 11:45:51,058 11696 DEBUG mavis_prod odoo.addons.base.models.ir_cron: cron.object.execute('mavis_prod', 1, '*', 'Clear Appointment', 892) 
+2025-06-24 11:45:51,070 11696 DEBUG mavis_prod odoo.addons.base.models.ir_cron: 0.012s (cron Clear Appointment, server action 892 with uid 1) 
+2025-06-24 11:45:51,071 11696 INFO mavis_prod odoo.addons.base.models.ir_cron: Job `Clear Appointment` done. 
+2025-06-24 11:45:51,071 11696 INFO mavis_prod odoo.addons.base.models.ir_cron: Starting job `Send WhatsApp Messages`. 
+2025-06-24 11:45:51,075 11696 DEBUG mavis_prod odoo.modules.registry: Multiprocess signaling check: [Registry - 59 -> 59] [Cache - 170 -> 170] 
+2025-06-24 11:45:51,076 11696 DEBUG mavis_prod odoo.addons.base.models.ir_cron: cron.object.execute('mavis_prod', 1, '*', 'Send WhatsApp Messages', 735) 
+2025-06-24 11:45:51,079 11696 DEBUG mavis_prod odoo.addons.base.models.ir_cron: 0.003s (cron Send WhatsApp Messages, server action 735 with uid 1) 
+2025-06-24 11:45:51,080 11696 INFO mavis_prod odoo.addons.base.models.ir_cron: Job `Send WhatsApp Messages` done. 
+2025-06-24 11:45:51,080 11696 INFO mavis_prod odoo.addons.base.models.ir_cron: Starting job `Send SMS`. 
+2025-06-24 11:45:51,086 11696 DEBUG mavis_prod odoo.modules.registry: Multiprocess signaling check: [Registry - 59 -> 59] [Cache - 170 -> 170] 
+2025-06-24 11:45:51,087 11696 DEBUG mavis_prod odoo.addons.base.models.ir_cron: cron.object.execute('mavis_prod', 1, '*', 'Send SMS', 729) 
+2025-06-24 11:45:51,094 11696 DEBUG mavis_prod odoo.addons.base.models.ir_cron: 0.007s (cron Send SMS, server action 729 with uid 1) 
+2025-06-24 11:45:51,095 11696 INFO mavis_prod odoo.addons.base.models.ir_cron: Job `Send SMS` done. 
+2025-06-24 11:46:01,805 11696 DEBUG ? odoo.service.server: cron1 polling for jobs 
+2025-06-24 11:46:18,163 11696 INFO mavis_prod werkzeug: 127.0.0.1 - - [24/Jun/2025 11:46:18] "POST /longpolling/poll HTTP/1.1" 200 - 9 0.004 50.023
+2025-06-24 11:46:18,774 11696 INFO ? odoo.service.server: Initiating shutdown 
+2025-06-24 11:46:18,774 11696 INFO ? odoo.service.server: Hit CTRL-C again or send a second signal to force the shutdown. 
+2025-06-24 11:46:19,088 11696 DEBUG ? odoo.service.server: current thread: <_MainThread(MainThread, started 18524)> 
+2025-06-24 11:46:19,090 11696 DEBUG ? odoo.service.server: process <_MainThread(MainThread, started 18524)> (False) 
+2025-06-24 11:46:19,090 11696 DEBUG ? odoo.service.server: process <Thread(odoo.service.httpd, started daemon 9136)> (True) 
+2025-06-24 11:46:19,090 11696 DEBUG ? odoo.service.server: process <Thread(odoo.service.cron.cron0, started daemon 18424)> (True) 
+2025-06-24 11:46:19,090 11696 DEBUG ? odoo.service.server: process <Thread(odoo.service.cron.cron1, started daemon 18860)> (True) 
+2025-06-24 11:46:19,090 11696 DEBUG ? odoo.service.server: process <Thread(odoo.addons.bus.models.bus.Bus, started daemon 9464)> (True) 
+2025-06-24 11:46:19,093 11696 ERROR ? odoo.addons.bus.models.bus: Bus.loop error, sleep and retry 
+Traceback (most recent call last):
+  File "C:\odoo\server\odoo\addons\bus\models\bus.py", line 173, in loop
+    conn.poll()
+psycopg2.InterfaceError: connection already closed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\odoo\server\odoo\addons\bus\models\bus.py", line 187, in run
+    self.loop()
+  File "C:\odoo\server\odoo\addons\bus\models\bus.py", line 182, in loop
+    event.set()
+  File "C:\odoo\server\odoo\sql_db.py", line 153, in __exit__
+    self.close()
+  File "<decorator-gen-6>", line 2, in close
+  File "C:\odoo\server\odoo\sql_db.py", line 101, in check
+    return f(self, *args, **kwargs)
+  File "C:\odoo\server\odoo\sql_db.py", line 366, in close
+    return self._close(False)
+  File "C:\odoo\server\odoo\sql_db.py", line 392, in _close
+    self.rollback()
+  File "<decorator-gen-10>", line 2, in rollback
+  File "C:\odoo\server\odoo\sql_db.py", line 101, in check
+    return f(self, *args, **kwargs)
+  File "C:\odoo\server\odoo\sql_db.py", line 466, in rollback
+    result = self._cnx.rollback()
+psycopg2.InterfaceError: connection already closed
+2025-06-24 11:46:19,094 11696 INFO ? odoo.sql_db: ConnectionPool(used=0/count=0/max=64): Closed 4 connections  
+2025-06-24 11:46:19,098 11696 DEBUG ? odoo.service.server: -- 
