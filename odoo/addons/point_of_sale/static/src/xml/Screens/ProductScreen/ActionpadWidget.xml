@@ -4,8 +4,8 @@
     <t t-name="ActionpadWidget" owl="1">
         <div class="actionpad">
             <button class="button set-customer" t-att-class="{'decentered': isLongName}"
-                    t-on-click="trigger('click-customer')">
-                <t t-if="!env.isMobile"><i class="fa fa-user" role="img" aria-label="Customer" title="Customer" /></t>
+                    t-on-click="trigger('click-patient-button')">
+                <t t-if="!env.isMobile"><i class="fa fa-user" role="img" aria-label="Patient" title="Patient" /></t>
                 <t t-if="client">
                     <t t-esc="client.name" />
                 </t>

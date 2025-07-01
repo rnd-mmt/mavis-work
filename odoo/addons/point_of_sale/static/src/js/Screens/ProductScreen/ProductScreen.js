@@ -18,6 +18,7 @@ odoo.define('point_of_sale.ProductScreen', function(require) {
             useListener('set-numpad-mode', this._setNumpadMode);
             useListener('click-product', this._clickProduct);
             useListener('click-customer', this._onClickCustomer);
+            useListener('click-patient-button', this._onClickPatientButton);
             useListener('click-pay', this._onClickPay);
             useBarcodeReader({
                 product: this._barcodeProductAction,
@@ -56,6 +57,7 @@ odoo.define('point_of_sale.ProductScreen', function(require) {
             return this.env.pos.get_client();
         }
         get currentOrder() {
+            console.log("ENV POS Get-ORDER " , this.env.pos.get_order());
             return this.env.pos.get_order();
         }
         showCashBoxOpening() {
@@ -130,7 +132,6 @@ odoo.define('point_of_sale.ProductScreen', function(require) {
                     if (confirmed) {
                         weight = payload.weight;
                     } else {
-                        // do not add the product;
                         return;
                     }
                 } else {
@@ -296,17 +297,29 @@ odoo.define('point_of_sale.ProductScreen', function(require) {
             }
         }
         async _onClickCustomer() {
-            alert('TESTE');
             // IMPROVEMENT: This code snippet is very similar to selectClient of PaymentScreen.
-            // const currentClient = this.currentOrder.get_client();
-            // const { confirmed, payload: newClient } = await this.showTempScreen(
-            //     'ClientListScreen',
-            //     { client: currentClient }
-            // );
-            // if (confirmed) {
-            //     this.currentOrder.set_client(newClient);
-            //     this.currentOrder.updatePricelist(newClient);
-            // }
+            const currentClient = this.currentOrder.get_client();
+            const { confirmed, payload: newClient } = await this.showTempScreen(
+                'ClientListScreen',
+                { client: currentClient }
+            );
+            if (confirmed) {
+                this.currentOrder.set_client(newClient);
+                this.currentOrder.updatePricelist(newClient);
+            }
+        }
+        async _onClickPatientButton(){
+            const currentClient = this.currentOrder.get_client();
+            const { confirmed, payload: newClient } = await this.showTempScreen(
+                'PatientListScreen',
+                { client: currentClient }
+            );
+
+            if (confirmed) {
+                this.currentOrder.set_client(newClient);
+                this.currentOrder.updatePricelist(newClient);
+            }
+
         }
         async _onClickPay() {
             if (this.env.pos.get_order().orderlines.any(line => line.get_product().tracking !== 'none' && !line.has_valid_product_lot() && (this.env.pos.picking_type.use_create_lots || this.env.pos.picking_type.use_existing_lots))) {

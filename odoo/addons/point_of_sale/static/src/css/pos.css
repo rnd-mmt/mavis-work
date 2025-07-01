@@ -1,29 +1,34 @@
 /* --- Fonts --- */
 
-@font-face{
+@font-face {
     font-family: 'Inconsolata';
     src: url(../fonts/Inconsolata.otf);
 }
 
 /* --- Styling of OpenERP Elements --- */
-.ui-dialog, .modal-dialog {
+.ui-dialog,
+.modal-dialog {
     background: white;
     padding: 10px;
     border-radius: 3px;
     font-family: sans-serif;
-    box-shadow: 0px 10px 40px rgba(0,0,0,0.4);
+    box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.4);
     position: absolute;
     top: 30px;
     height: 400px;
     overflow: scroll;
 }
-.ui-dialog button, .modal-dialog button {
+
+.ui-dialog button,
+.modal-dialog button {
     padding: 8px;
     min-width: 48px;
 }
-.ui-dialog .ui-icon-closethick{
+
+.ui-dialog .ui-icon-closethick {
     float: right;
 }
+
 div.modal.in {
     position: absolute;
     background: white;
@@ -49,18 +54,21 @@ table {
     border-spacing: 0px;
     border-collapse: collapse;
 }
+
 td {
     padding: 0px;
 }
 
-.oe_hidden{
+.oe_hidden {
     display: none !important;
 }
-.oe_invisible{
+
+.oe_invisible {
     visibility: hidden !important;
 }
+
 .clearfix:after {
-    content:" ";
+    content: " ";
     display: block;
     visibility: hidden;
     line-height: 0;
@@ -75,15 +83,17 @@ td {
     margin: 0;
 }
 
-.pos button{
+.pos button {
     box-shadow: none;
     outline: none;
     border: none;
     font-family: 'Lato';
 }
-.pos button:hover{
+
+.pos button:hover {
     background: default;
 }
+
 .pos textarea {
     font-family: "Lato";
     font-size: 20px;
@@ -91,19 +101,21 @@ td {
     padding: 10px;
     border-radius: 3px;
     border: none;
-    box-shadow: 0px 0px 0px 1px rgb(220,220,220) inset;
+    box-shadow: 0px 0px 0px 1px rgb(220, 220, 220) inset;
 }
+
 .pos textarea:focus {
     outline: none;
     box-shadow: 0px 0px 0px 3px #6EC89B;
 }
 
 
-.pos .oe_hidden{
+.pos .oe_hidden {
     display: none !important;
 }
 
-.pos ul, .pos li  {
+.pos ul,
+.pos li {
     margin: 0;
     padding: 0;
     list-style-type: none;
@@ -114,7 +126,7 @@ td {
     padding: 0;
     margin: 0;
     background-color: #f0eeee;
-    font-family: "Lato","Lucida Grande", Helvetica, Verdana, Arial;
+    font-family: "Lato", "Lucida Grande", Helvetica, Verdana, Arial;
     color: #555555;
     font-size: 12px;
     /* Some elements inside .pos are allowed to be moved/resized. When
@@ -130,49 +142,54 @@ td {
     width: 100%;
     height: 100%;
     -webkit-user-select: none;
-       -moz-user-select: none;
-            user-select: none;
+    -moz-user-select: none;
+    user-select: none;
     text-shadow: none;
     overflow: hidden;
 }
 
 /*  ********* The black loading screen ********* */
 
-.pos .loader{
+.pos .loader {
     background-color: #222;
-    position:absolute;
-    left:0px;
-    top:0px;
-    width:100%;
-    height:100%;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
     z-index: 999;
     text-align: center;
     font-family: Lato;
     color: #555555;
 }
 
-.pos .loader-feedback{
+.pos .loader-feedback {
     width: 400px;
     height: 160px;
     margin: -60px -200px;
     position: absolute;
-    left: 50%; top: 50%;
+    left: 50%;
+    top: 50%;
     text-align: center;
 }
-.pos .loader-feedback h1{
+
+.pos .loader-feedback h1 {
     font-weight: 300;
 }
-.pos .loader-feedback .progressbar{
-    background: rgb(73,73,73);
+
+.pos .loader-feedback .progressbar {
+    background: rgb(73, 73, 73);
     height: 1px;
 }
-.pos .loader-feedback .progressbar > .progress{
+
+.pos .loader-feedback .progressbar>.progress {
     height: 100%;
     background: white;
     width: 0%;
-    box-shadow: 0px 0px 5px rgba(255,255,255,0.35);
+    box-shadow: 0px 0px 5px rgba(255, 255, 255, 0.35);
 }
-.pos .loader-feedback .button{
+
+.pos .loader-feedback .button {
     display: inline-block;
     margin: 25px auto;
     line-height: 42px;
@@ -183,13 +200,15 @@ td {
     border-radius: 5px;
     cursor: pointer;
 }
-.pos .loader-feedback .button:active{
+
+.pos .loader-feedback .button:active {
     color: #222;
     background: #555555;
 }
+
 /*  ********* Generic Layout Constructs  ********* */
 
-.pos .window{
+.pos .window {
     position: absolute;
     top: 0px;
     left: 0px;
@@ -199,77 +218,90 @@ td {
     border: none;
     overflow: hidden;
 }
-.pos .window .subwindow{
+
+.pos .window .subwindow {
     display: table-row;
     width: 100%;
     height: 100%;
 }
-.pos .window .subwindow.collapsed{
+
+.pos .window .subwindow.collapsed {
     height: 0px;
 }
-.pos .window .subwindow-container .collapsed{
+
+.pos .window .subwindow-container .collapsed {
     height: 0px;
 }
-.pos .subwindow .subwindow-container{
+
+.pos .subwindow .subwindow-container {
     display: table-cell;
     position: relative;
 }
+
 /* firefox seems to ignore the relative positionning of the subwindow-container
  * putting this inside subwindow-container fixes it.
  */
-.pos .subwindow .subwindow-container-fix{
+.pos .subwindow .subwindow-container-fix {
     height: 100%;
     position: relative;
 }
 
 .pos .clientlist-screen .window,
-.pos .clientlist-screen .full-content .subwindow{
+.pos .clientlist-screen .full-content .subwindow {
     display: block;
 }
-.pos .clientlist-screen .full-content .subwindow-container{
+
+.pos .clientlist-screen .full-content .subwindow-container {
     display: block;
     height: 100%;
 }
+
 .pos .clientlist-screen .full-content .subwindow.collapsed,
-.pos .clientlist-screen .full-content .subwindow-container.collapsed{
+.pos .clientlist-screen .full-content .subwindow-container.collapsed {
     height: auto;
 }
 
 /* ---- Scrollers ----- */
 
-.pos .scroller-container{
+.pos .scroller-container {
     position: absolute;
     top: 0px;
     left: 0px;
     right: 0px;
     bottom: 0px;
 }
-.pos .scroller{
+
+.pos .scroller {
     width: 100%;
     height: 100%;
     overflow: hidden;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
 }
-.pos .scroller.horizontal{
+
+.pos .scroller.horizontal {
     overflow-y: hidden;
     overflow-x: auto;
 }
-.pos .scroller-content{
-    -webkit-transform: translate3d(0,0,0);
+
+.pos .scroller-content {
+    -webkit-transform: translate3d(0, 0, 0);
 }
-.pos .scroller-container ::-webkit-scrollbar{
-    width:  10px;
+
+.pos .scroller-container ::-webkit-scrollbar {
+    width: 10px;
     height: 10px;
 }
-.pos .scroller-container ::-webkit-scrollbar-track{
-    background: rgb(224,224,224);
-    border-left: solid 1px rgb(200,200,200);
+
+.pos .scroller-container ::-webkit-scrollbar-track {
+    background: rgb(224, 224, 224);
+    border-left: solid 1px rgb(200, 200, 200);
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
 }
-.pos .scroller-container ::-webkit-scrollbar-thumb{
-    background: rgb(168,168,168);
+
+.pos .scroller-container ::-webkit-scrollbar-thumb {
+    background: rgb(168, 168, 168);
     min-height: 30px;
 }
 
@@ -279,7 +311,9 @@ td {
     text-decoration: none;
     color: #555555;
 }
-.pos button, .pos a.button {
+
+.pos button,
+.pos a.button {
     display: inline-block;
     cursor: pointer;
     padding: 4px 10px;
@@ -288,22 +322,28 @@ td {
     background: #e2e2e2;
     border-radius: 3px;
 }
-.pos ul, .pos ol {
+
+.pos ul,
+.pos ol {
     padding: 0;
     margin: 0;
 }
+
 .pos li {
     list-style-type: none;
 }
+
 .pos .pos-right-align {
     text-align: right;
 }
+
 .pos .pos-center-align {
     text-align: center;
 }
+
 .pos .pos-disc-font {
     font-size: 12px;
-    font-style:italic;
+    font-style: italic;
     color: #808080;
 }
 
@@ -311,13 +351,13 @@ td {
 
 
 .pos .pos-topheader {
-    position:absolute;
-    left:0;
-    top:0;
+    position: absolute;
+    left: 0;
+    top: 0;
     width: 100%;
     height: 48px;
-    margin:0;
-    padding:0;
+    margin: 0;
+    padding: 0;
     color: gray;
     background: #875A7B;
     display: flex;
@@ -325,32 +365,34 @@ td {
 
 /*  a) The left part of the top-bar */
 
-.pos .pos-branding{
+.pos .pos-branding {
     min-width: 503px;
     max-width: 503px;
     flex-grow: 1;
-    height:100%;
-    margin:0;
-    padding:0;
-    text-align:left;
-    line-height:100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    line-height: 100%;
     vertical-align: middle;
     display: flex;
     justify-content: space-between;
 }
+
 .pos .pos-logo {
     height: 35px;
     margin-left: 10px;
     margin-top: 5px;
-    vertical-align:middle;
+    vertical-align: middle;
 }
-.pos .pos-branding .username{
-    float:right;
-    color:#DDD;
-    font-size:16px;
-    margin-right:32px;
+
+.pos .pos-branding .username {
+    float: right;
+    color: #DDD;
+    font-size: 16px;
+    margin-right: 32px;
     line-height: 48px;
-    font-style:italic;
+    font-style: italic;
     cursor: pointer;
 }
 
@@ -362,12 +404,13 @@ td {
 
 .pos .pos-rightheader {
     flex-grow: 1;
-    height:100%;
+    height: 100%;
     display: flex;
-    overflow : hidden;
+    overflow: hidden;
     overflow-x: auto;
 }
-.pos .pos-rightheader > * {
+
+.pos .pos-rightheader>* {
     border-right: 1px solid #875A7B;
 }
 
@@ -381,7 +424,7 @@ td {
     flex: 1;
 }
 
-.pos .order-button{
+.pos .order-button {
     color: #f0f0f0;
     display: inline-block;
     box-sizing: border-box;
@@ -398,7 +441,7 @@ td {
     vertical-align: top;
     line-height: 42px;
     text-align: center;
-    box-shadow: 0px -5px 10px -6px rgb(82,82,82) inset;
+    box-shadow: 0px -5px 10px -6px rgb(82, 82, 82) inset;
     cursor: pointer;
     min-width: 45px;
 }
@@ -407,10 +450,10 @@ td {
     margin-left: 0px;
 }
 
-.pos .order-button.selected{
+.pos .order-button.selected {
     font-weight: 900;
     background: #EEEEEE;
-    color: rgb(75,75,75);
+    color: rgb(75, 75, 75);
     height: 45px;
     border-bottom: solid 1px rgb(196, 196, 196);
     box-shadow: none;
@@ -418,12 +461,13 @@ td {
     flex-shrink: 0;
 }
 
-.pos .order-button .order-sequence{
+.pos .order-button .order-sequence {
     font-size: 16px;
     font-weight: 800;
     vertical-align: middle;
 }
-.pos .order-button.selected .order-sequence{
+
+.pos .order-button.selected .order-sequence {
     color: white;
     background: black;
     display: inline-block;
@@ -434,19 +478,21 @@ td {
     margin-left: -4px;
 }
 
-.pos .order-button.square{
-    margin-left:1px;
+.pos .order-button.square {
+    margin-left: 1px;
     background: #5c5c5c;
-    color: rgb(160,160,160);
+    color: rgb(160, 160, 160);
     font-size: 18px;
     line-height: 45px;
 }
-.pos .order-button:not(.square) > .fa {
+
+.pos .order-button:not(.square)>.fa {
     font-size: 16px;
     vertical-align: middle;
     margin-right: 4px;
 }
-.pos .order-button .order-sequence{
+
+.pos .order-button .order-sequence {
     font-size: 16px;
     font-weight: 800;
 }
@@ -457,6 +503,7 @@ td {
     -webkit-flex: 1;
     flex: 1;
 }
+
 .pos .orders {
     display: -webkit-flex;
     display: flex;
@@ -467,7 +514,7 @@ td {
 
 /*  c) The session buttons */
 
-.pos .pos-rightheader .header-button{
+.pos .pos-rightheader .header-button {
     float: right;
     height: 48px;
     padding-left: 16px;
@@ -483,13 +530,16 @@ td {
     -webkit-transition-duration: 0.2s;
     -webkit-transition-timing-function: ease-out;
 }
-.pos .pos-rightheader .header-button:last-child{
-    border-left:  1px solid #875A7B;
+
+.pos .pos-rightheader .header-button:last-child {
+    border-left: 1px solid #875A7B;
 }
-.pos .pos-rightheader .header-button:active{
-    background: rgba(0,0,0,0.2);
-    color:#EEE;
+
+.pos .pos-rightheader .header-button:active {
+    background: rgba(0, 0, 0, 0.2);
+    color: #EEE;
 }
+
 .pos .pos-rightheader .header-button.confirm {
     background: #359766;
     color: white;
@@ -498,40 +548,48 @@ td {
 
 /*  c) The notifications indicator */
 
-.pos .oe_status{
-    float:right;
-    color: rgba(255,255,255,0.4);
+.pos .oe_status {
+    float: right;
+    color: rgba(255, 255, 255, 0.4);
     padding: 14px;
     line-height: 20px;
     font-size: 20px;
-    vertical-align:middle;
+    vertical-align: middle;
     font-style: italic;
-    cursor:pointer;
+    cursor: pointer;
 }
-.pos .oe_status.oe_inactive{
+
+.pos .oe_status.oe_inactive {
     cursor: default;
 }
-.pos .oe_status .oe_icon{
-    display:inline-block;
-    cursor:pointer;
-    width:20px; height:16px;
+
+.pos .oe_status .oe_icon {
+    display: inline-block;
+    cursor: pointer;
+    width: 20px;
+    height: 16px;
     color: white;
 }
+
 .pos .oe_status .oe_red,
 .pos .oe_icon.oe_red {
     color: rgb(197, 52, 0);
 }
+
 .pos .oe_status .oe_green,
 .pos .oe_icon.oe_green {
     color: rgb(94, 185, 55);
 }
+
 .pos .oe_status .oe_orange,
 .pos .oe_icon.oe_orange {
     color: rgb(239, 153, 65);
 }
-.pos .oe_link_icon{
-    cursor:pointer;
+
+.pos .oe_link_icon {
+    cursor: pointer;
 }
+
 /*  ********* Contains everything below the  bar ********* */
 
 .pos .pos-content {
@@ -557,6 +615,7 @@ td {
     background-color: #FFFFFF;
     color: #6ec89b;
 }
+
 .pos .switchpane .order-info h2 {
     padding: 0px;
     margin: 3px 0px;
@@ -573,6 +632,7 @@ td {
     flex-basis: 50%;
     padding-bottom: 20px;
 }
+
 .pos .switchpane .btn-switchpane h1 {
     margin-bottom: 0px;
 }
@@ -613,6 +673,7 @@ td {
     padding: 8px 16px 0px 11px;
     margin-bottom: -6px;
 }
+
 .pos .control-button {
     -webkit-flex-grow: 1;
     flex-grow: 1;
@@ -631,17 +692,21 @@ td {
     overflow: hidden;
     transition: all linear 150ms;
 }
+
 .pos .control-button:hover {
     background: #efefef;
 }
+
 .pos .control-button:active {
     background: black;
     color: white;
     border-color: black;
 }
-.pos .control-button .fa{
+
+.pos .control-button .fa {
     margin-right: 4px;
 }
+
 .pos .control-button .control-button-number {
     color: rgb(226, 226, 226);
     background: rgb(85, 85, 85);
@@ -663,14 +728,16 @@ td {
     border: solid 1px #64AF8A !important;
     color: white !important;
 }
+
 .pos .control-button.altlight,
 .pos .button.altlight {
     background: #7F82AC !important;
     border: solid 1px #756A99 !important;
     color: white !important;
 }
+
 .pos .control-button.disabled,
-.pos .control-button.disabled:active{
+.pos .control-button.disabled:active {
     background: #e2e2e2;
     border: solid 1px #BEBEBE;
     opacity: 0.5;
@@ -696,6 +763,7 @@ td {
     border-bottom-left-radius: 4px;
     flex-grow: 1;
 }
+
 .pos .actionpad .button {
     position: relative;
     display: block;
@@ -712,23 +780,29 @@ td {
     border-color: #bfbfbf;
     transition: all 150ms linear;
 }
+
 .pos .actionpad .button:hover {
     background: #efefef;
 }
+
 .pos .actionpad .button:active {
     background: black;
     border-color: black;
     color: white;
 }
+
 .pos .actionpad .button:first-child {
     border-top-left-radius: 4px;
 }
+
 .pos .actionpad .button:last-child {
     border-bottom-left-radius: 4px;
 }
+
 .pos .actionpad .button.pay {
     height: 162px;
 }
+
 .pos .actionpad .button.pay .pay-circle {
     display: block;
     font-size: 32px;
@@ -741,20 +815,23 @@ td {
     border-radius: 30px;
     margin-bottom: 10px;
 }
+
 .pos .actionpad .button.pay .pay-circle .fa {
     position: relative;
     top: -1px;
     left: 3px;
 }
 
-.pos .actionpad .button.set-customer{
+.pos .actionpad .button.set-customer {
     padding-left: 40px;
     padding-right: 40px;
 }
+
 .pos .actionpad .button.set-customer.decentered {
     padding-left: 40px;
     padding-right: 5px;
 }
+
 .pos .actionpad .button .fa-user {
     position: absolute;
     left: 13px;
@@ -768,11 +845,12 @@ td {
 }
 
 @media screen and (max-width: 768px) {
-    .pos .actionpad .button.set-customer{
+    .pos .actionpad .button.set-customer {
         padding-left: 0px;
         padding-right: 0px;
     }
-    .pos .actionpad .button.set-customer.decentered{
+
+    .pos .actionpad .button.set-customer.decentered {
         padding-left: 0px;
         padding-right: 0px;
     }
@@ -793,8 +871,12 @@ td {
     border-top-right-radius: 4px;
     min-width: 216px;
 }
+
 .pos .numpad button {
-    float: left/*rtl:ignore*/; /* rtlcss forced to keep ltr */
+    float: left
+        /*rtl:ignore*/
+    ;
+    /* rtlcss forced to keep ltr */
     height: 54px;
     width: 54px;
     font-weight: bold;
@@ -807,37 +889,47 @@ td {
     border-color: #bfbfbf;
     transition: all 150ms linear;
 }
+
 .pos .numpad button:hover {
     background: #efefef;
 }
+
 .pos .numpad button:active {
     background: black;
     color: white;
     border-color: transparent;
 }
+
 .pos .numpad button:nth-child(4) {
     border-top-right-radius: 4px;
 }
+
 .pos .numpad button:last-child {
     border-bottom-right-radius: 4px;
 }
+
 .pos .input-button {
     font-size: 24px;
 }
+
 .pos .mode-button {
     font-size: 14px;
 }
+
 .pos .mode-button.selected-mode {
     color: white;
     background: #6EC89B;
     border-color: transparent;
 }
+
 .pos .mode-button.selected-mode:hover {
     background: #6EC89B;
     color: white;
     border-color: transparent;
 }
-.pos .numpad .disabled-mode, .pos .numpad .disabled-mode:hover {
+
+.pos .numpad .disabled-mode,
+.pos .numpad .disabled-mode:hover {
     background: #c7c7c7;
     color: #a5a1a1;
     cursor: not-allowed;
@@ -887,38 +979,40 @@ td {
 .pos .product-list {
     padding: 10px;
     text-align: left;
-    -webkit-transform: translate3d(0,0,0);
+    -webkit-transform: translate3d(0, 0, 0);
     display: flex;
     flex-wrap: wrap;
 }
 
-.pos .product-list-scroller{
+.pos .product-list-scroller {
     -webkit-box-sizing: border-box;
-       -moz-box-sizing: border-box;
-        -ms-box-sizing: border-box;
-            box-sizing: border-box;
-    width:100%;
-    height:100%;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
     overflow: hidden;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    -webkit-transform: translate3d(0,0,0);
+    -webkit-transform: translate3d(0, 0, 0);
 
 }
 
 /*  a) the product list navigation bar */
 
-.pos .breadcrumb{
+.pos .breadcrumb {
     float: left;
     display: inline-block;
     line-height: 48px;
     height: 48px;
     min-width: 48px;
 }
+
 .pos .breadcrumb:last-child {
     padding-right: 3px;
     border-right: 1px solid #c5c5c5;
 }
+
 .pos .breadcrumb-button {
     display: inline-block;
     padding: 0 9px;
@@ -927,15 +1021,17 @@ td {
     font-size: 14px;
     cursor: pointer;
 }
+
 .pos .breadcrumb-button.breadcrumb-home {
     line-height: 50px;
     font-size: 25px;
     text-align: center;
 }
 
-.pos .breadcrumb-arrow{
+.pos .breadcrumb-arrow {
     width: 28px;
 }
+
 .pos .breadcrumb-homeimg {
     width: 27px;
     margin: 12px 6px;
@@ -955,6 +1051,7 @@ td {
     flex-grow: 1;
     position: relative;
 }
+
 .pos .searchbox input {
     width: 150px;
     border: 1px solid #cecbcb;
@@ -962,9 +1059,10 @@ td {
     margin: 6px;
     background-color: white;
     border-radius: 20px;
-    font-family: "Lato","Lucida Grande", Helvetica, Verdana, Arial;
+    font-family: "Lato", "Lucida Grande", Helvetica, Verdana, Arial;
     font-size: 13px;
 }
+
 .pos .searchbox input:focus {
     outline: none;
     box-shadow: 0px 0px 0px 2px rgb(153, 153, 255) inset;
@@ -993,23 +1091,25 @@ td {
 }
 
 @media screen and (max-width: 768px) {
-  .search-clear.left {
-      position: relative;
-      top: -40px;
-      left: 5%;
-  }
+    .search-clear.left {
+        position: relative;
+        top: -40px;
+        left: 5%;
+    }
 
-  .search-clear.right {
-      position: relative;
-      top: -70px;
-      left: 85%;
-  }
-  .pos .searchbox input {
-      width: 70%;
-  }
-  .pos .searchbox {
-      position: relative;
-  }
+    .search-clear.right {
+        position: relative;
+        top: -70px;
+        left: 85%;
+    }
+
+    .pos .searchbox input {
+        width: 70%;
+    }
+
+    .pos .searchbox {
+        position: relative;
+    }
 }
 
 /*  c) the categories list */
@@ -1019,29 +1119,33 @@ td {
     border-bottom: solid 3px rgb(110, 200, 155);
     flex: 1;
 }
+
 .pos .categories h4 {
     display: inline-block;
     margin: 9px 5px;
 }
-.pos .category-list-scroller{
+
+.pos .category-list-scroller {
     -webkit-box-sizing: border-box;
-       -moz-box-sizing: border-box;
-        -ms-box-sizing: border-box;
-            box-sizing: border-box;
-    width:100%;
-    height:100%;
-    max-height:40vh;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    max-height: 40vh;
     overflow: hidden;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    -webkit-transform: translate3d(0,0,0);
+    -webkit-transform: translate3d(0, 0, 0);
 
 }
+
 .pos .category-list {
     text-align: left;
     padding: 10px;
     background: rgb(229, 229, 229);
 }
+
 .pos .category-list.simple {
     padding: 0px;
     background: #cecece;
@@ -1060,15 +1164,15 @@ td {
     font-size: 11px;
     margin: 8px !important;
     width: 120px;
-    height:120px;
-    background:#fff;
+    height: 120px;
+    background: #fff;
     border: 1px solid #d7d7d7;
     border-radius: 3px;
     border-bottom-width: 3px;
     cursor: pointer;
 }
 
-.pos .category-simple-button{
+.pos .category-simple-button {
     display: flex;
     align-items: center;
     font-size: 14px;
@@ -1080,7 +1184,8 @@ td {
     border-right: solid 1px #d3d3d3;
     border-top: solid 1px #d3d3d3;
 }
-.pos .category-simple-button:active{
+
+.pos .category-simple-button:active {
     color: white;
     background: black;
 
@@ -1101,16 +1206,16 @@ td {
 
 .pos .category-button .category-img img {
     max-height: 100px;
-    max-width:  120px;
+    max-width: 120px;
     vertical-align: middle;
 }
 
 .pos .category-button .category-name {
     position: absolute;
     -webkit-box-sizing: border-box;
-       -moz-box-sizing: border-box;
-        -ms-box-sizing: border-box;
-            box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
     bottom: 0;
     top: auto;
     line-height: 14px;
@@ -1127,15 +1232,15 @@ td {
 /*  e) the product */
 
 .pos .product {
-    position:relative;
+    position: relative;
     vertical-align: top;
     display: inline-block;
     line-height: 100px;
     font-size: 11px;
     margin: 8px !important;
     width: 122px;
-    height:115px;
-    background:#fff;
+    height: 115px;
+    background: #fff;
     border: 1px solid #e2e2e2;
     border-radius: 3px;
     border-bottom-width: 3px;
@@ -1153,7 +1258,7 @@ td {
 
 .pos .product .product-img img {
     max-height: 100px;
-    max-width:  120px;
+    max-width: 120px;
     vertical-align: middle;
 }
 
@@ -1161,25 +1266,30 @@ td {
     .pos .product-list {
         padding: 0px;
     }
+
     .pos .product {
         width: 32%;
         height: auto;
         margin: 0px !important;
     }
+
     .pos .product:active {
         border: solid 50px #6ec89b;
         box-sizing: border-box;
     }
+
     .pos .product:after {
         content: "";
         display: block;
         padding-bottom: 100%;
     }
+
     .pos .product .product-img {
         position: absolute;
         width: 100%;
         height: 100%;
     }
+
     .pos .product .product-img img {
         max-height: none;
         max-width: none;
@@ -1204,13 +1314,13 @@ td {
 .pos .product .product-name {
     position: absolute;
     -webkit-box-sizing: border-box;
-       -moz-box-sizing: border-box;
-        -ms-box-sizing: border-box;
-            box-sizing: border-box;
-    bottom:0;
-    top:auto;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    bottom: 0;
+    top: auto;
     line-height: 14px;
-    width:100%;
+    width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
     /* troublesome in latest webkit
@@ -1218,43 +1328,47 @@ td {
     */
     /*background:#FFF;*/
     padding: 3px;
-    padding-top:15px;
+    padding-top: 15px;
 }
 
 /*rtl:ignore*/
 .pos .product .product-name {
-    background: -webkit-linear-gradient(-90deg,rgba(255,255,255,0),rgba(255,255,255,1), rgba(255,255,255,1));
-    background:    -moz-linear-gradient(-90deg,rgba(255,255,255,0),rgba(255,255,255,1), rgba(255,255,255,1));
-    background:     -ms-linear-gradient(-90deg,rgba(255,255,255,0),rgba(255,255,255,1), rgba(255,255,255,1));
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1), rgba(255, 255, 255, 1));
+    background: -moz-linear-gradient(-90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1), rgba(255, 255, 255, 1));
+    background: -ms-linear-gradient(-90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1), rgba(255, 255, 255, 1));
 }
 
 
 /*  ********* The Screens  ********* */
 
 .pos .screen {
-    position:absolute;
+    position: absolute;
     text-align: center;
-    top:0px;
-    bottom:0px;
-    width:100%;
+    top: 0px;
+    bottom: 0px;
+    width: 100%;
     overflow: auto;
     -webkit-overflow-scrolling: touch;
 }
+
 .pos .screen header h2 {
     margin-top: 0px;
     padding-top: 7px;
 }
-.pos .screen p{
+
+.pos .screen p {
     font-size: 18px;
 }
-.pos .dialog{
+
+.pos .dialog {
     width: 500px;
     margin-left: auto;
     margin-right: auto;
     margin-top: 50px;
     text-align: center;
 }
-.pos .dialog p{
+
+.pos .dialog p {
     font-size: 25px;
     margin-top: 10px;
     color: #5a5a5a;
@@ -1262,7 +1376,7 @@ td {
 
 /* a) Generic Screen Layout Constructs */
 
-.screen .screen-content{
+.screen .screen-content {
     position: relative;
     margin: 0px auto;
     max-width: 1024px;
@@ -1273,7 +1387,7 @@ td {
     flex-direction: column;
 }
 
-.screen .screen-full-width{
+.screen .screen-full-width {
     height: 100%;
     width: 100%;
     display: flex;
@@ -1282,20 +1396,21 @@ td {
 }
 
 @media screen and (min-width: 1024px) {
-    .screen .screen-content{
-        border-left:  dashed 1px rgb(215,215,215);
-        border-right: dashed 1px rgb(215,215,215);
+    .screen .screen-content {
+        border-left: dashed 1px rgb(215, 215, 215);
+        border-right: dashed 1px rgb(215, 215, 215);
     }
 }
 
-.screen .top-content{
+.screen .top-content {
     height: 64px;
-    border-bottom: dashed 1px rgb(215,215,215);
+    border-bottom: dashed 1px rgb(215, 215, 215);
     text-align: center;
     display: flex;
     padding-right: 10px;
     padding-left: 10px;
 }
+
 .screen .top-content .button {
     line-height: 32px;
     padding: 3px 13px;
@@ -1310,42 +1425,47 @@ td {
     cursor: pointer;
     transition: all 150ms linear;
 }
+
 .screen .top-content .button:hover {
     background: #efefef;
 }
+
 .screen .top-content .button:active {
     background: black;
     border-color: black;
     color: white;
 }
+
 .screen .top-content .button.highlight {
-    background: rgb(110,200,155);
+    background: rgb(110, 200, 155);
     color: white;
-    border: solid 1px rgb(110,200,155);
+    border: solid 1px rgb(110, 200, 155);
 }
+
 .screen .top-content .button.highlight:hover {
-    background: rgb(120,210,165);
+    background: rgb(120, 210, 165);
 }
 
 .screen .top-content .top-content-center {
     flex-grow: 1;
 }
 
-.screen .main-content{
+.screen .main-content {
     display: flex;
     flex-grow: 1;
     flex-wrap: wrap;
     overflow-y: auto;
 }
-.screen .left-content{
+
+.screen .left-content {
     overflow-x: hidden;
     overflow-y: auto;
-    border-right: dashed 1px rgb(215,215,215);
+    border-right: dashed 1px rgb(215, 215, 215);
     flex-grow: 1;
     min-width: 200px;
 }
 
-.screen .right-content{
+.screen .right-content {
     overflow-x: hidden;
     overflow-y: auto;
     flex-grow: 1;
@@ -1368,45 +1488,52 @@ td {
     height: 100px;
     width: 100%;
 }
-.screen .centered-content{
-    border-right: dashed 1px rgb(215,215,215);
-    border-left: dashed 1px rgb(215,215,215);
+
+.screen .centered-content {
+    border-right: dashed 1px rgb(215, 215, 215);
+    border-left: dashed 1px rgb(215, 215, 215);
     overflow-x: hidden;
     overflow-y: auto;
     max-width: 512px;
     margin-left: auto;
     margin-right: auto;
 }
-.screen .full-content{
+
+.screen .full-content {
     position: absolute;
-    right: 0%; top: 65px; bottom: 0px;
+    right: 0%;
+    top: 65px;
+    bottom: 0px;
     left: 0%;
 }
 
 /* a) Layout for the Product Screen */
 
 .pos .screen .layout-table {
-    border:none;
-    width:100%;
+    border: none;
+    width: 100%;
     display: flex;
     flex-grow: 1;
 }
 
-.pos .screen .header-cell{
-    border:none;
-    width:100%;
-    height:0px;
+.pos .screen .header-cell {
+    border: none;
+    width: 100%;
+    height: 0px;
 }
+
 .pos .screen .content-row {
-    width:100%;
-    height:100%;
+    width: 100%;
+    height: 100%;
 }
-.pos .screen .content-cell{
-    width:100%;
+
+.pos .screen .content-cell {
+    width: 100%;
 }
-.pos .screen .content-cell .content-container{
-    height:100%;
-    position:relative;
+
+.pos .screen .content-cell .content-container {
+    height: 100%;
+    position: relative;
 }
 
 
@@ -1424,6 +1551,7 @@ td {
     text-align: center;
     flex-grow: 1;
 }
+
 .pos .payment-numpad .numpad {
     border-radius: 4px;
     border-top: 1px solid;
@@ -1433,13 +1561,16 @@ td {
     height: 100%;
     margin: auto;
 }
+
 .pos .payment-numpad .numpad button {
     width: 74px;
     height: 74px;
 }
+
 .pos .payment-numpad .numpad button:first-child {
     border-top-left-radius: 4px;
 }
+
 .pos .payment-numpad .numpad button:nth-child(16) {
     border-bottom-left-radius: 4px;
 }
@@ -1462,12 +1593,13 @@ td {
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
 }
+
 .paymentlines .paymentline:last-child {
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
 }
 
-.pos  .paymentline {
+.pos .paymentline {
     background: #e2e2e2;
     line-height: 74px;
     font-size: 16px;
@@ -1480,26 +1612,31 @@ td {
     flex-grow: 1;
     flex-basis: 100%;
 }
+
 .paymentline:active {
     background: black;
     border-color: black;
     color: white;
 }
+
 .paymentline .payment-name {
     flex-grow: 1;
     margin-left: 10px;
     margin-right: 10px;
 }
+
 .paymentline .payment-amount {
     margin-left: 10px;
     margin-right: 10px;
 }
+
 .paymentline .delete-button {
-  margin-left: 10px;
-  margin-right: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
-.paymentline.selected{
-  background: white;
+
+.paymentline.selected {
+    background: white;
 }
 
 .pos .payment-buttons {
@@ -1508,46 +1645,55 @@ td {
     padding-left: 0;
     flex-grow: 5;
 }
+
 .payment-screen .customer-button {
     margin-bottom: 10px;
 }
+
 .payment-screen .payment-buttons .button {
     background: #e2e2e2;
     line-height: 73px;
     font-size: 16px;
     padding: 0px 8px;
-    border: solid 1px rgb(200,200,200);
+    border: solid 1px rgb(200, 200, 200);
     border-top-width: 0;
     cursor: pointer;
     text-align: center;
     position: relative;
     transition: background-color, border-color, color 150ms linear;
 }
+
 .payment-screen .payment-buttons .button:hover {
     background-color: #efefef;
 }
+
 .payment-screen .payment-buttons .button:first-child {
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
     border-top-width: 1px;
 }
+
 .payment-screen .payment-buttons .button:last-child {
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
 }
+
 .payment-screen .payment-buttons .button.highlight:not(:first-child) {
     margin-top: -1px;
     border-top: solid 1px;
 }
+
 .payment-screen .payment-buttons .button:active {
     background: black;
     border-color: black;
     color: white;
 }
+
 .payment-screen .payment-buttons .button.highlight .fa {
     border-color: rgba(0, 0, 0, 0.109804);
     background: rgba(0, 0, 0, 0.0980392);
 }
+
 .payment-screen .payment-buttons .button .fa {
     position: absolute;
     left: 11px;
@@ -1558,16 +1704,17 @@ td {
     margin-top: -25px;
     vertical-align: middle;
     border-radius: 26px;
-    border: 1px solid rgba(0,0,0,0.2);
+    border: 1px solid rgba(0, 0, 0, 0.2);
     border-image-source: initial;
     border-image-slice: initial;
     border-image-width: initial;
     border-image-outset: initial;
     border-image-repeat: initial;
-    background: rgba(255,255,255,0.4);
+    background: rgba(255, 255, 255, 0.4);
     font-size: 20px;
     transition: all 150ms linear;
 }
+
 .payment-screen .paymentlines-empty .total {
     text-align: center;
     padding: 24px 0px 18px;
@@ -1575,6 +1722,7 @@ td {
     color: #43996E;
     text-shadow: 0px 2px white, 0px 2px 2px rgba(0, 0, 0, 0.27);
 }
+
 .payment-screen .paymentlines-empty .message {
     text-align: center;
 }
@@ -1583,6 +1731,7 @@ td {
     cursor: pointer;
     border: 1px solid #cacaca;
 }
+
 .paymentlines .electronic_payment {
     background: #e2e2e2;
     border-collapse: unset;
@@ -1625,39 +1774,45 @@ td {
 }
 
 @media screen and (max-width: 768px) {
-      .pos .paymentlines-container {
-          min-height: 0px;
-          border-bottom: none;
-          padding-bottom: 3px;
-      }
-      .pos .paymentlines {
+    .pos .paymentlines-container {
+        min-height: 0px;
+        border-bottom: none;
+        padding-bottom: 3px;
+    }
+
+    .pos .paymentlines {
         margin-top: 0px;
         margin-bottom: 0px;
-      }
-      .payment-status-container {
-          font-size: 22px;
-      }
-      .payment-screen .payment-buttons {
-          display: flex;
-          flex-wrap: wrap;
-          flex-direction: column;
-      }
-      .payment-screen .payment-controls {
-          display: flex;
-          flex-wrap: wrap;
-      }
-      .payment-screen .payment-buttons .button {
-          flex-basis: 30%;
-          flex-grow: 1;
-          border: 1px solid rgba(0,0,0,0.2);
-          border-radius: 0px;
-          line-height: normal;
-          padding-top: 28px;
-          padding-bottom: 28px;
-      }
-      .payment-screen .payment-buttons .button .fa {
-          display: none;
-      }
+    }
+
+    .payment-status-container {
+        font-size: 22px;
+    }
+
+    .payment-screen .payment-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+    }
+
+    .payment-screen .payment-controls {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .payment-screen .payment-buttons .button {
+        flex-basis: 30%;
+        flex-grow: 1;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 0px;
+        line-height: normal;
+        padding-top: 28px;
+        padding-bottom: 28px;
+    }
+
+    .payment-screen .payment-buttons .button .fa {
+        display: none;
+    }
 }
 
 /* c) The receipt screen */
@@ -1681,16 +1836,16 @@ td {
     direction: ltr;
 }
 
-.pos .pos-receipt-container > div {
+.pos .pos-receipt-container>div {
     text-align: left;
     width: 300px;
     background-color: white;
     margin: 20px;
     padding: 15px;
     font-size: 16px;
-    padding-bottom:30px;
+    padding-bottom: 30px;
     display: inline-block;
-    border: solid 1px rgb(220,220,220);
+    border: solid 1px rgb(220, 220, 220);
     border-radius: 3px;
     overflow: hidden;
 }
@@ -1703,24 +1858,31 @@ td {
     body {
         background: white;
     }
+
     body * {
         visibility: hidden;
         height: 0 !important;
     }
-    .pos, .pos * {
+
+    .pos,
+    .pos * {
         position: static !important;
     }
+
     .pos .receipt-screen .pos-receipt-container {
         position: absolute !important;
         top: 0;
         left: 0;
     }
-    .pos .receipt-screen .pos-receipt-container, .pos .receipt-screen .pos-receipt-container  * {
+
+    .pos .receipt-screen .pos-receipt-container,
+    .pos .receipt-screen .pos-receipt-container * {
         visibility: visible;
         background: white !important;
         color: black !important;
         height: auto !important;
     }
+
     .pos .pos-receipt {
         margin: 0 !important;
         margin-left: auto !important;
@@ -1733,14 +1895,15 @@ td {
 
 /* d) The Scale screen */
 
-.pos .scale-screen .product-price{
+.pos .scale-screen .product-price {
     font-size: 25px;
     margin: 16px;
     text-align: center;
     display: inline-block;
     width: 35%;
 }
-.pos .scale-screen .computed-price{
+
+.pos .scale-screen .computed-price {
     font-size: 25px;
     display: inline-block;
     text-align: right;
@@ -1752,14 +1915,15 @@ td {
     border-radius: 3px;
     font-family: Inconsolata;
     font-weight: bold;
-    text-shadow: 0px 2px 0px rgb(210,210,210);
-    box-shadow: 0px 2px 0px rgb(225,225,225) inset;
+    text-shadow: 0px 2px 0px rgb(210, 210, 210);
+    box-shadow: 0px 2px 0px rgb(225, 225, 225) inset;
     float: right;
 }
-.pos .scale-screen .buy-product{
+
+.pos .scale-screen .buy-product {
     text-align: center;
     font-size: 32px;
-    background: rgb(110,200,155);
+    background: rgb(110, 200, 155);
     color: white;
     border-radius: 3px;
     padding: 16px;
@@ -1767,7 +1931,7 @@ td {
     cursor: pointer;
 }
 
-.pos .scale-screen .weight{
+.pos .scale-screen .weight {
     text-align: right;
     margin: 16px;
     background: white;
@@ -1777,57 +1941,67 @@ td {
     border-radius: 3px;
     font-family: Inconsolata;
     text-shadow: 0px 2px 0px rgb(210, 210, 210);
-    box-shadow: 0px 2px 0px rgb(225,225,225) inset;
+    box-shadow: 0px 2px 0px rgb(225, 225, 225) inset;
 }
 
 
 /* e) The Client List Screen */
 
-.pos .clientlist-screen .full-content{
+.pos .clientlist-screen .full-content {
     overflow: auto;
 }
 
-.pos .clientlist-screen .client-list{
+.pos .clientlist-screen .client-list {
     font-size: 16px;
     width: 100%;
 }
+
 .pos .clientlist-screen .client-list th,
 .pos .clientlist-screen .client-list td {
     padding: 12px 8px;
 }
-.pos .clientlist-screen .client-list tr{
+
+.pos .clientlist-screen .client-list tr {
     transition: all 150ms linear;
-    background: rgb(230,230,230);
+    background: rgb(230, 230, 230);
 }
-.pos .clientlist-screen .client-list thead > tr,
+
+.pos .clientlist-screen .client-list thead>tr,
 .pos .clientlist-screen .client-list tr:nth-child(even) {
-    background: rgb(247,247,247);
+    background: rgb(247, 247, 247);
 }
-.pos .clientlist-screen .client-list tr.highlight{
+
+.pos .clientlist-screen .client-list tr.highlight {
     transition: all 150ms linear;
-    background: rgb(110,200,155) !important;
+    background: rgb(110, 200, 155) !important;
     color: white;
 }
-.pos .clientlist-screen .client-list tr.lowlight{
+
+.pos .clientlist-screen .client-list tr.lowlight {
     transition: all 150ms linear;
     background: rgb(216, 238, 227);
 }
-.pos .clientlist-screen .client-list tr.lowlight:nth-child(even){
+
+.pos .clientlist-screen .client-list tr.lowlight:nth-child(even) {
     transition: all 150ms linear;
     background: rgb(227, 246, 237);
 }
+
 .pos .client-line {
     vertical-align: text-top;
 }
+
 .pos .edit-client-button {
     margin-top: 6px;
     color: black;
 }
-.pos .clientlist-screen .client-details{
+
+.pos .clientlist-screen .client-details {
     padding: 16px;
-    border-bottom: solid 5px rgb(110,200,155);
+    border-bottom: solid 5px rgb(110, 200, 155);
 }
-.pos .clientlist-screen .client-picture{
+
+.pos .clientlist-screen .client-picture {
     height: 64px;
     width: 64px;
     border-radius: 32px;
@@ -1838,7 +2012,8 @@ td {
     background: white;
     position: relative;
 }
-.pos .clientlist-screen .client-picture > img {
+
+.pos .clientlist-screen .client-picture>img {
     position: absolute;
     top: -9999px;
     bottom: -9999px;
@@ -1847,10 +2022,12 @@ td {
     max-height: 64px;
     margin: auto;
 }
-.pos .clientlist-screen .client-picture > .fa {
+
+.pos .clientlist-screen .client-picture>.fa {
     line-height: 64px;
     font-size: 32px;
 }
+
 .pos .clientlist-screen .client-picture .image-uploader {
     position: absolute;
     z-index: 1000;
@@ -1861,66 +2038,76 @@ td {
     opacity: 0;
     cursor: pointer;
 }
+
 .pos .clientlist-screen .client-name {
     font-size: 32px;
     line-height: 64px;
-    margin-bottom:16px;
+    margin-bottom: 16px;
 }
+
 .pos .clientlist-screen .edit-buttons {
     position: absolute;
     right: 16px;
     top: 10px;
 }
-.pos .clientlist-screen .edit-buttons .button{
+
+.pos .clientlist-screen .edit-buttons .button {
     display: inline-block;
     margin-left: 16px;
-    color: rgb(128,128,128);
+    color: rgb(128, 128, 128);
     cursor: pointer;
     font-size: 36px;
 }
-.pos .clientlist-screen .client-details-box{
+
+.pos .clientlist-screen .client-details-box {
     position: relative;
     font-size: 16px;
 }
-.pos .clientlist-screen .client-details-left{
+
+.pos .clientlist-screen .client-details-left {
     width: 50%;
     float: left;
 }
-.pos .clientlist-screen .client-details-right{
+
+.pos .clientlist-screen .client-details-right {
     width: 50%;
     float: right;
 }
-.pos .clientlist-screen .client-detail{
+
+.pos .clientlist-screen .client-detail {
     line-height: 24px;
 }
-.pos .clientlist-screen .client-detail > .label{
+
+.pos .clientlist-screen .client-detail>.label {
     font-weight: bold;
     display: inline-block;
     width: 75px;
     text-align: right;
     margin-right: 8px;
 }
+
 .pos .clientlist-screen .client-details input,
-.pos .clientlist-screen .client-details select
-{
+.pos .clientlist-screen .client-details select {
     padding: 4px;
     border-radius: 3px;
     border: solid 1px #cecbcb;
     margin-bottom: 4px;
     background: white;
-    font-family: "Lato","Lucida Grande", Helvetica, Verdana, Arial;
+    font-family: "Lato", "Lucida Grande", Helvetica, Verdana, Arial;
     color: #555555;
     width: 340px;
     font-size: 14px;
     box-sizing: border-box;
 }
+
 .pos .clientlist-screen .client-details input.client-name {
     font-size: 24px;
     line-height: 24px;
     margin: 18px 6px;
     width: 340px;
 }
-.pos .clientlist-screen .client-detail > .empty{
+
+.pos .clientlist-screen .client-detail>.empty {
     opacity: 0.3;
 }
 
@@ -1928,10 +2115,280 @@ td {
     min-width: 30px;
 }
 
+
+/* e) The patient List Screen */
+.pos .patientlist-screen .full-content {
+    overflow: auto;
+}
+
+.pos .patientlist-screen .patient-list {
+    font-size: 16px;
+    width: 100%;
+}
+
+.pos .patientlist-screen .patient-list th,
+.pos .patientlist-screen .patient-list td {
+    padding: 12px 8px;
+}
+
+.pos .patientlist-screen .patient-list tr {
+    transition: all 150ms linear;
+    background: rgb(230, 230, 230);
+}
+
+.pos .patientlist-screen .patient-list thead>tr,
+.pos .patientlist-screen .patient-list tr:nth-child(even) {
+    background: rgb(247, 247, 247);
+}
+
+.pos .patientlist-screen .patient-list tr.highlight {
+    transition: all 150ms linear;
+    background: rgb(110, 200, 155) !important;
+    color: white;
+}
+
+.pos .patientlist-screen .patient-list tr.lowlight {
+    transition: all 150ms linear;
+    background: rgb(216, 238, 227);
+}
+
+.pos .patientlist-screen .patient-list tr.lowlight:nth-child(even) {
+    transition: all 150ms linear;
+    background: rgb(227, 246, 237);
+}
+
+.pos .patient-line {
+    vertical-align: text-top;
+}
+
+.pos .edit-patient-button {
+    margin-top: 6px;
+    color: black;
+}
+
+.pos .patientlist-screen .patient-details {
+    padding: 10px;
+    /* border-bottom: solid 3px rgb(138, 135, 137); */
+}
+
+.pos .patientlist-screen .patient-picture {
+    height: 64px;
+    width: 64px;
+    border-radius: 32px;
+    overflow: hidden;
+    text-align: center;
+    float: left;
+    margin-right: 16px;
+    background: white;
+    position: relative;
+}
+
+.pos .patientlist-screen .patient-picture>img {
+    position: absolute;
+    top: -9999px;
+    bottom: -9999px;
+    right: -9999px;
+    left: -9999px;
+    max-height: 64px;
+    margin: auto;
+}
+
+.pos .patientlist-screen .patient-picture>.fa {
+    line-height: 64px;
+    font-size: 32px;
+}
+
+.pos .patientlist-screen .patient-picture .image-uploader {
+    position: absolute;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.pos .patientlist-screen .patient-name {
+    font-size: 32px;
+    line-height: 64px;
+    margin-bottom: 16px;
+}
+
+.pos .patientlist-screen .edit-buttons {
+    position: absolute;
+    right: 16px;
+    top: 10px;
+}
+
+.pos .patientlist-screen .edit-buttons .button {
+    display: inline-block;
+    margin-left: 16px;
+    color: rgb(128, 128, 128);
+    cursor: pointer;
+    font-size: 36px;
+}
+
+.pos .patientlist-screen .patient-details-box-list {
+    position: relative;
+    font-size: 14px;
+}
+
+.pos .patientlist-screen .patient-details-left {
+    width: 50%;
+    float: left;
+}
+
+.pos .patientlist-screen .patient-details-right {
+    width: 50%;
+    float: right;
+}
+
+.pos .patientlist-screen .patient-detail {
+    line-height: 24px;
+}
+
+.pos .patientlist-screen .patient-detail>.label {
+    font-weight: bold;
+    display: inline-block;
+    width: 40%;
+    text-align: start;
+    margin-right: 5px;
+}
+
+.pos .patientlist-screen .patient-details input,
+.pos .patientlist-screen .patient-details select {
+    padding: 4px;
+    border-radius: 3px;
+    border: solid 1px #cecbcb;
+    margin-bottom: 4px;
+    background: white;
+    font-family: "Lato", "Lucida Grande", Helvetica, Verdana, Arial;
+    color: #555555;
+    width: 50%;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.pos .patientlist-screen .patient-details input.patient-name {
+    font-size: 24px;
+    line-height: 24px;
+    margin: 18px 6px;
+    width: 340px;
+}
+
+.pos .patientlist-screen .patient-detail>.empty {
+    opacity: 0.3;
+}
+
+.pos .patientlist-screen .button.new-customer {
+    min-width: 30px;
+}
+
+
+
+
+
+
+.patient-details-box-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    border-top: solid 3px rgb(138, 135, 137);
+    padding-top: 10px;
+}
+
+.patient-details-list-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 15px;
+    width: 100%;
+    justify-content: center;
+}
+
+.patient-details-list-wrapper .patient-data p {
+    font-size: 14px;
+}
+
+.patient-card {
+    display: flex;
+     flex-direction: row;
+    align-items: flex-start;
+    width: calc(50% - 20px);
+    border: 1px solid #c3bdbd;
+    background-color:#ffffff4f;
+    padding: 5px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    gap: 15px;
+}
+
+.patient-image img {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    opacity: 0.7;
+}
+
+.patient-data {
+    flex: 1;
+}
+
+.patient-data p {
+    margin: 4px 0;
+    font-size: 14px;
+    color: #333;
+}
+
+.patient-data strong {
+    font-weight: 600;
+    color: #444;
+}
+
+.patient-data p i {
+    font-size: 12px;
+    color: #999;
+}
+
+.patient-data .button {
+    margin-top: 10px;
+    background-color: #7c7bad;
+    border: none;
+    color: white;
+    font-size: 14px;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.patient-data .button:hover {
+    background-color: #5f5e91;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .pos .searchbox-client {
     padding: 3px 13px;
     margin-top: 12px;
-    margin-bottom : 12px;
+    margin-bottom: 12px;
 }
 
 .pos .searchbox-client input {
@@ -1942,9 +2399,10 @@ td {
     padding-right: 33px;
     background-color: white;
     border-radius: 20px;
-    font-family: "Lato","Lucida Grande", Helvetica, Verdana, Arial;
+    font-family: "Lato", "Lucida Grande", Helvetica, Verdana, Arial;
     font-size: 13px;
 }
+
 .pos .searchbox-client input:focus {
     outline: none;
     box-shadow: 0px 0px 0px 2px rgb(153, 153, 255) inset;
@@ -1976,42 +2434,50 @@ td {
     .searchbox-client.top-content-center {
         display: flex
     }
+
     .pos .searchbox-client input {
         width: auto;
         flex-grow: 1;
         padding-left: 10px;
         padding-right: 10px;
     }
+
     .pos .clientlist-screen .client-details-box {
         display: flex;
         flex-wrap: wrap;
     }
-    .pos .clientlist-screen .client-details-left{
+
+    .pos .clientlist-screen .client-details-left {
         width: auto;
         float: none;
         flex-grow: 1;
     }
-    .pos .clientlist-screen .client-details-right{
+
+    .pos .clientlist-screen .client-details-right {
         width: auto;
         float: none;
         flex-grow: 1;
     }
-    .pos .clientlist-screen .client-detail{
+
+    .pos .clientlist-screen .client-detail {
         display: flex;
         flex-direction: column;
     }
+
     .pos .clientlist-screen .client-details input,
-    .pos .clientlist-screen .client-details select
-    {
+    .pos .clientlist-screen .client-details select {
         width: 100%;
     }
+
     .pos .clientlist-screen .client-details input.client-name {
         width: 100%;
     }
-    .pos .clientlist-screen .client-detail > .label{
+
+    .pos .clientlist-screen .client-detail>.label {
         width: auto;
         text-align: left;
     }
+
     .pos .clientlist-screen .client-list td {
         overflow: hidden;
         white-space: nowrap;
@@ -2024,9 +2490,9 @@ td {
 
 /*  ********* The OrderWidget  ********* */
 
-.pos .order-container{
+.pos .order-container {
     top: 0px;
-    width:100%;
+    width: 100%;
     height: 100%;
     background: white;
     flex-grow: 1;
@@ -2034,20 +2500,20 @@ td {
     overflow-y: auto;
 }
 
-.pos .scrollable-y{
+.pos .scrollable-y {
     overflow: hidden !important;
     overflow-y: auto !important;
     -webkit-overflow-scrolling: touch !important;
 }
 
-.pos .order{
+.pos .order {
     background: white;
     padding-bottom: 8px;
     padding-top: 8px;
     font-size: 16px;
     text-align: left;
     max-width: 500px;
-    -webkit-transform: translate3d(0,0,0);
+    -webkit-transform: translate3d(0, 0, 0);
 }
 
 .pos .order .order-empty {
@@ -2055,43 +2521,49 @@ td {
     margin: 48px;
     color: #DDD;
 }
+
 .pos .order .order-empty .fa {
     font-size: 64px;
 }
+
 .pos .order .order-empty h1 {
     font-size: 20px;
 }
 
-.pos .order .summary{
-    width:100%;
-    text-align:right;
+.pos .order .summary {
+    width: 100%;
+    text-align: right;
     font-weight: bold;
-    margin-top:20px;
-    margin-bottom:10px;
+    margin-top: 20px;
+    margin-bottom: 10px;
 }
-.pos .order .summary .line{
+
+.pos .order .summary .line {
     float: right;
-    margin-right:15px;
+    margin-right: 15px;
     margin-left: 15px;
-    padding-top:5px;
+    padding-top: 5px;
     border-top: solid 2px;
-    border-color:#777;
+    border-color: #777;
 }
+
 .pos .order .summary .total {
     font-size: 22px;
 }
-.pos .order .summary .line .subentry{
+
+.pos .order .summary .line .subentry {
     font-size: 16px;
     font-weight: normal;
     text-align: center;
 }
-.pos .order .summary .line.empty{
+
+.pos .order .summary .line.empty {
     text-align: right;
-    border-color:#BBB;
-    color:#999;
+    border-color: #BBB;
+    color: #999;
 }
 
-.pos .order .summary .fidpoints{
+.pos .order .summary .fidpoints {
     position: absolute;
     left: 20px;
     padding: 10px;
@@ -2112,61 +2584,67 @@ td {
 
 /*  ********* The OrderLineWidget  ********* */
 
-.pos .order .orderline{
-    width:100%;
-    margin:0px;
-    padding-top:3px;
-    padding-bottom:10px;
-    padding-left:15px;
-    padding-right:15px;
+.pos .order .orderline {
+    width: 100%;
+    margin: 0px;
+    padding-top: 3px;
+    padding-bottom: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
     cursor: pointer;
     -webkit-box-sizing: border-box;
-       -moz-box-sizing: border-box;
-        -ms-box-sizing: border-box;
-            box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
     -webkit-transition: background 250ms ease-in-out;
-       -moz-transition: background 250ms ease-in-out;
-            transition: background 250ms ease-in-out;
+    -moz-transition: background 250ms ease-in-out;
+    transition: background 250ms ease-in-out;
 }
-.pos .order .orderline:active{
-    background: rgba(140,143,183,0.05);
+
+.pos .order .orderline:active {
+    background: rgba(140, 143, 183, 0.05);
     -webkit-transition: background 50ms ease-in-out;
-       -moz-transition: background 50ms ease-in-out;
-            transition: background 50ms ease-in-out;
+    -moz-transition: background 50ms ease-in-out;
+    transition: background 50ms ease-in-out;
 }
-.pos .order .orderline.empty:active{
+
+.pos .order .orderline.empty:active {
     background: transparent;
     cursor: default;
 }
 
-.pos .order .orderline.selected{
-    background: rgba(140,143,183,0.2);
+.pos .order .orderline.selected {
+    background: rgba(140, 143, 183, 0.2);
     -webkit-transition: background 250ms ease-in-out;
-       -moz-transition: background 250ms ease-in-out;
-            transition: background 250ms ease-in-out;
+    -moz-transition: background 250ms ease-in-out;
+    transition: background 250ms ease-in-out;
     cursor: default;
 }
-.pos .order .orderline .product-name{
-    padding:0;
-    display:inline-block;
+
+.pos .order .orderline .product-name {
+    padding: 0;
+    display: inline-block;
     font-weight: bold;
-    width:80%;
-    overflow:hidden;
+    width: 80%;
+    overflow: hidden;
     text-overflow: ellipsis;
 }
-.pos .order .orderline .price{
-    padding:0;
+
+.pos .order .orderline .price {
+    padding: 0;
     font-weight: bold;
-    float:right;
+    float: right;
 }
-.pos .order .orderline .info-list{
+
+.pos .order .orderline .info-list {
     color: #888;
-    margin-left:10px;
+    margin-left: 10px;
 }
-.pos .order .orderline .info-list em{
+
+.pos .order .orderline .info-list em {
     color: #777;
     font-weight: bold;
-    font-style:normal;
+    font-style: normal;
 }
 
 /*  ********* SplitBill ********* */
@@ -2177,49 +2655,56 @@ td {
     font-size: 64px;
     color: #43996E;
     text-shadow: 0px 2px white, 0px 2px 2px rgba(0, 0, 0, 0.27);
-    border-bottom: dashed 1px rgb(215,215,215);
+    border-bottom: dashed 1px rgb(215, 215, 215);
 }
+
 .pos .splitbill-screen .order {
     background: white;
-    padding-bottom:15px;
-    padding-top:15px;
-    margin-left:16px;
-    margin-right:16px;
-    margin-top:16px;
-    margin-bottom:16px;
-    font-size:16px;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    margin-left: 16px;
+    margin-right: 16px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    font-size: 16px;
     border-radius: 3px;
-    border: solid 1px rgb(220,220,220);
+    border: solid 1px rgb(220, 220, 220);
     text-align: left;
     max-width: 500px;
-    -webkit-transform: translate3d(0,0,0);
+    -webkit-transform: translate3d(0, 0, 0);
     height: max-content;
     width: 100%;
 }
-.splitbill-screen .order .orderline.selected{
-    background: rgb(110,200,155);
+
+.splitbill-screen .order .orderline.selected {
+    background: rgb(110, 200, 155);
     color: white;
     -webkit-transition: background 250ms ease-in-out;
-       -moz-transition: background 250ms ease-in-out;
-            transition: background 250ms ease-in-out;
+    -moz-transition: background 250ms ease-in-out;
+    transition: background 250ms ease-in-out;
     cursor: default;
 }
-.splitbill-screen .order .orderline.partially.selected{
+
+.splitbill-screen .order .orderline.partially.selected {
     background: rgb(136, 214, 176);
 }
+
 .splitbill-screen .order .orderline.selected .info-list {
     color: white;
 }
-.splitbill-screen .order .orderline.selected .info-list em{
+
+.splitbill-screen .order .orderline.selected .info-list em {
     color: white;
     font-size: 24px;
     vertical-align: top;
 }
+
 .paymentmethods {
     margin: 16px;
     display: flex;
     flex-wrap: wrap;
 }
+
 .paymentmethods .button {
     background: #e2e2e2;
     line-height: 74px;
@@ -2228,25 +2713,30 @@ td {
     border-top-width: 0px;
     cursor: pointer;
 }
+
 .paymentmethods .button:first-child {
     border-top-width: 1px;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
 }
+
 .paymentmethods .button:last-child {
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
 }
+
 .paymentmethods .button:active {
     background: black;
     border-color: black;
     color: white;
 }
+
 .paymentmethod .button.active {
     background: #6EC89B;
     color: white;
     border-color: #6EC89B;
 }
+
 .paymentmethod {
     display: flex;
     padding-left: 30px;
@@ -2254,21 +2744,25 @@ td {
     flex-grow: 1;
     flex-basis: 100%;
 }
+
 .paymentmethod .payment-name {
     flex-grow: 1;
     margin-left: 10px;
     margin-right: 10px;
 }
+
 .paymentmethod .payment-amount {
     margin-left: 10px;
     margin-right: 10px;
 }
+
 .paymentmethod .delete-button {
-  margin-left: 10px;
-  margin-right: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
-.paymentmethod.selected{
-  background: white;
+
+.paymentmethod.selected {
+    background: white;
 }
 
 @media screen and (max-width: 768px) {
@@ -2276,10 +2770,12 @@ td {
         margin-top: 0px;
         margin-bottom: 0px;
     }
+
     .paymentmethods .button {
         border: solid 1px rgb(202, 202, 202);
         border-radius: 3px;
     }
+
     .paymentmethod {
         flex-basis: 30%;
     }
@@ -2287,34 +2783,35 @@ td {
 
 /*  ********* The ActionBarWidget  ********* */
 
-.pos .pos-actionbar{
+.pos .pos-actionbar {
     height: 105px;
-    background: #f5f5f5;    /*#ebebeb;*/
+    background: #f5f5f5;
+    /*#ebebeb;*/
     border-top: solid 1px #cecece;
-    z-index:900;
+    z-index: 900;
 }
 
-.pos .pos-actionbar ul{
-    list-style:  none;
+.pos .pos-actionbar ul {
+    list-style: none;
 }
 
-.pos .pos-actionbar-button-list{
+.pos .pos-actionbar-button-list {
     height: 100%;
     margin: 0px;
-    padding-left:3px;
-    padding-right:3px;
-    overflow:hidden;
+    padding-left: 3px;
+    padding-right: 3px;
+    overflow: hidden;
 }
 
-.pos .pos-actionbar .button{
+.pos .pos-actionbar .button {
     width: 90px;
     height: 90px;
-    text-align:center;
-    margin:3px;
-    margin-top:6px;
-    float:left;
+    text-align: center;
+    margin: 3px;
+    margin-top: 6px;
+    float: left;
 
-    font-size:   14px;
+    font-size: 14px;
     font-weight: bold;
 
     cursor: pointer;
@@ -2324,13 +2821,16 @@ td {
 
     background: #e2e2e2;
 }
-.pos .pos-actionbar .button .label{
+
+.pos .pos-actionbar .button .label {
     margin-top: 37px;
 }
-.pos .pos-actionbar .button .icon{
+
+.pos .pos-actionbar .button .icon {
     margin-top: 10px;
 }
-.pos .pos-actionbar .button:active{
+
+.pos .pos-actionbar .button:active {
     color: white;
     background: #7f82ac;
     border: 1px solid #7f82ac;
@@ -2340,10 +2840,11 @@ td {
     -webkit-transition-timing-function: ease-out;
 }
 
-.pos .pos-actionbar .button.disabled{
+.pos .pos-actionbar .button.disabled {
     opacity: 0.5;
 }
-.pos .pos-actionbar .button.disabled:active{
+
+.pos .pos-actionbar .button.disabled:active {
     border: 1px solid #cacaca;
     color: #555;
     cursor: default;
@@ -2351,67 +2852,76 @@ td {
     background: #e2e2e2;
 }
 
-.pos .pos-actionbar .button.rightalign{
-    float:right;
+.pos .pos-actionbar .button.rightalign {
+    float: right;
 }
+
 /*  ********* The Debug Widget  ********* */
 
-.pos .debug-widget{
-    z-index:100000;
+.pos .debug-widget {
+    z-index: 100000;
     position: absolute;
     right: 10px;
     top: 10px;
     width: 200px;
     font-size: 10px;
 
-    background: rgba(0,0,0,0.82);
+    background: rgba(0, 0, 0, 0.82);
     color: white;
     padding-bottom: 10px;
     cursor: move;
-    -webkit-transform: translate3d(0,0,0);
+    -webkit-transform: translate3d(0, 0, 0);
 }
-.pos .debug-widget .toggle{
+
+.pos .debug-widget .toggle {
     position: absolute;
     font-size: 16px;
-    cursor:pointer;
-    top:0px;
-    right:0px;
-    padding:10px;
-    padding-right:15px;
+    cursor: pointer;
+    top: 0px;
+    right: 0px;
+    padding: 10px;
+    padding-right: 15px;
 }
-.pos .debug-widget .content{
+
+.pos .debug-widget .content {
     overflow: hidden;
 }
+
 .pos .debug-widget header {
     position: relative;
 }
-.pos .debug-widget h1{
-    background:black;
+
+.pos .debug-widget h1 {
+    background: black;
     padding-top: 10px;
     padding-left: 10px;
-    margin-top:0;
-    margin-bottom:0;
+    margin-top: 0;
+    margin-bottom: 0;
 }
-.pos .debug-widget .category{
+
+.pos .debug-widget .category {
     background: black;
     padding-left: 10px;
     margin: 0px;
     font-weight: bold;
-    padding-top:3px;
-    padding-bottom:3px;
+    padding-top: 3px;
+    padding-bottom: 3px;
 }
-.pos .debug-widget .button{
+
+.pos .debug-widget .button {
     padding: 5px;
     padding-left: 15px;
     display: block;
-    cursor:pointer;
+    cursor: pointer;
 }
-.pos .debug-widget .button:active{
-    background: rgba(96,21,177,0.45);
+
+.pos .debug-widget .button:active {
+    background: rgba(96, 21, 177, 0.45);
 }
-.pos .debug-widget input{
-    margin-left:10px;
-    margin-top:7px;
+
+.pos .debug-widget input {
+    margin-left: 10px;
+    margin-top: 7px;
     padding: 4px;
     width: 180px;
     border: none;
@@ -2419,49 +2929,54 @@ td {
     -moz-box-sizing: border-box;
     border-radius: 3px;
 }
-.pos .debug-widget .status{
+
+.pos .debug-widget .status {
     padding: 5px;
     padding-left: 15px;
     display: block;
-    cursor:default;
+    cursor: default;
 }
-.pos .debug-widget .status.on{
+
+.pos .debug-widget .status.on {
     background-color: #6cd11d;
 }
-.pos .debug-widget .event{
+
+.pos .debug-widget .event {
     padding: 5px;
     padding-left: 15px;
     display: block;
-    cursor:default;
+    cursor: default;
     background-color: #1E1E1E;
 }
 
 /*  ********* The PopupWidgets  ********* */
 
-.pos .modal-dialog{
+.pos .modal-dialog {
     position: absolute;
     left: 0;
     top: 0;
     width: 100%;
-    height:100%;
-    background-color: rgba(0,0,0,0.5);
-    z-index:1000;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
 }
-.pos .modal-dialog header{
+
+.pos .modal-dialog header {
     position: relative;
 }
-.pos .modal-dialog .popup{
+
+.pos .modal-dialog .popup {
     position: absolute;
     margin: auto;
-    max-width:500px;
+    max-width: 500px;
     width: 100%;
-    text-align:center;
-    font-size:20px;
-    font-weight:bold;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
     background-color: #F0EEEE;
     border-radius: 3px;
-    box-shadow: 0px 10px 20px rgba(0,0,0,0.4);
-    z-index:1200;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.4);
+    z-index: 1200;
     font-family: 'Lato';
     font-family: Lato;
     /* position the popup at center and and still making it draggable*/
@@ -2470,19 +2985,20 @@ td {
     transform: translate(-50%, -50%);
 }
 
-.pos .modal-dialog .popup-lg{
+.pos .modal-dialog .popup-lg {
     max-width: 80%;
     max-height: 600px;
     height: auto;
 }
 
 .pos .popup .title {
-    background: rgba(255,255,255,0.5);
+    background: rgba(255, 255, 255, 0.5);
     margin: 0;
     padding: 20px;
     border-radius: 3px 3px 0px 0px;
-    border-bottom: solid 1px rgba(60,60,60,0.1);
+    border-bottom: solid 1px rgba(60, 60, 60, 0.1);
 }
+
 .pos .popup .body {
     font-weight: normal;
     font-size: 18px;
@@ -2503,32 +3019,34 @@ td {
     text-align: left;
     font-family: 'Inconsolata';
     -webkit-user-select: text;
-       -moz-user-select: text;
-            user-select: text;
+    -moz-user-select: text;
+    user-select: text;
 }
-.pos .popup .footer{
-    width:100%;
-    height:60px;
-    border-top: solid 1px rgba(60,60,60,0.1);
+
+.pos .popup .footer {
+    width: 100%;
+    height: 60px;
+    border-top: solid 1px rgba(60, 60, 60, 0.1);
 }
-.pos .popup .button{
-    float:right;
+
+.pos .popup .button {
+    float: right;
     width: 110px;
     height: 40px;
-    line-height:40px;
-    text-align:center;
+    line-height: 40px;
+    text-align: center;
     border-radius: 2px;
-    margin-top:10px;
-    margin-right:10px;
+    margin-top: 10px;
+    margin-right: 10px;
 
-    font-size:   14px;
+    font-size: 14px;
     font-weight: bold;
 
     cursor: pointer;
 
-    border: solid 1px rgba(60,60,60,0.1);
+    border: solid 1px rgba(60, 60, 60, 0.1);
 
-    background: rgba(0,0,0,0.05);
+    background: rgba(0, 0, 0, 0.05);
 }
 
 .pos .popup .button.dont-show-again {
@@ -2539,7 +3057,8 @@ td {
     width: 40px;
     font-size: 20px;
 }
-.pos .popup .button:active{
+
+.pos .popup .button:active {
     color: white;
     background: black;
     border: 1px solid black;
@@ -2550,23 +3069,24 @@ td {
 }
 
 
-.pos .popup .button.big-left{
-    position:absolute;
+.pos .popup .button.big-left {
+    position: absolute;
     top: 120px;
-    left:40px;
+    left: 40px;
     width: 180px;
     height: 180px;
-    line-height:180px;
+    line-height: 180px;
 }
 
-.pos .popup .button.big-right{
-    position:absolute;
+.pos .popup .button.big-right {
+    position: absolute;
     top: 120px;
-    right:40px;
+    right: 40px;
     width: 180px;
     height: 180px;
-    line-height:180px;
+    line-height: 180px;
 }
+
 .pos .popup input,
 .pos .popup-input {
     text-align: left;
@@ -2580,15 +3100,17 @@ td {
     padding: 10px;
     border-radius: 3px;
     border: none;
-    box-shadow: 0px 0px 0px 1px rgb(220,220,220) inset;
+    box-shadow: 0px 0px 0px 1px rgb(220, 220, 220) inset;
     box-sizing: border-box;
     width: 80%;
 }
-.pos .popup .list-lines{
+
+.pos .popup .list-lines {
     overflow: auto;
     height: 250px;
     margin: 10px;
 }
+
 .pos .popup .list-line-input {
     margin: 3px;
 }
@@ -2596,20 +3118,24 @@ td {
 .pos .popup-number .popup-input {
     text-align: center;
 }
+
 .pos .popup input:focus,
 .pos .popup-input.active {
     outline: none;
     box-shadow: 0px 0px 0px 3px #6EC89B;
 }
+
 .pos .popup.popup-error {
     background-color: #F3BBBB;
     color: rgb(168, 89, 89);
-    box-shadow: 0px 10px 20px rgba(92,51,51,0.4);
+    box-shadow: 0px 10px 20px rgba(92, 51, 51, 0.4);
 }
+
 .pos .popup.popup-error .title {
     color: white;
     background: rgba(255, 76, 76, 0.5);
 }
+
 .pos .popup.popup-selection .selection {
     overflow-y: auto;
     max-height: 273px;
@@ -2617,46 +3143,57 @@ td {
     width: auto;
     line-height: 50px;
     margin-top: -1px;
-    border-top: solid 3px rgba(60,60,60,0.1);
+    border-top: solid 3px rgba(60, 60, 60, 0.1);
 
 }
+
 .pos .popup.popup-selection .selection-item {
     width: auto;
-    background: rgb(230,230,230);
+    background: rgb(230, 230, 230);
     cursor: pointer;
     text-align: left;
     padding: 0px 16px;
 }
+
 .pos .popup.popup-selection .selection-item:nth-child(odd) {
-    background: rgb(247,247,247);
+    background: rgb(247, 247, 247);
 }
+
 .pos .popup.popup-selection .selection-item.selected {
     background: #6EC89B;
 }
+
 .pos .popup.popup-number {
     width: 300px;
     height: 450px;
 }
+
 .pos .footer.centered {
     text-align: center;
 }
+
 .pos .footer.centered .button {
     float: none;
     display: inline-block;
     margin-left: 3px;
     margin-right: 3px;
 }
+
 .pos .popup-numpad {
-    direction: ltr/*rtl:ignore*/; /* rtlcss forced to keep ltr */
+    direction: ltr
+        /*rtl:ignore*/
+    ;
+    /* rtlcss forced to keep ltr */
     margin: 12px auto;
     text-align: center;
     width: 254px;
 }
+
 .pos .popup-number .title,
-.pos .popup-textinput .title
-{
+.pos .popup-textinput .title {
     margin-bottom: 20px;
 }
+
 .pos .popup-numpad .input-button,
 .pos .popup-numpad .mode-button {
     background: none;
@@ -2668,6 +3205,7 @@ td {
     vertical-align: top;
     color: #444;
 }
+
 .pos .popup-numpad .input-button:active,
 .pos .popup-numpad .mode-button:active {
     background: #444;
@@ -2678,25 +3216,30 @@ td {
 .pos .popup.popup-password {
     width: 254px;
 }
+
 .pos .popup-password .mode-button.add,
 .pos .popup-password .input-button.dot {
     display: none;
 }
+
 .pos .popup-password .popup-numpad {
     width: 190px;
 }
+
 .pos .popup-password .popup-input {
     width: 70%;
- }
+}
 
 .pos .popup .body ul,
 .pos .popup ul.body {
     text-align: left;
     margin-left: 1em;
 }
+
 .pos .popup .body li {
     text-indent: 1em;
 }
+
 .pos .popup .body li:before {
     content: '—';
     position: relative;
@@ -2708,58 +3251,69 @@ td {
 
 /*  ********* The Webkit Scrollbar  ********* */
 
-.pos *::-webkit-scrollbar{
-    width:  4px;
+.pos *::-webkit-scrollbar {
+    width: 4px;
     height: 4px;
 }
-.pos *::-webkit-scrollbar-track{
-    background: rgb(224,224,224);
-    border-left: solid 1px rgb(200,200,200);
+
+.pos *::-webkit-scrollbar-track {
+    background: rgb(224, 224, 224);
+    border-left: solid 1px rgb(200, 200, 200);
 }
-.pos *::-webkit-scrollbar-thumb{
-    background: rgb(168,168,168);
+
+.pos *::-webkit-scrollbar-thumb {
+    background: rgb(168, 168, 168);
     background: #393939;
     min-height: 30px;
 }
 
-.pos.big-scrollbars *::-webkit-scrollbar{
-    width:  40px;
+.pos.big-scrollbars *::-webkit-scrollbar {
+    width: 40px;
     height: 40px;
 }
-.pos.big-scrollbars *::-webkit-scrollbar-track{
-    background: rgb(224,224,224);
+
+.pos.big-scrollbars *::-webkit-scrollbar-track {
+    background: rgb(224, 224, 224);
     border-left: none;
 }
-.pos.big-scrollbars *::-webkit-scrollbar-thumb{
-    background: rgb(168,168,168);
+
+.pos.big-scrollbars *::-webkit-scrollbar-thumb {
+    background: rgb(168, 168, 168);
     min-height: 40px;
     border-radius: 3px;
 }
-.pos.big-scrollbars *::-webkit-scrollbar-button{
-    width:  40px;
+
+.pos.big-scrollbars *::-webkit-scrollbar-button {
+    width: 40px;
     height: 40px;
     border-radius: 3px;
-    background: rgb(210,210,210);
+    background: rgb(210, 210, 210);
     background-size: cover;
 }
-.pos.big-scrollbars *::-webkit-scrollbar-button:decrement{
+
+.pos.big-scrollbars *::-webkit-scrollbar-button:decrement {
     background-image: url('../img/scroll-up.png');
 }
-.pos.big-scrollbars *::-webkit-scrollbar-button:increment{
+
+.pos.big-scrollbars *::-webkit-scrollbar-button:increment {
     background-image: url('../img/scroll-down.png');
 }
 
 
 /*  ********* Unsupported Browser Page ********* */
 
-.pos .not-supported-browser{
+.pos .not-supported-browser {
     position: absolute;
     z-index: 100000;
-    top: 0; bottom: 0; left: 0; right: 0;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     background: #2C2C2C;
 }
-.pos .not-supported-browser .message{
-    width:600px;
+
+.pos .not-supported-browser .message {
+    width: 600px;
     margin-top: 100px;
     margin-left: auto;
     margin-right: auto;
@@ -2767,23 +3321,28 @@ td {
     color: #d3d3d3;
     font-size: 14px;
 }
-.pos .not-supported-browser img{
+
+.pos .not-supported-browser img {
     border-collapse: separate;
 }
 
-.fade-enter-active, .fade-leave-active {
+.fade-enter-active,
+.fade-leave-active {
     transition: opacity .2s;
 }
 
-.fade-enter, .fade-leave-to {
+.fade-enter,
+.fade-leave-to {
     opacity: 0;
 }
 
-.swing-enter-active, .swing-leave-active {
+.swing-enter-active,
+.swing-leave-active {
     transition: opacity 0.8s;
 }
 
-.swing-enter, .swing-leave-to {
+.swing-enter,
+.swing-leave-to {
     opacity: 0;
 }
 
@@ -2796,9 +3355,9 @@ td {
     left: 0;
     top: 0;
     width: 100%;
-    height:100%;
-    background-color: rgba(0,0,0,0.5);
-    z-index:1000;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
 }
 
 .drag-handle {
@@ -2817,18 +3376,18 @@ td {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-    background-color:  rgb(230,230,230);
+    background-color: rgb(230, 230, 230);
 }
 
 .order-list .order-row:hover {
     color: white;
-    background-color:  rgb(110,200,155);
+    background-color: rgb(110, 200, 155);
     font-weight: bold;
 }
 
 .order-row.highlight {
     color: white;
-    background-color:  rgb(110,200,155);
+    background-color: rgb(110, 200, 155);
     font-weight: bold;
 }
 
@@ -2859,7 +3418,7 @@ td {
     flex-basis: 0;
     text-align: left;
     padding: 10px 10px;
-    border-bottom: solid rgb(150,150,150) 1px;
+    border-bottom: solid rgb(150, 150, 150) 1px;
 }
 
 .order-row .item.total {
@@ -2901,13 +3460,13 @@ td {
     font-size: x-large;
 }
 
-.order-management-screen .control-panel .page-controls > div {
+.order-management-screen .control-panel .page-controls>div {
     border: darkgray solid 1px;
     border-radius: 2px;
 }
 
-.order-management-screen .control-panel .page-controls > div:hover {
-    color: rgb(110,200,155);
+.order-management-screen .control-panel .page-controls>div:hover {
+    color: rgb(110, 200, 155);
 }
 
 .order-management-screen .control-panel .page-controls .previous {
@@ -2947,7 +3506,7 @@ td {
     margin: auto;
     background-color: white;
     border-radius: 20px;
-    font-family: "Lato","Lucida Grande", Helvetica, Verdana, Arial;
+    font-family: "Lato", "Lucida Grande", Helvetica, Verdana, Arial;
     font-size: 13px;
 }
 
@@ -3113,7 +3672,7 @@ td {
     overflow-y: auto;
 }
 
-.ticket-screen .orders .header-row{
+.ticket-screen .orders .header-row {
     display: flex;
     flex-flow: row nowrap;
     flex: 1;
@@ -3168,7 +3727,7 @@ td {
 }
 
 .ticket-screen .order-row:hover {
-    background: rgb(110,200,155);
+    background: rgb(110, 200, 155);
     color: white;
 }
 
@@ -3181,7 +3740,7 @@ td {
     justify-content: space-between;
     align-items: center;
     margin: 0px 20px;
-    border-bottom: dashed 1px rgb(215,215,215);
+    border-bottom: dashed 1px rgb(215, 215, 215);
     flex: 0 0 80px;
 }
 
@@ -3260,7 +3819,7 @@ td {
 }
 
 .ticket-screen .pos-search-bar .search li {
-    color: rgb(1,160,157);
+    color: rgb(1, 160, 157);
     margin: 0.2em 0;
     padding-top: 0.2em;
     padding-bottom: 0.2em;
@@ -3346,11 +3905,11 @@ td {
 }
 
 .ticket-button.highlight {
-    background: rgb(104,69,95);
+    background: rgb(104, 69, 95);
 }
 
 .ticket-button:hover {
-    background: rgb(104,69,95);
+    background: rgb(104, 69, 95);
     cursor: pointer;
 }
 
@@ -3364,7 +3923,7 @@ td {
 }
 
 [badge]:after {
-    background: rgb(1,160,157);
+    background: rgb(1, 160, 157);
     border-radius: 10rem;
     color: #fff;
     content: attr(badge);
@@ -3380,7 +3939,7 @@ td {
 [badge^="-"]:after,
 [badge="0"]:after,
 [badge=""]:after {
- display: none;
+    display: none;
 }
 
 /* Product Screen Search Bar */
@@ -3545,12 +4104,15 @@ td {
         flex-direction: column-reverse;
         overflow: auto;
     }
+
     .receipt-screen .default-view .actions {
         flex: 0;
     }
+
     .receipt-screen .default-view .actions h1 {
         margin-bottom: 1.5rem;
     }
+
     .receipt-screen .default-view .pos-receipt-container {
         flex: 1;
         overflow: visible;
