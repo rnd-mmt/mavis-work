@@ -2834,7 +2834,7 @@ msgstr "Nouvelle commande"
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.view_pos_config_kanban
 msgid "New Session"
-msgstr "Nouvelle session _____________________ "
+msgstr "Nouvelle session"
 
 #. module: point_of_sale
 #: model:product.product,name:point_of_sale.newspaper_rack
