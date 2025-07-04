@@ -844,6 +844,18 @@ td {
     border-radius: 100%;
 }
 
+.pos .actionpad .button .fa-user-md {
+    position: absolute;
+    left: 13px;
+    top: 13px;
+    margin-right: 8px;
+    font-size: 18px;
+    background: rgba(255, 255, 255, 0.5);
+    line-height: 30px;
+    width: 30px;
+    border-radius: 100%;
+}
+
 @media screen and (max-width: 768px) {
     .pos .actionpad .button.set-customer {
         padding-left: 0px;
@@ -857,7 +869,6 @@ td {
 }
 
 /*  ********* The Numpad ********* */
-
 .pos .numpad {
     text-align: center;
     width: 216px;

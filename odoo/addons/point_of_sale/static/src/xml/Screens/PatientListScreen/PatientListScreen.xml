@@ -4,10 +4,11 @@
         <div class="patientlist-screen screen" t-on-activate-edit-mode="activateEditMode">
             <div class="screen-content">
                 <div class="top-content">
-                    <div t-if="!state.detailIsShown &amp;&amp; !state.selectedPatient" class="button 
-                    " role="img" aria-label="Add a customer"
+                    <div t-if="!state.detailIsShown &amp;&amp; !state.selectedPatient" 
+                    class="button"
+                    role="img" aria-label="Add a patient"
                           t-on-click="trigger('activate-edit-mode', { isNewPatient: true })"
-                          title="Add a customer">
+                          title="Add a patient">
                         <t t-if="!env.isMobile">
                             Create
                         </t>

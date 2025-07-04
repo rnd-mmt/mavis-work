@@ -48,8 +48,6 @@ odoo.define('point_of_sale.PaymentScreen', function (require) {
             return this.currentOrder.selected_paymentline;
         }
         async selectClient() {
-            // IMPROVEMENT: This code snippet is repeated multiple times.
-            // Maybe it's better to create a function for it.
             const currentClient = this.currentOrder.get_client();
             const { confirmed, payload: newClient } = await this.showTempScreen(
                 'ClientListScreen',

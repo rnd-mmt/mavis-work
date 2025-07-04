@@ -19,7 +19,7 @@ odoo.define('point_of_sale.PatientListScreen', function(require) {
 
             this.state = {
                 query: '',
-                selectedPatient: this.props.client,
+                selectedPatient: this.props.patient,
                 detailIsShown: false,
                 isEditMode: false,
                 isNewPatient: false,
@@ -49,7 +49,7 @@ odoo.define('point_of_sale.PatientListScreen', function(require) {
             this.updatePatientList = debounce(this.updatePatientList.bind(this), 70);
         }
 
-        get clients() {
+        get patients() {
             if (this.state.query.trim()) {
                 return this.env.pos.db.search_partner(this.state.query.trim());
             } else {
@@ -62,12 +62,12 @@ odoo.define('point_of_sale.PatientListScreen', function(require) {
         }
 
         get nextButton() {
-            if (!this.props.client) {
-                return { command: 'set', text: this.env._t('Set Customer') };
-            } else if (this.props.client === this.state.selectedPatient) {
-                return { command: 'deselect', text: this.env._t('Deselect Customer') };
+            if (!this.props.patient) {
+                return { command: 'set', text: this.env._t('Set Patient') };
+            } else if (this.props.patient === this.state.selectedPatient) {
+                return { command: 'deselect', text: this.env._t('Deselect Patient') };
             } else {
-                return { command: 'set', text: this.env._t('Change Customer') };
+                return { command: 'set', text: this.env._t('Change Patient') };
             }
         }
 
@@ -88,9 +88,9 @@ odoo.define('point_of_sale.PatientListScreen', function(require) {
 
         updatePatientList(event) {
             this.state.query = event.target.value;
-            const clients = this.clients;
-            if (event.code === 'Enter' && clients.length === 1) {
-                this.state.selectedPatient = clients[0];
+            const patients = this.patients;
+            if (event.code === 'Enter' && patients.length === 1) {
+                this.state.selectedPatient = patients[0];
                 this.clickNext();
             } else {
                 this.render();

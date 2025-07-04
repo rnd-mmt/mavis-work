@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="template" xml:space="preserve">
-
     <t t-name="ActionpadWidget" owl="1">
         <div class="actionpad">
-            <button class="button set-customer" t-att-class="{'decentered': isLongName}"
-                    t-on-click="trigger('click-patient-button')">
-                <t t-if="!env.isMobile"><i class="fa fa-user" role="img" aria-label="Patient" title="Patient" /></t>
-                <t t-if="client">
-                    <t t-esc="client.name" />
+            <button class="button set-customer" t-att-class="{'decentered': isPatientLongName}" t-on-click="trigger('click-patient-button')">
+                <t t-if="!env.isMobile">
+                    <i class="fa fa-user-md" role="img" aria-label="Patient" title="Patient" />
+                </t>
+                <t t-if="patient">
+                    <t t-esc="patient.name" />
                 </t>
                 <t t-else="">
-                        Patient
+                    Patient
                 </t>
             </button>
-            <button class="button set-customer" t-att-class="{'decentered': isLongName}"
-                    t-on-click="trigger('click-customer')">
-                <t t-if="!env.isMobile"><i class="fa fa-user" role="img" aria-label="Customer" title="Customer" /></t>
+            <button class="button set-customer" t-att-class="{'decentered': isLongName}" t-on-click="trigger('click-customer')">
+                <t t-if="!env.isMobile">
+                    <i class="fa fa-user" role="img" aria-label="Customer" title="Customer" />
+                </t>
                 <t t-if="client">
                     <t t-esc="client.name" />
                 </t>
@@ -31,5 +32,4 @@
             </button>
         </div>
     </t>
-
 </templates>
