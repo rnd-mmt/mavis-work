@@ -1224,7 +1224,7 @@ class Database(http.Controller):
 
 class Session(http.Controller):
 
-    @http.route('/web/session/get_session_info', type='json', auth="none")
+    @http.route('/web/session/get_session_info', type='json', auth="user")
     def get_session_info(self):
         request.session.check_security()
         request.uid = request.session.uid

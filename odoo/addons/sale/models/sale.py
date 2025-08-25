@@ -760,7 +760,6 @@ Reason(s) of this behavior could be:
             invoice_vals_list = new_invoice_vals_list
 
         # 3) Create invoices.
-
         # As part of the invoice creation, we make sure the sequence of multiple SO do not interfere
         # in a single invoice. Example:
         # SO 1:
@@ -943,7 +942,7 @@ Reason(s) of this behavior could be:
         for order in self.filtered(lambda order: order.partner_id not in order.message_partner_ids):
             order.message_subscribe([order.partner_id.id])
         self.write(self._prepare_confirmation_values())
-
+        
         # Context key 'default_name' is sometimes propagated up to here.
         # We don't need it and it creates issues in the creation of linked records.
         context = self._context.copy()

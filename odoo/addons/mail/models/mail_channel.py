@@ -1166,3 +1166,31 @@ class Channel(models.Model):
             msg = _("Users in this channel: %(members)s %(dots)s and you.", members=", ".join(members), dots=dots)
 
         self._send_transient_message(partner, msg)
+
+    def get_unread_messages_count(self, user_id):
+        """Retourne le nombre de messages non lus pour chaque canal de l'utilisateur."""
+        channels = self.search([('channel_partner_ids.user_id', '=', user_id)])
+        result = []
+        for channel in channels:
+            partner = self.env['mail.channel.partner'].search([
+                ('channel_id', '=', channel.id),
+                ('partner_id.user_id', '=', user_id),
+            ], limit=1)
+            if partner and partner.seen_message_id:
+                unread_count = self.env['mail.message'].search_count([
+                    ('model', '=', 'mail.channel'),
+                    ('res_id', '=', channel.id),
+                    ('id', '>', partner.seen_message_id.id),
+                ])
+            else:
+                unread_count = self.env['mail.message'].search_count([
+                    ('model', '=', 'mail.channel'),
+                    ('res_id', '=', channel.id),
+                ])
+            result.append({
+                'id': channel.id,
+                'uuid': channel.uuid,
+                'name': channel.name,
+                'unread_count': unread_count,
+            })
+        return result

@@ -15,8 +15,6 @@ from odoo.http import request
 from odoo.tools import consteq
 
 _logger = logging.getLogger(__name__)
-
-
 class MailController(http.Controller):
     _cp_path = '/mail'
 
@@ -296,15 +294,202 @@ class MailController(http.Controller):
         }
         return values
 
-    @http.route('/mail/get_partner_info', type='json', auth='user')
-    def message_partner_info_from_emails(self, model, res_ids, emails, link_mail=False):
-        records = request.env[model].browse(res_ids)
-        try:
-            records.check_access_rule('read')
-            records.check_access_rights('read')
-        except:
+    @http.route('/mail/count_messaging_unread', type='json', auth='user')
+    def mail_count_messaging_unread(self):
+        if not request.uid:
             return []
-        return records._message_partner_info_from_emails(emails, link_mail=link_mail)
+        
+        uid = request.uid
+        user = request.env['res.users'].sudo().browse(uid)
+        partner = user.partner_id
+
+        # Recherche des canaux où ce partner est membre
+        channels = request.env['mail.channel'].sudo().search([
+            ('channel_partner_ids', 'in', [partner.id])
+        ])
+
+        result = []
+        # The above Python code snippet is iterating over a list of channels and retrieving
+        # information about unread messages for each channel and a specific partner. It does the following:
+        for channel in channels:
+            partner_info = request.env['mail.channel.partner'].sudo().search([
+                ('channel_id', '=', channel.id),
+                ('partner_id', '=', partner.id),
+            ], limit=1)
+
+            if partner_info and partner_info.seen_message_id:
+                unread_count = request.env['mail.message'].sudo().search_count([
+                    ('model', '=', 'mail.channel'),
+                    ('res_id', '=', channel.id),
+                    ('id', '>', partner_info.seen_message_id.id),
+                ])
+            else:
+                unread_count = request.env['mail.message'].sudo().search_count([
+                    ('model', '=', 'mail.channel'),
+                    ('res_id', '=', channel.id),
+                ])
+
+            result.append({
+                'id': channel.id,
+                'uuid': channel.uuid,
+                'name': channel.name,
+                'channel_type': channel.channel_type,
+                'unread_count': unread_count,
+            })
+        return result
+    
+    @http.route('/mail/discussions/all', type='json', auth='user')
+    def get_combined_discussions(self, limit=30, offset=0):
+        try:
+            limit = int(limit)
+            offset = int(offset)
+            partner = request.env.user.partner_id
+
+            # --- 1️⃣ Précharger tous les canaux et last messages ---
+            channel_slots = request.env['mail.channel'].channel_fetch_slot()
+            all_channels = [c for slot in channel_slots.values() for c in slot]
+            channel_ids = [c['id'] for c in all_channels]
+
+            # Précharger mail.channel.partner pour ce partenaire
+            partner_info_map = {
+                p.channel_id.id: p
+                for p in request.env['mail.channel.partner'].sudo().search([
+                    ('channel_id', 'in', channel_ids),
+                    ('partner_id', '=', partner.id)
+                ])
+            }
+
+            # Précharger le dernier message par canal
+            messages = request.env['mail.message'].sudo().search([
+                ('model', '=', 'mail.channel'),
+                ('res_id', 'in', channel_ids),
+                ('message_type', 'in', ['comment', 'user_notification', 'notification'])
+            ], order='date desc')
+
+            last_message_map = {}
+            for msg in messages:
+                if msg.res_id not in last_message_map:
+                    last_message_map[msg.res_id] = msg
+
+            # Préparer toutes les discussions
+            canaux_with_last_message = []
+            for canal in all_channels:
+                last_message = last_message_map.get(canal['id'])
+                partner_info = partner_info_map.get(canal['id'])
+
+                if partner_info and partner_info.seen_message_id:
+                    unread_count = sum(
+                        1 for m in messages
+                        if m.res_id == canal['id'] and m.id > partner_info.seen_message_id.id
+                    )
+                else:
+                    unread_count = sum(1 for m in messages if m.res_id == canal['id'])
+
+                if last_message:
+                    clean_text = last_message.body or "Nouveau message"
+                    last_author_name = getattr(last_message.author_id, 'name', 'Unknown')
+                    last_author_id = getattr(last_message.author_id, 'id', None)
+                    is_mine = last_author_id == partner.id
+
+                    display_name = canal['name']
+                    display_text = clean_text
+
+                    if canal['channel_type'] == 'chat':
+                        # Pour chat privé, afficher le nom de l'autre membre
+                        other_members = [m['id'] for m in canal.get('members', []) if m['id'] != partner.id]
+                        if other_members:
+                            other_member = request.env['res.partner'].sudo().browse(other_members[0])
+                            display_name = other_member.name or other_member.email
+                        if is_mine:
+                            display_text = f"⤻ Vous : {clean_text}"
+                    else:
+                        display_text = f"⤻ {'Vous' if is_mine else last_author_name} : {clean_text}"
+
+                    canaux_with_last_message.append({
+                        'uuid': canal['uuid'],
+                        'name': display_name,
+                        'conversation_type': canal['channel_type'],
+                        'text': display_text,
+                        'time': last_message.date,
+                        'channelId': canal['id'],
+                        'email': getattr(last_message.author_id, 'email', ''),
+                        'unreadCount': unread_count
+                    })
+
+            # --- 2️⃣ Précharger toutes les notifications non lues ---
+            system_user_id = request.env.ref('base.user_root').id
+            notifications = request.env['mail.message'].sudo().search([
+                ('message_type', 'in', ['user_notification', 'notification']),
+                ('author_id', '=', system_user_id)
+            ], order='date desc', limit=limit + 10)
+
+            unread_notifications = request.env['mail.notification'].sudo().search([
+                ('res_partner_id', '=', partner.id),
+                ('is_read', '=', False)
+            ])
+            unread_map = {n.mail_message_id.id: True for n in unread_notifications}
+
+            # Regrouper par modèle
+            grouped_by_model = {}
+            for notif in notifications:
+                model_key = notif.model or 'other'
+                if model_key not in grouped_by_model:
+                    grouped_by_model[model_key] = {
+                        'messages': [],
+                        'unreadCount': 0,
+                        'lastMessageTime': notif.date
+                    }
+
+                grouped_by_model[model_key]['messages'].append(notif)
+                grouped_by_model[model_key]['unreadCount'] += 1 if unread_map.get(notif.id) else 0
+                grouped_by_model[model_key]['lastMessageTime'] = max(
+                    grouped_by_model[model_key]['lastMessageTime'], notif.date
+                )
+
+            # Mapping pour titre plus lisible
+            model_titles = {
+                'sale.order': 'Bon de commande',
+                'account.move': 'Facture',
+                'account.bank.statement': 'Relevé bancaire',
+                'res.partner': 'Contact',
+                'mail.channel': 'Canal de discussion',
+                'stock.picking': 'Transfert de stock' 
+            }
+
+            notif_with_details = []
+            for model, group in grouped_by_model.items():
+                if all(not (m.body or '').strip() for m in group['messages']):
+                    continue
+
+                last_message = group['messages'][0]
+                last_body = (last_message.body or '').strip()
+                res_id = last_message.res_id if last_message and last_message.res_id else 0
+
+                notif_with_details.append({
+                    'uuid': f'group_{model}',
+                    'name': model_titles.get(model, model),
+                    'conversation_type': 'notification',
+                    'text': f"{last_body}",
+                    'time': group['lastMessageTime'],
+                    'channelId': None,
+                    'email': '',
+                    'unreadCount': group['unreadCount'],
+                    'target': {
+                        'model': model,
+                        'res_id': res_id
+                    }
+                })
+
+            # --- 3️⃣ Fusionner et trier ---
+            combined_list = canaux_with_last_message + notif_with_details
+            combined_list.sort(key=lambda x: x['time'], reverse=True)
+            paginated_list = combined_list[offset:offset + limit]
+
+            return paginated_list
+
+        except Exception as e:
+            _logger.error(f"Erreur dans get_combined_discussions: {str(e)}")
+            raise
 
     @http.route('/mail/get_suggested_recipients', type='json', auth='user')
     def message_get_suggested_recipients(self, model, res_ids):
@@ -315,3 +500,114 @@ class MailController(http.Controller):
         except:
             return {}
         return records._message_get_suggested_recipients()
+    
+    @http.route('/mail/channel/seen', type='json', auth='user', methods=['POST'])
+    def channel_seen(self, channel_id=None, last_message_id=None, uuid=None):
+        """
+        Mark messages in a channel as seen up to last_message_id for the current user.
+        """
+        try:
+            user = request.env.user
+            partner = user.partner_id
+            
+            # 🔹 Cas 1 : groupe de notifications
+            if uuid and uuid.startswith("group_"):
+                model = uuid.replace("group_", "", 1)
+
+                if not last_message_id:
+                    return {
+                        'jsonrpc': '2.0',
+                        'error': {'code': 400, 'message': 'Missing last_message_id for notifications'}
+                    }
+
+                # Marquer toutes les notifs du modèle comme lues jusqu’à last_message_id
+                domain = [
+                    ('res_partner_id', '=', partner.id),
+                    ('is_read', '=', False),
+                    ('mail_message_id.model', '=', model),
+                    ('mail_message_id.id', '<=', int(last_message_id))
+                ]
+                notifications = request.env['mail.notification'].sudo().search(domain)
+                notifications.write({'is_read': True})
+
+                # Recalcul du unread_count
+                unread_count = request.env['mail.notification'].sudo().search_count([
+                    ('res_partner_id', '=', partner.id),
+                    ('is_read', '=', False),
+                    ('mail_message_id.model', '=', model),
+                ])
+
+                return {
+                    'jsonrpc': '2.0',
+                    'result': {
+                        'success': True,
+                        'uuid': uuid,
+                        'last_message_id': last_message_id,
+                        'unreadCount': unread_count
+                    }
+                }
+                
+            # 🔹 Cas 2 : channel normal
+            if not channel_id or not last_message_id:
+                return {
+                    'jsonrpc': '2.0',
+                    'error': {'code': 400, 'message': 'Missing channel_id or last_message_id'}
+                }
+
+            # Fetch the channel
+            channel = request.env['mail.channel'].sudo().browse(int(channel_id)).exists()
+            if not channel:
+                return {'jsonrpc': '2.0', 'error': {'code': 404, 'message': 'Channel not found'}}
+
+            # Ensure user is a member
+            if partner.id not in channel.channel_partner_ids.mapped('id'):
+                return {'jsonrpc': '2.0', 'error': {'code': 403, 'message': 'User not a member of the channel'}}
+
+            # Fetch the last message
+            message = request.env['mail.message'].sudo().browse(int(last_message_id)).exists()
+            if not message or message.model != 'mail.channel' or message.res_id != channel.id:
+                return {'jsonrpc': '2.0', 'error': {'code': 404, 'message': 'Invalid message_id for this channel'}}
+
+            # Update seen_message_id
+            channel_partner = request.env['mail.channel.partner'].sudo().search([
+                ('channel_id', '=', channel.id),
+                ('partner_id', '=', partner.id)
+            ], limit=1)
+            if channel_partner:
+                channel_partner.write({'seen_message_id': last_message_id})
+            else:
+                return {'jsonrpc': '2.0', 'error': {'code': 404, 'message': 'Channel partner record not found'}}
+
+            # Update notifications in one query
+            notifications = request.env['mail.notification'].sudo().search([
+                ('res_partner_id', '=', partner.id),
+                ('is_read', '=', False),
+                ('mail_message_id.model', '=', 'mail.channel'),
+                ('mail_message_id.res_id', '=', channel.id),
+                ('mail_message_id.id', '<=', last_message_id)
+            ])
+            notifications.write({'is_read': True})
+
+            # Recalculate unread_count
+            unread_count = request.env['mail.message'].sudo().search_count([
+                ('model', '=', 'mail.channel'),
+                ('res_id', '=', channel.id),
+                ('id', '>', last_message_id)
+            ])
+
+            return {
+                'jsonrpc': '2.0',
+                'result': {
+                    'success': True,
+                    'channel_id': channel.id,
+                    'last_message_id': last_message_id,
+                    'unreadCount': unread_count
+                }
+            }
+
+        except (AccessError, ValidationError) as e:
+            return {'jsonrpc': '2.0', 'error': {'code': 403, 'message': f'Access error: {str(e)}'}}
+        except Exception as e:
+            _logger.error(f"Erreur dans channel_seen: {str(e)}")
+            return {'jsonrpc': '2.0', 'error': {'code': 500, 'message': f'Internal server error: {str(e)}'}}
+        

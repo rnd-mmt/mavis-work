@@ -220,7 +220,6 @@ class MessagingMenu extends Component {
         ev.stopPropagation();
         this.messagingMenu.update({ activeTabId: ev.detail.tabId });
     }
-
 }
 
 Object.assign(MessagingMenu, {

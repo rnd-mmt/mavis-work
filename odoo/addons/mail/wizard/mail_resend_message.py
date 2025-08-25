@@ -85,7 +85,6 @@ class MailResendMessage(models.TransientModel):
             wizard.mail_message_id._notify_message_notification_update()
         return {'type': 'ir.actions.act_window_close'}
 
-
 class PartnerResend(models.TransientModel):
     _name = 'mail.resend.partner'
     _description = 'Partner with additional information for mail resend'
