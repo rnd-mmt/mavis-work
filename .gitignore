@@ -137,3 +137,5 @@ out/
 *.mp4
 *.avi
 *.mov
+
+odoo.log
