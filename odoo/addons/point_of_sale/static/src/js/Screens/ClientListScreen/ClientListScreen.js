@@ -177,6 +177,7 @@ odoo.define('point_of_sale.ClientListScreen', function(require) {
             this.deactivateEditMode();
         }
     }
+    
     ClientListScreen.template = 'ClientListScreen';
 
     Registries.Component.add(ClientListScreen);

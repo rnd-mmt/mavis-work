@@ -10,6 +10,13 @@ odoo.define('point_of_sale.ActionpadWidget', function(require) {
      * @emits click-pay
      */
     class ActionpadWidget extends PosComponent {
+        get isPatientLongName() {
+            return this.patient && this.patient.name.length > 10;
+        }
+        get patient() {
+            return this.props.patient;
+        }
+
         get isLongName() {
             return this.client && this.client.name.length > 10;
         }
