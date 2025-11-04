@@ -2325,14 +2325,16 @@ td {
 
 .patient-card {
     display: flex;
-     flex-direction: row;
+    flex-direction: row;
     align-items: flex-start;
     width: calc(50% - 20px);
     border: 1px solid #c3bdbd;
-    background-color:#ffffff4f;
+    background-color: #eae4e44f;
     padding: 5px;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
     gap: 15px;
+    cursor: pointer; /* 👈 rend la carte cliquable visuellement */
+    transition: all 0.3s ease;
 }
 
 .patient-image img {
@@ -2378,6 +2380,32 @@ td {
 .patient-data .button:hover {
     background-color: #5f5e91;
 }
+
+.patient-card:hover {
+    background-color: #06a952;
+    color: white;
+    border-color: #145a32;
+}
+
+.patient-card.active {
+    background-color: #06a952;
+    color: #fff;
+    border-color: #145a32;
+}
+
+.patient-card { 
+    cursor: pointer; 
+    transition: all;
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+
+
+
+
+
+
+
 
 
 

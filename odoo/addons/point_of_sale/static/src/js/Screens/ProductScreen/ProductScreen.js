@@ -41,9 +41,12 @@ odoo.define('point_of_sale.ProductScreen', function (require) {
         }
         mounted() {
             this.env.pos.on('change:selectedClient', this.render, this);
+            this.env.pos.on('change:selectedPatient', this.render, this);
         }
+
         willUnmount() {
             this.env.pos.off('change:selectedClient', null, this);
+            this.env.pos.off('change:selectedPatient', null, this);
         }
         /**
          * To be overridden by modules that checks availability of
@@ -56,8 +59,12 @@ odoo.define('point_of_sale.ProductScreen', function (require) {
         get client() {
             return this.env.pos.get_client();
         }
+
+        get patient() {
+            return this.env.pos.get_patient();
+        }
         get currentOrder() {
-            console.log("ENV POS Get-ORDER ", this.env.pos.get_order());
+            // console.log("ENV POS Get-ORDER ", this.env.pos.get_order());
             return this.env.pos.get_order();
         }
         showCashBoxOpening() {
@@ -298,6 +305,7 @@ odoo.define('point_of_sale.ProductScreen', function (require) {
         }
         async _onClickCustomer() {
             const currentClient = this.currentOrder.get_client();
+            console.log("------------- CURRENT CUSTOMER --------- ", currentClient);
             const { confirmed, payload: newClient } = await this.showTempScreen(
                 'ClientListScreen',
                 { client: currentClient }
@@ -307,8 +315,10 @@ odoo.define('point_of_sale.ProductScreen', function (require) {
                 this.currentOrder.updatePricelist(newClient);
             }
         }
+
         async _onClickPatientButton() {
             const currentPatient = this.currentOrder.get_patient();
+            console.log("------------- CURRENT PATIENT --------- ", currentPatient);
             const { confirmed, payload: newPatient } = await this.showTempScreen(
                 'PatientListScreen',
                 { patient: currentPatient }
@@ -316,9 +326,15 @@ odoo.define('point_of_sale.ProductScreen', function (require) {
 
             if (confirmed) {
                 this.currentOrder.set_patient(newPatient);
+                // Si aucun client n'est encore sélectionné, on met le patient comme client par défaut
+                if (!this.currentOrder.get_client()) {
+                    this.currentOrder.set_client(newPatient);
+                }
                 // this.currentOrder.updatePricelist(newPatient);
             }
+
         }
+
         async _onClickPay() {
             if (this.env.pos.get_order().orderlines.any(line => line.get_product().tracking !== 'none' && !line.has_valid_product_lot() && (this.env.pos.picking_type.use_create_lots || this.env.pos.picking_type.use_existing_lots))) {
                 const { confirmed } = await this.showPopup('ConfirmPopup', {

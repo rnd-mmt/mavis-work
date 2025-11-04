@@ -119,6 +119,8 @@
         'static/src/xml/Screens/ProductScreen/ControlButtons/SetFiscalPositionButton.xml',
         'static/src/xml/ChromeWidgets/ClientScreenButton.xml',
         'static/src/xml/Misc/MobileOrderWidget.xml',
+        'static/src/xml/Screens/PatientListScreen/PatientLine.xml',
+        'static/src/xml/Screens/PatientListScreen/PatientDetailsEdit.xml',
         'static/src/xml/Screens/PatientListScreen/PatientListScreen.xml'
     ],
     'website': 'https://www.odoo.com/page/point-of-sale-shop',

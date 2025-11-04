@@ -3523,6 +3523,7 @@ odoo.define('point_of_sale.models', function (require) {
         is_to_invoice: function () {
             return this.to_invoice;
         },
+        
         /* ---- Client / Customer --- */
         // the client related to the current order.
         set_client: function (client) {

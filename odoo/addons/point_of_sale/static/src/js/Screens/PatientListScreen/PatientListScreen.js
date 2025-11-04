@@ -97,10 +97,30 @@ odoo.define('point_of_sale.PatientListScreen', function(require) {
             }
         }
 
+        // clickPatient(event) {
+        //     const partner = event.detail.patient;
+        //     this.state.selectedPatient = (this.state.selectedPatient === partner) ? null : partner;
+        //     this.render();
+        // }
+
         clickPatient(event) {
             const partner = event.detail.patient;
-            this.state.selectedPatient = (this.state.selectedPatient === partner) ? null : partner;
+            // S’il est déjà sélectionné, on le désélectionne
+            if (this.state.selectedPatient && this.state.selectedPatient.id === partner.id) {
+                this.state.selectedPatient = null;
+            } else {
+                this.state.selectedPatient = partner;
+            }
             this.render();
+        }
+
+        selectPatientForService(patient) {
+            // Définir ce patient dans l’environnement POS (ActionParWidget)
+            this.env.pos.get_order().set_client(patient);
+            this.showPopup('ConfirmPopup', {
+                title: this.env._t('Patient sélectionné'),
+                body: this.env._t(`${patient.name} est maintenant défini comme patient actif.`),
+            });
         }
 
         editPatient() {
@@ -169,7 +189,7 @@ odoo.define('point_of_sale.PatientListScreen', function(require) {
 
             try {
                 const partnerId = await this.rpc({
-                    model: 'res.partner',
+                    model: 'pos.patient',
                     method: 'create_from_ui',
                     args: [data],
                 });
