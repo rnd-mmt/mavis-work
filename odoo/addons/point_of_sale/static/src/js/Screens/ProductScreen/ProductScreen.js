@@ -332,7 +332,6 @@ odoo.define('point_of_sale.ProductScreen', function (require) {
                 }
                 // this.currentOrder.updatePricelist(newPatient);
             }
-
         }
 
         async _onClickPay() {

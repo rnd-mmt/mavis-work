@@ -9,7 +9,7 @@
                     'grey-border-bottom': env.pos.config.iface_display_categ_images,
                 }">
                     <!-- Breadcrumbs -->
-                    <div class="breadcrumbs">
+                    <div class="breadcrumb">
                         <HomeCategoryBreadcrumb subcategories="props.subcategories" currentCat="props.breadcrumbs[props.breadcrumbs.length - 1]"/>
                         <t t-if="!env.isMobile">
                             <t t-foreach="props.breadcrumbs" t-as="category" t-key="category.id">
