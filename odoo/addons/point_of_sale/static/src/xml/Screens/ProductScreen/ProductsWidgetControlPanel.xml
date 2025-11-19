@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates id="template" xml:space="preserve">
-
     <t t-name="ProductsWidgetControlPanel" owl="1">
         <div class="products-widget-control">
             <t t-if="!props.hasNoCategories">
@@ -18,11 +17,11 @@
                         </t>
                     </div>
                     <!-- Subcategories -->
-                    <t t-if="props.subcategories.length > 0 and !env.pos.config.iface_display_categ_images and !env.isMobile">
+                    <!-- <t t-if="props.subcategories.length > 0 and !env.pos.config.iface_display_categ_images and !env.isMobile">
                         <t t-foreach="props.subcategories" t-as="category" t-key="category.id">
                             <CategorySimpleButton category="category" />
                         </t>
-                    </t>
+                    </t> -->
                 </div>
                 <t t-if="props.subcategories.length > 0 and env.pos.config.iface_display_categ_images and !env.isMobile">
                     <div class="categories">
@@ -38,7 +37,9 @@
             </t>
             <Portal target="'.pos .search-bar-portal'">
                 <div class="search-box">
-                    <span class="icon"><i class="fa fa-search"></i></span>
+                    <span class="icon">
+                        <i class="fa fa-search"></i>
+                    </span>
                     <span t-on-click="clearSearch" class="clear-icon">
                         <i class="fa fa-times" aria-hidden="true"></i>
                     </span>
@@ -47,5 +48,4 @@
             </Portal>
         </div>
     </t>
-
 </templates>

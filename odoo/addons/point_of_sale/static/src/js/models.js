@@ -412,6 +412,7 @@ odoo.define('point_of_sale.models', function (require) {
                     }
                     return domain;
                 },
+                context: { include_parent_categories: true },
                 loaded: function (self, categories) {
                     console.log("📦POS. categories ------- 3 ------  :", categories);
                     const categoryMap = {};
