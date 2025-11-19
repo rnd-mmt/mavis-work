@@ -127,7 +127,7 @@ td {
     margin: 0;
     background-color: #f0eeee;
     font-family: "Lato", "Lucida Grande", Helvetica, Verdana, Arial;
-    color: #555555;
+    color: #030976;
     font-size: 12px;
     /* Some elements inside .pos are allowed to be moved/resized. When
      * this 'move/resize' event is performed in touch devices, .pos

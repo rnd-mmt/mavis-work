@@ -929,6 +929,14 @@ odoo.define('point_of_sale.models', function (require) {
             return null;
         },
 
+        get_patient: function () {
+            var order = this.get_order();
+            if (order) {
+                return order.get_patient();
+            }
+            return null;
+        },
+
         // change the current order
         set_order: function (order, options) {
             this.set({ selectedOrder: order }, options);
