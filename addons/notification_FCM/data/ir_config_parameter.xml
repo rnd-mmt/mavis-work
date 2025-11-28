@@ -1,0 +1,8 @@
+<odoo>
+    <data noupdate="1">
+        <record id="fcm_server_key_param" model="ir.config_parameter">
+            <field name="key">fcm.server.key</field>
+            <field name="value"></field>
+        </record>
+    </data>
+</odoo>
