@@ -50,7 +50,7 @@ class FCMController(http.Controller):
         if device:
             device.write({
                 'logged_in': False,
-                'fcm_token': False,
+                # 'fcm_token': False,
             })
         return {"status": "ok"}
 
