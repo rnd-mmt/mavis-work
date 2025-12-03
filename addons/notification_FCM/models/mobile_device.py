@@ -14,10 +14,6 @@ class MobileDevice(models.Model):
     create_date = fields.Datetime(readonly=True)
     write_date = fields.Datetime(readonly=True)
 
-    _sql_constraints = [
-        ('unique_device', 'unique(device_id)', 'This device is already registered!')
-    ]
-
     def init(self):
         # Ajoute les droits d'accès automatiquement à l'installation
         self.env.ref('base.group_user').write({
