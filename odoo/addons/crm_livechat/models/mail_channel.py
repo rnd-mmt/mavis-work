@@ -4,7 +4,6 @@
 from odoo import models, _
 from odoo.tools import html2plaintext, html_escape
 
-
 class MailChannel(models.Model):
     _inherit = 'mail.channel'
 
