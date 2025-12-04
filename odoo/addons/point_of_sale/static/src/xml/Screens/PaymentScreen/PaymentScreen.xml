@@ -50,6 +50,20 @@
 
                             <div class="payment-buttons">
                                 <div class="customer-button">
+                                    <div class="button" t-on-click="selectPatient">
+                                        <i class="fa fa-user-md" role="img" aria-label="Patient"
+                                           title="Patient" />
+                                        <span class="js_customer_name">
+                                            <t t-if="env.pos.get_patient()">
+                                                <t t-esc="env.pos.get_patient().name" />
+                                            </t>
+                                            <t t-if="!env.pos.get_patient()">
+                                                Patient
+                                            </t>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="customer-button">
                                     <div class="button" t-on-click="selectClient">
                                         <i class="fa fa-user" role="img" aria-label="Customer"
                                            title="Customer" />

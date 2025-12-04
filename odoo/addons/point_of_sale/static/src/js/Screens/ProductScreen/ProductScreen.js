@@ -1,4 +1,4 @@
-odoo.define('point_of_sale.ProductScreen', function(require) {
+odoo.define('point_of_sale.ProductScreen', function (require) {
     'use strict';
 
     const PosComponent = require('point_of_sale.PosComponent');
@@ -18,6 +18,7 @@ odoo.define('point_of_sale.ProductScreen', function(require) {
             useListener('set-numpad-mode', this._setNumpadMode);
             useListener('click-product', this._clickProduct);
             useListener('click-customer', this._onClickCustomer);
+            useListener('click-patient-button', this._onClickPatientButton);
             useListener('click-pay', this._onClickPay);
             useBarcodeReader({
                 product: this._barcodeProductAction,
@@ -40,9 +41,12 @@ odoo.define('point_of_sale.ProductScreen', function(require) {
         }
         mounted() {
             this.env.pos.on('change:selectedClient', this.render, this);
+            this.env.pos.on('change:selectedPatient', this.render, this);
         }
+
         willUnmount() {
             this.env.pos.off('change:selectedClient', null, this);
+            this.env.pos.off('change:selectedPatient', null, this);
         }
         /**
          * To be overridden by modules that checks availability of
@@ -55,11 +59,16 @@ odoo.define('point_of_sale.ProductScreen', function(require) {
         get client() {
             return this.env.pos.get_client();
         }
+
+        get patient() {
+            return this.env.pos.get_patient();
+        }
         get currentOrder() {
+            // console.log("ENV POS Get-ORDER ", this.env.pos.get_order());
             return this.env.pos.get_order();
         }
         showCashBoxOpening() {
-            if(this.env.pos.config.cash_control && this.env.pos.pos_session.state == 'opening_control')
+            if (this.env.pos.config.cash_control && this.env.pos.pos_session.state == 'opening_control')
                 return true;
             return false;
         }
@@ -69,7 +78,7 @@ odoo.define('point_of_sale.ProductScreen', function(require) {
 
             if (this.env.pos.config.product_configurator && _.some(product.attribute_line_ids, (id) => id in this.env.pos.attributes_by_ptal_id)) {
                 let attributes = _.map(product.attribute_line_ids, (id) => this.env.pos.attributes_by_ptal_id[id])
-                                  .filter((attr) => attr !== undefined);
+                    .filter((attr) => attr !== undefined);
                 let { confirmed, payload } = await this.showPopup('ProductConfiguratorPopup', {
                     product: product,
                     attributes: attributes,
@@ -130,7 +139,6 @@ odoo.define('point_of_sale.ProductScreen', function(require) {
                     if (confirmed) {
                         weight = payload.weight;
                     } else {
-                        // do not add the product;
                         return;
                     }
                 } else {
@@ -159,13 +167,13 @@ odoo.define('point_of_sale.ProductScreen', function(require) {
             this.state.numpadMode = mode;
         }
         async _updateSelectedOrderline(event) {
-            if(this.state.numpadMode === 'quantity' && this.env.pos.disallowLineQuantityChange()) {
+            if (this.state.numpadMode === 'quantity' && this.env.pos.disallowLineQuantityChange()) {
                 let order = this.env.pos.get_order();
                 let selectedLine = order.get_selected_orderline();
                 let lastId = order.orderlines.last().cid;
                 let currentQuantity = this.env.pos.get_order().get_selected_orderline().get_quantity();
 
-                if(selectedLine.noDecrease) {
+                if (selectedLine.noDecrease) {
                     this.showPopup('ErrorPopup', {
                         title: this.env._t('Invalid action'),
                         body: this.env._t('You are not allowed to change this quantity'),
@@ -173,11 +181,11 @@ odoo.define('point_of_sale.ProductScreen', function(require) {
                     return;
                 }
                 const parsedInput = event.detail.buffer && parse.float(event.detail.buffer) || 0;
-                if(lastId != selectedLine.cid)
+                if (lastId != selectedLine.cid)
                     this._showDecreaseQuantityPopup();
-                else if(currentQuantity < parsedInput)
+                else if (currentQuantity < parsedInput)
                     this._setValue(event.detail.buffer);
-                else if(parsedInput < currentQuantity)
+                else if (parsedInput < currentQuantity)
                     this._showDecreaseQuantityPopup();
             } else {
                 let { buffer } = event.detail;
@@ -233,7 +241,7 @@ odoo.define('point_of_sale.ProductScreen', function(require) {
                     merge: false,
                 });
             }
-            this.currentOrder.add_product(product,  options)
+            this.currentOrder.add_product(product, options)
         }
         _barcodeClientAction(code) {
             const partner = this.env.pos.db.get_partner_by_barcode(code.code);
@@ -270,44 +278,62 @@ odoo.define('point_of_sale.ProductScreen', function(require) {
          * override this method to perform procedure if the scale is not available.
          * @see isScaleAvailable
          */
-        async _onScaleNotAvailable() {}
+        async _onScaleNotAvailable() { }
         async _showDecreaseQuantityPopup() {
             const { confirmed, payload: inputNumber } = await this.showPopup('NumberPopup', {
                 startingValue: 0,
                 title: this.env._t('Set the new quantity'),
             });
-            if(!confirmed)
+            if (!confirmed)
                 return;
             let newQuantity = parse.float(inputNumber);
             let order = this.env.pos.get_order();
             let selectedLine = this.env.pos.get_order().get_selected_orderline();
-            let currentQuantity = selectedLine.get_quantity()
-            if(selectedLine.is_last_line() && currentQuantity === 1 && newQuantity < currentQuantity)
+            let currentQuantity = selectedLine.get_quantity();
+            if (selectedLine.is_last_line() && currentQuantity === 1 && newQuantity < currentQuantity)
                 selectedLine.set_quantity(newQuantity);
-            else if(newQuantity >= currentQuantity)
+            else if (newQuantity >= currentQuantity)
                 selectedLine.set_quantity(newQuantity);
             else {
                 let newLine = selectedLine.clone();
                 let decreasedQuantity = currentQuantity - newQuantity
                 newLine.order = order;
 
-                newLine.set_quantity( - decreasedQuantity, true);
+                newLine.set_quantity(- decreasedQuantity, true);
                 order.add_orderline(newLine);
             }
         }
         async _onClickCustomer() {
-            alert('TESTE');
-            // IMPROVEMENT: This code snippet is very similar to selectClient of PaymentScreen.
-            // const currentClient = this.currentOrder.get_client();
-            // const { confirmed, payload: newClient } = await this.showTempScreen(
-            //     'ClientListScreen',
-            //     { client: currentClient }
-            // );
-            // if (confirmed) {
-            //     this.currentOrder.set_client(newClient);
-            //     this.currentOrder.updatePricelist(newClient);
-            // }
+            const currentClient = this.currentOrder.get_client();
+            console.log("------------- CURRENT CUSTOMER --------- ", currentClient);
+            const { confirmed, payload: newClient } = await this.showTempScreen(
+                'ClientListScreen',
+                { client: currentClient }
+            );
+            if (confirmed) {
+                this.currentOrder.set_client(newClient);
+                this.currentOrder.updatePricelist(newClient);
+            }
         }
+
+        async _onClickPatientButton() {
+            const currentPatient = this.currentOrder.get_patient();
+            console.log("------------- CURRENT PATIENT --------- ", currentPatient);
+            const { confirmed, payload: newPatient } = await this.showTempScreen(
+                'PatientListScreen',
+                { patient: currentPatient }
+            );
+
+            if (confirmed) {
+                this.currentOrder.set_patient(newPatient);
+                // Si aucun client n'est encore sélectionné, on met le patient comme client par défaut
+                if (!this.currentOrder.get_client()) {
+                    this.currentOrder.set_client(newPatient);
+                }
+                // this.currentOrder.updatePricelist(newPatient);
+            }
+        }
+
         async _onClickPay() {
             if (this.env.pos.get_order().orderlines.any(line => line.get_product().tracking !== 'none' && !line.has_valid_product_lot() && (this.env.pos.picking_type.use_create_lots || this.env.pos.picking_type.use_existing_lots))) {
                 const { confirmed } = await this.showPopup('ConfirmPopup', {

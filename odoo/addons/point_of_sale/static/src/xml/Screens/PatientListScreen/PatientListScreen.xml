@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="PatientListScreen" owl="1">
+        <div class="patientlist-screen screen" t-on-activate-edit-mode="activateEditMode">
+            <div class="screen-content">
+                <div class="top-content">
+                    <div t-if="!state.detailIsShown &amp;&amp; !state.selectedPatient" 
+                    class="button"
+                    role="img" aria-label="Add a patient"
+                          t-on-click="trigger('activate-edit-mode', { isNewPatient: true })"
+                          title="Add a patient">
+                        <t t-if="!env.isMobile">
+                            Create
+                        </t>
+                        <t t-else="">
+                            <i class="fa fa-plus"></i>
+                        </t>
+                    </div>
+                    <div t-if="isNextButtonVisible" t-on-click="clickNext"
+                          class="button next highlight">
+                        <t t-if="!env.isMobile">
+                            <t t-esc="nextButton.text" />
+                        </t>
+                        <t t-else="">
+                            <i t-if="nextButton.command === 'deselect'" class="fa fa-trash"></i>
+                            <i t-if="nextButton.command === 'set'" class="fa fa-check"></i>
+                        </t>
+                    </div>
+                    <div class="button" t-if="state.detailIsShown" t-on-click="trigger('click-save')">
+                        <t t-if="!env.isMobile">
+                            <i class="fa fa-floppy-o"/>
+                            <span> Save</span>
+                        </t>
+                        <t t-else="">
+                            <i class="fa fa-floppy-o"/>
+                        </t>
+                    </div>
+                    <div class="button back" t-on-click="back">
+                        <t t-if="!env.isMobile">Discard</t>
+                        <t t-else="">
+                            <i class="fa fa-undo"></i>
+                        </t>
+                    </div>
+                    <!-- <div t-if="!state.detailIsShown" class="searchbox-patient top-content-center">
+                        <input placeholder="Search Customers" size="1" t-on-keyup="updatePatientList" />
+                        <span class="search-clear-patient"></span>
+                    </div> -->
+                </div>
+                <section class="patient-details edit">
+                    <div class="patient-picture">
+                        <t t-if="partnerImageUrl">
+                            <img t-att-src="partnerImageUrl" alt="Partner" style="width: 100%; height: auto; object-fit: cover;" />
+                        </t>
+                        <t t-else="">
+                            <i class="fa fa-camera" role="img" aria-label="Picture" title="Picture"></i>
+                        </t>
+                        <input type="file" class="image-uploader" t-on-change="uploadImage" style="width: 100%;" />
+                    </div>
+                    <div class="patient-details-box" style="display: flex; justify-content: space-between; gap: 20px;">
+                        <div class="patient-details-left">
+                            <div class="patient-detail">
+                                <span class="label">Code d'identification</span>
+                                <input class="detail" type="text" t-att-value="state.patient_code" t-on-input="(ev) => onInputChange(ev, 'patient_code')" />
+                            </div>
+                            <div class="patient-detail">
+                                <span class="label">Date de naissance</span>
+                                <input class="detail" type="date" t-att-value="state.patient_birthday" t-on-input="(ev) => onInputChange(ev, 'patient_birthday')" />
+                            </div>
+                            <div class="patient-detail">
+                                <span class="label">Nom Patient</span>
+                                <input class="detail" type="text" t-att-value="state.patient_name" t-on-input="(ev) => onInputChange(ev, 'patient_name')" />
+                            </div>
+                            <div class="patient-detail">
+                                <span class="label">Genre</span>
+                                <select class="detail" t-att-value="state.patient_gender" t-on-change="(ev) => onInputChange(ev, 'patient_gender')">
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
+                            <div class="patient-detail">
+                                <span class="label">Type profil</span>
+                                <select class="detail" t-att-value="state.profil_type" t-on-change="(ev) => onInputChange(ev, 'profil_type')">
+                                    <option value="fonctionnaire">Fonctionnaire</option>
+                                    <option value="fonc_pensioner">Retraité</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="patient-detail">
+                                <span class="label">Assurance</span>
+                                <input class="detail" type="text" t-att-value="state.patient_assurance" t-on-input="(ev) => onInputChange(ev, 'patient_assurance')" />
+                            </div>
+                            <div class="patient-detail">
+                                <span class="label">Pricelist</span>
+                                <select class="detail" t-att-value="state.patient_pricelist" t-on-change="(ev) => onInputChange(ev, 'patient_pricelist')">
+                                    <option value="Standard">Standard</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="patient-details-right" style="flex: 1;">
+                            <div class="patient-detail">
+                                <span class="label">Mobile</span>
+                                <input class="detail" type="tel" t-att-value="state.patient_phone" t-on-input="(ev) => onInputChange(ev, 'patient_phone')" />
+                            </div>
+                            <div class="patient-detail">
+                                <span class="label">Adresse</span>
+                                <input class="detail" type="text" t-att-value="state.patient_adress" t-on-input="(ev) => onInputChange(ev, 'patient_adress')" />
+                            </div>
+                            <div class="patient-detail">
+                                <span class="label">CIN</span>
+                                <input class="detail" type="text" t-att-value="state.gov_code" t-on-input="(ev) => onInputChange(ev, 'gov_code')" />
+                            </div>
+                            <div class="patient-detail">
+                                <span class="label">E-mail</span>
+                                <input class="detail" type="email" t-att-value="state.patient_mail" t-on-input="(ev) => onInputChange(ev, 'patient_mail')" />
+                            </div>
+                            <div class="patient-detail">
+                                <span class="label">Personne de contact</span>
+                                <input class="detail" type="text" t-att-value="state.patient_contact_person" t-on-input="(ev) => onInputChange(ev, 'patient_contact_person')" />
+                            </div>
+                            <div class="patient-detail">
+                                <span class="label">Marital Status</span>
+                                <select class="detail" t-att-value="state.patient_marital_status" t-on-change="(ev) => onInputChange(ev, 'patient_marital_status')">
+                                    <option value="celibataire">Célibataire</option>
+                                    <option value="marie">Marié(e)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="patient-details">
+                    <div class="patient-details-box-list">
+                        <div class="patient-details-list-wrapper">
+                            <div
+                                t-foreach="state.similar_patients"
+                                t-as="patient"
+                                t-key="patient.id"
+                                t-attf-class="patient-card #{state.selectedPatient &amp;&amp; state.selectedPatient.id === patient.id ? 'active' : ''}"
+                                t-on-click="() => clickPatient({detail: {patient: patient}})">
+                                <div class="patient-image">
+                                    <img src="/base/static/img/avatar_grey.png" style="width: 64px; height: 64px;" />
+                                </div>
+                                <div class="patient-data">
+                                    <p>
+                                        <strong>Code d'identification:</strong>
+                                        <t t-esc="patient.code"/>
+                                    </p>
+                                    <p>
+                                        <strong>Nom:</strong>
+                                        <t t-esc="patient.name"/>
+                                    </p>
+                                    <p>
+                                        <strong>Date de naissance:</strong>
+                                        <t t-esc="patient.birthday"/>
+                                    </p>
+                                    <p>
+                                        <strong>Genre:</strong>
+                                        <t t-esc="patient.gender"/>
+                                    </p>
+                                    <p>
+                                        <strong>Adresse :</strong>
+                                        <t t-esc="patient.street"/>
+                                    </p>
+                                    <p>
+                                        <strong>Téléphone :</strong>
+                                        <t t-esc="patient.mobile"/>
+                                    </p>
+                                    <p>
+                                        <i>Créé le
+                                            <t t-esc="patient.create_date"/>
+                                        </i>
+                                    </p>
+                                    <!-- <button class="button highlight"
+                                        t-on-click="() => clickPatient({detail: {patient: patient}})">
+                                        Créer Service Santé
+                                    </button> -->
+                                    <!-- <button class="button highlight"
+                                        t-if="state.selectedPatient &amp;&amp; state.selectedPatient.id === patient.id"
+                                        t-on-click="() => selectPatientForService(patient)">
+                                        Créer Service Santé
+                                    </button> -->
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </t>
+</templates>

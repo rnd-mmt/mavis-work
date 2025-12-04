@@ -13,7 +13,8 @@
                 </span>
             </div>
             <div class="product-name" t-attf-id="article_product_{{props.product.id}}">
-                <t t-esc="props.product.display_name" />
+                <!-- <t t-esc="props.product.display_name" /> -->
+                <t t-esc="props.product.display_name.substring(0, 30) + (props.product.display_name.length > 30 ? '...' : '')"/>
             </div>
         </article>
     </t>

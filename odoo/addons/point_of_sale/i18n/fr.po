@@ -1035,6 +1035,13 @@ msgstr "Changer de client"
 
 #. module: point_of_sale
 #. openerp-web
+#: code:addons/point_of_sale/static/src/js/Screens/PatientListScreen/PatientListScreen.js:0
+#, python-format
+msgid "Change Patient"
+msgstr "Changer de patient"
+
+#. module: point_of_sale
+#. openerp-web
 #: code:addons/point_of_sale/static/src/js/Screens/PaymentScreen/PaymentScreen.js:0
 #, python-format
 msgid "Change Tip"
@@ -1617,6 +1624,13 @@ msgstr "Effacer les commandes non-payées ?"
 #, python-format
 msgid "Deselect Customer"
 msgstr "Dé-sélectionner le client"
+
+#. module: point_of_sale
+#. openerp-web
+#: code:addons/point_of_sale/static/src/js/Screens/PatientListScreen/PatientListScreen.js:0
+#, python-format
+msgid "Deselect Patient"
+msgstr "Dé-sélectionner le patient"
 
 #. module: point_of_sale
 #: model:product.product,name:point_of_sale.desk_organizer
@@ -2834,7 +2848,7 @@ msgstr "Nouvelle commande"
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.view_pos_config_kanban
 msgid "New Session"
-msgstr "Nouvelle session _____________________ "
+msgstr "Nouvelle session"
 
 #. module: point_of_sale
 #: model:product.product,name:point_of_sale.newspaper_rack
@@ -3212,7 +3226,7 @@ msgstr "Numéro de séquence de la commande"
 #: code:addons/point_of_sale/static/src/xml/Screens/OrderManagementScreen/OrderDetails.xml:0
 #, python-format
 msgid "Order is empty"
-msgstr "La commande est vide ____________ "
+msgstr "La commande est vide"
 
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.view_pos_pos_form
@@ -4586,6 +4600,13 @@ msgid "Set Customer"
 msgstr "Définir le client"
 
 #. module: point_of_sale
+#. openerp-web
+#: code:addons/point_of_sale/static/src/js/Screens/PatientListScreen/PatientListScreen.js:0
+#, python-format
+msgid "Set Patient"
+msgstr "Définir le patient"
+
+#. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.view_account_bnk_stmt_cashbox_footer
 msgid "Set Default Cash Opening"
 msgstr "Définir le montant en cash par défaut à l'ouverture"
@@ -5424,7 +5445,7 @@ msgstr ""
 #: code:addons/point_of_sale/static/src/xml/Screens/ProductScreen/OrderWidget.xml:0
 #, python-format
 msgid "This order is empty"
-msgstr "La commande est vide ____________  toot"
+msgstr "La commande est vide"
 
 #. module: point_of_sale
 #. openerp-web
