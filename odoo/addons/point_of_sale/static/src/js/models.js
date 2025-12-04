@@ -388,18 +388,46 @@ odoo.define('point_of_sale.models', function (require) {
                     });
                 },
             }, {
-                model: 'product.category',
-                fields: ['name', 'parent_id'],
-                loaded: function (self, product_categories) {
-                    var category_by_id = {};
-                    _.each(product_categories, function (category) {
-                        category_by_id[category.id] = category;
-                    });
-                    _.each(product_categories, function (category) {
-                        category.parent = category_by_id[category.parent_id[0]];
-                    });
+                // model: 'pos.category',
+                // fields: ['name', 'parent_id'],
+                // loaded: function (self, product_categories) {
+                //     console.log("📦POS. product_categories ------- 4 ------  :", product_categories);
+                //     var category_by_id = {};
+                //     _.each(product_categories, function (category) {
+                //         category_by_id[category.id] = category;
+                //     });
+                //     _.each(product_categories, function (category) {
+                //         category.parent = category_by_id[category.parent_id[0]];
+                //     });
 
-                    self.product_categories = product_categories;
+                //     self.product_categories = product_categories;
+                // },
+            }, {
+                model: 'product.category',
+                fields: ['id', 'name', 'parent_id', 'child_id', 'write_date', 'is_nomenclature'],
+                domain: function (self) {
+                    var domain = [['is_nomenclature', '=', true]];
+                    if (self.config.limit_categories && self.config.iface_available_categ_ids.length) {
+                        domain.push(['id', 'in', self.config.iface_available_categ_ids]);
+                    }
+                    return domain;
+                },
+                context: { include_parent_categories: true },
+                loaded: function (self, categories) {
+                    console.log("📦POS. categories ------- 3 ------  :", categories);
+                    const categoryMap = {};
+                    categories.forEach(cat => categoryMap[cat.id] = cat);
+                    categories.forEach(cat => {
+                        if (cat.parent_id && categoryMap[cat.parent_id[0]]) {
+                            const parent = categoryMap[cat.parent_id[0]];
+                            if (!parent.child_id.includes(cat.id)) {
+                                parent.child_id.push(cat.id);
+                            }
+                        }
+                    });
+                    self.db.add_categories(categories);
+                    self.product_categories = categories;
+                    console.log('✅ Catégories ajoutées à la DB POS:', self.db.category_by_id);
                 },
             }, {
                 model: 'res.currency',
@@ -412,29 +440,61 @@ odoo.define('point_of_sale.models', function (require) {
                     } else {
                         self.currency.decimals = 0;
                     }
-
                     self.company_currency = currencies[1];
                 },
             }, {
-                model: 'pos.category',
-                fields: ['id', 'name', 'parent_id', 'child_id', 'write_date'],
-                domain: function (self) {
-                    return self.config.limit_categories && self.config.iface_available_categ_ids.length ? [['id', 'in', self.config.iface_available_categ_ids]] : [];
-                },
-                loaded: function (self, categories) {
-                    self.db.add_categories(categories);
-                },
+                // model: 'pos.category',
+                // fields: ['id', 'name', 'parent_id', 'child_id', 'write_date'],
+                // domain: function (self) {
+                //     return self.config.limit_categories && self.config.iface_available_categ_ids.length ? [['id', 'in', self.config.iface_available_categ_ids]] : [];
+                // },
+                // loaded: function (self, categories) {
+                //     console.log("📦POS. category ------- 1 ------  :", categories);
+                //     self.db.add_categories(categories);
+                // },
             }, {
+                // model: 'product.product',
+                // fields: ['display_name', 'lst_price', 'standard_price', 'categ_id', 'pos_categ_id', 'taxes_id',
+                //     'barcode', 'default_code', 'to_weight', 'uom_id', 'description_sale', 'description',
+                //     'product_tmpl_id', 'tracking', 'write_date', 'available_in_pos', 'attribute_line_ids', 'active'],
+                // order: _.map(['sequence', 'default_code', 'name'], function (name) { return { name: name }; }),
+                // domain: function (self) {
+                //     var domain = ['&', '&', ['sale_ok', '=', true], ['available_in_pos', '=', true], '|', ['company_id', '=', self.config.company_id[0]], ['company_id', '=', false]];
+                //     if (self.config.limit_categories && self.config.iface_available_categ_ids.length) {
+                //         domain.unshift('&');
+                //         domain.push(['pos_categ_id', 'in', self.config.iface_available_categ_ids]);
+                //     }
+                //     if (self.config.iface_tipproduct) {
+                //         domain.unshift(['id', '=', self.config.tip_product_id[0]]);
+                //         domain.unshift('|');
+                //     }
+                //     return domain;
+                // },
+                // context: function (self) { return { display_default_code: false }; },
+                // loaded: function (self, products) {
+                //     console.log("📦POS. products ------- 2 ------  :", products);
+                //     var using_company_currency = self.config.currency_id[0] === self.company.currency_id[0];
+                //     var conversion_rate = self.currency.rate / self.company_currency.rate;
+                //     self.db.add_products(_.map(products, function (product) {
+                //         if (!using_company_currency) {
+                //             product.lst_price = round_pr(product.lst_price * conversion_rate, self.currency.rounding);
+                //         }
+                //         product.categ = _.findWhere(self.product_categories, { 'id': product.categ_id[0] });
+                //         product.pos = self;
+                //         return new exports.Product({}, product);
+                //     }));
+                // },
+
                 model: 'product.product',
                 fields: ['display_name', 'lst_price', 'standard_price', 'categ_id', 'pos_categ_id', 'taxes_id',
                     'barcode', 'default_code', 'to_weight', 'uom_id', 'description_sale', 'description',
                     'product_tmpl_id', 'tracking', 'write_date', 'available_in_pos', 'attribute_line_ids', 'active'],
                 order: _.map(['sequence', 'default_code', 'name'], function (name) { return { name: name }; }),
                 domain: function (self) {
-                    var domain = ['&', '&', ['sale_ok', '=', true], ['available_in_pos', '=', true], '|', ['company_id', '=', self.config.company_id[0]], ['company_id', '=', false]];
+                    var domain = ['&', ['sale_ok', '=', true], '|', ['company_id', '=', self.config.company_id[0]], ['company_id', '=', false]];
                     if (self.config.limit_categories && self.config.iface_available_categ_ids.length) {
                         domain.unshift('&');
-                        domain.push(['pos_categ_id', 'in', self.config.iface_available_categ_ids]);
+                        domain.push(['categ_id', 'in', self.config.iface_available_categ_ids]);
                     }
                     if (self.config.iface_tipproduct) {
                         domain.unshift(['id', '=', self.config.tip_product_id[0]]);
@@ -444,9 +504,22 @@ odoo.define('point_of_sale.models', function (require) {
                 },
                 context: function (self) { return { display_default_code: false }; },
                 loaded: function (self, products) {
+
                     var using_company_currency = self.config.currency_id[0] === self.company.currency_id[0];
                     var conversion_rate = self.currency.rate / self.company_currency.rate;
-                    self.db.add_products(_.map(products, function (product) {
+
+                    var allowed_category_ids = self.product_categories.map(function (cat) {
+                        return cat.id;
+                    });
+
+                    var filtered_products = products.filter(function (product) {
+                        return product.categ_id && allowed_category_ids.includes(product.categ_id[0]);
+                    });
+
+                    console.log("📦POS. products ------- après filtre :", filtered_products);
+
+                    // Ajout des produits filtrés à la DB POS
+                    self.db.add_products(_.map(filtered_products, function (product) {
                         if (!using_company_currency) {
                             product.lst_price = round_pr(product.lst_price * conversion_rate, self.currency.rounding);
                         }
@@ -454,7 +527,8 @@ odoo.define('point_of_sale.models', function (require) {
                         product.pos = self;
                         return new exports.Product({}, product);
                     }));
-                },
+                    console.log("DB products by ID:", self.db.product_by_id);
+                }
             }, {
                 model: 'product.attribute',
                 fields: ['name', 'display_type'],
@@ -851,6 +925,14 @@ odoo.define('point_of_sale.models', function (require) {
             var order = this.get_order();
             if (order) {
                 return order.get_client();
+            }
+            return null;
+        },
+
+        get_patient: function () {
+            var order = this.get_order();
+            if (order) {
+                return order.get_patient();
             }
             return null;
         },
@@ -3523,6 +3605,7 @@ odoo.define('point_of_sale.models', function (require) {
         is_to_invoice: function () {
             return this.to_invoice;
         },
+
         /* ---- Client / Customer --- */
         // the client related to the current order.
         set_client: function (client) {

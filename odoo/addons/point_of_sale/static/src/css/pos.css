@@ -85,7 +85,7 @@ td {
 
 .pos button {
     box-shadow: none;
-    outline: none;
+    outline: invert;
     border: none;
     font-family: 'Lato';
 }
@@ -127,7 +127,7 @@ td {
     margin: 0;
     background-color: #f0eeee;
     font-family: "Lato", "Lucida Grande", Helvetica, Verdana, Arial;
-    color: #555555;
+    color: #030976;
     font-size: 12px;
     /* Some elements inside .pos are allowed to be moved/resized. When
      * this 'move/resize' event is performed in touch devices, .pos
@@ -655,7 +655,7 @@ td {
 }
 
 .pos .leftpane .pads {
-    border-top: solid 3px rgb(110, 200, 155);
+    border-top: solid 3px rgb(6 31 103);
 }
 
 .pos .leftpane .pads .subpads {
@@ -771,7 +771,7 @@ td {
     width: 100%;
     font-weight: bold;
     vertical-align: middle;
-    color: #555555;
+    color: rgb(6 31 103);
     font-size: 14px;
     border-radius: 0;
     border: none;
@@ -800,7 +800,7 @@ td {
 }
 
 .pos .actionpad .button.pay {
-    height: 162px;
+    height: 150px;
 }
 
 .pos .actionpad .button.pay .pay-circle {
@@ -808,7 +808,7 @@ td {
     font-size: 32px;
     line-height: 54px;
     padding-top: 6px;
-    background: rgb(86, 86, 86);
+    background: rgb(6 31 103);
     color: white;
     width: 60px;
     margin: auto;
@@ -875,30 +875,44 @@ td {
     margin: 16px;
     margin-top: 8px;
     margin-left: 0px;
-    border: none;
+    /* border: none;
     border-radius: 0;
     border-top: 1px solid;
     border-color: #bfbfbf;
     border-top-right-radius: 4px;
-    min-width: 216px;
+    min-width: 216px; 
+    */
 }
 
 .pos .numpad button {
-    float: left
-        /*rtl:ignore*/
-    ;
-    /* rtlcss forced to keep ltr */
-    height: 54px;
-    width: 54px;
+    float: left;
+    height: 24%;
+    width: 24%;
     font-weight: bold;
     vertical-align: middle;
-    color: #555555;
+    color: rgb(6 31 103);
     border-radius: 0;
-    border: none;
+    /* The above code is CSS code that is styling a border for an element. It is setting the border
+    style for all sides to "none", then specifically setting the right and bottom borders to be
+    solid with a color of #bfbfbf. */
+    /* border: none;
     border-right: 1px solid;
     border-bottom: 1px solid;
-    border-color: #bfbfbf;
+    border-color: #bfbfbf; */
     transition: all 150ms linear;
+    margin: 0.4%;
+
+    /* height: 24%;
+    width: 24px;
+    font-weight: bold;
+    vertical-align: middle;
+    color: #0539a0;
+    border-radius: 10%;
+    border: 1px solid;
+    border-color: #646567;
+    transition: all 150ms linear;
+    margin: 0.4%; */
+    
 }
 
 .pos .numpad button:hover {
@@ -929,12 +943,12 @@ td {
 
 .pos .mode-button.selected-mode {
     color: white;
-    background: #6EC89B;
+    background:#4fc3f7;
     border-color: transparent;
 }
 
 .pos .mode-button.selected-mode:hover {
-    background: #6EC89B;
+    background: #4fc3f7;
     color: white;
     border-color: transparent;
 }
@@ -945,6 +959,74 @@ td {
     color: #a5a1a1;
     cursor: not-allowed;
 }
+/* .pos .numpad {
+    display: grid;
+    grid-template-columns: repeat(4, 60px);
+    grid-auto-rows: 60px;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+}
+
+.pos .numpad button {
+    font-size: 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: #fff;
+    color: #333;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.pos .numpad .number-char {
+    background-color: #ffffff;
+}
+
+.pos .numpad .number-char:hover {
+    background-color: #f3f3f3;
+}
+
+.pos .numpad .mode-button,
+.pos .numpad .numpad-backspace {
+    background-color: #4fc3f7;
+    color: #fff;
+    font-weight: 600;
+}
+
+.pos .numpad .mode-button:hover,
+.pos .numpad .numpad-backspace:hover {
+    background-color: #03a9f4;
+}
+
+.pos .numpad .mode-button.selected-mode {
+    background-color: #0288d1;
+}
+
+.pos .numpad .mode-button.disabled-mode {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.pos .numpad .numpad-backspace img {
+    width: 22px;
+    height: 18px;
+    pointer-events: none;
+}
+
+.pos .numpad .numpad-minus {
+    font-weight: bold;
+}
+
+.pos .numpad button:active {
+    transform: scale(0.95);
+}
+
+.pos .numpad br {
+    display: none;
+} */
+
 
 /*  ********* The right pane contains the screens and headers ********* */
 
@@ -978,7 +1060,7 @@ td {
 }
 
 .pos .green-border-bottom {
-    border-bottom: solid 3px rgb(110, 200, 155);
+    border-bottom: solid 3px rgb(6 31 103);
 }
 
 .pos .grey-border-bottom {
@@ -1021,16 +1103,18 @@ td {
 
 .pos .breadcrumb:last-child {
     padding-right: 3px;
-    border-right: 1px solid #c5c5c5;
+    /* border-right: 1px solid #c5c5c5; */
 }
 
 .pos .breadcrumb-button {
     display: inline-block;
     padding: 0 9px;
     vertical-align: top;
-    color: #808080;
+    color: #ffffff;
     font-size: 14px;
     cursor: pointer;
+    color: rgb(6 31 103);
+    font-weight: 900;
 }
 
 .pos .breadcrumb-button.breadcrumb-home {
@@ -1041,11 +1125,23 @@ td {
 
 .pos .breadcrumb-arrow {
     width: 28px;
+    color: rgb(6 31 103);
 }
 
 .pos .breadcrumb-homeimg {
     width: 27px;
     margin: 12px 6px;
+}
+
+.pos .breadcrumb-item {
+    font-weight: bold;
+    color: #176506;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.pos .breadcrumb-item:hover {
+    color: #27ae60;
 }
 
 @media screen and (max-width: 768px) {
@@ -1127,7 +1223,7 @@ td {
 
 .pos .categories {
     position: relative;
-    border-bottom: solid 3px rgb(110, 200, 155);
+    border-bottom: solid 3px #176506;
     flex: 1;
 }
 
@@ -1194,6 +1290,8 @@ td {
     background: rgb(229, 229, 229);
     border-right: solid 1px #d3d3d3;
     border-top: solid 1px #d3d3d3;
+    font-weight: 900;
+    color: rgb(6 31 103);
 }
 
 .pos .category-simple-button:active {
@@ -1237,7 +1335,7 @@ td {
     /*background:#FFF;*/
     padding: 3px;
     padding-top: 15px;
-    color: #7C7BAD;
+    color: rgb(6 31 103);
 }
 
 /*  e) the product */
@@ -1285,7 +1383,7 @@ td {
     }
 
     .pos .product:active {
-        border: solid 50px #6ec89b;
+        border: solid 50px #176506;
         box-sizing: border-box;
     }
 
@@ -1573,10 +1671,10 @@ td {
     margin: auto;
 }
 
-.pos .payment-numpad .numpad button {
+/* .pos .payment-numpad .numpad button {
     width: 74px;
     height: 74px;
-}
+} */
 
 .pos .payment-numpad .numpad button:first-child {
     border-top-left-radius: 4px;
@@ -1585,6 +1683,56 @@ td {
 .pos .payment-numpad .numpad button:nth-child(16) {
     border-bottom-left-radius: 4px;
 }
+
+/* .pos .payment-numpad {
+    box-sizing: border-box;
+    margin: 16px auto;
+    text-align: center;
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.pos .payment-numpad .numpad {
+    display: grid;
+    grid-template-columns: repeat(4, 70px);
+    grid-gap: 8px;
+    justify-content: center;
+    background: transparent;
+}
+
+.pos .payment-numpad .numpad button {
+    width: 70px;
+    height: 70px;
+    border: none;
+    border-radius: 10px;
+    background-color: #f5f5f5;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.pos .payment-numpad .numpad button:hover {
+    background-color: #e8e8e8;
+}
+
+.pos .payment-numpad .numpad .mode-button,
+.pos .payment-numpad .numpad .numpad-backspace {
+    background-color: #3eb4e6;
+    color: white;
+    font-weight: 600;
+}
+
+.pos .payment-numpad .numpad .mode-button:hover,
+.pos .payment-numpad .numpad .numpad-backspace:hover {
+    background-color: #38a2ce;
+}
+
+.pos .payment-numpad .numpad img {
+    filter: invert(100%);
+} */
 
 .pos .paymentlines-container {
     padding: 16px;
@@ -2325,14 +2473,16 @@ td {
 
 .patient-card {
     display: flex;
-     flex-direction: row;
+    flex-direction: row;
     align-items: flex-start;
     width: calc(50% - 20px);
     border: 1px solid #c3bdbd;
-    background-color:#ffffff4f;
+    background-color: #eae4e44f;
     padding: 5px;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
     gap: 15px;
+    cursor: pointer; /* 👈 rend la carte cliquable visuellement */
+    transition: all 0.3s ease;
 }
 
 .patient-image img {
@@ -2378,6 +2528,42 @@ td {
 .patient-data .button:hover {
     background-color: #5f5e91;
 }
+
+.patient-card:hover {
+    background-color: #06a952;
+    color: white;
+    border-color: #145a32;
+}
+
+.patient-card.active {
+    background-color: #06a952;
+    border-color: #145a32;
+}
+
+
+.patient-data:hover strong {
+    font-weight: 600;
+    color: #fefdfd;
+}
+
+.patient-data:hover p i {
+    font-size: 12px;
+    color: #ffffff;
+}
+
+.patient-card { 
+    cursor: pointer; 
+    transition: all;
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+
+
+
+
+
+
+
 
 
 

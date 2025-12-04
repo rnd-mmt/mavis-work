@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates id="template" xml:space="preserve">
-
     <t t-name="CategoryBreadcrumb" owl="1">
         <span class="breadcrumb">
-            <img src="/point_of_sale/static/src/img/bc-arrow-big.png" class="breadcrumb-arrow"
+            <!-- <img src="/point_of_sale/static/src/img/bc-arrow-big.png" class="breadcrumb-arrow"
+                 alt="Slash" /> -->
+            <i class="fa fa-chevron-right breadcrumb-arrow" role="img" aria-label="Slash"
                  alt="Slash" />
             <span class="breadcrumb-button"
                   t-on-click="trigger('switch-category', props.category.id)">
@@ -11,5 +12,4 @@
             </span>
         </span>
     </t>
-
 </templates>

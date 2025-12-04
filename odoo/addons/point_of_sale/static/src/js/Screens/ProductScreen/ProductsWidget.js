@@ -39,6 +39,7 @@ odoo.define('point_of_sale.ProductsWidget', function(require) {
                 );
             } else {
                 return this.env.pos.db.get_product_by_category(this.selectedCategoryId);
+                // return this.env.pos.db.get_product_by_inventory_category(this.selectedCategoryId);
             }
         }
         get subcategories() {

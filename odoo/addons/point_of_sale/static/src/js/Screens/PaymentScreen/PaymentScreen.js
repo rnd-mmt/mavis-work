@@ -58,14 +58,33 @@ odoo.define('point_of_sale.PaymentScreen', function (require) {
                 this.currentOrder.updatePricelist(newClient);
             }
         }
+
+        async selectPatient() {
+            const currentPatient = this.currentOrder.get_patient();
+            console.log("------------- CURRENT PATIENT --------- ", currentPatient);
+            const { confirmed, payload: newPatient } = await this.showTempScreen(
+                'PatientListScreen',
+                { patient: currentPatient }
+            );
+
+            if (confirmed) {
+                this.currentOrder.set_patient(newPatient);
+                // Si aucun client n'est encore sélectionné, on met le patient comme client par défaut
+                if (!this.currentOrder.get_client()) {
+                    this.currentOrder.set_client(newPatient);
+                }
+                // this.currentOrder.updatePricelist(newPatient);
+            }
+        }
+
         addNewPaymentLine({ detail: paymentMethod }) {
             // original function: click_paymentmethods
             let result = this.currentOrder.add_paymentline(paymentMethod);
-            if (result){
+            if (result) {
                 NumberBuffer.reset();
                 return true;
             }
-            else{
+            else {
                 this.showPopup('ErrorPopup', {
                     title: this.env._t('Error'),
                     body: this.env._t('There is already an electronic payment in progress.'),
@@ -129,7 +148,7 @@ odoo.define('point_of_sale.PaymentScreen', function (require) {
             // request.
             if (['waiting', 'waitingCard', 'timeout'].includes(line.get_payment_status())) {
                 line.set_payment_status('waitingCancel');
-                line.payment_method.payment_terminal.send_payment_cancel(this.currentOrder, cid).then(function() {
+                line.payment_method.payment_terminal.send_payment_cancel(this.currentOrder, cid).then(function () {
                     self.currentOrder.remove_paymentline(line);
                     NumberBuffer.reset();
                     self.render();
@@ -149,8 +168,8 @@ odoo.define('point_of_sale.PaymentScreen', function (require) {
             this.render();
         }
         async validateOrder(isForceValidate) {
-            if(this.env.pos.config.cash_rounding) {
-                if(!this.env.pos.get_order().check_paymentlines_rounding()) {
+            if (this.env.pos.config.cash_rounding) {
+                if (!this.env.pos.get_order().check_paymentlines_rounding()) {
                     this.showPopup('ErrorPopup', {
                         title: this.env._t('Rounding error in payment lines'),
                         body: this.env._t("The amount of your payment lines must be rounded to validate the transaction."),
@@ -227,7 +246,7 @@ odoo.define('point_of_sale.PaymentScreen', function (require) {
             }
         }
         get nextScreen() {
-            return !this.error? 'ReceiptScreen' : 'ProductScreen';
+            return !this.error ? 'ReceiptScreen' : 'ProductScreen';
         }
         async _isOrderValid(isForceValidate) {
             if (this.currentOrder.get_orderlines().length === 0) {
@@ -271,7 +290,7 @@ odoo.define('point_of_sale.PaymentScreen', function (require) {
             // The exact amount must be paid if there is no cash payment method defined.
             if (
                 Math.abs(
-                    this.currentOrder.get_total_with_tax() - this.currentOrder.get_total_paid()  + this.currentOrder.get_rounding_applied()
+                    this.currentOrder.get_total_with_tax() - this.currentOrder.get_total_paid() + this.currentOrder.get_rounding_applied()
                 ) > 0.00001
             ) {
                 var cash = false;

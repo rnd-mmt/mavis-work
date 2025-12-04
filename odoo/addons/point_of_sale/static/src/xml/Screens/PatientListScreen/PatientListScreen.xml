@@ -130,8 +130,12 @@
                 <section class="patient-details">
                     <div class="patient-details-box-list">
                         <div class="patient-details-list-wrapper">
-                            <div class="patient-card" t-foreach="state.similar_patients"
-                                t-as="patient" t-key="patient.id">
+                            <div
+                                t-foreach="state.similar_patients"
+                                t-as="patient"
+                                t-key="patient.id"
+                                t-attf-class="patient-card #{state.selectedPatient &amp;&amp; state.selectedPatient.id === patient.id ? 'active' : ''}"
+                                t-on-click="() => clickPatient({detail: {patient: patient}})">
                                 <div class="patient-image">
                                     <img src="/base/static/img/avatar_grey.png" style="width: 64px; height: 64px;" />
                                 </div>
@@ -165,10 +169,16 @@
                                             <t t-esc="patient.create_date"/>
                                         </i>
                                     </p>
-                                    <button class="button highlight"
+                                    <!-- <button class="button highlight"
                                         t-on-click="() => clickPatient({detail: {patient: patient}})">
                                         Créer Service Santé
-                                    </button>
+                                    </button> -->
+                                    <!-- <button class="button highlight"
+                                        t-if="state.selectedPatient &amp;&amp; state.selectedPatient.id === patient.id"
+                                        t-on-click="() => selectPatientForService(patient)">
+                                        Créer Service Santé
+                                    </button> -->
+
                                 </div>
                             </div>
                         </div>
