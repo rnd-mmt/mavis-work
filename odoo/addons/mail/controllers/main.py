@@ -338,159 +338,506 @@ class MailController(http.Controller):
             })
         return result
     
+    #---------------------- OLD --------------------- 
+    # @http.route('/mail/discussions/all', type='json', auth='user')
+    # def get_combined_discussions(self, limit=30, offset=0):
+    #     try:
+    #         limit = int(limit)
+    #         offset = int(offset)
+    #         partner = request.env.user.partner_id
+
+    #         # --- 1️⃣ Précharger tous les canaux et last messages ---
+    #         channel_slots = request.env['mail.channel'].channel_fetch_slot()
+    #         all_channels = [c for slot in channel_slots.values() for c in slot]
+    #         channel_ids = [c['id'] for c in all_channels]
+
+    #         #  Précharger mail.channel.partner pour ce partenaire
+    #         partner_info_map = {
+    #             p.channel_id.id: p
+    #             for p in request.env['mail.channel.partner'].sudo().search([
+    #                 ('channel_id', 'in', channel_ids),
+    #                 ('partner_id', '=', partner.id)
+    #             ])
+    #         }
+
+    #         # Précharger le dernier message par canal
+    #         messages = request.env['mail.message'].sudo().search([
+    #             ('model', '=', 'mail.channel'),
+    #             ('res_id', 'in', channel_ids),
+    #             ('message_type', 'in', ['comment', 'user_notification', 'notification'])
+    #         ], order='date desc')
+
+    #         last_message_map = {}
+    #         for msg in messages:
+    #             if msg.res_id not in last_message_map:
+    #                 last_message_map[msg.res_id] = msg
+
+    #         # Préparer toutes les discussions
+    #         canaux_with_last_message = []
+    #         for canal in all_channels:
+    #             last_message = last_message_map.get(canal['id'])
+    #             partner_info = partner_info_map.get(canal['id'])
+
+    #             if partner_info and partner_info.seen_message_id:
+    #                 unread_count = sum(
+    #                     1 for m in messages
+    #                     if m.res_id == canal['id'] and m.id > partner_info.seen_message_id.id
+    #                 )
+    #             else:
+    #                 unread_count = sum(1 for m in messages if m.res_id == canal['id'])
+
+    #             if last_message:
+    #                 clean_text = last_message.body or "Nouveau message"
+    #                 last_author_name = getattr(last_message.author_id, 'name', 'Unknown')
+    #                 last_author_id = getattr(last_message.author_id, 'id', None)
+    #                 is_mine = last_author_id == partner.id
+
+    #                 display_name = canal['name']
+    #                 display_text = clean_text
+
+    #                 if canal['channel_type'] == 'chat':
+    #                    #  Pour chat privé, afficher le nom de l'autre membre
+    #                     other_members = [m['id'] for m in canal.get('members', []) if m['id'] != partner.id]
+    #                     if other_members:
+    #                         other_member = request.env['res.partner'].sudo().browse(other_members[0])
+    #                         display_name = other_member.name or other_member.email
+    #                     if is_mine:
+    #                         display_text = f"⤻ Vous : {clean_text}"
+    #                 else:
+    #                     display_text = f"⤻ {'Vous' if is_mine else last_author_name} : {clean_text}"
+
+    #                 canaux_with_last_message.append({
+    #                     'uuid': canal['uuid'],
+    #                     'name': display_name,
+    #                     'conversation_type': canal['channel_type'],
+    #                     'text': display_text,
+    #                     'time': last_message.date,
+    #                     'channelId': canal['id'],
+    #                     'email': getattr(last_message.author_id, 'email', ''),
+    #                     'unreadCount': unread_count
+    #                 })
+
+    #         # --- 2️⃣ Précharger toutes les notifications non lues ---
+    #         system_user_id = request.env.ref('base.user_root').id
+    #         notifications = request.env['mail.message'].sudo().search([
+    #             ('message_type', 'in', ['user_notification', 'notification']),
+    #             ('author_id', '=', system_user_id)
+    #         ], order='date desc', limit=limit + 10)
+
+    #         unread_notifications = request.env['mail.notification'].sudo().search([
+    #             ('res_partner_id', '=', partner.id),
+    #             ('is_read', '=', False)
+    #         ])
+    #         unread_map = {n.mail_message_id.id: True for n in unread_notifications}
+
+    #         # Regrouper par modèle
+    #         grouped_by_model = {}
+    #         for notif in notifications:
+    #             model_key = notif.model or 'other'
+
+    #             if unread_map.get(notif.id):
+    #                 grouped_by_model[notif.model]['unreadCount'] += 1
+    #             if model_key not in grouped_by_model:
+    #                 grouped_by_model[model_key] = {
+    #                     'messages': [],
+    #                     'unreadCount': 0,
+    #                     'lastMessageTime': notif.date
+    #                 }
+
+    #             grouped_by_model[model_key]['messages'].append(notif)
+    #             if unread_map.get(notif.id):
+    #                 grouped_by_model[model_key]['unreadCount'] += 1
+    #             grouped_by_model[model_key]['unreadCount'] += 1 if unread_map.get(notif.id) else 0
+    #             grouped_by_model[model_key]['lastMessageTime'] = max(
+    #                 grouped_by_model[model_key]['lastMessageTime'], notif.date
+    #             ) 
+
+    #         # Mapping pour titre plus lisible
+    #         model_titles = {
+    #             'sale.order': 'Bon de commande',
+    #             'account.move': 'Facture',
+    #             'account.bank.statement': 'Relevé bancaire',
+    #             'res.partner': 'Contact',
+    #             'mail.channel': 'Canal de discussion',
+    #             'stock.picking': 'Transfert de stock',
+    #             'mail.activity': 'Activité',
+    #         }
+
+    #         notif_with_details = []
+    #         for model, group in grouped_by_model.items():
+    #             if all(not (m.body or '').strip() for m in group['messages']):
+    #                 continue
+
+    #             last_message = group['messages'][0]
+    #             last_body = (last_message.body or '').strip()
+    #             res_id = last_message.res_id if last_message and last_message.res_id else 0
+
+    #             notif_with_details.append({
+    #                 'uuid': f'group_{model}',
+    #                 'name': model_titles.get(model, model),
+    #                 'conversation_type': 'notification',
+    #                 'text': f"{last_body}",
+    #                 'time': group['lastMessageTime'],
+    #                 'channelId': None,
+    #                 'email': '',
+    #                 'unreadCount': group['unreadCount'],
+    #                 'target': {
+    #                     'model': model,
+    #                     'res_id': res_id
+    #                 }
+    #             })
+                
+    #         all_user_notifications = request.env['mail.message'].sudo().search([
+    #             ('message_type', 'in', ['user_notification', 'notification']),
+    #             ('partner_ids', 'in', [partner.id])
+    #         ], order='date desc', limit=limit + 10)
+            
+    #         # --- 4 Fusionner et trier ---
+    #         combined_list = canaux_with_last_message + notif_with_details
+    #         combined_list.sort(key=lambda x: x['time'], reverse=True)
+    #         paginated_list = combined_list[offset:offset + limit]
+
+    #         return paginated_list
+
+    #     except Exception as e:
+    #         _logger.error(f"Erreur dans get_combined_discussions: {str(e)}")
+    #         raise
+    
     @http.route('/mail/discussions/all', type='json', auth='user')
-    def get_combined_discussions(self, limit=30, offset=0):
+    def get_combined_discussions(self, limit=30, offset=0, filter_type='all'):
+        """
+        Un seul endpoint avec 4 options:
+        - filter_type='all' → Tout combiné (comportement actuel)
+        - filter_type='channels' → Canaux seulement
+        - filter_type='activities' → Activités seulement
+        - filter_type='notifications' → Notifications système seulement
+        """
         try:
             limit = int(limit)
             offset = int(offset)
             partner = request.env.user.partner_id
-
-            # --- 1️⃣ Précharger tous les canaux et last messages ---
-            channel_slots = request.env['mail.channel'].channel_fetch_slot()
-            all_channels = [c for slot in channel_slots.values() for c in slot]
-            channel_ids = [c['id'] for c in all_channels]
-
-            # Précharger mail.channel.partner pour ce partenaire
-            partner_info_map = {
-                p.channel_id.id: p
-                for p in request.env['mail.channel.partner'].sudo().search([
-                    ('channel_id', 'in', channel_ids),
-                    ('partner_id', '=', partner.id)
-                ])
-            }
-
-            # Précharger le dernier message par canal
-            messages = request.env['mail.message'].sudo().search([
-                ('model', '=', 'mail.channel'),
-                ('res_id', 'in', channel_ids),
-                ('message_type', 'in', ['comment', 'user_notification', 'notification'])
-            ], order='date desc')
-
-            last_message_map = {}
-            for msg in messages:
-                if msg.res_id not in last_message_map:
-                    last_message_map[msg.res_id] = msg
-
-            # Préparer toutes les discussions
-            canaux_with_last_message = []
-            for canal in all_channels:
-                last_message = last_message_map.get(canal['id'])
-                partner_info = partner_info_map.get(canal['id'])
-
-                if partner_info and partner_info.seen_message_id:
-                    unread_count = sum(
-                        1 for m in messages
-                        if m.res_id == canal['id'] and m.id > partner_info.seen_message_id.id
-                    )
-                else:
-                    unread_count = sum(1 for m in messages if m.res_id == canal['id'])
-
-                if last_message:
-                    clean_text = last_message.body or "Nouveau message"
-                    last_author_name = getattr(last_message.author_id, 'name', 'Unknown')
-                    last_author_id = getattr(last_message.author_id, 'id', None)
-                    is_mine = last_author_id == partner.id
-
-                    display_name = canal['name']
-                    display_text = clean_text
-
-                    if canal['channel_type'] == 'chat':
-                        # Pour chat privé, afficher le nom de l'autre membre
-                        other_members = [m['id'] for m in canal.get('members', []) if m['id'] != partner.id]
-                        if other_members:
-                            other_member = request.env['res.partner'].sudo().browse(other_members[0])
-                            display_name = other_member.name or other_member.email
-                        if is_mine:
-                            display_text = f"⤻ Vous : {clean_text}"
-                    else:
-                        display_text = f"⤻ {'Vous' if is_mine else last_author_name} : {clean_text}"
-
-                    canaux_with_last_message.append({
-                        'uuid': canal['uuid'],
-                        'name': display_name,
-                        'conversation_type': canal['channel_type'],
-                        'text': display_text,
-                        'time': last_message.date,
-                        'channelId': canal['id'],
-                        'email': getattr(last_message.author_id, 'email', ''),
-                        'unreadCount': unread_count
-                    })
-
-            # --- 2️⃣ Précharger toutes les notifications non lues ---
-            system_user_id = request.env.ref('base.user_root').id
-            notifications = request.env['mail.message'].sudo().search([
-                ('message_type', 'in', ['user_notification', 'notification']),
-                ('author_id', '=', system_user_id)
-            ], order='date desc', limit=limit + 10)
-
-            unread_notifications = request.env['mail.notification'].sudo().search([
-                ('res_partner_id', '=', partner.id),
-                ('is_read', '=', False)
-            ])
-            unread_map = {n.mail_message_id.id: True for n in unread_notifications}
-
-            # Regrouper par modèle
-            grouped_by_model = {}
-            for notif in notifications:
-                model_key = notif.model or 'other'
-                if model_key not in grouped_by_model:
-                    grouped_by_model[model_key] = {
-                        'messages': [],
-                        'unreadCount': 0,
-                        'lastMessageTime': notif.date
-                    }
-
-                grouped_by_model[model_key]['messages'].append(notif)
-                grouped_by_model[model_key]['unreadCount'] += 1 if unread_map.get(notif.id) else 0
-                grouped_by_model[model_key]['lastMessageTime'] = max(
-                    grouped_by_model[model_key]['lastMessageTime'], notif.date
-                )
-
-            # Mapping pour titre plus lisible
-            model_titles = {
-                'sale.order': 'Bon de commande',
-                'account.move': 'Facture',
-                'account.bank.statement': 'Relevé bancaire',
-                'res.partner': 'Contact',
-                'mail.channel': 'Canal de discussion',
-                'stock.picking': 'Transfert de stock' 
-            }
-
-            notif_with_details = []
-            for model, group in grouped_by_model.items():
-                if all(not (m.body or '').strip() for m in group['messages']):
-                    continue
-
-                last_message = group['messages'][0]
-                last_body = (last_message.body or '').strip()
-                res_id = last_message.res_id if last_message and last_message.res_id else 0
-
-                notif_with_details.append({
-                    'uuid': f'group_{model}',
-                    'name': model_titles.get(model, model),
-                    'conversation_type': 'notification',
-                    'text': f"{last_body}",
-                    'time': group['lastMessageTime'],
-                    'channelId': None,
-                    'email': '',
-                    'unreadCount': group['unreadCount'],
-                    'target': {
-                        'model': model,
-                        'res_id': res_id
-                    }
-                })
-
-            # --- 3️⃣ Fusionner et trier ---
-            combined_list = canaux_with_last_message + notif_with_details
-            combined_list.sort(key=lambda x: x['time'], reverse=True)
-            paginated_list = combined_list[offset:offset + limit]
-
-            return paginated_list
-
+            
+            if filter_type == 'channels':
+                return self._get_channels(partner, limit, offset)
+            elif filter_type == 'activities':
+                return self._get_activities(partner, limit, offset)
+            elif filter_type == 'notifications':
+                return self._get_system_notifications(partner, limit, offset)
+            else:  # 'all' ou par défaut
+                return self._get_all_combined(partner, limit, offset)
+                
         except Exception as e:
             _logger.error(f"Erreur dans get_combined_discussions: {str(e)}")
             raise
 
+    # -------------------------------------------------------------------
+    # 1. Fonction pour les CANAUX seulement
+    # -------------------------------------------------------------------
+    def _get_channels(self, partner, limit, offset):
+        """Retourne seulement les canaux de discussion"""
+        # Récupérer les canaux
+        channel_slots = request.env['mail.channel'].channel_fetch_slot()
+        all_channels = [c for slot in channel_slots.values() for c in slot]
+        channel_ids = [c['id'] for c in all_channels]
+        
+        # Messages des canaux (comment + email seulement)
+        messages = request.env['mail.message'].sudo().search([
+            ('model', '=', 'mail.channel'),
+            ('res_id', 'in', channel_ids),
+            ('message_type', 'in', ['comment', 'email'])
+        ], order='date desc')
+        
+        # Précharger les informations de canal partenaire
+        partner_info_map = {
+            p.channel_id.id: p
+            for p in request.env['mail.channel.partner'].sudo().search([
+                ('channel_id', 'in', channel_ids),
+                ('partner_id', '=', partner.id)
+            ])
+        }
+        
+        # Dernier message par canal
+        last_message_map = {}
+        for msg in messages:
+            if msg.res_id not in last_message_map:
+                last_message_map[msg.res_id] = msg
+        
+        # Formater les canaux
+        formatted_channels = []
+        for canal in all_channels:
+            last_message = last_message_map.get(canal['id'])
+            if not last_message:
+                continue
+            
+            partner_info = partner_info_map.get(canal['id'])
+            
+            # Calcul messages non lus
+            if partner_info and partner_info.seen_message_id:
+                unread_count = sum(
+                    1 for m in messages
+                    if m.res_id == canal['id'] and m.id > partner_info.seen_message_id.id
+                )
+            else:
+                unread_count = sum(1 for m in messages if m.res_id == canal['id'])
+            
+            # Formatage du texte
+            clean_text = last_message.body or "Nouveau message"
+            is_mine = last_message.author_id.id == partner.id
+            
+            display_name = canal['name']
+            display_text = clean_text
+
+            if canal['channel_type'] == 'chat':
+                other_members = [m['id'] for m in canal.get('members', []) if m['id'] != partner.id]
+                if other_members:
+                    other_member = request.env['res.partner'].sudo().browse(other_members[0])
+                    display_name = other_member.name or other_member.email
+                if is_mine:
+                    display_text = f"⤻ Vous : {clean_text}"
+            else:
+                display_text = f"⤻ {'Vous' if is_mine else last_message.author_id.name} : {clean_text}"
+            
+            formatted_channels.append({
+                'uuid': canal['uuid'],
+                'name': display_name,
+                'conversation_type': 'channel',
+                'text': display_text[:100] + ('...' if len(display_text) > 100 else ''),
+                'time': last_message.date,
+                'channelId': canal['id'],
+                'email': getattr(last_message.author_id, 'email', ''),
+                'unreadCount': unread_count,
+                'filter_type': 'channel'
+            })
+        
+        # Trier et paginer
+        formatted_channels.sort(key=lambda x: x['time'], reverse=True)
+        return formatted_channels[offset:offset + limit]
+
+    # -------------------------------------------------------------------
+    # 2. Fonction pour les ACTIVITÉS seulement
+    # -------------------------------------------------------------------
+    def _get_activities(self, partner, limit, offset):
+        """Retourne seulement les activités (user_notifications)"""
+        system_user_id = request.env.ref('base.user_root').id
+        
+        # Récupérer les user_notifications
+        user_notifications = request.env['mail.message'].sudo().search([
+            ('message_type', 'in', ['user_notification', 'notification']),
+            ('partner_ids', 'in', [partner.id]),
+            ('author_id', '!=', system_user_id)  # Exclure les notifications système
+        ], order='date desc', limit=limit + offset + 20)
+        
+        # Lier aux activités pour avoir le type
+        activity_ids = [n.res_id for n in user_notifications if n.model == 'mail.activity']
+        activities = request.env['mail.activity'].sudo().search([
+            ('id', 'in', activity_ids)
+        ])
+        
+        # Mapping activité -> type
+        activity_type_map = {}
+        for activity in activities:
+            if activity.activity_type_id:
+                activity_type_map[activity.id] = activity.activity_type_id.name
+            else:
+                activity_type_map[activity.id] = 'To Do'
+        
+        # Grouper par type d'activité
+        activity_groups = {}
+        for notif in user_notifications:
+            # Déterminer le type
+            if notif.model == 'mail.activity' and notif.res_id:
+                activity_type = activity_type_map.get(notif.res_id, 'To Do')
+            else:
+                activity_type = 'Notification'
+            
+            if activity_type not in activity_groups:
+                activity_groups[activity_type] = {
+                    'messages': [],
+                    'unreadCount': 0,
+                    'lastMessageTime': notif.date
+                }
+            
+            activity_groups[activity_type]['messages'].append(notif)
+            activity_groups[activity_type]['lastMessageTime'] = max(
+                activity_groups[activity_type]['lastMessageTime'], notif.date
+            )
+        
+        # Titres des activités
+        activity_titles = {
+            'Email': 'Email',
+            'Call': 'Appel téléphonique',
+            'To Do': 'Tâche à faire',
+            'Upload Document': 'Document à uploader',
+            'Exception': 'Exception',
+            'Order Upsell': 'Vente incitative',
+            'Meeting': 'Réunion',
+            'Contract to Renew': 'Contrat à renouveler',
+            'Time Off Approval': 'Approbation congés',
+            'Time Off Second Approve': '2ème approbation congés',
+            'Allocation Approval': 'Approbation allocation',
+            'Allocation Second Approve': '2ème approbation allocation',
+            'Maintenance Request': 'Demande maintenance',
+            'Expense Approval': 'Approbation frais',
+            'Reminder': 'Rappel',
+            'Session open over 7 days': 'Session ouverte > 7 jours',
+            'Alert Date Reached': 'Date d\'alerte atteinte',
+        }
+        
+        # Formater les groupes
+        formatted_activities = []
+        for activity_type, group in activity_groups.items():
+            if not group['messages']:
+                continue
+            
+            last_message = group['messages'][0]
+            last_body = (last_message.body or '').strip()
+            total_count = len(group['messages'])
+            
+            formatted_activities.append({
+                'uuid': f'activity_{activity_type}',
+                'name': activity_titles.get(activity_type, activity_type),
+                'conversation_type': 'activity',
+                'text': f"{total_count} activité(s) • {last_body[:80]}...",
+                'time': group['lastMessageTime'],
+                'channelId': None,
+                'email': getattr(last_message.author_id, 'email', ''),
+                'unreadCount': total_count,
+                'target': {
+                    'model': 'mail.activity',
+                    'type': activity_type
+                },
+                'filter_type': 'activity'
+            })
+        
+        # Trier et paginer
+        formatted_activities.sort(key=lambda x: x['time'], reverse=True)
+        return formatted_activities[offset:offset + limit]
+
+    # -------------------------------------------------------------------
+    # 3. Fonction pour les NOTIFICATIONS SYSTÈME seulement
+    # -------------------------------------------------------------------
+    def _get_system_notifications(self, partner, limit, offset):
+        """Retourne seulement les notifications système"""
+        system_user_id = request.env.ref('base.user_root').id
+        
+        # Récupérer les notifications système
+        notifications = request.env['mail.message'].sudo().search([
+            ('message_type', 'in', ['user_notification', 'notification']),
+            ('author_id', '=', system_user_id)
+        ], order='date desc', limit=limit + offset + 20)
+        
+        # Notifications non lues
+        unread_notifications = request.env['mail.notification'].sudo().search([
+            ('res_partner_id', '=', partner.id),
+            ('is_read', '=', False)
+        ])
+        unread_map = {n.mail_message_id.id: True for n in unread_notifications}
+        
+        # Grouper par modèle
+        grouped_by_model = {}
+        for notif in notifications:
+            model_key = notif.model or 'other'
+            
+            if model_key not in grouped_by_model:
+                grouped_by_model[model_key] = {
+                    'messages': [],
+                    'unreadCount': 0,
+                    'lastMessageTime': notif.date
+                }
+            
+            grouped_by_model[model_key]['messages'].append(notif)
+            if unread_map.get(notif.id):
+                grouped_by_model[model_key]['unreadCount'] += 1
+            grouped_by_model[model_key]['lastMessageTime'] = max(
+                grouped_by_model[model_key]['lastMessageTime'], notif.date
+            )
+        
+        # Titres des modèles
+        model_titles = {
+            'sale.order': 'Bon de commande',
+            'account.move': 'Facture',
+            'account.bank.statement': 'Relevé bancaire',
+            'res.partner': 'Contact',
+            'mail.channel': 'Canal de discussion',
+            'stock.picking': 'Transfert de stock',
+            'mail.activity': 'Activité',
+        }
+        
+        # Formater les groupes
+        formatted_notifications = []
+        for model, group in grouped_by_model.items():
+            if all(not (m.body or '').strip() for m in group['messages']):
+                continue
+            
+            last_message = group['messages'][0]
+            last_body = (last_message.body or '').strip()
+            res_id = last_message.res_id if last_message and last_message.res_id else 0
+            
+            formatted_notifications.append({
+                'uuid': f'notification_{model}',
+                'name': model_titles.get(model, model),
+                'conversation_type': 'notification',
+                'text': f"{last_body[:80]}...",
+                'time': group['lastMessageTime'],
+                'channelId': None,
+                'email': '',
+                'unreadCount': group['unreadCount'],
+                'target': {
+                    'model': model,
+                    'res_id': res_id
+                },
+                'filter_type': 'notification'
+            })
+        
+        # Trier et paginer
+        formatted_notifications.sort(key=lambda x: x['time'], reverse=True)
+        return formatted_notifications[offset:offset + limit]
+
+    # -------------------------------------------------------------------
+    # 4. Fonction pour TOUT combiné (comportement original)
+    # -------------------------------------------------------------------
+    def _get_all_combined(self, partner, limit, offset):
+        """Retourne tout combiné - votre logique originale"""
+        # Appeler les 3 fonctions
+        channels = self._get_channels(partner, limit//3 + 10, 0)
+        activities = self._get_activities(partner, limit//3 + 10, 0)
+        notifications = self._get_system_notifications(partner, limit//3 + 10, 0)
+        
+        # Combiner
+        combined_list = channels + activities + notifications
+        
+        # Trier par date
+        combined_list.sort(key=lambda x: x['time'], reverse=True)
+        
+        # Paginer
+        paginated_list = combined_list[offset:offset + limit]
+        
+        # Ajouter un flag pour indiquer le type (pour le tri mobile)
+        for item in paginated_list:
+            if 'filter_type' not in item:
+                if item['conversation_type'] == 'channel':
+                    item['filter_type'] = 'channel'
+                elif item['conversation_type'] == 'activity':
+                    item['filter_type'] = 'activity'
+                elif item['conversation_type'] == 'notification':
+                    item['filter_type'] = 'notification'
+        
+        return paginated_list
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     @http.route('/mail/get_suggested_recipients', type='json', auth='user')
     def message_get_suggested_recipients(self, model, res_ids):
         records = request.env[model].browse(res_ids)
