@@ -1,9 +1,14 @@
 {
-    'name': "Notification - Firebase Cloud Messaging",
-    'version': '1.0',
-    'summary': "Envoie des notifications FCM pour les validations à faire  dans notre applications",
-    'description': "Module pour notifier les appareils mobiles",
-    'depends': ['base'],
+    'name': 'Notifications FCM et Automatisation',
+    'version': '1.0.0',
+    'summary': 'Notifications push mobiles et automatisation des actions',
+    'description': '''
+        Module combiné gérant :
+        1. Notifications FCM pour mobile
+        2. Automatisation des notifications métier
+        3. Intégration complète avec les modèles Odoo
+    ''',
+    'depends': ['base', 'mail', 'sale'],
     'data': [],
     'installable': True,
     'application': False,

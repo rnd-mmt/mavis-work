@@ -5,7 +5,6 @@ import logging
 _logger = logging.getLogger(__name__)
 
 class FCMController(http.Controller):
-
     @http.route('/fcm/register', type='json', auth='user', methods=['POST'])
     def register_device(self, **kwargs):
         user = request.env.user
@@ -72,9 +71,7 @@ class FCMController(http.Controller):
         })
 
         return {"status": "ok", "message": "Device transferred to new user"}
-
-
-        
+    
     @http.route('/fcm/unregister', type='json', auth='user', methods=['POST'])
     def logout_device(self, **kwargs):
         device_id = kwargs.get('device_id')
@@ -98,3 +95,4 @@ class FCMController(http.Controller):
         })
 
         return {"status": "ok", "message": "Device logged out"}
+    
