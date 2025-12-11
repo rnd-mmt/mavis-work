@@ -1,65 +1,156 @@
 import json
 import requests
-from odoo import fields, models, api
+from odoo import modules, models, api, models, _
 import logging
+import requests
+from datetime import datetime
+from odoo.exceptions import UserError
+import jwt
+import os
 
 _logger = logging.getLogger(__name__)
 class FCMService(models.AbstractModel):
     _name = 'fcm.service'
     _description = 'Service to send Firebase Cloud Messaging notifications'
 
-    FCM_URL = "https://fcm.googleapis.com/fcm/send"
+    FCM_V1_URL = "https://fcm.googleapis.com/v1/projects/mavis-chat/messages:send"
 
+    def _get_service_account_json(self):
+        # récupère automatiquement le chemin du module
+        module_path = modules.get_module_path("notification_FCM")
+        
+        # construit le chemin du JSON
+        json_path = os.path.join(module_path, "data", "firebase.json")
+        
+        # charge le fichier JSON
+        with open(json_path, "r", encoding="utf-8") as f:
+            return json.load(f)
+        
     @api.model
     def send_notification(self, token, title, body, data=None):
-        _logger.info("---- Envoi notification FCM ----")
-        server_key = self.env['ir.config_parameter'].sudo().get_param('fcm.server.key')
-        _logger.info(f"Server key found: {'Yes' if server_key else 'No'}")
-        _logger.info(f"Token: {token}")
+        """Envoi notification via FCM HTTP v1"""
         
-        if not server_key:
-            _logger.error("server key not found")
-            return {"success": False, "error": "Clé FCM manquante"}
-        token_test = "dQ2EANG0QT-AOxYNpgGz8G:APA91bG0ixlC6jqyMDL2UKxJAtTexKYFvsSWKIBNNPSy1YCBzF7yXVYcuRCQP8wRclljQwSRIMIPYOsfIWcNJXkEXF052hT-KAFyI25KWBxRMLhawedK_kQ"
-        server_key_test = "AIzaSyCgipeBUtz-0awhcu9GnJRm1qVNXPXyNdk"
-    
-        notification_payload = {
-            'to': token_test,
-            'notification': {
-                'title': title, 
-                'body': body,   
-                'sound': 'default'
-            },
-            'data': data or {},
-            'priority': 'high'
+        # Récupérer la configuration depuis les paramètres Odoo
+        # config = self.env['ir.config_parameter'].sudo()
+        # project_id = config.get_param('fcm.project.id')
+        # private_key = config.get_param('fcm.private.key')
+        # client_email = config.get_param('fcm.client.email')
+        creds = self._get_service_account_json()
+
+        client_email = creds["client_email"]
+        private_key = creds["private_key"]
+        project_id = creds["project_id"]
+        
+        # project_id = "mavis-chat"
+        # private_key = "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCwQbxxbpjJhs3S\ncXcMYaeWCNBmoGYXDA77HNIz1VUSWYdFF5Rf0erd3RinoQ2pkyrHbbXzPaIFCK+g\nDn/5ZJbUsdc/Cu58YUc/NLJpSABK9H3mF++irAdzLfWsnRuZTNTPOyY8QtNpAGJ3\nxvKtRjJ8z26gL4hOGMT/yxx5nzjdzpFpljVEu+5+yNBAlpzyMgw4soWvAl4V4uDl\n3yquOqDET1pJr4wORc88LoGDjE6Fkg0A2FjjW9QGuInF1CVut/CqNugDMXW2dgRP\nmm3AkL4+tHC/38vF9FikYdsTVGxcgWbkhx861zeCuO4Iv2lIrHtb21i1FAGc4o+u\nw4G+Lpe1AgMBAAECggEACvybV6zFBwbeoegNu4QDfhrgNrgiilGSRifmmHGLWICj\n1HQ4UlK+TlnKVXn4uox1uwcFM6Yws8SgrJxKxjZ1dR5SzwIKRKQ3BzhsiJstiCk+\nXHnl0kuL5ADw5/NxICNbE+yEISHUlh5+hNMuFwv2+LMLb8kWuNuFaCEhOMQ/4go0\nMr7DUrMvrYGR3XJCJCIp4Ay/tJY5G/iooctsWf27nSmFv3uCnzwnWtrE3tbRccdb\nXQ5Adijust4Qq3NMAxvVaAlacFkn4I3GL0VWjwmost9VWK9eQFsMJC247+Z1vygT\nmE+BVKGtJ6TYGZyFnik5gpgLb+ktR5onF8Uh57kr3wKBgQDqOpNqUIYyX5vo9vlS\nvuZwbD5xpAO0y41ZuJok8tIqMlfvJQXPu8nArmU5kCKZxv63F93cvmwgSpqKnSFR\nmpEpFiSKcTV3VNmtDFgtYGROi7XdgQnVaMiC+z5rIFtpmA0KSrNf4ryuO5mwD4jr\ndog2VZHbGJZyKgqyXDpWTN4lZwKBgQDAo7pw38/GYF/BHNeq/pBc4Rq+I3W0FojV\nmHIJ35TwVhdc4EH0YdoMwcUpj8Xj9P4GifhPuvGh+KAT+TXf0x3hT5J/Yv1TrVfd\nFSVU2rE91hB5MjyqQLkgCozoLRSrJJhI5ktAqs/CEHI87o1SRxCfpo0gPfu/LAZU\nVFl1qzZsgwKBgDuDnqlIxJBQEsFi337S2qJ+Hm+piPeLMOM3MJNqz1PBbu5orc1W\nnbDDnxy9Ls177oR/H/RSvg6GZjYKLskZSQDzi11R3o/vk0+Q72a4M0Rx40fg3arH\n8Qq24+k8U33FEKsox+L5LY/nvOkrSVLqzzlfDKxq1u8zF3yySnBbH6bJAoGARRWy\nlC4/pkYDsQ617XXTsetsmsm+uXHnaqp8IzxSfopxYHZwUMMS3sZS/d+4uVKwEwpB\nyd4iL9MpHWCfSIC+04Gk6RhH/01IGFowBClVrPZq+/vfM7N4cJw4Aj/AjMvX7TTh\nwfRAA7nALkfi2KHxvT+OlwSDlwCj2HRTjNZ08x8CgYA1CBKHFyIsULfd4M8srSzu\n1iq+dSiipI/WP78gqkbRGbqnxE9BtiRah37U5+IAi7/Gp5xgglJmQ05baErfLbEv\na0dc9CD5nqWt1p5RnKq4gZ0cY7wbHNh6a/yU7nZcd7P6QLkWAtsH+BG8lFpyX4zC\nVg+XrXCUXA2dNtU6Ie15lQ==\n-----END PRIVATE KEY-----\n"
+        # client_email = "firebase-adminsdk-fbsvc@mavis-chat.iam.gserviceaccount.com"
+  
+        if not all([project_id, private_key, client_email]):
+            _logger.error("❌ Configuration FCM v1 incomplète")
+            return {"success": False, "error": "Configuration FCM incomplète"}
+        
+        # Générer le token JWT
+        access_token = self._generate_access_token(
+            private_key=private_key,
+            client_email=client_email
+        )
+        
+        _logger.info(f"///////////// Access token generated: {'Yes' if access_token else 'No'}")
+        
+        if not access_token:
+            return {"success": False, "error": "Échec génération token"}
+        
+        data_str = {str(k): str(v) for k, v in (data or {}).items()}
+        # Préparer le payload
+        message = {
+            "message": {
+                "token": token,
+                "notification": {
+                    "title": title,
+                    "body": body
+                },
+                "data": data_str,
+                "android": {
+                    "priority": "HIGH"
+                },
+                "apns": {
+                    "headers": {
+                        "apns-priority": "10"
+                    },
+                    "payload": {
+                        "aps": {
+                            "sound": "default"
+                        }
+                    }
+                }
+            }
         }
         
-        _logger.info(f"Payload FCM: {json.dumps(notification_payload, indent=2)}")
-
+        # _logger.info(f"FCM v1 Payload: {json.dumps(message, indent=2)}")
+        
+        url = self.FCM_V1_URL
+        _logger.info(f"FCM v1 URL: {url}")
+        headers = {
+            'Authorization': f'Bearer {access_token}',
+            'Content-Type': 'application/json'
+        }
+        
+        _logger.info(f"FCM v1 Headers: {headers}")
+        
         try:
-            headers = {
-                'Authorization': f'key={server_key_test}',
-                'Content-Type': 'application/json'
-            }
-            _logger.info(f"Headers: {headers}")
-            response = requests.post(self.FCM_URL, json=notification_payload, headers=headers, timeout=10)
-            _logger.info(f"📥 Réponse HTTP: {response.status_code}")
-            _logger.info(f"📥 Corps réponse: {response.text}")
-            
-            if response.status_code == 200:
-                if response.text.strip():
-                    return response.json()
-                else:
-                    _logger.warning("⚠️ Réponse FCM vide")
-                    return {"success": False, "error": "Réponse vide"}
-            else:
-                _logger.error(f"❌ Erreur HTTP {response.status_code}: {response.text}")
-                return {"success": False, "error": f"HTTP {response.status_code}"}
-                
-        except Exception as e:
-            _logger.error(f"💥 Exception FCM: {str(e)}")
+            response = requests.post(url, json=message, headers=headers, timeout=10)
+            response.raise_for_status()
+            return {"success": True, "response": response.json()}
+        except requests.exceptions.RequestException as e:
+            _logger.error(f"❌ Erreur FCM v1: {e}")
+            if e.response is not None:
+                _logger.error(f"FCM Response: {e.response.text}")
             return {"success": False, "error": str(e)}
 
+    
+    def _generate_access_token(self, private_key, client_email):
+        """Génère un token d'accès OAuth2"""
+        try:
+            now = datetime.utcnow()
+            
+            # Créer le JWT
+            payload = {
+                'iss': client_email,
+                'scope': 'https://www.googleapis.com/auth/firebase.messaging',
+                'aud': 'https://oauth2.googleapis.com/token',
+                'exp': int((now.timestamp() + 3600)),
+                'iat': int(now.timestamp())
+            }
+            # _logger.info(f"JWT Payload: {json.dumps(payload, indent=2)}")
+            
+            # Décoder la clé privée
+            # private_key = private_key.replace('\\n', '\n')
+            _logger.info("Private key formatted for JWT signing.")
+            # Signer le JWT
+            signed_jwt = jwt.encode(
+                payload, 
+                private_key, 
+                algorithm='RS256'
+            )
+            _logger.info(f"Signed JWT: {signed_jwt[:30]}...")  # Log only the beginning for security
+            
+            # Échanger contre un token d'accès
+            token_url = "https://oauth2.googleapis.com/token"
+            token_data = {
+                'grant_type': 'urn:ietf:params:oauth:grant-type:jwt-bearer',
+                'assertion': signed_jwt
+            }
+            _logger.info("Requesting access token from Google OAuth2...")
+            
+            response = requests.post(token_url, data=token_data, timeout=10)
+            response.raise_for_status()
+            _logger.info("Access token obtained successfully.")
+            return response.json().get('access_token')
+            
+        except Exception as e:
+            _logger.error(f"❌ Erreur génération token: {str(e)}")
+            return None
+        
     @api.model
     def send_notification_to_users(self, user_ids, title, body, data=None):
         """ENVOYER DIRECTEMENT AUX USERS - Méthode principale"""

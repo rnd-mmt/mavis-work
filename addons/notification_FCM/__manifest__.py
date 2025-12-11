@@ -9,6 +9,9 @@
         3. Intégration complète avec les modèles Odoo
     ''',
     'depends': ['base', 'mail', 'sale'],
+    'external_dependencies': {
+        'python': ['pyjwt', 'requests']
+    },
     'data': [],
     'installable': True,
     'application': False,
