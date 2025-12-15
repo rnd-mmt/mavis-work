@@ -20,7 +20,7 @@ class FCMService(models.AbstractModel):
         module_path = modules.get_module_path("notification_FCM")
         
         # construit le chemin du JSON
-        json_path = os.path.join(module_path, "data", "firebase.json")
+        json_path = os.path.join(module_path, "data", "mavis-chat-firebase.json")
         
         # charge le fichier JSON
         with open(json_path, "r", encoding="utf-8") as f:
@@ -40,11 +40,7 @@ class FCMService(models.AbstractModel):
         client_email = creds["client_email"]
         private_key = creds["private_key"]
         project_id = creds["project_id"]
-        
-        # project_id = "mavis-chat"
-        # private_key = "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCwQbxxbpjJhs3S\ncXcMYaeWCNBmoGYXDA77HNIz1VUSWYdFF5Rf0erd3RinoQ2pkyrHbbXzPaIFCK+g\nDn/5ZJbUsdc/Cu58YUc/NLJpSABK9H3mF++irAdzLfWsnRuZTNTPOyY8QtNpAGJ3\nxvKtRjJ8z26gL4hOGMT/yxx5nzjdzpFpljVEu+5+yNBAlpzyMgw4soWvAl4V4uDl\n3yquOqDET1pJr4wORc88LoGDjE6Fkg0A2FjjW9QGuInF1CVut/CqNugDMXW2dgRP\nmm3AkL4+tHC/38vF9FikYdsTVGxcgWbkhx861zeCuO4Iv2lIrHtb21i1FAGc4o+u\nw4G+Lpe1AgMBAAECggEACvybV6zFBwbeoegNu4QDfhrgNrgiilGSRifmmHGLWICj\n1HQ4UlK+TlnKVXn4uox1uwcFM6Yws8SgrJxKxjZ1dR5SzwIKRKQ3BzhsiJstiCk+\nXHnl0kuL5ADw5/NxICNbE+yEISHUlh5+hNMuFwv2+LMLb8kWuNuFaCEhOMQ/4go0\nMr7DUrMvrYGR3XJCJCIp4Ay/tJY5G/iooctsWf27nSmFv3uCnzwnWtrE3tbRccdb\nXQ5Adijust4Qq3NMAxvVaAlacFkn4I3GL0VWjwmost9VWK9eQFsMJC247+Z1vygT\nmE+BVKGtJ6TYGZyFnik5gpgLb+ktR5onF8Uh57kr3wKBgQDqOpNqUIYyX5vo9vlS\nvuZwbD5xpAO0y41ZuJok8tIqMlfvJQXPu8nArmU5kCKZxv63F93cvmwgSpqKnSFR\nmpEpFiSKcTV3VNmtDFgtYGROi7XdgQnVaMiC+z5rIFtpmA0KSrNf4ryuO5mwD4jr\ndog2VZHbGJZyKgqyXDpWTN4lZwKBgQDAo7pw38/GYF/BHNeq/pBc4Rq+I3W0FojV\nmHIJ35TwVhdc4EH0YdoMwcUpj8Xj9P4GifhPuvGh+KAT+TXf0x3hT5J/Yv1TrVfd\nFSVU2rE91hB5MjyqQLkgCozoLRSrJJhI5ktAqs/CEHI87o1SRxCfpo0gPfu/LAZU\nVFl1qzZsgwKBgDuDnqlIxJBQEsFi337S2qJ+Hm+piPeLMOM3MJNqz1PBbu5orc1W\nnbDDnxy9Ls177oR/H/RSvg6GZjYKLskZSQDzi11R3o/vk0+Q72a4M0Rx40fg3arH\n8Qq24+k8U33FEKsox+L5LY/nvOkrSVLqzzlfDKxq1u8zF3yySnBbH6bJAoGARRWy\nlC4/pkYDsQ617XXTsetsmsm+uXHnaqp8IzxSfopxYHZwUMMS3sZS/d+4uVKwEwpB\nyd4iL9MpHWCfSIC+04Gk6RhH/01IGFowBClVrPZq+/vfM7N4cJw4Aj/AjMvX7TTh\nwfRAA7nALkfi2KHxvT+OlwSDlwCj2HRTjNZ08x8CgYA1CBKHFyIsULfd4M8srSzu\n1iq+dSiipI/WP78gqkbRGbqnxE9BtiRah37U5+IAi7/Gp5xgglJmQ05baErfLbEv\na0dc9CD5nqWt1p5RnKq4gZ0cY7wbHNh6a/yU7nZcd7P6QLkWAtsH+BG8lFpyX4zC\nVg+XrXCUXA2dNtU6Ie15lQ==\n-----END PRIVATE KEY-----\n"
-        # client_email = "firebase-adminsdk-fbsvc@mavis-chat.iam.gserviceaccount.com"
-  
+         
         if not all([project_id, private_key, client_email]):
             _logger.error("❌ Configuration FCM v1 incomplète")
             return {"success": False, "error": "Configuration FCM incomplète"}
