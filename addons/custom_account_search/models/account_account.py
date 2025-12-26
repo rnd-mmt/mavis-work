@@ -30,6 +30,16 @@ class AccountAccount(models.Model):
                 has_precise_code_domain = True
                 continue
 
+            # 🔁 Filtre personnalisé : Code "contient"
+            if field == 'code' and op in ('ilike', 'like') and isinstance(value, str):
+                clean = value.strip()
+
+                # supprimer les % éventuels
+                clean = clean.strip('%')
+                code_domain.append(('code', '=ilike', f'{clean}%'))
+                has_precise_code_domain = True
+                continue
+
             # Si drill-down → on IGNORE name
             if has_precise_code_domain and field == 'name':
                 _logger.debug("Ignoring name condition due to drill-down")
