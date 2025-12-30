@@ -12,7 +12,9 @@
     'external_dependencies': {
         'python': ['pyjwt', 'requests']
     },
-    'data': [],
+    'data': [
+        'data/mail_activity_type_fcm.xml',
+    ],
     'installable': True,
     'application': False,
     'auto_install': False,

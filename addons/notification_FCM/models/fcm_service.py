@@ -51,12 +51,11 @@ class FCMService(models.AbstractModel):
             client_email=client_email
         )
         
-        _logger.info(f"///////////// Access token generated: {'Yes' if access_token else 'No'}")
-        
         if not access_token:
             return {"success": False, "error": "Échec génération token"}
         
         data_str = {str(k): str(v) for k, v in (data or {}).items()}
+        
         # Préparer le payload
         message = {
             "message": {
@@ -82,7 +81,6 @@ class FCMService(models.AbstractModel):
             }
         }
         
-        # _logger.info(f"FCM v1 Payload: {json.dumps(message, indent=2)}")
         
         url = self.FCM_V1_URL
         _logger.info(f"FCM v1 URL: {url}")
@@ -103,7 +101,6 @@ class FCMService(models.AbstractModel):
                 _logger.error(f"FCM Response: {e.response.text}")
             return {"success": False, "error": str(e)}
 
-    
     def _generate_access_token(self, private_key, client_email):
         """Génère un token d'accès OAuth2"""
         try:
@@ -176,7 +173,7 @@ class FCMService(models.AbstractModel):
             for device in devices:
                 _logger.info(f"Sending FCM to user {user.login}, device {device.device_name} with token {device.fcm_token[:30]}...")
                 # Log détaillé du device
-                _logger.info(f"📱 Device details for {user.login}:")
+                _logger.info(f" ----- Device details for {user.login}:")
                 _logger.info(f"   ID: {device.id}")
                 _logger.info(f"   Name: {device.device_name}")
                 _logger.info(f"   OS: {device.os}")
@@ -199,4 +196,5 @@ class FCMService(models.AbstractModel):
                 })
         
         return results
+    
     
