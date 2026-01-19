@@ -127,7 +127,7 @@ td {
     margin: 0;
     background-color: #f0eeee;
     font-family: "Lato", "Lucida Grande", Helvetica, Verdana, Arial;
-    color: #030976;
+    color: #555555;
     font-size: 12px;
     /* Some elements inside .pos are allowed to be moved/resized. When
      * this 'move/resize' event is performed in touch devices, .pos
@@ -318,7 +318,7 @@ td {
     cursor: pointer;
     padding: 4px 10px;
     font-size: 11px;
-    border: 1px solid #cacaca;
+    /* border: 1px solid #cacaca; */
     background: #e2e2e2;
     border-radius: 3px;
 }
@@ -746,7 +746,6 @@ td {
 }
 
 /*  ********* The actionpad (payment, set customer) ********* */
-
 .pos .actionpad {
     padding: 0;
     margin: 16px;
@@ -755,12 +754,12 @@ td {
     text-align: center;
     vertical-align: top;
     border: none;
-    border-radius: 0;
+    /* border-radius: 0;
     border-top: 1px solid;
     border-left: 1px solid;
     border-color: #bfbfbf;
     border-top-left-radius: 4px;
-    border-bottom-left-radius: 4px;
+    border-bottom-left-radius: 4px; */
     flex-grow: 1;
 }
 
@@ -912,7 +911,7 @@ td {
     border-color: #646567;
     transition: all 150ms linear;
     margin: 0.4%; */
-    
+
 }
 
 .pos .numpad button:hover {
@@ -943,7 +942,7 @@ td {
 
 .pos .mode-button.selected-mode {
     color: white;
-    background:#4fc3f7;
+    background: #4fc3f7;
     border-color: transparent;
 }
 
@@ -959,6 +958,7 @@ td {
     color: #a5a1a1;
     cursor: not-allowed;
 }
+
 /* .pos .numpad {
     display: grid;
     grid-template-columns: repeat(4, 60px);
@@ -2444,6 +2444,40 @@ td {
     min-width: 30px;
 }
 
+.pos .patientlist-screen .patient-detail>.input-with-prefix {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-left: 7%;
+    flex-direction: row;
+    align-content: center;
+    flex-wrap: nowrap;
+}
+
+.pos .patientlist-screen .patient-detail>.input-with-prefix .prefix {
+    position: absolute;
+    left: 10px;
+    color: #555;
+    font-weight: bold;
+    pointer-events: none;
+}
+
+.pos .patientlist-screen .patient-detail>.input-with-prefix input {
+    padding-left: 40px !important;
+    /* espace pour le C-/R- */
+}
+
+.required-field {
+    background-color: #d4d2fe !important;
+}
+
+
+
+
+
+
+
+
 
 
 
@@ -2456,6 +2490,8 @@ td {
     justify-content: center;
     border-top: solid 3px rgb(138, 135, 137);
     padding-top: 10px;
+    max-height: 78%;
+    overflow-y: auto;
 }
 
 .patient-details-list-wrapper {
@@ -2465,10 +2501,17 @@ td {
     gap: 15px;
     width: 100%;
     justify-content: center;
+    max-height: 100%;
+    /* permet le scroll vertical si le contenu dépasse */
 }
 
 .patient-details-list-wrapper .patient-data p {
     font-size: 14px;
+}
+
+.patient-details-list-wrapper .patient-name-card {
+    font-weight: 900;
+    font-size: x-large;
 }
 
 .patient-card {
@@ -2476,13 +2519,15 @@ td {
     flex-direction: row;
     align-items: flex-start;
     width: calc(50% - 20px);
-    border: 1px solid #c3bdbd;
+    /* border: 1px solid #c3bdbd; */
     background-color: #eae4e44f;
     padding: 5px;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
     gap: 15px;
-    cursor: pointer; /* 👈 rend la carte cliquable visuellement */
+    cursor: pointer;
+    /* 👈 rend la carte cliquable visuellement */
     transition: all 0.3s ease;
+    border-radius: 15px;
 }
 
 .patient-image img {
@@ -2530,9 +2575,8 @@ td {
 }
 
 .patient-card:hover {
-    background-color: #06a952;
+    background-color: #5a7be8;
     color: white;
-    border-color: #145a32;
 }
 
 .patient-card.active {
@@ -2551,11 +2595,12 @@ td {
     color: #ffffff;
 }
 
-.patient-card { 
+/* .patient-card { 
     cursor: pointer; 
     transition: all;
     transition: background-color 0.25s ease, color 0.25s ease;
-}
+    border-radius: 15px;
+} */
 
 
 
@@ -2680,6 +2725,12 @@ td {
         white-space: nowrap;
     }
 }
+
+
+
+
+
+
 
 
 

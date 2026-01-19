@@ -1,4 +1,4 @@
-odoo.define('point_of_sale.PatientListScreen', function(require) {
+odoo.define('point_of_sale.PatientListScreen', function (require) {
     'use strict';
 
     const { debounce } = owl.utils;
@@ -8,12 +8,25 @@ odoo.define('point_of_sale.PatientListScreen', function(require) {
     const { isRpcError } = require('point_of_sale.utils');
     const { useAsyncLockedMethod } = require('point_of_sale.custom_hooks');
 
+    const profilTypeMap = {
+        'all': { label: 'C-', showAssurance: true, showPension: false },
+        'fonc_activity': { label: 'C-', showAssurance: true, showPension: false },
+        'fonc_pensioner': { label: 'R-', showAssurance: true, showPension: true },
+        'pec_privee': { label: '', showAssurance: true, showPension: false },
+        'other': { label: '', showAssurance: false, showPension: false },
+        'arovy': { label: '', showAssurance: true, showPension: false },
+        'smi': { label: '', showAssurance: true, showPension: false },
+        'pecgr': { label: '', showAssurance: true, showPension: false },
+        'remboursement': { label: '', showAssurance: true, showPension: false },
+    };
+
     class PatientListScreen extends PosComponent {
         constructor() {
             super(...arguments);
             this.lockedSaveChanges = useAsyncLockedMethod(this.saveChanges);
 
-            useListener('click-save', () => this.env.bus.trigger('save-customer'));
+            useListener('click-save', () => this.createPatient());
+            //  this.env.bus.trigger('save-customer'));
             useListener('click-edit', () => this.editPatient());
             useListener('save-changes', this.lockedSaveChanges);
 
@@ -34,13 +47,14 @@ odoo.define('point_of_sale.PatientListScreen', function(require) {
 
                 // Champs supplémentaires
                 patient_birthday: '',
-                patient_gender: 'male',
-                profil_type: 'other',
+                patient_gender: 'all',
+                patient_label: '',
+                profil_type: 'all',
                 patient_assurance: '',
                 patient_pension: '',
                 patient_pricelist: 'Standard',
-                patient_contact_person: '',
-                patient_marital_status: 'celibataire',
+                patient_person_contact: '',
+                patient_marital_status: 'all',
 
                 // Patients similaires
                 similar_patients: [],
@@ -111,6 +125,7 @@ odoo.define('point_of_sale.PatientListScreen', function(require) {
             } else {
                 this.state.selectedPatient = partner;
             }
+            console.log(" SELECTED PATIENT ----------- ", this.state.selectedPatient);
             this.render();
         }
 
@@ -134,7 +149,16 @@ odoo.define('point_of_sale.PatientListScreen', function(require) {
             this.confirm();
         }
 
-        activateEditMode(event) {
+        async activateEditMode(event) {
+            const check = this.validateBeforeCreate();
+            if (!check.ok) {
+                await this.showPopup('ErrorPopup', {
+                    title: this.env._t("Champs obligatoires manquants"),
+                    body: this.env._t(check.message),
+                });
+                return;
+            }
+
             const { isNewPatient } = event.detail;
             this.state.isEditMode = true;
             this.state.detailIsShown = true;
@@ -148,21 +172,132 @@ odoo.define('point_of_sale.PatientListScreen', function(require) {
             this.render();
         }
 
+        // async onInputChange(ev, field) {
+        //     this.state[field] = ev.target.value;
+        //     await this.fetchSimilarPatients();
+        //     this.render();
+        // }
+        highlightContactGroup() {
+            const phone = this.state.patient_phone || "";
+            const address = this.state.patient_adress || "";
+            const cin = this.state.gov_code || "";
+
+            const fields = this.el.querySelectorAll('.group-required');
+
+            // Si aucun rempli → les 3 colorés
+            if (!phone && !address && !cin) {
+                fields.forEach(f => f.classList.add("required-field"));
+                return;
+            }
+
+            // Si au moins 1 rempli → seul celui rempli est coloré
+            fields.forEach(f => {
+                const fieldName = f === fields[0] ? 'patient_phone'
+                    : f === fields[1] ? 'patient_adress'
+                        : 'gov_code';
+
+                if (this.state[fieldName]) {
+                    f.classList.add("required-field");
+                } else {
+                    f.classList.remove("required-field");
+                }
+            });
+        }
+
+        mounted() {
+            this.highlightContactGroup();
+        }
+
+        validateBeforeCreate() {
+            const errors = [];
+            const errors_new = [];
+
+            // Champs obligatoires stricts
+            if (!this.state.patient_name?.trim()) errors.push("Nom du patient");
+            if (!this.state.patient_birthday?.trim()) errors.push("Date de naissance");
+            if (!this.state.patient_gender || this.state.patient_gender === "all") errors.push("Sexe");
+
+            // Groupe (au moins un rempli)
+            if (
+                !this.state.patient_phone?.trim() &&
+                !this.state.patient_adress?.trim() &&
+                !this.state.gov_code?.trim()
+            ) {
+                errors_new.push("\n Au moins un des champs suivants doit être rempli : Téléphone, Adresse, CIN.");
+            }
+
+            // Si erreurs obligatoires strictes
+            if (errors.length > 0) {
+                return {
+                    ok: false,
+                    message: "Veuillez remplir les champs obligatoires :\n- " + errors.join("\n- ") + errors_new
+                };
+            }
+
+            return { ok: true };
+        }
+
+
         async onInputChange(ev, field) {
             this.state[field] = ev.target.value;
+
+            this.highlightContactGroup();
+            if (field === 'profil_type') {
+                const map = profilTypeMap[this.state.profil_type]
+                    || { label: '', showAssurance: true, showPension: false };
+                this.state.payment_label = map.label;   // C- ou R-
+                this.state.show_patient_assurance = map.showAssurance;  // afficher input assurance ?
+                this.state.show_patient_pension = map.showPension;  // afficher pension ?
+            }
             await this.fetchSimilarPatients();
             this.render();
         }
 
         async fetchSimilarPatients() {
             try {
+                const domain = [];
+                if (this.state.patient_name && this.state.patient_name.trim() !== "") {
+                    domain.push(['name', 'ilike', this.state.patient_name]);
+                }
+                if (this.state.patient_code && this.state.patient_code.trim() !== "") {
+                    domain.push(['code', 'ilike', this.state.patient_code]);
+                }
+                if (this.state.patient_gender &&
+                    this.state.patient_gender.trim() !== "" &&
+                    this.state.patient_gender.trim() !== "all"
+                ) {
+                    domain.push(['gender', 'ilike', this.state.patient_gender]);
+                }
+                if (this.state.patient_phone && this.state.patient_phone.trim() !== "") {
+                    domain.push(['mobile', 'ilike', this.state.patient_phone]);
+                }
+                if (this.state.patient_email && this.state.patient_email.trim() !== "") {
+                    domain.push(['email', 'ilike', this.state.patient_email]);
+                }
+                if (this.state.patient_street && this.state.patient_street.trim() !== "") {
+                    domain.push(['street', 'ilike', this.state.patient_street]);
+                }
+                if (this.state.patient_marital_status &&
+                    this.state.patient_marital_status.trim() !== "" &&
+                    this.state.patient_marital_status.trim() !== "all") {
+                    domain.push(['marital_status', 'ilike', this.state.patient_marital_status]);
+                }
+                if (this.state.patient_birthday && this.state.patient_birthday.trim() !== "") {
+                    domain.push(['birthday', '=', this.state.patient_birthday]);
+                }
+
+                if (this.state.patient_assurance && this.state.patient_assurance.trim() !== "") {
+                    domain.push(['assurance', '=', this.state.patient_assurance]);
+                }
+
                 const res = await this.rpc({
                     model: 'hms.patient',
                     method: 'search_read',
-                    domain: [['name', 'ilike', this.state.patient_name || '']],
+                    domain: domain,
                     fields: ['id', 'name', 'code', 'birthday', 'gender', 'street', 'mobile', 'create_date'],
-                    limit: 5,
+                    limit: 60,
                 });
+
                 this.state.similar_patients = res;
             } catch (error) {
                 console.error('Erreur recherche patient similaire', error);
@@ -170,6 +305,17 @@ odoo.define('point_of_sale.PatientListScreen', function(require) {
         }
 
         async createPatient() {
+            console.log("-------------- ----------------");
+            console.log(" ***************CREATE PATIENT*****************");
+            const check = this.validateBeforeCreate();
+            if (!check.ok) {
+                await this.showPopup('ErrorPopup', {
+                    title: this.env._t("Champs obligatoires manquants"),
+                    body: this.env._t(check.message),
+                });
+                return;
+            }
+
             const data = {
                 code: this.state.patient_code,
                 name: this.state.patient_name,
@@ -186,26 +332,34 @@ odoo.define('point_of_sale.PatientListScreen', function(require) {
                 marital_status: this.state.patient_marital_status,
                 pricelist: this.state.patient_pricelist,
             };
-
-            try {
+            try { // 1️⃣ Création du patient 
                 const partnerId = await this.rpc({
-                    model: 'pos.patient',
-                    method: 'create_from_ui',
-                    args: [data],
+                    model: 'hms.patient', method: 'create_from_ui', args: [data],
                 });
+                // // 2️⃣ Création automatique du Service Santé
+                await this.rpc({
+                    model: 'acs.health_service',
+                    method: 'create_service_from_pos',
+                    args: [{ patient_id: partnerId, }],
+                });
+
+                // 3️⃣ Mise à jour du POS
                 await this.env.pos.load_new_partners();
                 this.state.selectedPatient = this.env.pos.db.get_partner_by_id(partnerId);
                 this.state.detailIsShown = false;
                 this.render();
+                await this.showPopup("ConfirmPopup", {
+                    title: "Succès",
+                    body: "Patient et Service Santé créés avec succès.",
+                });
             } catch (error) {
-                if (isRpcError(error) && error.message.code < 0) {
-                    await this.showPopup('OfflineErrorPopup', {
-                        title: this.env._t('Offline'),
-                        body: this.env._t('Unable to save changes.'),
-                    });
-                } else {
-                    throw error;
-                }
+                console.log('ee rr oo rr ', error);
+                // if (isRpcError(error) && error.message.code < 0) {
+                //     await this.showPopup('OfflineErrorPopup', {
+                //         title: this.env._t('Offline'),
+                //         body: this.env._t('Unable to save changes.'),
+                //     });
+                // } else { throw error; }
             }
         }
 

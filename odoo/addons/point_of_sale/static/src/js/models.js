@@ -506,6 +506,7 @@ odoo.define('point_of_sale.models', function (require) {
                 loaded: function (self, products) {
 
                     var using_company_currency = self.config.currency_id[0] === self.company.currency_id[0];
+                    // console.log("DEVISE  ----------- ", self.config.currency_id, self.company.currency_id);
                     var conversion_rate = self.currency.rate / self.company_currency.rate;
 
                     var allowed_category_ids = self.product_categories.map(function (cat) {
