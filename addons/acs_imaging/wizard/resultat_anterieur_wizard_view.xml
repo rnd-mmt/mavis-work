@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Split Record -->
+    <record id="view_img_resultat_anterieur_wizard" model="ir.ui.view">
+        <field name="name">img.result.anterieur.wizard.form</field>
+        <field name="model">img.result.anterieur.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Résultat antérieur">
+                <group>
+                    <group>
+                        <field name="patient_id"/>
+                    </group>
+                    <field name="line_ids" nolabel="1" colspan="4" widget="section_and_note_one2many">
+                        <tree string="Lines" create='false' editable="1">
+                            <field name="selected"/>
+                            <field name="date" string="Date"/>
+                            <field name="clinic_info"/>
+                        </tree>
+                    </field>
+                </group>
+                <footer>
+                    <button name="insert_record" type="object" string="Insérer" class="oe_highlight"/>
+                    or
+                    <button special="cancel" string="Annuler" type="object"/>
+                </footer>
+           </form>
+        </field>
+    </record>
+
+    <record id="action_get_img_resultat_anterieur_wizard" model="ir.actions.act_window">
+        <field name="name">Résultat antérieur imagerie</field>
+        <field name="res_model">img.result.anterieur.wizard</field>
+        <field name="binding_model_id" ref="acs_imaging.model_patient_imaging_test"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_img_resultat_anterieur_wizard"/>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

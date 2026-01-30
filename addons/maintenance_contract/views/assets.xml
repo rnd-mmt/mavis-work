@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_backend" name="Maintenance Contract Assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/maintenance_contract/static/src/css/style.css"/>
+        </xpath>
+    </template>
+
+    <template id="assets_backend1" name="web_widget_color assets1" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/maintenance_contract/static/src/js/timer-widget.js"></script>
+            <script type="text/javascript" src="/maintenance_contract/static/src/js/donut-chart-widget.js"></script>
+        </xpath>
+    </template>
+
+</odoo>

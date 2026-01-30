@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_move_form" model="ir.ui.view">
+        <field name="name">account.move.form</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr ="//button[@name='action_invoice_sent']" position="before">
+                <button string="Imprimer" name="print_invoice_report" type="object"  class="oe_highlight"/>                
+            </xpath>
+            <xpath expr ="//button[@name='button_draft']" position="after">
+                <button string="Split Invoice" class="btn-primary" name="%(action_select_split_invoice_wizard)d" type="action" attrs="{'invisible':['|',('state', 'not in', ['draft']),('fact_associe', '!=', False)]}"/>
+            </xpath>
+            <xpath expr="//page[@name='paid_info']" position="inside">
+                <group>
+                    <group>
+                        <field string = 'type' name="ceiling_type" readonly="1"/>
+                        <field  name="initial_amount" readonly="1"/>
+                        <field string = 'Plafond' name="ceiling" readonly="1"/>
+                        <field  name="percentage_by_assurance" readonly="1"/>
+                        <field  name="result_taux_assurance" readonly="1"/>
+                        <field  name="percentage_by_patient" readonly="1"/>
+                        <field  name="result_taux_patient" readonly="1"/>
+                        <field  name="exceeding" readonly="1"/>
+                        <field  name="patient_display_name" invisible="1"/>
+                    </group>
+                    <group>
+                        <field name="type_paid" />
+                        <field name="amount_insurance" readonly="1"/>
+                        <field name="amount_patient" readonly="1"/>
+                    </group>
+                </group>
+            </xpath>
+            <xpath expr="//page[@id='invoice_tab']//field[@name='invoice_line_ids']//field[@name='price_unit']" position="before">
+                <field name="price_unit_before_split" string="Prix Avant" groups="account.group_show_line_subtotals_tax_excluded" invisible="1"/>
+                <field name="price_subtotal_before_split" string="Subtotal Avant" groups="account.group_show_line_subtotals_tax_excluded" invisible="1"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="view_inherit_invoice_tree" model="ir.ui.view">
+            <field name="name">account.inherit.invoice.tree</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_invoice_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr ="//button[@name='action_register_payment']" position="before">
+                    <button string="Imprimer" name="print_invoice_report" type="object"  class="oe_highlight"/>                
+                </xpath>
+            </field>
+    </record>
+
+    <record id="view_patient_in_invoice_tree" model="ir.ui.view">
+        <field name="name">account.patient.invoice.tree</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_invoice_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="inside">
+                <field name="patient_display_name" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_partner_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='accounting']" position="inside">
+                <group name="Recapitulatifs">
+                    <field name="company_acronym"/>
+                    <field name="invoice_contact_type"/>
+                    <field name="invoice_contact_bank"/>
+                    <field name="type_paid" />
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- <record id="view_move_form" model="ir.ui.view"> 
+        <field name="name">account.move.form</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr ="//button[@name='button_draft']" position="after">
+                <button string="Split Invoice" name="%(action_select_split_invoice_wizard)d" type="action" attrs="{'invisible':[('state', 'not in', ['draft'])]}"/>
+            </xpath>
+        </field>
+    </record> -->
+
+</odoo>

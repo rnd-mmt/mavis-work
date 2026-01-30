@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="0">
+  <!-- PL  -->
+  <record id="account_financial_report_l10n_mg_cdr" model="account.financial.report">
+    <field name="name">Compte de résultats</field>
+    <field name='type_financial_report_mg'>income_statement</field>
+    <field name='note_mg' eval="True"/>
+    <field name="sign">-1</field>
+    <field name="type">sum_mg</field>
+  </record>
+
+  <record id="account_financial_report_line_01_mg_cdr_pde" model="account.financial.report">
+    <field name="name">I- Production de l'excercice</field>
+    <field name="code">MGCDR_PDE</field>
+    <field name="financial_report_id" ref="account_financial_report_l10n_mg_cdr"/>
+    <field name="parent_id" ref="account_financial_report_l10n_mg_cdr"/>
+    <field name="sequence" eval="1"/>
+    <field name="formulas">balance = PDE_CDA.balance + PDE_PS.balance + PDE_PI.balance</field>
+    <field name="level" eval="1"/>
+    <field name="type">report_mg_pl</field>
+    <field name="style_overwrite">0</field>
+  </record>
+
+  <record id="account_financial_report_line_mg_pde_cda" model="account.financial.report">
+    <field name="name">Chiffres d'affaires</field>
+    <field name="code">PDE_CDA</field>
+    <field name="sequence" eval="1"/>
+    <field name="parent_id" ref='account_financial_report_line_01_mg_cdr_pde'/>
+    <field name="domain" eval="[('code', '=like', '70%'),('code', 'not like', '709%')]"/>
+    <field name="formulas">balance = -sum.balance + PDE_CDA_1.balance</field>
+    <field name="level" eval="2"/>
+    <field name="green_on_positive" eval="0"/>
+    <field name="type">report_mg_pl</field>
+    <field name="style_overwrite">1</field>
+  </record>
+
+  <record id="account_financial_report_line_mg_pde_cda_1" model="account.financial.report">
+    <field name="name">Chiffres d'affaires(soustractifs)</field>
+    <field name="code">PDE_CDA_1</field>
+    <field name="sequence" eval="1"/>
+    <field name="parent_id" ref='account_financial_report_line_mg_pde_cda'/>
+    <field name="domain" eval="[('code', '=like', '709%')]"/>
+    <field name="formulas">balance = -sum.balance</field>
+    <field name="level" eval="3"/>
+    <field name="green_on_positive" eval="0"/>
+    <field name="is_hidden" eval="True"/>
+    <field name="type">report_mg_pl</field>
+    <field name="style_overwrite">2</field>
+  </record>
+
+  <record id="account_financial_report_line_mg_pde_ps" model="account.financial.report">
+    <field name="name">Production stockée</field>
+    <field name="code">PDE_PS</field>
+    <field name="sequence" eval="2"/>
+    <field name="parent_id" ref='account_financial_report_line_01_mg_cdr_pde'/>
+    <field name="domain" eval="['|',('code', '=like', '713%'),('code', '=like', '714%')]"/>
+    <field name="formulas">balance = -sum.balance</field>
+    <field name="level" eval="2"/>
+    <field name="green_on_positive" eval="0"/>
+    <field name="type">report_mg_pl</field>
+    <field name="style_overwrite">1</field>
+  </record>
+
+  <record id="account_financial_report_line_mg_pde_pi" model="account.financial.report">
+    <field name="name">Production immobilisée</field>
+    <field name="code">PDE_PI</field>
+    <field name="sequence" eval="3"/>
+    <field name="parent_id" ref='account_financial_report_line_01_mg_cdr_pde'/>
+    <field name="domain" eval="['|',('code', '=like', '721%'),('code', '=like', '722%')]"/>
+    <field name="formulas">balance = -sum.balance</field>
+    <field name="level" eval="2"/>
+    <field name="green_on_positive" eval="0"/>
+    <field name="type">report_mg_pl</field>
+    <field name="style_overwrite">1</field>
+  </record>
+
+  <record id="account_financial_report_line_02_mg_cdr_cde" model="account.financial.report">
+    <field name="name">II- Consommation de l’exercice</field>
+    <field name="code">MGCDR_CDE</field>
+    <field name="financial_report_id" ref="account_financial_report_l10n_mg_cdr"/>
+    <field name="parent_id" ref="account_financial_report_l10n_mg_cdr"/>
+    <field name="sequence" eval="2"/>
+    <field name="formulas">balance = CDE_AC.balance + CDE_SEAC.balance</field>
+    <field name="level" eval="1"/>
+    <field name="type">report_mg_pl</field>
+    <field name="style_overwrite">0</field>
+  </record>
+
+  <record id="account_financial_report_line_mg_cde_ac" model="account.financial.report">
+    <field name="name">Achats consommés</field>
+    <field name="code">CDE_AC</field>
+    <field name="sequence" eval="1"/>
+    <field name="parent_id" ref='account_financial_report_line_02_mg_cdr_cde'/>
+    <field name="domain" eval="[('code', '=like', '60%'),('code', 'not like', '609%')]"/>
+    <field name="formulas">balance = sum.balance - CDE_AC_1.balance</field>
+    <field name="level" eval="2"/>
+    <field name="green_on_positive" eval="0"/>
+    <field name="type">report_mg_pl</field>
+    <field name="style_overwrite">1</field>
+  </record>
+
+  <record id="account_financial_report_line_mg_cde_ac_1" model="account.financial.report">
+    <field name="name">Achats consommés(soustractifs)</field>
+    <field name="code">CDE_AC_1</field>
+    <field name="sequence" eval="1"/>
+    <field name="parent_id" ref='account_financial_report_line_mg_cde_ac'/>
+    <field name="domain" eval="[('code', '=like', '609%')]"/>
+    <field name="formulas">balance = sum.balance</field>
+    <field name="level" eval="3"/>
+    <field name="green_on_positive" eval="0"/>
+    <field name="is_hidden" eval="True"/>
+    <field name="type">report_mg_pl</field>
+    <field name="style_overwrite">2</field>
+  </record>
+
+  <record id="account_financial_report_line_mg_cde_SEAC" model="account.financial.report">
+    <field name="name">Services extérieurs et autres consommations</field>
+    <field name="code">CDE_SEAC</field>
+    <field name="sequence" eval="2"/>
+    <field name="parent_id" ref='account_financial_report_line_02_mg_cdr_cde'/>
+    <field name="domain"
+           eval="['&amp;','|','&amp;',('code', '=like', '61%'),('code', 'not like', '619%'),('code', '=like', '62%'),('code', 'not like', '629%')]"/>
+    <field name="formulas">balance = sum.balance - CDE_SEAC_1.balance</field>
+    <field name="level" eval="2"/>
+    <field name="green_on_positive" eval="0"/>
+    <field name="type">report_mg_pl</field>
+    <field name="style_overwrite">1</field>
+  </record>
+
+  <record id="account_financial_report_line_mg_cde_SEAC_1" model="account.financial.report">
+    <field name="name">Services extérieurs et autres consommations(soustractifs)</field>
+    <field name="code">CDE_SEAC_1</field>
+    <field name="sequence" eval="3"/>
+    <field name="parent_id" ref='account_financial_report_line_mg_cde_SEAC'/>
+    <field name="domain" eval="['|',('code', '=like', '619%'),('code', '=like', '629%')]"/>
+    <field name="formulas">balance = sum.balance</field>
+    <field name="level" eval="3"/>
+    <field name="green_on_positive" eval="0"/>
+    <field name="is_hidden" eval="True"/>
+    <field name="type">report_mg_pl</field>
+    <field name="style_overwrite">2</field>
+  </record>
+
+  <record id="account_financial_report_line_03_mg_cdr_vae" model="account.financial.report">
+    <field name="name">III- VALEUR AJOUTEE D’EXPLOITATION (I - II)</field>
+    <field name="code">MGCDR_VAE</field>
+    <field name="financial_report_id" ref="account_financial_report_l10n_mg_cdr"/>
+    <field name="parent_id" ref="account_financial_report_l10n_mg_cdr"/>
+    <field name="sequence" eval="3"/>
+    <field name="formulas">balance = MGCDR_PDE.balance - MGCDR_CDE.balance</field>
+    <field name="level" eval="1"/>
+    <field name="type">report_mg_pl</field>
+    <field name="style_overwrite">0</field>
+  </record>
+
+  <record id="account_financial_report_line_04_mg_cdr_ebe" model="account.financial.report">
+    <field name="name">IV- EXCEDENT BRUT D’EXPLOITATION</field>
+    <field name="code">MGCDR_EBE</field>
+    <field name="financial_report_id" ref="account_financial_report_l10n_mg_cdr"/>
+    <field name="parent_id" ref="account_financial_report_l10n_mg_cdr"/>
+    <field name="sequence" eval="4"/>
+    <field name="formulas">balance = MGCDR_VAE.balance - EBE_ITVA.balance - EBE_CP.balance + EBE_SE.balance</field>
+    <field name="level" eval="1"/>
+    <field name="type">report_mg_pl</field>
+    <field name="style_overwrite">0</field>
+  </record>
+
+  <record id="account_financial_report_line_mg_ebe_se" model="account.financial.report">
+    <field name="name">Subvention d’exploitation</field>
+    <field name="code">EBE_SE</field>
+    <field name="sequence" eval="1"/>
+    <field name="parent_id" ref='account_financial_report_line_04_mg_cdr_ebe'/>
+    <field name="domain" eval="['|',('code', '=like', '741%'),('code', '=like', '748%')]"/>
+    <field name="formulas">balance = -sum.balance</field>
+    <field name="level" eval="2"/>
+    <field name="green_on_positive" eval="0"/>
+    <field name="type">report_mg_pl</field>
+    <field name="style_overwrite">1</field>
+  </record>
+
+  <record id="account_financial_report_line_mg_ebe_cp" model="account.financial.report">
+    <field name="name">Charges de personnel (A)</field>
+    <field name="code">EBE_CP</field>
+    <field name="sequence" eval="2"/>
+    <field name="parent_id" ref='account_financial_report_line_04_mg_cdr_ebe'/>
+    <field name="domain" eval="[('code', '=like', '64%')]"/>
+    <field name="formulas">balance = sum.balance</field>
+    <field name="level" eval="2"/>
+    <field name="green_on_positive" eval="0"/>
+    <field name="type">report_mg_pl</field>
+    <field name="style_overwrite">1</field>
+  </record>
+
+  <record id="account_financial_report_line_mg_ebe_itva" model="account.financial.report">
+    <field name="name">Impôts, taxes et versements assimilés</field>
+    <field name="code">EBE_ITVA</field>
+    <field name="sequence" eval="3"/>
+    <field name="parent_id" ref='account_financial_report_line_04_mg_cdr_ebe'/>
+    <field name="domain" eval="[('code', '=like', '63%')]"/>
+    <field name="formulas">balance = sum.balance</field>
+    <field name="level" eval="2"/>
+    <field name="green_on_positive" eval="0"/>
+    <field name="type">report_mg_pl</field>
+    <field name="style_overwrite">1</field>
+  </record>
+
+  <record id="account_financial_report_line_05_mg_cdr_ro" model="account.financial.report">
+    <field name="name">V- RESULTAT OPERATIONNEL</field>
+    <field name="code">MGCDR_RO</field>
+    <field name="financial_report_id" ref="account_financial_report_l10n_mg_cdr"/>
+    <field name="parent_id" ref="account_financial_report_l10n_mg_cdr"/>
+    <field name="sequence" eval="5"/>
+    <field name="formulas">balance = MGCDR_EBE.balance + RO_APO.balance - RO_ACO.balance - RO_DAPPV.balance +
+      RO_RPPV.balance
+    </field>
+    <field name="level" eval="1"/>
+    <field name="type">report_mg_pl</field>
+    <field name="style_overwrite">0</field>
+  </record>
+
+  <record id="account_financial_report_line_mg_ro_apo" model="account.financial.report">
+    <field name="name">Autres produits opérationnels</field>
+    <field name="code">RO_APO</field>
+    <field name="sequence" eval="1"/>
+    <field name="parent_id" ref='account_financial_report_line_05_mg_cdr_ro'/>
+    <field name="domain" eval="[('code', '=like', '75%')]"/>
+    <field name="formulas">balance = -sum.balance</field>
+    <field name="level" eval="2"/>
+    <field name="green_on_positive" eval="0"/>
+    <field name="type">report_mg_pl</field>
+    <field name="style_overwrite">1</field>
+  </record>
+
+  <record id="account_financial_report_line_mg_ro_aco" model="account.financial.report">
+    <field name="name">Autres charges opérationnelles</field>
+    <field name="code">RO_ACO</field>
+    <field name="sequence" eval="2"/>
+    <field name="parent_id" ref='account_financial_report_line_05_mg_cdr_ro'/>
+    <field name="domain" eval="[('code', '=like', '65%')]"/>
+    <field name="formulas">balance = sum.balance</field>
+    <field name="level" eval="2"/>
+    <field name="green_on_positive" eval="0"/>
+    <field name="type">report_mg_pl</field>
+    <field name="style_overwrite">1</field>
+  </record>
+
+  <record id="account_financial_report_line_mg_ro_dappv" model="account.financial.report">
+    <field name="name">Dotations aux amortissements, aux provisions et pertes de valeur</field>
+    <field name="code">RO_DAPPV</field>
+    <field name="sequence" eval="3"/>
+    <field name="parent_id" ref='account_financial_report_line_05_mg_cdr_ro'/>
+    <field name="domain" eval="[('code', '=like', '68%')]"/>
+    <field name="formulas">balance = sum.balance</field>
+    <field name="level" eval="2"/>
+    <field name="green_on_positive" eval="0"/>
+    <field name="type">report_mg_pl</field>
+    <field name="style_overwrite">1</field>
+  </record>
+
+  <record id="account_financial_report_line_mg_ro_rppv" model="account.financial.report">
+    <field name="name">Reprise sur provisions et pertes de valeurs</field>
+    <field name="code">RO_RPPV</field>
+    <field name="sequence" eval="4"/>
+    <field name="parent_id" ref='account_financial_report_line_05_mg_cdr_ro'/>
+    <field name="domain" eval="[('code', '=like', '78%')]"/>
+    <field name="formulas">balance = -sum.balance</field>
+    <field name="level" eval="2"/>
+    <field name="green_on_positive" eval="0"/>
+    <field name="type">report_mg_pl</field>
+    <field name="style_overwrite">1</field>
+  </record>
+
+  <record id="account_financial_report_line_06_mg_cdr_rf" model="account.financial.report">
+    <field name="name">VI- RESULTAT FINANCIER</field>
+    <field name="code">MGCDR_RF</field>
+    <field name="financial_report_id" ref="account_financial_report_l10n_mg_cdr"/>
+    <field name="parent_id" ref="account_financial_report_l10n_mg_cdr"/>
+    <field name="sequence" eval="6"/>
+    <field name="formulas">balance = RF_PF.balance - RF_CF.balance</field>
+    <field name="level" eval="1"/>
+    <field name="type">report_mg_pl</field>
+    <field name="style_overwrite">0</field>
+  </record>
+
+  <record id="account_financial_report_line_mg_rf_pf" model="account.financial.report">
+    <field name="name">Produits financiers</field>
+    <field name="code">RF_PF</field>
+    <field name="sequence" eval="1"/>
+    <field name="parent_id" ref='account_financial_report_line_06_mg_cdr_rf'/>
+    <field name="domain" eval="['|',('code', '=like', '76%'),('code', '=like', '786%')]"/>
+    <field name="formulas">balance = -sum.balance</field>
+    <field name="level" eval="2"/>
+    <field name="green_on_positive" eval="0"/>
+    <field name="type">report_mg_pl</field>
+    <field name="style_overwrite">1</field>
+  </record>
+
+  <record id="account_financial_report_line_mg_rf_cf" model="account.financial.report">
+    <field name="name">Charges financières</field>
+    <field name="code">RF_CF</field>
+    <field name="sequence" eval="2"/>
+    <field name="parent_id" ref='account_financial_report_line_06_mg_cdr_rf'/>
+    <field name="domain" eval="['|',('code', '=like', '66%'),('code', '=like', '686%')]"/>
+    <field name="formulas">balance = sum.balance</field>
+    <field name="level" eval="2"/>
+    <field name="green_on_positive" eval="0"/>
+    <field name="type">report_mg_pl</field>
+    <field name="style_overwrite">1</field>
+  </record>
+
+  <record id="account_financial_report_line_07_mg_cdr_rai" model="account.financial.report">
+    <field name="name">VII- RESULTAT AVANT IMPOTS (V + VI)</field>
+    <field name="code">MGCDR_RAI</field>
+    <field name="financial_report_id" ref="account_financial_report_l10n_mg_cdr"/>
+    <field name="parent_id" ref="account_financial_report_l10n_mg_cdr"/>
+    <field name="sequence" eval="7"/>
+    <field name="formulas">balance = MGCDR_RO.balance + MGCDR_RF.balance</field>
+    <field name="level" eval="1"/>
+    <field name="type">report_mg_pl</field>
+    <field name="style_overwrite">0</field>
+  </record>
+
+  <record id="account_financial_report_line_10_mg_cdr_rnao" model="account.financial.report">
+    <field name="name"> VIII- RESULTAT NET DES ACTIVITES ORDINAIRES</field>
+    <field name="code">MGCDR_RNAO</field>
+    <field name="financial_report_id" ref="account_financial_report_l10n_mg_cdr"/>
+    <field name="parent_id" ref="account_financial_report_l10n_mg_cdr"/>
+    <field name="sequence" eval="10"/>
+    <field name="formulas">balance = MGCDR_RAI.balance - RNAO_IER.balance - RNAO_ID.balance</field>
+    <field name="level" eval="1"/>
+    <field name="type">report_mg_pl</field>
+    <field name="style_overwrite">0</field>
+  </record>
+
+  <record id="account_financial_report_line_mg_rnao_ier" model="account.financial.report">
+    <field name="name">Impôts exigibles sur résultats</field>
+    <field name="code">RNAO_IER</field>
+    <field name="sequence" eval="1"/>
+    <field name="parent_id" ref='account_financial_report_line_10_mg_cdr_rnao'/>
+    <field name="domain" eval="['|',('code', '=like', '695%'),('code', '=like', '698%')]"/>
+    <field name="formulas">balance = sum.balance</field>
+    <field name="level" eval="2"/>
+    <field name="green_on_positive" eval="0"/>
+    <field name="type">report_mg_pl</field>
+    <field name="style_overwrite">1</field>
+  </record>
+
+  <record id="account_financial_report_line_mg_rnao_id" model="account.financial.report">
+    <field name="name">Impôts différés</field>
+    <field name="code">RNAO_ID</field>
+    <field name="sequence" eval="2"/>
+    <field name="parent_id" ref='account_financial_report_line_10_mg_cdr_rnao'/>
+    <field name="domain" eval="['|',('code', '=like', '692%'),('code', '=like', '693%')]"/>
+    <field name="formulas">balance = sum.balance</field>
+    <field name="level" eval="2"/>
+    <field name="green_on_positive" eval="0"/>
+    <field name="type">report_mg_pl</field>
+    <field name="style_overwrite">1</field>
+  </record>
+
+  <record id="account_financial_report_line_8_mg_cdr_tpao" model="account.financial.report">
+    <field name="name">TOTAL DES PRODUITS DES ACTIVITES ORDINAIRE</field>
+    <field name="code">RNAO_TPAO</field>
+    <field name="parent_id" ref='account_financial_report_line_10_mg_cdr_rnao'/>
+    <field name="sequence" eval="8"/>
+    <field name="domain"
+           eval="['&amp;','&amp;','|',('code', '=like', '7%'),('code', '=like', '692%'),('code', 'not like', '77%'),('code', 'not like', '79%')]"/>
+    <field name="formulas">balance = -sum.balance</field>
+    <field name="level" eval="1"/>
+    <field name="type">report_mg_pl</field>
+    <field name="style_overwrite">1</field>
+  </record>
+
+  <record id="account_financial_report_line_9_mg_cdr_tcao" model="account.financial.report">
+    <field name="name">TOTAL DES CHARGES DES ACTIVITES ORDINAIRES</field>
+    <field name="code">RNAO_TCAO</field>
+    <field name="parent_id" ref='account_financial_report_line_10_mg_cdr_rnao'/>
+    <field name="sequence" eval="9"/>
+    <field name="domain"
+           eval="['|','|','&amp;','&amp;',('code', '=like', '6%'),('code', 'not like', '69%'),('code', 'not like', '67%'),('code', '=like', '693%'),('code', '=like', '695%')]"/>
+    <field name="formulas">balance = sum.balance</field>
+    <field name="level" eval="1"/>
+    <field name="type">report_mg_pl</field>
+    <field name="style_overwrite">1</field>
+  </record>
+
+
+  <record id="account_financial_report_line_11_mg_cdr_re" model="account.financial.report">
+    <field name="name">IX- RESULTAT EXTRAORDINAIRE</field>
+    <field name="code">MGCDR_RE</field>
+    <field name="financial_report_id" ref="account_financial_report_l10n_mg_cdr"/>
+    <field name="parent_id" ref="account_financial_report_l10n_mg_cdr"/>
+    <field name="sequence" eval="11"/>
+    <field name="formulas">balance = RE_EEP.balance - RE_EEC.balance</field>
+    <field name="level" eval="1"/>
+    <field name="style_overwrite">0</field>
+  </record>
+
+  <record id="account_financial_report_line_mg_re_eep" model="account.financial.report">
+    <field name="name">Eléments extraordinaires (produits) – à préciser</field>
+    <field name="code">RE_EEP</field>
+    <field name="sequence" eval="1"/>
+    <field name="parent_id" ref='account_financial_report_line_11_mg_cdr_re'/>
+    <field name="domain" eval="[('code', '=like', '77%')]"/>
+    <field name="formulas">balance = -sum.balance</field>
+    <field name="level" eval="2"/>
+    <field name="green_on_positive" eval="0"/>
+    <field name="style_overwrite">1</field>
+  </record>
+
+  <record id="account_financial_report_line_mg_re_eec" model="account.financial.report">
+    <field name="name">Eléments extraordinaires (charges) – à préciser</field>
+    <field name="code">RE_EEC</field>
+    <field name="sequence" eval="2"/>
+    <field name="parent_id" ref='account_financial_report_line_11_mg_cdr_re'/>
+    <field name="domain" eval="[('code', '=like', '67%')]"/>
+    <field name="formulas">balance = sum.balance</field>
+    <field name="level" eval="2"/>
+    <field name="green_on_positive" eval="0"/>
+    <field name="style_overwrite">1</field>
+  </record>
+
+  <record id="account_financial_report_line_12_mg_cdr_rne" model="account.financial.report">
+    <field name="name">X- RESULTAT NET DE L’EXERCICE</field>
+    <field name="code">MGCDR_RNE</field>
+    <field name="financial_report_id" ref="account_financial_report_l10n_mg_cdr"/>
+    <field name="parent_id" ref="account_financial_report_l10n_mg_cdr"/>
+    <field name="sequence" eval="12"/>
+    <field name="formulas">balance = MGCDR_RE.balance + MGCDR_RNAO.balance</field>
+    <field name="level" eval="1"/>
+    <field name="style_overwrite">0</field>
+  </record>
+
+  <record id="account_financial_report_line_13_mg_cdr_rnec" model="account.financial.report">
+    <field name="name">XI- RESULTAT NET DE L’ENSEMBLE CONSOLIDE</field>
+    <field name="code">MGCDR_RNEC</field>
+    <field name="financial_report_id" ref="account_financial_report_l10n_mg_cdr"/>
+    <field name="parent_id" ref="account_financial_report_l10n_mg_cdr"/>
+    <field name="sequence" eval="13"/>
+    <field name="formulas"></field>
+    <field name="level" eval="1"/>
+    <field name="style_overwrite">0</field>
+  </record>
+</odoo>

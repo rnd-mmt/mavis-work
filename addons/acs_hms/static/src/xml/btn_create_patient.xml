@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t t-inherit="web.ControlPanel" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('o_cp_bottom_left')]" position="before">
+                <button class="btn btn-primary patient_creation_checking o_hidden" style="min-width: 100px; margin-right: 5px; ">Créer patient</button>
+		</xpath>
+    </t>
+</templates>

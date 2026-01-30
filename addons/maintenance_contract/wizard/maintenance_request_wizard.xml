@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="maintenance_request_wizard_view_inherit" model="ir.ui.view">
+            <field name="name">maintenance.request.wizard.form.inherit</field>
+            <field name="model">maintenance.request.wizard</field>
+            <field name="inherit_id" ref="helpdesk_support_ticket_maintenance.maintenance_request_wizard_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='equipment_id']" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

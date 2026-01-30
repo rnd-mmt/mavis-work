@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <!-- Vue Simulateur de prix -->
+        <record id="pricelist_simulator_view_form" model="ir.ui.view">
+            <field name="name">Simulateur de prix</field>
+            <field name="model">pricelist.simulator.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Simulateur de prix">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="pricelist_id" string="Liste de prix"/>
+                                <field name="currency_id" invisible="1"/>
+                                <field name="type_pricelist" invisible="1"/>
+                                <field name="prise_charge" attrs="{'invisible': [('type_pricelist','=', False)]}"/>
+                                <label for="percentage" attrs="{'invisible': [('type_pricelist','=', False)]}"/>
+                                <div class="o_row">
+                                    <field name="percentage" attrs="{'invisible': [('type_pricelist','=', False)], 'required': [('prise_charge', 'in', ['sans_plafond','plafond_motant_total','plafond_par_article'])]}" />
+
+                                    <span attrs="{'invisible': [('type_pricelist','=', False)]}">%%</span>
+                                </div>
+                                <field name="total_plafond" widget="monetary" options="{'currency_field': 'currency_id'}"
+                                       attrs="{'invisible': ['|',('type_pricelist','=', False),('prise_charge', 'in', ['sans_plafond'])]}"/>
+                            </group>
+                            <group>
+                                <button name="update_price" type="object" string="Mettre à jour" class="btn-primary"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="service_line" nolabel="1" colspan="4">
+                                <tree string="Lignes" editable="bottom">
+                                    <field name="product" string="Product" widget="product_configurator"/>
+                                    <field name="product_uom_category_id" invisible="1"/>
+                                    <field name="quantity"/>
+                                    <field name="product_uom"/>
+                                    <field name="sale_price" force_save="1"/>
+                                    <field name="amount_total" widget="monetary" optional="hide"/>
+                                </tree>
+                            </field>
+                        </group>
+                        <div class="oe_subtotal_footer oe_right" style="padding: 0 30px;">
+                            <strong>TOTAL: </strong>
+                            <field name="total_price" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                            <br/>
+                            <strong attrs="{'invisible': [('type_pricelist','=', False)]}">Part Assurance: </strong>
+                            <field name="amount_assurance" widget='monetary' readonly="1" options="{'currency_field': 'currency_id'}" attrs="{'invisible': [('type_pricelist','=', False)]}"/>
+                            <br/>
+                            <strong attrs="{'invisible': [('type_pricelist','=', False)]}">Part Patient: </strong>
+                            <field name="amount_patient" widget='monetary' readonly="1" options="{'currency_field': 'currency_id'}" attrs="{'invisible': [('type_pricelist','=', False)]}"/>
+                        </div>
+                    </sheet>
+                    <footer>
+                        <button string="Fermer" class="btn-dark" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action Simulateur de prix -->
+        <record id="action_pricelist_simulator" model="ir.actions.act_window">
+            <field name="name">Simulateur de prix</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pricelist.simulator.wizard</field>
+            <field name="view_id" ref="health_service.pricelist_simulator_view_form"/>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        
+    </data>
+</odoo>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="1">
+        <!-- Sequence for Car Reservation -->
+        <record id="seq_car_reservation" model="ir.sequence">
+            <field name="name">Car Reservation</field>
+            <field name="code">car.reservation</field>
+            <field name="prefix">RES/</field>
+            <field name="number_next">1</field>
+            <field name="padding">4</field>
+        </record>
+        <record id="custom_car_reservation_template" model="mail.template">
+            <field name="name">Car Reservation Mail Template</field>
+            <field
+                name="email_from"
+            >${object.approvar_id and object.approvar_id.partner_id.email or ''}</field>
+            <field
+                name="email_to"
+            >${(object.employee_id and object.employee_id.work_email) or (object.partner_id and object.partner_id.email) or ''}</field>
+            <field name="subject">Car Reservation</field>
+            <field name="model_id" ref="model_car_reservation" />
+            <field name="auto_delete" eval="True" />
+            <field
+                name="body_html"
+            ><![CDATA[
+                 <p>
+                    Hello <b>${(object.employee_id and object.employee_id.name) or (object.partner_id and object.partner_id.name) or ''} </b>,
+                 </p>
+                 <p>
+                    Your booking from Date ${format_datetime(object.start_date, tz=(object.employee_id.tz if object.employee_id else object.partner_id.tz) or 'UTC', dt_format=False) or ''} to Date ${format_datetime(object.end_date, tz=(object.employee_id.tz if object.employee_id else object.partner_id.tz) or 'UTC', dt_format=False) or ''} for location <b>${object.pickup_location_id and object.pickup_location_id.name or ''}</b> to <b>${object.drop_location_id and object.drop_location_id.name or ''}</b> is confirmed.
+                 </p>
+                    Thank You.
+                ]]></field>
+        </record>
+    </data>
+</odoo>

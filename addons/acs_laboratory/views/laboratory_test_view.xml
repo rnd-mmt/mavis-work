@@ -1,0 +1,323 @@
+<?xml version="1.0"?>
+<odoo>
+    <template id="section_note_and_conclusion_js" name="section_note_and_conclusion_js" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/acs_laboratory/static/src/js/section_note_and_conclusion.js"></script>
+            <link rel="stylesheet" href="/acs_laboratory/static/src/css/section_note_and_conclusion.css"/>
+        </xpath>
+    </template>
+    
+    <!--Patient Test Results-->
+    <record model="ir.ui.view" id="patient_laboratory_test_view">
+        <field name="name">Laboratory Test</field>
+        <field name="model">patient.laboratory.test</field>
+        <field name="arch" type="xml">
+            <form string="Laboratory Test">
+                <header>
+                    <button name="get_analyte" string="Confirmer" class="btn-success" type="object" states="draft"/>
+                    <button string="Récupérer valeur antérieur" name="get_resultat_anterieur" class="btn-danger" type="object" attrs="{'invisible':[('state', 'in', ['done','deliver'])]}"/>
+                    <button name="check_result" states="pret,result_saved" string="Vérifier résultat" type="object"/>
+<!--                    <button name="action_verified" states="result_saved" string="Vérification biologiste" type="object" class="oe_highlight" groups="acs_laboratory.group_hms_lab_manager"/>/>-->
+                    <button name="action_done" states="verified,result_saved,half_done"
+                            confirm="Vous êtes sur le point de valider un résultat de laboratoire. Êtes vous sûr de vouloir continuer?"  string="Done" type="object" class="oe_highlight"/>
+                    <button name="action_deliver" states="done" string="Résultat livré" type="object" class="oe_highlight"/>
+                    <button name="print_send_sms" states="done" string="Imprimer résultat" type="object" state='done,half_done'/>
+                    <button name="action_cancel" states="draft" string="Cancel" type="object"/>
+                    <button name="reverified_record" string="Re-vérifier" states="done" class="btn-danger"  type="object" groups="acs_laboratory.group_hms_lab_manager"/>
+                    <button name="combine_conclusion" string="Interpreter" states="result_saved" type="object" groups="acs_laboratory.group_hms_lab_manager"/>
+                    <button name="action_draft" string="Set to draft" type="object" attrs="{'invisible':[('state', 'in', ['done','deliver'])]}"/>
+                    <button name="print_gs" string="Carte sanguin" type="object" class="oe_highlight" attrs="{'invisible':[('state', 'not in', ['done','deliver']),('check_print_card', '=', False)]}"/>
+
+                    <button name="recover_lab_data"
+                        string="Récuperer les Données"
+                        type="object"
+                        class="oe_highlight"
+                        attrs="{'invisible': [('show_button', '=', False)]}" />
+
+                    <!-- POUR LIVRAISON PARTIELLE -->
+                    <button name="set_ready_for_partial_delivery" string="Pour Livraison partielle" type="object" attrs="{'invisible': [('is_ready_for_partial_delivery', '=', True)]}" />
+                    <button name="unset_ready_for_partial_delivery" string="Annuler Livraison partielle" type="object" attrs="{'invisible': [('is_ready_for_partial_delivery', '=', False)]}" />
+                    <!-- END LIVRAISON PARTIELLE -->
+
+                    <!-- LIVREE PARTIELLEMENT -->
+                    <button name="set_partial_delivery" string="Livré partiellement" type="object" attrs="{'invisible': [('is_partial_delivery', '=', True)]}" />
+                    <!-- END LIVRAISON PARTIELLE -->                   
+
+                        
+                    <field name="state" widget="statusbar" statusbar_visible="draft,pret,sent,result_saved,verified,half_done,deliver"/>
+                </header>
+                <!-- Bannière LIVRAISON PARTIELLE -->
+                <div class="container-fluid text-center pl-0 pr-0" attrs="{'invisible': [('is_partial_delivery', '=', False)]}">
+                    <div class="alert alert-info rounded-0 pt-4 pb-4 h3" role="alert">Livré partiellement.</div>
+                </div>
+
+                <sheet>
+                    <!-- Etiquette LIVRAISON PARTIELLE -->
+                    <widget name="web_ribbon" title="Prêt pour livraison partielle" bg_color="bg-info" attrs="{'invisible': [('is_ready_for_partial_delivery', '!=', True)]}"/>
+
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object"
+                        name="action_view_attachments" icon="fa-files-o">
+                            <field string="Documents" name="attach_count" widget="statinfo"/>
+                        </button>
+                        <button class="oe_stat_button" type="object"
+                            name="action_attachments_preview" icon="fa-files-o" string="Laboratoire">
+                        </button>
+                    </div>
+
+                    <h1>
+                        <field name="name" class="oe_inline"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="patient_id"/>
+                            <field name="birthday"/>
+                            <field name="age"/>
+                            <field name="mobile"/>
+                            <field name="test_id" invisible="1"/>
+                            <field name="request_id" domain="[('patient_id','=',patient_id)]"/>
+                            <field name="laboratory_id" attrs="{'invisible': [('laboratory_id', '=', False)]}" domain=" [('is_collection_center', '=', False)]"/>
+                            <field name="physician_id" invisible="1"/>
+                            <field name="prescripteur"/>
+                            <field name="sample_ids" widget="many2many_tags" domain="[('request_id','=',request_id),('patient_id','=',patient_id)]" options="{'no_create': True}" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="user_id" required="1"/>
+                            <field name="cat_analyse" readonly="1"/>
+                            <field name="collection_center_id" domain=" [('is_collection_center', '=', True)]" invisible="1"/>
+                            <field name="date_requested"/>
+                            <field name="date_analysis"/>
+                            <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                            <field name="health_service_id"/>
+                            <field name="department_id"/>
+                            <field name="clinic_info"/>
+                            <field name="check_print_card" invisible="1"/>
+                            <field name="show_button" invisible="1"/>
+                            <field name="is_ready_for_partial_delivery" invisible="1"/>
+                            <field name="is_partial_delivery" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="diagnosis" string="Diagnosis">
+                            <group>
+                                <group><field name="aspect_sang"/></group>
+                                <group><field name="aspect_urine"/></group>
+                            </group>
+                            <group class="oe_subtotal_footer oe_right">
+                                    <field name="nb_analyte_warning"/>
+                            </group>
+                            <!-- <group class="oe_subtotal_footer oe_right">
+                                    <field name="check_analyte_warning"/>
+                            </group> -->
+
+                            <field name="critearea_ids" colspan="4" nolabel="1" widget="section_note_conclusion_one2many">
+                                <tree default_order="sequence" editable="bottom" string="Test Cases" decoration-warning="result_type=='warning'" decoration-danger="result_type in ['low','high','danger']">
+                                    <!--control>
+                                        <create string="Add a line"/>
+                                        <create string="Add a section" context="{'default_display_type': 'line_section'}"/>
+                                    </control-->
+                                    <control>
+                                        <create name="add_line_control" string="Add a line"/>
+                                        <create name="add_section_control" string="Add a section" context="{'default_display_type': 'line_section'}"/>
+                                        <create name="add_note_control" string="Add a note" context="{'default_display_type': 'line_note'}"/>
+                                        <create name="add_conclusion_control" string="Ajouter un conclusion" context="{'default_display_type': 'line_conclusion'}"/>
+                                    </control>
+                                    <field name="id" invisible="1"/>
+                                    <field name="display_type" invisible="1"/>
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="group_sequence" invisible="1"/>
+                                    <field name="code"/>
+                                    <field name="name" required="1" widget="section_and_note_text" attrs="{ 'readonly': [('display_type', '=', False)]}" decoration-danger="result == False"/>
+                                    <field name="normal_range" attrs="{ 'required': [('display_type', '=', False)],  'readonly': [('id', '!=', False)]}"/>
+                                    <field name="lab_uom_id" attrs="{ 'readonly': [('id', '!=', False)]}"/>
+                                    <field name="result"/>
+                                    <field name="pourcentage"/>
+                                    <field name="prev_result" readonly="1"/>
+                                    <field name="date_anterieur"/>
+                                    <field name="result_type"/>
+                                    <field name="remark"/>
+                                    <field name="date_result" invisible="1"/>
+                                    <field name="ref_sample" force_save="1"/>
+                                    <field name="section_warning"/>
+                                </tree>
+                            </field>
+                            <separator string="Antibiogramme"/>
+                            <!-- <field name="antibiogramme" type="html" class="oe_memo"/> -->
+                            <div class="jumbotron">
+                                <notebook>
+                                    <page name="antibiogramme_1" string="ANTIBIOGRAMME 1">
+                                        <field name="antibiogramme_1" type="html" class="oe_memo"/>
+                                    </page>
+                                    <page name="antibiogramme_2" string="ANTIBIOGRAMME 2">
+                                        <field name="antibiogramme_2" type="html" class="oe_memo"/>
+                                    </page>
+                                    <page name="antibiogramme_3" string="ANTIBIOGRAMME 3">
+                                        <field name="antibiogramme_3" type="html" class="oe_memo"/>
+                                    </page>
+                                    <page name="antibiogramme_4" string="ANTIBIOGRAMME 4">
+                                        <field name="antibiogramme_4" type="html" class="oe_memo"/>
+                                    </page>
+                                </notebook>
+                                <style> .jumbotron .o_notebook{display:flex!important;flex-direction:row!important}.jumbotron .o_notebook_headers{display:flex!important;flex-direction:column!important;width:205px!important}.jumbotron .o_notebook_headers .nav-tabs{display:flex!important;flex-direction:column!important;width:100%!important}.jumbotron .o_notebook_headers .nav-tabs .nav-item{width:100%!important}.jumbotron .o_notebook_headers .nav-tabs .nav-item .nav-link{width:100%!important;text-align:left!important;border-radius:0!important;border-bottom:1px solid #ddd!important}.jumbotron .o_notebook_headers .nav-tabs .nav-item .nav-link.active{border-right:none!important}.jumbotron .tab-content{flex-grow:1!important;padding-left:20px!important}.jumbotron .tab-content .tab-pane{display:none!important}.jumbotron .tab-content .tab-pane.active{display:block!important}.jumbotron .tab-pane.active{padding-top:0!important;}.jumbotron a.nav-link:hover{background-color: #ffffff !important;}</style>
+                            </div>
+                            <field name="diagnosis" placeholder="Diagnosis"/>
+                            <field name="note" placeholder="Extra Note"/>
+                        </page>
+<!--                        <page name="consumed_material" string="Consumed Material">-->
+<!--                            <field name="consumable_line_ids" nolabel="1" colspan="4">-->
+<!--                                <tree string="Line" editable="top">-->
+<!--                                    <field name="product_id" expand="1" required="1" domain="[('tracking','=','none')]"/>-->
+<!--                                    <field name="product_uom" required="1"/>-->
+<!--                                    <field name="qty" required="1"/>-->
+<!--                                    <field name="date" required="1"/>-->
+<!--                                    <field name="move_id" invisible="1"/>-->
+<!--                                </tree>-->
+<!--                            </field>-->
+<!--                        </page>-->
+                        <page string="Liste tests" name="lines">
+                            <group>
+                                <field name="list_test" nolabel="1" colspan="4" >
+                                    <tree string="Lines" editable="bottom">
+                                        <field name="test_id" string="Test"/>
+                                        <field name="acs_tat" optional="show"/>
+                                        <field name="instruction"/>
+                                        <field name="sample_type_id" optional="hide"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                        <page string="Autres informations">
+                            <group>
+                                <group>
+                                    <field name="group_techlab" widget="many2many_tags"/>
+                                    
+                                    
+                                </group>
+                                <group>
+                                    <field name="group_medlab" widget="many2many_tags"/>                           
+                                    
+                                </group>
+                            </group>
+                            <group>
+                                <group>
+                                    <field name="tech_user_id"/>
+                                    <field name="check_user_id"/>
+                                    <field name="med_user_id"/>
+                                    <field name="reverifed_user_id"/>
+                                    <field name="deliverd_user_id"/>                                   
+                                    
+                                </group>
+                            </group>
+                            <separator string="Motif de revérification" attrs="{'invisible': [('state','not in',['done','verified','deliver'])]}"/>
+                            <field name="editable_reason" placeholder="Motif de revérification..." attrs="{'invisible': [('state','not in',['done','verified','deliver'])]}"/>
+                        </page>
+                    </notebook>
+                    <field name="disclaimer" placeholder="Disclaimer" nolabel="1" colspan="4"/>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="patient_laboratory_test_tree">
+        <field name="name">Laboratory Test</field>
+        <field name="model">patient.laboratory.test</field>
+        <field name="arch" type="xml">
+            <tree string="Lab Test" decoration-danger="nb_analyte_warning != 0" decoration-info="is_ready_for_partial_delivery" multi_edit="1" sample="1">
+                <header>
+                    <button name="confirm_tree" string="Confirmer" class="btn-success" type="object"/>
+                    <button name="deliver_tree" string="Résultat livré" class="btn-success" type="object"/>
+
+                    <!-- <button name="set_ready_for_partial_delivery_tree" icon="fa-adjust" class="btn-secondary" type="object" title="Livrer Partiellement" string="Livrer partiellement"/>
+                    <button name="unset_ready_for_partial_delivery_tree" icon="fa-times-circle" class="btn-secondary" type="object" title="Annuler Livraison Partielle" string="Annuler Livraison Partielle"/>
+                    <button name="set_partial_delivery_tree" icon="fa-times-circle" class="btn-secondary" type="object" title="Livré partiellement" string="Livré partiellement"/> -->
+                    <button name="print_send_sms" string="Imprimé" class="btn-success" type="object"/>
+
+                </header>
+                <field name="name" invisible="1"/>
+                <field name="request_id"/>
+                <field name="cat_analyse"/>
+                <field name="patient_id"/>
+                <field name="date_analysis"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="state"/>
+                <field name="nb_analyte_warning" invisible="1"/>
+                <field name="is_ready_for_partial_delivery" invisible="1"/>
+
+                <!-- <field name="check_analyte_warning" invisible="1"/> -->
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_hms_patient_laboratory_test_search" model="ir.ui.view">
+        <field name="name">patient.laboratory.test.search</field>
+        <field name="model">patient.laboratory.test</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <search string="Patient Laboratry Test Results">
+                <field name="request_id"/>
+                <field name="name"/>
+                <field name="cat_analyse"/>
+                <field name="patient_id"/>
+                <field name="date_analysis"/>
+                <filter name="anormal_result" string="Résultat anormaux" domain="[('nb_analyte_warning','>', 0)]"/>
+                <!-- <filter name="check_anormal_result" string="Check Résultat anormaux" domain="[('check_analyte_warning','=', True)]"/> -->
+                <filter name="today" string="Today's Investigation" domain="[('date_analysis', '=', context_today().strftime('%Y-%m-%d'))]"/>
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter name="group_by_patient_id" string="Patient" context="{'group_by':'patient_id'}"/>
+                    <filter name="group_by_lab_test" string="Lab Request" context="{'group_by':'request_id'}"/>
+                    <filter name="group_by_test" string="Test" context="{'group_by':'test_id'}"/>
+                    <filter name="group_by_user" string="Tested By" context="{'group_by':'user_id'}"/>
+                    <filter name="group_by_req" string=" Prescribing Doctor" context="{'group_by':'physician_id'}"/>
+                    <filter name="group_by_state" string="State" context="{'group_by':'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_patient_laboratory_test_calendar" model="ir.ui.view">
+        <field name="name">patient.laboratory.test.calendar</field>
+        <field name="model">patient.laboratory.test</field>
+        <field name="type">calendar</field>
+        <field name="arch" type="xml">
+            <calendar string="Patient Lab Test" color="physician_id" date_start="date_requested">
+                <field name="physician_id"/>
+                <field name="patient_id"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="patient_laboratory_test_pivot" model="ir.ui.view">
+        <field name="name">patient.laboratory.test.pivot</field>
+        <field name="model">patient.laboratory.test</field>
+        <field name="arch" type="xml">
+            <pivot string="Patient Lab Test">
+                <field name="date_analysis" type="row"/>
+                <field name="physician_id" type="row"/>
+                <field name="patient_id" type="row"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_lab_result">
+        <field name="name">Lab Test Results</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">patient.laboratory.test</field>
+        <field name="view_mode">tree,form,calendar,pivot</field>
+        <field name="context">{'search_default_today': 1,'search_default_anormal_result': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Record Found
+            </p>
+            <p>
+                Click to add new Lab Test Result.
+            </p>
+        </field>
+    </record>
+
+</odoo>

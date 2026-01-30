@@ -1,0 +1,14 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_commission_prestataire,commission.prestataire,model_commission_prestataire,,1,0,0,0
+access_commission_prestataire_sheet,commission.prestataire.sheet,model_commission_prestataire_sheet,,1,0,0,0
+access_commission_prestataire_role,commission.prestataire.role,model_commission_prestataire_role,,1,0,0,0
+access_commission_prestataire_rule,commission.prestataire.rule,model_commission_prestataire_rule,,1,0,0,0
+access_commission_prestataire_account_user,commission.prestatire.manager,model_commission_prestataire,account.group_account_invoice,1,1,1,0
+access_commission_prestataire_user,commission.prestataire.user,model_commission_prestataire,commission_prestataire.group_coprest_user,1,1,1,1
+access_commission_prestataire_role_user,commission.prestataire.role,model_commission_prestataire_role,commission_prestataire.group_coprest_user,1,1,1,1
+access_commission_prestataire_rule_user,commission.prestataire.rule,model_commission_prestataire_rule,commission_prestataire.group_coprest_user,1,1,1,1
+access_commission_prestataire_sheet_user,commission.prestataire.sheet,model_commission_prestataire_sheet,commission_prestataire.group_coprest_user,1,1,1,1
+access_coprest_invoice,access_coprest_invoice,model_coprest_invoice,base.group_user,1,1,1,1
+
+access_commission_prestataire_caisse,commission.prestataire,model_commission_prestataire,commission_prestataire.group_coprest_caisse,1,1,0,0
+

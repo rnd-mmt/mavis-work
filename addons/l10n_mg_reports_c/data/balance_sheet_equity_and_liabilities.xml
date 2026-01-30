@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+    <!-- BALANCE SHEET EQUITY AND LIABILITIES -->
+    <record id="account_financial_report_l10n_mg_bsel" model="account.financial.report">
+      <field name="name">Bilan Capitaux propres et Passifs</field>
+      <field name="type_financial_report_mg">balance_cp_p</field>
+      <field name="sign">-1</field>
+      <field name="type">sum_mg</field>
+      <field name="is_hidden" eval="True"/>
+      <field name="style_overwrite">0</field>
+    </record>
+    <record id="account_financial_report_l10n_mg_bsel_psv" model="account.financial.report">
+      <field name="name">CAPITAUX PROPRES ET PASSIFS</field>
+      <field name="parent_id" ref="account_financial_report_l10n_mg_bsel"/>
+      <field name="sequence" eval="0"/>
+      <field name="level" eval="1"/>
+      <field name="style_overwrite">0</field>
+      <field name="is_hidden">True</field>
+    </record>
+    <record id="account_financial_report_l10n_mg_bsel_psv_cp" model="account.financial.report">
+      <field name="name">CAPITAUX PROPRES</field>
+      <field name="parent_id" ref="account_financial_report_l10n_mg_bsel_psv"/>
+      <field name="sequence" eval="0"/>
+      <field name="level" eval="1"/>
+      <field name="style_overwrite">0</field>
+      <field name="is_hidden">True</field>
+    </record>
+    <record id="account_financial_report_l10n_mg_bsel_psv_cp_ce" model="account.financial.report">
+      <field name="name">Capital émis</field>
+      <field name="code">CE_CP_PSV_BSEL_MG</field>
+      <field name="parent_id" ref="account_financial_report_l10n_mg_bsel_psv_cp"/>
+      <field name="formulas">balance = -sum.balance</field>
+      <field name="domain"
+             eval="['|','|',('code', '=like', '101%'),('code', '=like', '108%'),('code', '=like', '109%')]"/>
+      <field name="sequence" eval="0"/>
+      <field name="level" eval="2"/>
+      <field name="style_overwrite">2</field>
+      <field name="type">report_mg_cp_p</field>
+    </record>
+    <record id="account_financial_report_l10n_mg_bsel_psv_cp_prc" model="account.financial.report">
+      <field name="name">Primes et réserves consolidées</field>
+      <field name="code">PRC_CP_PSV_BSEL_MG</field>
+      <field name="parent_id" ref="account_financial_report_l10n_mg_bsel_psv_cp"/>
+      <field name="formulas">balance = -sum.balance</field>
+      <field name="domain" eval="['|',('code', '=like', '104%'),('code', '=like', '106%')]"/>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="2"/>
+      <field name="style_overwrite">2</field>
+      <field name="type">report_mg_cp_p</field>
+    </record>
+    <record id="account_financial_report_l10n_mg_bsel_psv_cp_eevl" model="account.financial.report">
+      <field name="name">Ecarts d'évaluation</field>
+      <field name="code">EEVL_CP_PSV_BSEL_MG</field>
+      <field name="parent_id" ref="account_financial_report_l10n_mg_bsel_psv_cp"/>
+      <field name="formulas">balance = -sum.balance</field>
+      <field name="domain" eval="[('code', '=like', '105%')]"/>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="2"/>
+      <field name="style_overwrite">2</field>
+      <field name="type">report_mg_cp_p</field>
+    </record>
+    <record id="account_financial_report_l10n_mg_bsel_psv_cp_eequ" model="account.financial.report">
+      <field name="name">Ecarts d'équivalence</field>
+      <field name="code">EEQU_CP_PSV_BSEL_MG</field>
+      <field name="parent_id" ref="account_financial_report_l10n_mg_bsel_psv_cp"/>
+      <field name="formulas">balance = -sum.balance</field>
+      <field name="domain" eval="[('code', '=like', '107%')]"/>
+      <field name="sequence" eval="3"/>
+      <field name="level" eval="2"/>
+      <field name="style_overwrite">2</field>
+      <field name="type">report_mg_cp_p</field>
+    </record>
+    <record id="account_financial_report_l10n_mg_bsel_psv_cp_rnpg" model="account.financial.report">
+      <field name="name">Résultat net - part du groupe</field>
+      <field name="code">RNPG_CP_PSV_BSEL_MG</field>
+      <field name="parent_id" ref="account_financial_report_l10n_mg_bsel_psv_cp"/>
+      <field name="formulas">balance = RNET.balance</field>
+      <field name="sequence" eval="4"/>
+      <field name="level" eval="2"/>
+      <field name="style_overwrite">2</field>
+      <field name="type">report_mg_cp_p</field>
+    </record>
+    <record id="account_financial_report_l10n_mg_bsel_psv_cp_acprn" model="account.financial.report">
+      <field name="name">Autres capitaux propres - report à nouveau</field>
+      <field name="code">ACPRN_CP_PSV_BSEL_MG</field>
+      <field name="parent_id" ref="account_financial_report_l10n_mg_bsel_psv_cp"/>
+<!--      <field name="formulas">balance = -sum.balance</field>-->
+      <field name="formulas">balance = -sum.balance</field>
+<!--      <field name="domain" eval="['|','|',('code', '=like', '110%'),('code', '=like', '119%'),('code', '=like', '129%')]"/>-->
+      <field name="domain" eval="['|',('code', '=like', '110%'),('code', '=like', '119%')]"/>
+      <field name="sequence" eval="5"/>
+      <field name="level" eval="2"/>
+      <field name="style_overwrite">2</field>
+      <field name="type">report_mg_cp_p</field>
+    </record>
+    <record id="account_financial_report_l10n_mg_bsel_psv_tcp" model="account.financial.report">
+      <field name="name">TOTAL CAPITAUX PROPRES</field>
+      <field name="code">TCP_PSV_BSEL_MG</field>
+      <field name="parent_id" ref="account_financial_report_l10n_mg_bsel_psv"/>
+      <field name="formulas">balance = CE_CP_PSV_BSEL_MG.balance + PRC_CP_PSV_BSEL_MG.balance + EEVL_CP_PSV_BSEL_MG.balance + EEQU_CP_PSV_BSEL_MG.balance+RNPG_CP_PSV_BSEL_MG.balance+ACPRN_CP_PSV_BSEL_MG.balance</field>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="1"/>
+      <field name="style_overwrite">0</field>
+      <field name="type">report_mg_cp_p</field>
+    </record>
+    <record id="account_financial_report_l10n_mg_bsel_psv_pnc" model="account.financial.report">
+      <field name="name">PASSIFS NON-COURANTS</field>
+      <field name="code">PNC_PSV_BSEL_MG</field>
+      <field name="parent_id" ref="account_financial_report_l10n_mg_bsel_psv"/>
+      <field name="formulas"/>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="1"/>
+      <field name="style_overwrite">0</field>
+      <field name="type">report_mg_cp_p</field>
+      <field name="is_hidden">True</field>
+    </record>
+    <record id="account_financial_report_l10n_mg_bsel_psv_pnc_pdsi" model="account.financial.report">
+      <field name="name">Produits différés : subventions d'investissement</field>
+      <field name="code">PDSI_PNC_PSV_BSEL_MG</field>
+      <field name="parent_id" ref="account_financial_report_l10n_mg_bsel_psv_pnc"/>
+      <field name="formulas">balance = -sum.balance</field>
+      <field name="domain" eval="['|',('code', '=like', '131%'),('code', '=like', '132%')]"/>
+      <field name="sequence" eval="0"/>
+      <field name="level" eval="2"/>
+      <field name="style_overwrite">2</field>
+      <field name="type">report_mg_cp_p</field>
+    </record>
+    <record id="account_financial_report_l10n_mg_bsel_psv_pnc_id" model="account.financial.report">
+      <field name="name">Impôts différés</field>
+      <field name="code">ID_PNC_PSV_BSEL_MG</field>
+      <field name="parent_id" ref="account_financial_report_l10n_mg_bsel_psv_pnc"/>
+      <field name="formulas">balance = -sum.balance</field>
+      <field name="domain" eval="['|',('code', '=like', '134%'),('code', '=like', '138%')]"/>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="2"/>
+      <field name="style_overwrite">2</field>
+      <field name="type">report_mg_cp_p</field>
+    </record>
+    <record id="account_financial_report_l10n_mg_bsel_psv_pnc_edf" model="account.financial.report">
+      <field name="name">Emprunts et dettes financières</field>
+      <field name="code">EDF_PNC_PSV_BSEL_MG</field>
+      <field name="parent_id" ref="account_financial_report_l10n_mg_bsel_psv_pnc"/>
+      <field name="formulas">balance = -sum.balance</field>
+      <field name="domain" eval="['|',('code', '=like', '16%'),('code', '=like', '17%')]"/>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="2"/>
+      <field name="style_overwrite">2</field>
+      <field name="type">report_mg_cp_p</field>
+    </record>
+    <record id="account_financial_report_l10n_mg_bsel_psv_pnc_edf" model="account.financial.report">
+      <field name="name">Provisions et produits constatés d'avance</field>
+      <field name="code">EDF_PNC_PSV_BSEL_MG</field>
+      <field name="parent_id" ref="account_financial_report_l10n_mg_bsel_psv_pnc"/>
+      <field name="formulas">balance = -sum.balance</field>
+      <field name="domain" eval="[('code', '=like', '15%')]"/>
+      <field name="sequence" eval="3"/>
+      <field name="level" eval="2"/>
+      <field name="style_overwrite">2</field>
+      <field name="type">report_mg_cp_p</field>
+    </record>
+    <record id="account_financial_report_l10n_mg_bsel_psv_tpnc" model="account.financial.report">
+      <field name="name">TOTAL PASSIFS NON-COURANTS</field>
+      <field name="code">TPNC_PSV_BSEL_MG</field>
+      <field name="parent_id" ref="account_financial_report_l10n_mg_bsel_psv"/>
+      <field name="formulas">balance = PDSI_PNC_PSV_BSEL_MG.balance+ID_PNC_PSV_BSEL_MG.balance
+        +EDF_PNC_PSV_BSEL_MG.balance+EDF_PNC_PSV_BSEL_MG.balance
+      </field>
+      <field name="sequence" eval="3"/>
+      <field name="level" eval="1"/>
+      <field name="style_overwrite">0</field>
+      <field name="type">report_mg_cp_p</field>
+    </record>
+    <record id="account_financial_report_l10n_mg_bsel_psv_pc" model="account.financial.report">
+      <field name="name">PASSIFS COURANTS</field>
+      <field name="code">PC_PSV_BSEL_MG</field>
+      <field name="parent_id" ref="account_financial_report_l10n_mg_bsel_psv"/>
+      <field name="formulas"/>
+      <field name="sequence" eval="4"/>
+      <field name="level" eval="1"/>
+      <field name="style_overwrite">0</field>
+      <field name="type">report_mg_cp_p</field>
+      <field name="is_hidden">True</field>
+    </record>
+    <record id="account_financial_report_l10n_mg_bsel_psv_pc_dctpctdlt" model="account.financial.report">
+      <field name="name">Dettes court terme - partie court terme de dettes long terme</field>
+      <field name="code">DCTPCTDLT_PC_PSV_BSEL_MG</field>
+      <field name="parent_id" ref="account_financial_report_l10n_mg_bsel_psv_pc"/>
+      <field name="formulas">balance = -sum.balance</field>
+      <field name="domain" eval="['|',('code', '=like', '516%'),('code', '=like', '16%')]"/>
+      <field name="sequence" eval="0"/>
+      <field name="level" eval="2"/>
+      <field name="style_overwrite">2</field>
+      <field name="type">report_mg_cp_p</field>
+    </record>
+    <!-- <record id="account_financial_report_l10n_mg_bsel_psv_pc_fcr" model="account.financial.report">
+       <field name="name">Fournisseurs et comptes rattachés</field>
+       <field name="code">FCR_PC_PSV_BSEL_MG</field>
+       <field name="parent_id" ref="account_financial_report_l10n_mg_bsel_psv_pc"/>
+       <field name="formulas">balance = -sum.balance</field>
+       <field name="domain"
+              eval="['|','|','|','|','|','|','|','|','|','|','|','|','|','|','|','|','|','|', ('code', '=like', '401%'),
+              ('code', '=like', '403%'),('code', '=like', '408%'), ('code', '=like', '419%'),('code', '=like', '421%'),
+              ('code', '=like', '426%'), ('code', '=like', '427%'),('code', '=like', '4286%'),('code', '=like', '431%'),
+              ('code', '=like', '432%'),('code', '=like', '438%'),('code', '=like', '444%'), ('code', '=like', '446%'),
+              ('code', '=like', '447%'),('code', '=like', '4486%'), ('code', '=like', '455%'),('code', '=like', '457%'),
+              ('code', '=like', '464%'), ('code', '=like', '4686%')]"/>
+       <field name="sequence" eval="1"/>
+       <field name="level" eval="2"/>
+       <field name="style_overwrite">2</field>
+       <field name="type">report_mg_cp_p</field>
+     </record>-->
+
+    <record id="account_financial_report_l10n_mg_bsel_psv_pc_fcr" model="account.financial.report">
+      <field name="name">Fournisseurs et comptes rattachés</field>
+      <field name="code">FCR_PC_PSV_BSEL_MG</field>
+      <field name="parent_id" ref="account_financial_report_l10n_mg_bsel_psv_pc"/>
+<!--      <field name="formulas">balance = -(BLCADD_FCR_PC_PSV_BSEL_MG.balance + CDTADD_FCR_PC_PSV_BSEL_MG.balance)</field>-->
+      <field name="formulas">balance = -( EXPLADD_FCR_PC_PSV_BSEL_MG.balance+ CLICREADD_FCR_PC_PSV_BSEL_MG.balance + PERSADD_FCR_PC_PSV_BSEL_MG.balance + ORGADD_FCR_PC_PSV_BSEL_MG.balance + ETAADD_FCR_PC_PSV_BSEL_MG.balance)</field>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="2"/>
+      <field name="style_overwrite">2</field>
+      <field name="type">report_mg_cp_p</field>
+    </record>
+    <record id="account_financial_report_l10n_mg_bsel_psv_pc_fcr_expladd" model="account.financial.report">
+      <field name="name">Fournisseurs d'exploitation</field>
+      <field name="code">EXPLADD_FCR_PC_PSV_BSEL_MG</field>
+      <field name="formulas">balance = sum.credit</field>
+      <field name="parent_id" ref="account_financial_report_l10n_mg_bsel_psv_pc_fcr"/>
+      <field name="domain" eval="[('code', '=like', '40%')]"/>
+      <field name="sequence" eval="0"/>
+      <field name="level" eval="3"/>
+      <field name="style_overwrite">3</field>
+      <field name="type">report_mg_cp_p</field>
+    </record>
+    <record id="account_financial_report_l10n_mg_bsel_psv_pc_fcr_clicreadd" model="account.financial.report">
+      <field name="name">Clients créditeurs</field>
+      <field name="code">CLICREADD_FCR_PC_PSV_BSEL_MG</field>
+      <field name="formulas">balance = sum.credit</field>
+      <field name="parent_id" ref="account_financial_report_l10n_mg_bsel_psv_pc_fcr"/>
+      <field name="domain" eval="[('code', '=like', '41%')]"/>
+      <field name="sequence" eval="0"/>
+      <field name="level" eval="3"/>
+      <field name="style_overwrite">3</field>
+      <field name="type">report_mg_cp_p</field>
+    </record>
+     <record id="account_financial_report_l10n_mg_bsel_psv_pc_fcr_persadd" model="account.financial.report">
+      <field name="name">Personnel</field>
+      <field name="code">PERSADD_FCR_PC_PSV_BSEL_MG</field>
+      <field name="formulas">balance = sum.credit</field>
+      <field name="parent_id" ref="account_financial_report_l10n_mg_bsel_psv_pc_fcr"/>
+      <field name="domain" eval="[('code', '=like', '42%')]"/>
+      <field name="sequence" eval="0"/>
+      <field name="level" eval="3"/>
+      <field name="style_overwrite">3</field>
+      <field name="type">report_mg_cp_p</field>
+    </record>
+      <record id="account_financial_report_l10n_mg_bsel_psv_pc_fcr_orgadd" model="account.financial.report">
+      <field name="name">Organismes sociaux</field>
+      <field name="code">ORGADD_FCR_PC_PSV_BSEL_MG</field>
+      <field name="formulas">balance = sum.credit</field>
+      <field name="parent_id" ref="account_financial_report_l10n_mg_bsel_psv_pc_fcr"/>
+      <field name="domain" eval="[('code', '=like', '43%')]"/>
+      <field name="sequence" eval="0"/>
+      <field name="level" eval="3"/>
+      <field name="style_overwrite">3</field>
+      <field name="type">report_mg_cp_p</field>
+    </record>
+      <record id="account_financial_report_l10n_mg_bsel_psv_pc_fcr_etaadd" model="account.financial.report">
+      <field name="name">Etat</field>
+      <field name="code">ETAADD_FCR_PC_PSV_BSEL_MG</field>
+      <field name="formulas">balance = sum.credit</field>
+      <field name="parent_id" ref="account_financial_report_l10n_mg_bsel_psv_pc_fcr"/>
+      <field name="domain" eval="[('code', '=like', '44%')]"/>
+      <field name="sequence" eval="0"/>
+      <field name="level" eval="3"/>
+      <field name="style_overwrite">3</field>
+      <field name="type">report_mg_cp_p</field>
+    </record>
+<!--    <record id="account_financial_report_l10n_mg_bsel_psv_pc_fcr_blcadd" model="account.financial.report">-->
+<!--      <field name="name">Fournisseurs et comptes rattachés - Balance</field>-->
+<!--      <field name="code">BLCADD_FCR_PC_PSV_BSEL_MG</field>-->
+<!--      <field name="formulas">balance = sum.balance</field>-->
+<!--      <field name="parent_id" ref="account_financial_report_l10n_mg_bsel_psv_pc_fcr"/>-->
+<!--      <field name="domain" eval="['|','|','|','|','|','|','|','|','|','|','|','|','|','|','|','|','|','|',('code', '=like', '401%')-->
+<!--             ,('code', '=like', '403%'),('code', '=like', '408%'), ('code', '=like', '419%'),('code', '=like', '421%'),-->
+<!--             ('code', '=like', '426%'), ('code', '=like', '427%'),('code', '=like', '4286%'),('code', '=like', '431%'),-->
+<!--             ('code', '=like', '432%'),('code', '=like', '438%'),('code', '=like', '444%'), ('code', '=like', '446%'),-->
+<!--             ('code', '=like', '447%'),('code', '=like', '4486%'), ('code', '=like', '455%'),('code', '=like', '457%'),-->
+<!--             ('code', '=like', '464%'), ('code', '=like', '4686%')]"/>-->
+<!--      <field name="sequence" eval="0"/>-->
+<!--      <field name="level" eval="3"/>-->
+<!--      <field name="style_overwrite">3</field>-->
+<!--      <field name="type">report_mg_cp_p</field>-->
+<!--    </record>-->
+
+<!--    <record id="account_financial_report_l10n_mg_bsel_psv_pc_fcr_cdtadd" model="account.financial.report">-->
+<!--      <field name="name">Fournisseurs et comptes rattachés - Crédit</field>-->
+<!--      <field name="code">CDTADD_FCR_PC_PSV_BSEL_MG</field>-->
+<!--      <field name="parent_id" ref="account_financial_report_l10n_mg_bsel_psv_pc_fcr"/>-->
+<!--      <field name="formulas">balance = sum.credit</field>-->
+<!--      <field name="domain" eval="['|','|','|','|','|',('code', '=like', '422%'),-->
+<!--                                  ('code', '=like', '445%'),('code', '=like', '451%'),-->
+<!--                                  ('code', '=like', '456%'),('code', '=like', '458%'),('code', '=like', '467%')]"/>-->
+<!--      <field name="sequence" eval="1"/>-->
+<!--      <field name="level" eval="3"/>-->
+<!--      <field name="style_overwrite">3</field>-->
+<!--      <field name="type">report_mg_cp_p</field>-->
+<!--    </record>-->
+
+    <record id="account_financial_report_l10n_mg_bsel_psv_pc_ppcapc" model="account.financial.report">
+      <field name="name">Provisions et produits constatés d'avance - passifs courants</field>
+      <field name="code">PPCAPC_PC_PSV_BSEL_MG</field>
+      <field name="parent_id" ref="account_financial_report_l10n_mg_bsel_psv_pc"/>
+      <field name="formulas">balance = -sum.balance</field>
+      <field name="domain" eval="['|',('code', '=like', '481%'),('code', '=like', '487%')]"/>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="2"/>
+      <field name="style_overwrite">2</field>
+      <field name="type">report_mg_cp_p</field>
+    </record>
+    <record id="account_financial_report_l10n_mg_bsel_psv_pc_ad" model="account.financial.report">
+      <field name="name">Autres dettes</field>
+      <field name="code">AD_PC_PSV_BSEL_MG</field>
+      <field name="parent_id" ref="account_financial_report_l10n_mg_bsel_psv_pc"/>
+      <field name="formulas">balance = -(ASSO_AD_PC_PSV_BSEL_MG.balance + CRE_AD_PC_PSV_BSEL_MG.balance + PROVI_AD_PC_PSV_BSEL_MG.balance)</field>
+<!--      <field name="domain" eval="['|',('code', '=like', '404%'),('code', '=like', '405%')]"/>-->
+      <field name="sequence" eval="3"/>
+      <field name="level" eval="2"/>
+      <field name="style_overwrite">2</field>
+      <field name="type">report_mg_cp_p</field>
+    </record>
+    <record id="account_financial_report_l10n_mg_bsel_psv_pc_ad_asso" model="account.financial.report">
+      <field name="name">Associés</field>
+      <field name="code">ASSO_AD_PC_PSV_BSEL_MG</field>
+      <field name="parent_id" ref="account_financial_report_l10n_mg_bsel_psv_pc_ad"/>
+      <field name="formulas">balance = sum.credit</field>
+      <field name="domain" eval="[('code', '=like', '45%')]"/>
+      <field name="sequence" eval="0"/>
+      <field name="level" eval="3"/>
+      <field name="style_overwrite">3</field>
+      <field name="type">report_mg_cp_p</field>
+    </record>
+    <record id="account_financial_report_l10n_mg_bsel_psv_pc_ad_cre" model="account.financial.report">
+      <field name="name">Créditeurs divers</field>
+      <field name="code">CRE_AD_PC_PSV_BSEL_MG</field>
+      <field name="parent_id" ref="account_financial_report_l10n_mg_bsel_psv_pc_ad"/>
+      <field name="formulas">balance = sum.credit</field>
+      <field name="domain" eval="[('code', '=like', '46%')]"/>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="3"/>
+      <field name="style_overwrite">3</field>
+      <field name="type">report_mg_cp_p</field>
+    </record>
+     <record id="account_financial_report_l10n_mg_bsel_psv_pc_ad_provi" model="account.financial.report">
+      <field name="name">Provisions et produit constatés d'avance - passifs courants</field>
+      <field name="code">PROVI_AD_PC_PSV_BSEL_MG</field>
+      <field name="parent_id" ref="account_financial_report_l10n_mg_bsel_psv_pc_ad"/>
+      <field name="formulas">balance = sum.credit</field>
+      <field name="domain" eval="[('code', '=like', '48%')]"/>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="3"/>
+      <field name="style_overwrite">3</field>
+      <field name="type">report_mg_cp_p</field>
+    </record>
+    <record id="account_financial_report_l10n_mg_bsel_psv_pc_ctdb" model="account.financial.report">
+      <field name="name">Compte de trésorerie (découverts bancaires)</field>
+      <field name="code">CTDB_PC_PSV_BSEL_MG</field>
+      <field name="parent_id" ref="account_financial_report_l10n_mg_bsel_psv_pc"/>
+      <field name="formulas">balance = -sum.balance</field>
+      <field name="domain" eval="[('code', '=like', '519%')]"/>
+      <field name="sequence" eval="4"/>
+      <field name="level" eval="2"/>
+      <field name="style_overwrite">2</field>
+      <field name="type">report_mg_cp_p</field>
+    </record>
+    <record id="account_financial_report_l10n_mg_bsel_psv_tpc" model="account.financial.report">
+      <field name="name">TOTAL PASSIFS COURANTS</field>
+      <field name="code">TPC_PSV_BSEL_MG</field>
+      <field name="parent_id" ref="account_financial_report_l10n_mg_bsel_psv"/>
+      <field name="formulas">balance = DCTPCTDLT_PC_PSV_BSEL_MG.balance + FCR_PC_PSV_BSEL_MG.balance +
+        PPCAPC_PC_PSV_BSEL_MG.balance + AD_PC_PSV_BSEL_MG.balance + CTDB_PC_PSV_BSEL_MG.balance
+      </field>
+      <field name="sequence" eval="5"/>
+      <field name="level" eval="1"/>
+      <field name="style_overwrite">0</field>
+      <field name="type">report_mg_cp_p</field>
+    </record>
+    <record id="account_financial_report_l10n_mg_bsel_tpsv" model="account.financial.report">
+      <field name="name">TOTAL CAPITAUX PROPRES ET PASSIFS</field>
+      <field name="code">TPSV_BSEL_MG</field>
+      <field name="parent_id" ref="account_financial_report_l10n_mg_bsel"/>
+      <field name="financial_report_id" ref="account_financial_report_l10n_mg_bsel"/>
+      <field name="formulas">balance = TCP_PSV_BSEL_MG.balance+TPNC_PSV_BSEL_MG.balance+TPC_PSV_BSEL_MG.balance
+      </field>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="0"/>
+      <field name="style_overwrite">0</field>
+      <field name="type">report_mg_cp_p</field>
+    </record>
+    <!--  add action and menu  -->
+    <record id="action_account_report_bsel_mg" model="ir.actions.act_window">
+      <field name="name">Balance Sheet Equity And Liabilities</field>
+      <field name="res_model">accounting.report</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="view_mode">form</field>
+      <field name="view_id" ref="accounting_pdf_reports.accounting_report_view"/>
+      <field name="target">new</field>
+      <field name="context" eval="{'default_account_report_id':ref('account_financial_report_l10n_mg_bsel')}"/>
+    </record>
+    <menuitem id="menu_account_report_bsel_mg" name="Bilan Capitaux propres et Passifs" sequence="3"
+              action="action_account_report_bsel_mg" parent="l10n_mg_reports_c.account_reports_mg_statements_menu"
+              groups="account.group_account_user,account.group_account_manager"/>
+  </data>
+</odoo>

@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!-- Define the report action -->
+        <record id="account_invoices_active_report" model="ir.actions.report">
+            <field name="name">ETAT RECAPITULATIF IMM</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">acs_invoice_split.test_tpl</field>
+            <field name="report_file">acs_invoice_split.test_tpl</field>
+            <field name="binding_model_id" ref="model_account_move"/>
+        </record>
+
+        <!-- Define the report template -->
+        <template id="test_tpl">
+            <t t-call="web.basic_layout">
+                <div class="header" style="width:100%; !important; display: block !important;">
+                    <div class="row" style="display: -webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;-webkit-box-align: center;-moz-box-align: center;-ms-flex-align: center;-webkit-align-items: center;align-items: center; -webkit-box-pack: space-between !important;-moz-box-pack: space-between !important;-ms-flex-pack: space-between !important;-webkit-justify-content: space-between !important;justify-content: space-between !important;">
+                        <div class="col-6">
+                            <div class="row" style="display: -webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;-webkit-box-align: center;-moz-box-align: center;-ms-flex-align: center;-webkit-align-items: center;align-items: center; ">
+                                <div class="col-3">
+                                    <img t-if="docs[0].company_id.logo" t-att-src="image_data_uri(docs[0].company_id.logo)" alt="Logo" width="120px" height="130px"/>
+                                </div>
+                                <div class="col-9">
+                                    <div style="display: block; position: relative; max-width: 200px; padding-left: 5px;">
+                                        <p style="text-align: center;">INSTITUT MEDICAL <br/> de <br/> MADAGASCAR</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <p style="margin:0 !important;">Rue Andriamifidy - Anosy - (101) Antananarivo</p>
+                            <p style="margin:0 !important;">Email: imm@imm-mg.com Siteweb: imm-mg.com</p>
+                            <p style="margin:0 !important;">RCS : 2004 B 0133</p>
+                            <p style="margin:0 !important;">
+                                <span>NIF : 2000070423</span>
+                                <span style="margin-left: 2em;">STAT : 85121 11 2004 01 0324</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="page">
+                    <style>
+                        p.fill-dot { width: 100%; position: relative; }
+                        p.fill-dot:before { content: ''; position: absolute; bottom: .4rem; width: 100%; height: 0; line-height: 0; left:2px; border-bottom: 2px dotted #000;}
+                        .text-dot { background: #ffffff; display: inline; z-index: 1; padding-right: .2rem; }
+                        .table-recap td *, .table-recap td *:after, .table-recap td  *:before { box-sizing: border-box; -moz-box-sizing: border-box; }
+                        .table-recap td  * {margin:0;padding:0;border: 0 none;position: relative;}
+                        .table-recap td { overflow: hidden;}
+                        .table-sm-px tr th, .table-sm-px tr td { padding: 5px 10px !important; }
+                        .table-sm-px tr { line-height: 25px !important; }
+                    </style>
+                    <t t-call="web.html_container">
+                        <hr style="display: block; height: 1px; border: 0; border-top: 1px solid #000; margin: 1em 0;padding: 0;"/>
+                        <t t-set="date_code" t-value="str(docs[0].invoice_date)"/>
+                        <h6 style="text-align:center">
+                            <span style="text-decoration:underline">
+                                <span style="padding-right: 15px !important;">ETAT RECAPITULATIF N°</span>
+                                <span style="color:#ffffff;">_______</span>
+                                <span>/<span t-esc="docs[0].partner_id.company_acronym"/></span>
+                                <span>/IMM</span>
+                                <span>/<span t-esc="docs[0].partner_id.invoice_contact_type"/></span>
+                                <span>/<span t-esc="date_code[2:4]"/></span>
+                            </span>
+                        </h6>
+                        <t t-if="docs[0].partner_id.company_acronym == 'SCGAIC'">
+                            <h6 style="text-align:center">EXAMENS EFFECTUES PAR LES FONCTIONNAIRES EN ACTIVITES A L'IMM</h6>
+                        </t>
+                        <t t-elif="docs[0].partner_id.company_acronym == 'SCGAIR'">
+                            <h6 style="text-align:center">EXAMENS EFFECTUES PAR LES FONCTIONNAIRES RETRAITES A L'IMM</h6>
+                        </t>
+                        <t t-else="">
+                            <h6 style="text-align:center">EXAMENS EFFECTUES A L'IMM</h6>
+                        </t>
+                        <style>
+                            page.invoice_recap * { font-family: Arial !important; }
+                            /*.loop, .loop p; .loop span{ font-size: 24px; line-height: 28px;}*/
+                            .loop div[class^="col-"] { height: 29px; }
+                            p.fill-dot { width: 100%; position: relative;}
+                            p.fill-dot:before { content: ''; position: absolute; bottom: .4rem; width: 100%; height: 0; line-height: 0; left:2px; border-bottom: 2px dotted #000;}
+                            .text-dot { background: #ffffff !important; display: inline; z-index: 1; padding-right: .2rem; position: relative; z-index: 10; }
+                            #col_min.col-2 {max-width: 120px !important;}
+                            #col_montant.col-2 {max-width: 172px !important;}
+                        </style>
+                        <t>
+                        <t t-set="total_rows" t-value="0"/>
+                            <div class="row">
+                                <div class="col-2" style="border: solid 1px #000; border-right: none;">N° FACTURE</div>
+                                <div class="col-6" style="border: solid 1px #000; border-right: none; text-align: center;">NOM ET PRENOM</div>
+                                <div class="col-2" id="col_min" style="border: solid 1px #000; right: none; text-align: center;">Date</div>
+                                <div class="col-2" id="col_montant" style="border: solid 1px #000; border-left: none;">MONTANT</div>
+                            </div>
+
+                            <t t-set="i" t-value="0"/>
+                            <t t-set="subtotal_amount" t-value="0.0"/>
+                            <t t-set="total_general" t-value="0.0"/>
+                            <t t-set="devise" t-value="None"/>
+                            <t t-foreach="docs" t-as="o">
+                                <div class="row loop">
+                                    <div class="col-2" style="padding-left: 1px !important; padding-right: 1px !important; border-left: solid 1px #000; border-right: none; font-size: 13px; line-height:26px; transform: scale(1.4);"><t t-esc="o.name"/></div>
+                                    <!-- patient_display_name remplacé par patient_id.name-->
+                                    <div class="col-6" style="border-left: solid 1px #000;">
+                                        <t t-if="o.get_name_length() > 30">
+                                            <div style="height: 28px overflow: hidden;"><p style="line-height: 13px !important; font-size: 14px;" t-esc="o.remove_before_space(o.patient_id.name)"/></div>
+                                        </t>
+                                        <t t-else="">
+                                            <t t-esc="o.remove_before_space(o.patient_id.name)"/>
+                                        </t>
+                                    </div>
+                                    <div class="col-2" id="col_min" style="text-align: center; border-left: solid 1px #000;"><t t-esc="o.invoice_date.strftime('%d-%m-%Y')"/></div>
+                                    <div class="col-2" id="col_montant" style="border-right: solid 1px #000; border-left: solid 1px #000; text-align: right;"><t t-esc="o.amount_total_signed" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></div>
+                                </div>
+
+                                <t t-set="subtotal_amount" t-value="subtotal_amount + o.amount_total_signed"/>
+                                <t t-set="total_general" t-value="total_general + o.amount_total_signed"/>
+                                <t t-set="devise" t-value="o.currency_id"/>
+                                <t t-set="total_rows" t-value="total_rows + 1"/>
+                                <t t-set="i" t-value="i + 1"/>
+
+                                <t t-if="i % 30 == 0">
+                                    <div class="row loop">
+                                        <div class="col-2" style="border-left: solid 1px #000; font-size: 14px; line-height:26px; border-bottom:solid 1px #000;"> </div>
+                                        <div class="col-6" style="border-left: solid 1px #000; border-bottom:solid 1px #000;">
+                                            <p class="fill-dot"><span class="text-dot" style="font-weight:800; font-family: Arial; background-color: #fff;">TOTAL A REPORTER</span></p>
+                                        </div>
+                                        <div class="col-2" id="col_min" style="text-align: center; border-left: solid 1px #000; border-bottom:solid 1px #000;"> </div>
+                                        <div class="col-2" id="col_montant" style="border-right: solid 1px #000; border-left: solid 1px #000; border-bottom:solid 1px #000; ">
+                                            <p style="text-align: right !important;"><span style="font-weight: bold !important; font-family: Arial;" t-esc="subtotal_amount" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></p>
+                                        </div>
+                                    </div>
+                                    <div style="page-break-before:always !important; border: none !important; display:block !important;"> </div>
+                                    <div class="row">
+                                        <div class="col-2" style="border: solid 1px #000; border-right: none;">N° FACTURE</div>
+                                        <div class="col-6" style="border: solid 1px #000; border-right: none; text-align: center;">NOM ET PRENOM</div>
+                                        <div class="col-2" id="col_min" style="border: solid 1px #000; right: none; text-align: center;">Date</div>
+                                        <div class="col-2" id="col_montant" style="border: solid 1px #000; border-left: none;">MONTANT</div>
+                                    </div>
+                                    <div class="row loop">
+                                        <div class="col-2" style="border-left: solid 1px #000; font-size: 14px; line-height:26px;"> </div>
+                                        <div class="col-6" style="border-left: solid 1px #000;">
+                                            <p class="fill-dot"><span class="text-dot" style="text-align: right; font-weight:900; font-family: Arial;">REPORT</span></p>
+                                        </div>
+                                        <div class="col-2" id="col_min" style="text-align: center; border-left: solid 1px #000;"> </div>
+                                        <div class="col-2" id="col_montant" style="border-right: solid 1px #000; border-left: solid 1px #000; font-family: Arial; text-align: right;"><b><t t-esc="subtotal_amount" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></b></div>
+                                    </div>
+                                </t>
+                            </t>
+                            <!-- <div class="row loop">
+                                <div class="col-1" style="border-top: solid 1px #000;"> </div>
+                                <div class="col-4" style="border-top: solid 1px #000;">  </div>
+                                <div class="col-3" style="border: solid 1px #000;"><p style="text-align: center; font-weight: bold !important; font-family: Arial;">TOTAL GENERAL</p></div>
+                                <div class="col-4" style="border: solid 1px #000; border-left: none; text-align: right; font-weight: bold !important; font-family: Arial;"><span t-esc="total_general" t-options='{"widget": "monetary", "display_currency": devise}'/></div>
+                            </div>
+                            <t t-if="total_rows % 30 > 20">
+                                <div style="page-break-before:always !important; border: none !important; display:block !important;"> </div>
+                                <hr style="display: block; height: 1px; border: 0; border-top: 1px solid #000; margin: 1em 0;padding: 0; margin-bottom: 60px;"/>
+                            </t> -->
+                            <t t-if="total_rows % 30 > 19">
+                                <div class="row loop">
+                                        <div class="col-2" style="border-left: solid 1px #000; font-size: 14px; line-height:26px; border-bottom:solid 1px #000;"> </div>
+                                        <div class="col-6" style="border-left: solid 1px #000; border-bottom:solid 1px #000;">
+                                            <p class="fill-dot"><span class="text-dot" style="font-weight:800; font-family: Arial; background-color: #fff;">TOTAL A REPORTER</span></p>
+                                        </div>
+                                        <div class="col-2" id="col_min" style="text-align: center; border-left: solid 1px #000; border-bottom:solid 1px #000;"> </div>
+                                        <div class="col-2" id="col_montant" style="border-right: solid 1px #000; border-left: solid 1px #000; border-bottom:solid 1px #000; ">
+                                            <p style="text-align: right !important;"><span style="font-weight: bold !important; font-family: Arial;" t-esc="total_general" t-options='{"widget": "monetary", "display_currency": devise}'/></p>
+                                        </div>
+                                </div>
+                                <div style="page-break-before:always !important; border: none !important; display:block !important;"> </div>
+                                <div class="row">
+                                        <div class="col-2" style="border: solid 1px #000; border-right: none;">N° FACTURE</div>
+                                        <div class="col-6" style="border: solid 1px #000; border-right: none; text-align: center;">NOM ET PRENOM</div>
+                                        <div class="col-2" id="col_min" style="border: solid 1px #000; right: none;">Date</div>
+                                        <div class="col-2" id="col_montant" style="border: solid 1px #000; border-left: none;">MONTANT</div>
+                                    </div>
+                                <div class="row loop">
+                                        <div class="col-2" style="border-left: solid 1px #000; font-size: 14px; line-height:26px;"> </div>
+                                        <div class="col-6" style="border-left: solid 1px #000;">
+                                            <p class="fill-dot"><span class="text-dot" style="text-align: right; font-weight:900; font-family: Arial;">REPORT</span></p>
+                                        </div>
+                                        <div class="col-2" id="col_min" style="text-align: center; border-left: solid 1px #000;"> </div>
+                                        <div class="col-2" id="col_montant" style="border-right: solid 1px #000; border-left: solid 1px #000; font-family: Arial; text-align: right;"><b><t t-esc="total_general" t-options='{"widget": "monetary", "display_currency": devise}'/></b></div>
+                                </div>
+                                <div class="row loop">
+                                    <div class="col-1" style="border-top: solid 1px #000;"> </div>
+                                    <div class="col-4" style="border-top: solid 1px #000;">  </div>
+                                    <div class="col-3" style="border: solid 1px #000;"><p style="text-align: center; font-weight: bold !important; font-family: Arial;">TOTAL GENERAL</p></div>
+                                    <div class="col-4" style="border: solid 1px #000; border-left: none; text-align: right; font-weight: bold !important; font-family: Arial;"><span t-esc="total_general" t-options='{"widget": "monetary", "display_currency": devise}'/></div>
+                                </div>
+                            </t>
+                            <t t-else="">
+                                <div class="row loop">
+                                    <div class="col-1" style="border-top: solid 1px #000;"> </div>
+                                    <div class="col-4" style="border-top: solid 1px #000;">  </div>
+                                    <div class="col-3" style="border: solid 1px #000;"><p style="text-align: center; font-weight: bold !important; font-family: Arial;">TOTAL GENERAL</p></div>
+                                    <div class="col-4" style="border: solid 1px #000; border-left: none; text-align: right; font-weight: bold !important; font-family: Arial;"><span t-esc="total_general" t-options='{"widget": "monetary", "display_currency": devise}'/></div>
+                                </div>
+                            </t>
+                        </t>
+
+                        <br/>
+                        <div class="row">
+                            <div class="col-5">
+                                <p>Arrêté le présent Etat récapitulatif à la somme de : </p>
+                            </div>
+                            <div class="col-7">
+                                <span style="text-transform: uppercase;" t-esc="docs[0].currency_id.with_context(lang='fr_FR').amount_to_text(total_general)"/><br/>
+                                <p class="text-center">Antananarivo, le <span t-esc="datetime.datetime.now().strftime('%Y-%m-%d')" t-options="{'widget': 'date'}" class="m-0"/></p>
+                            </div>
+                        </div>
+<!--                    </t>-->
+                    </t>
+                    <div>
+                        <style>
+                            table.borderless td, table.borderless th { border: none !important; }
+                        </style>
+
+                        <br/>
+                        <p><b><u>Coordonnées bancaires :</u></b></p>
+                        <table class="table table-sm borderless" style="border: none !important;">
+                            <t t-if="docs[0].partner_id.invoice_contact_bank == 'BOA MADAGASCAR'">
+                                <tbody>
+                                        <tr>
+                                            <td style="border: none !important;">Titulaire: Institut Médical de Madagascar</td>
+                                            <td style="border: none !important;">Code Banque</td>
+                                            <td style="border: none !important;">Code guichet</td>
+                                            <td style="border: none !important;">Numero de compte</td>
+                                            <td style="border: none !important;">Clé RIB</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border: none !important;">Banque: <span t-esc="docs[0].partner_id.invoice_contact_bank"/></td>
+                                            <td style="border: none !important;">00009</td>
+                                            <td style="border: none !important;">07100</td>
+                                            <td style="border: none !important;">15710720019</td>
+                                            <td style="border: none !important;">50</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border: none !important;">Agence: CAF Andraharo</td>
+                                            <td style="border: none !important;">Domiciliation</td>
+                                            <td style="border: none !important;"> </td>
+                                            <td style="border: none !important;"><span t-esc="docs[0].partner_id.invoice_contact_bank"/></td>
+                                            <td style="border: none !important;"> </td>
+                                        </tr>
+                                        <tr style="border: none !important; visibility: hidden">
+                                            <td> </td><td> </td><td> </td><td> </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border: none !important;"> </td>
+                                            <td style="border: none !important;"> </td>
+                                            <td style="border: none !important;"> </td>
+                                            <td style="border: none !important;">Pour IMM</td>
+                                            <td style="border: none !important;"> </td>
+                                        </tr>
+                                    
+                                </tbody>
+                            </t>
+                            <t t-if="docs[0].partner_id.invoice_contact_bank == 'BAOBAB'">
+                                <tbody>
+                                    <tr>
+                                        <td style="border: none !important;">Titulaire: Institut Médical de Madagascar</td>
+                                        <td style="border: none !important;">Code Banque</td>
+                                        <td style="border: none !important;">Code guichet</td>
+                                        <td style="border: none !important;">Numero de compte</td>
+                                        <td style="border: none !important;">Clé RIB</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: none !important;"><span>Banque: Baobab Banque Madagascar</span></td>
+                                        <td style="border: none !important;">00013</td>
+                                        <td style="border: none !important;">00011</td>
+                                        <td style="border: none !important;">23953727319</td>
+                                        <td style="border: none !important;">95</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: none !important;">Agence: AMBODIVONA 101 ANTANANARIVO</td>
+                                        <td style="border: none !important;">Domiciliation</td>
+                                        <td style="border: none !important;"> </td>
+                                        <td style="border: none !important;"><span>Baobab Banque Madagascar</span></td>
+                                        <td style="border: none !important;"> </td>
+                                    </tr>
+                                    <tr style="border: none !important; visibility: hidden">
+                                        <td> </td><td> </td><td> </td><td> </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: none !important;"> </td>
+                                        <td style="border: none !important;"> </td>
+                                        <td style="border: none !important;"> </td>
+                                        <td style="border: none !important;">Pour IMM</td>
+                                        <td style="border: none !important;"> </td>
+                                    </tr>
+                                </tbody>
+                            </t>
+                        </table>
+                    </div>
+                    <div class="footer">
+                        <div class="row">
+                            <div class="col-6">
+                                <!-- <strong>Date d'impression:</strong>
+                                <span t-esc="datetime.datetime.now().strftime('%Y-%m-%d')" t-options="{'widget': 'date'}" class="m-0"/> -->
+                            </div>
+                            <div class="col-6" style="text-align: right">
+                                <ul class="list-inline">
+                                    <li style="display: inline;">Page</li>
+                                    <li style="display: inline;"><span class="page"/></li>
+                                    <li style="display: inline;">de</li>
+                                    <li style="display: inline;"><span class="topage"/></li>
+                                </ul>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

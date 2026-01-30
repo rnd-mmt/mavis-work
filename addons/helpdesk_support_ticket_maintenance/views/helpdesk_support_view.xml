@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+        <record id="helpdesk_support_form_view_inherit_maintenance" model="ir.ui.view" >
+            <field name="name">helpdesk.support.form.inherit.maintenance</field>
+            <field name="model">helpdesk.support</field>
+            <field name="inherit_id" ref="website_helpdesk_support_ticket.helpdesk_support_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/header" position="inside">
+                    <button name="%(helpdesk_maintenance_request_action)d" 
+                            string="Create Maintenance Request" type="action" class="oe_highlight" attrs="{'invisible':[('is_close','=',True)],'invisible': [('company_id', '!=', 1)]}"
+                            groups="website_helpdesk_support_ticket.group_helpdesk_user"
+                    />
+                </xpath>
+                <!-- <xpath expr="//sheet/div[@class='oe_button_box']" position="inside"> -->
+                <xpath expr="//sheet/div[hasclass('oe_button_box')]" position="inside">
+                    <button class="oe_stat_button" name="action_view_maintenance_request" attrs="{'invisible':[('maintenance_request_count','=',0)]}" type="object" icon="fa-wrench">
+                        <field string="Maintenance Request" name="maintenance_request_count" widget="statinfo"/>
+                    </button>
+                </xpath>
+                <xpath expr="//page[@name='general_information']/group" position="inside">
+                    <group>
+                        <field name="maintenance_id"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>
+

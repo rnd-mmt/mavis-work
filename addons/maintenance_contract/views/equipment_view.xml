@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="maintenance_contract_equipment_include" model="ir.ui.view">
+            <field name="name">maintenance.equipment.form</field>
+            <field name="model">maintenance.equipment</field>
+            <field name="inherit_id" ref="maintenance.hr_equipment_view_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="is_up" invisible="1"/>
+                </xpath>
+
+                <!-- Modalité d'imagerie -->
+                <xpath expr="//field[@name='category_id']" position="after">
+                    <field name="imaging_modality"/>
+                    <field name="project_id"/>
+                </xpath>
+
+                <xpath expr="//div[@class='oe_title']" position="after">
+                    <field name="last_contract_id"  invisible="1"/>
+                    <div class="equipment-dashboard" style="display: flex; flex-direction: row; align-items: center; column-gap: 30px;" attrs="{'invisible': [('last_contract_id', '=', False)]}">
+                        <div style="display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 15px; border-radius: 5px;">
+                            <field name="equipment_percentage_uptime" string="UP Time" widget="donut_chart_widget" />
+                            <span type="button" class="btn btn-secondary">
+                                <span class="badge badge-info">
+                                    <field name="total_up_time" />
+                                </span>
+                                <span> sur </span>
+                                <span class="badge badge-secondary">
+                                    <field name="contract_duration" />
+                                </span>
+                                <span>Heures</span>
+                            </span>
+                        </div>
+                        <div id="equipment-status">
+                            <field name="is_up" />
+                            <span class="btn btn-secondary">
+                                <span>État de l'équipement: </span>
+                                <span class="badge badge-info" attrs="{'invisible': [('is_up', '=', False)]}">Opérationnel</span>
+                                <span class="badge badge-danger" attrs="{'invisible': [('is_up', '=', True)]}">Hors service </span>
+                            </span>
+                        </div>
+                        <div id="contract-status"  style="display: flex;flex-direction: column; justify-content: center; align-items: center; padding: 12px; border-radius: 5px;">
+                            <field name="last_contract_is_expired" invisible="1"/>
+                            <div style="padding: 5px !important;"><i class="fa fa-book fa-3x" role="img" aria-label="Contrat de maintenance" title="Contrat de maintenance" /></div>
+                            <span class="btn btn-secondary">
+                                <span>Contrat de maintenance </span>
+                                <span class="badge badge-danger" attrs="{'invisible': [('last_contract_is_expired', '=', False)]}">Expiré</span>
+                                <span class="badge badge-info" attrs="{'invisible': [('last_contract_is_expired', '=', True)]}" style="font-size: 11px !important;">Active</span>
+                            </span>
+                        </div>
+                    </div>
+                    <script>
+                        if (typeof equipmentStatusContainer === 'undefined') {
+                        const equipmentStatusContainer = document.querySelector('#equipment-status');
+                        if (equipmentStatusContainer) {
+                        const customCheckboxContainer = equipmentStatusContainer.querySelector('.custom-control.custom-checkbox.o_field_boolean');
+                        if (customCheckboxContainer) {
+                        const midDiv = customCheckboxContainer;
+                        midDiv.classList.add('mid');
+                        const label1 = equipmentStatusContainer.querySelector('label');
+                        label1.classList.add('rocker', 'rocker-small');
+                        const input1 = equipmentStatusContainer.querySelector('input');
+                        input1.type = 'checkbox';
+                        label1.appendChild(input1);
+                        const spanLeft1 = document.createElement('span');
+                        spanLeft1.classList.add('switch-left');
+                        spanLeft1.textContent = 'ON';
+                        label1.appendChild(spanLeft1);
+                        const spanRight1 = document.createElement('span');
+                        spanRight1.classList.add('switch-right');
+                        spanRight1.textContent = 'OFF';
+                        label1.appendChild(spanRight1);
+                        midDiv.appendChild(label1);
+                        equipmentStatusContainer.replaceChild(midDiv, customCheckboxContainer);}}}
+                    </script>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
+
+
+<!--                <xpath expr="//div[@name='button_box']/button[1]" position="before">-->
+<!--                    <button name="action_open_linked_contract" type="object" class="oe_stat_button" icon="fa-dashboard" style="min-width: 240px;" title="Contrat de maintenance">-->
+<!--                            <div class="o_stat_info">-->
+<!--                                <div style="display: flex; justify-content: center; align-items: center;">-->
+<!--&lt;!&ndash;                                    <div class="time-counter">&ndash;&gt;-->
+<!--&lt;!&ndash;                                        <p class="mb-0">&ndash;&gt;-->
+<!--&lt;!&ndash;                                            <i class="fa fa-arrow-up" style="color: #81C784; font-size:15px; margin-right: 5px;"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;                                            <span> <field name="total_up"/> </span>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        </p>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        <p class="mb-0">&ndash;&gt;-->
+<!--&lt;!&ndash;                                            <i class="fa fa-arrow-down" style="color: #E57373; font-size:15px; margin-right: 5px;"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;                                            <span>  <field name="total_down"/></span>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        </p>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    </div>&ndash;&gt;-->
+<!--                                    <div class="stat-label">-->
+<!--                                        <p class="mb-0">-->
+<!--                                            <field name="equipment_percentage_downtime" widget="percentpie" string=""/>-->
+<!--                                        </p>-->
+<!--                                        <p>-->
+<!--                                            <span><field name="total_down_time"/></span>-->
+<!--                                            <span> sur </span>-->
+<!--                                            <span><field name="contract_duration"/></span>-->
+<!--                                        </p>-->
+<!--                                    </div>-->
+<!--                                    <div class="equipment-status-icon">-->
+<!--                                        <div class="indicator is-running" attrs="{'invisible': [('is_up', '=', False)]}"></div>-->
+<!--                                        <div class="indicator is-down" attrs="{'invisible': [('is_up', '=', True)]}"></div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                    </button>-->
+<!--                </xpath>-->

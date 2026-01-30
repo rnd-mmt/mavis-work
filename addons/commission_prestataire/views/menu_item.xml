@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+	<menuitem id="menu_commission_prestataire" name="Paiement prestataire"
+        sequence="20" parent="acs_hms.menu_hms" action="coprest_action" groups="commission_prestataire.group_coprest_user"/>
+
+    <menuitem id="menu_invoice_coprest" name="Paiement prestataire"
+        sequence="10" parent="account.menu_finance_configuration" groups="commission_prestataire.group_coprest_user"/>
+
+    <menuitem id="menu_invoice_coprest_role" name="Règle de paiement prestataire"
+        sequence="10" parent="menu_invoice_coprest" action="action_coprest_role"/>
+
+    <menuitem id="menu_coprest_titre" name="Paiement prestataire" sequence="10" parent="account.menu_finance_payables" groups="commission_prestataire.group_coprest_user"/>
+    <menuitem id="menu_coprest" name="Paiement prestataire" sequence="30" parent="menu_coprest_titre" action="coprest_action" groups="commission_prestataire.group_coprest_user"/>
+    <menuitem id="menu_coprest_sheet" action="action_coprest_sheet" name="Feuille de Feuille prestataire" parent="menu_coprest_titre" sequence="31" groups="commission_prestataire.group_coprest_user"/>
+
+</odoo>

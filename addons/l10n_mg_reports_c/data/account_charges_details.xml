@@ -1,0 +1,756 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data noupdate="0">
+    <!-- Détails charges -->
+    <record id="report_details_charges" model="account.financial.report">
+      <field name="name">Détails charges</field>
+      <field name="type_financial_report_mg">charge_details</field>
+    </record>
+
+    <record id="report_achat_consomme" model="account.financial.report">
+      <field name="name">ACHATS CONSOMMES</field>
+      <field name="code">ACONS</field>
+      <field name="financial_report_id" ref="report_details_charges"/>
+      <field name="parent_id" ref="report_details_charges"/>
+      <field name="formulas">balance = AMFC.balance + VDS.balance + AEPS.balance + ANSMF.balance + AMAR.balance +
+        FASA.balance
+      </field>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="1"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">0</field>
+    </record>
+    <record id="report_achat_matieres" model="account.financial.report">
+      <field name="name">Achats de matières et fournitures consommables</field>
+      <field name="code">AMFC</field>
+      <field name="parent_id" ref='report_achat_consomme'/>
+      <field name="domain" eval="['|',('code', '=like', '601%'),('code', '=like', '602%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_variations_stocks" model="account.financial.report">
+      <field name="name">Variations des stocks</field>
+      <field name="code">VDS</field>
+      <field name="parent_id" ref='report_achat_consomme'/>
+      <field name="domain" eval="[('code', '=like', '603%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+
+    <record id="report_achat_etude_prestation" model="account.financial.report">
+      <field name="name">Achats d'études et de prestations de services</field>
+      <field name="code">AEPS</field>
+      <field name="parent_id" ref='report_achat_consomme'/>
+      <field name="domain" eval="[('code', '=like', '604%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="3"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_achat_non_stocke" model="account.financial.report">
+      <field name="name">Achats non stockés de matières et fournitures</field>
+      <field name="code">ANSMF</field>
+      <field name="parent_id" ref='report_achat_consomme'/>
+      <field name="domain" eval="['|',('code', '=like', '605%'),('code', '=like', '606%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="4"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_achat_marchandise" model="account.financial.report">
+      <field name="name">Achats de marchandises</field>
+      <field name="code">AMAR</field>
+      <field name="parent_id" ref='report_achat_consomme'/>
+      <field name="domain" eval="[('code', '=like', '607%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="5"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_frais_accessoire" model="account.financial.report">
+      <field name="name">Frais accessoires sur achats</field>
+      <field name="code">FASA</field>
+      <field name="parent_id" ref='report_achat_consomme'/>
+      <field name="domain" eval="[('code', '=like', '608%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="6"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+
+    <record id="report_service_exterieur" model="account.financial.report">
+      <field name="name">SERVICES EXTERIEURS ET AUTRES CONSOMMATIONS</field>
+      <field name="code">SEACONS</field>
+      <field name="financial_report_id" ref="report_details_charges"/>
+      <field name="parent_id" ref="report_details_charges"/>
+      <field name="formulas">balance = STG.balance + LOC.balance + EER.balance + PRA.balance + DED.balance +
+        PEXE.balance + RIH.balance + PPRP.balance + TRFR.balance + DMR.balance + FPTELE.balance + SBASS.balance +
+        COTD.balance + ERD.balance
+      </field>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="1"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">0</field>
+    </record>
+    <record id="report_sous_traitance" model="account.financial.report">
+      <field name="name">Sous traitance générale</field>
+      <field name="code">STG</field>
+      <field name="parent_id" ref='report_service_exterieur'/>
+      <field name="domain" eval="[('code', '=like', '611%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_location" model="account.financial.report">
+      <field name="name">Locations</field>
+      <field name="code">LOC</field>
+      <field name="parent_id" ref='report_service_exterieur'/>
+      <field name="domain" eval="[('code', '=like', '613%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_entretien_reparation" model="account.financial.report">
+      <field name="name">Entretiens et réparations</field>
+      <field name="code">EER</field>
+      <field name="parent_id" ref='report_service_exterieur'/>
+      <field name="domain" eval="[('code', '=like', '615%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="3"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_primes_assurances" model="account.financial.report">
+      <field name="name">Primes d'assurances</field>
+      <field name="code">PRA</field>
+      <field name="parent_id" ref='report_service_exterieur'/>
+      <field name="domain" eval="[('code', '=like', '616%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="4"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_etude_recherche" model="account.financial.report">
+      <field name="name">Etudes et recherches</field>
+      <field name="code">ERD</field>
+      <field name="parent_id" ref='report_service_exterieur'/>
+      <field name="domain" eval="[('code', '=like', '617%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="5"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_documentation_divers" model="account.financial.report">
+      <field name="name">Documentation et divers</field>
+      <field name="code">DED</field>
+      <field name="parent_id" ref='report_service_exterieur'/>
+      <field name="domain" eval="[('code', '=like', '618%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="6"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_personnel_exterieur" model="account.financial.report">
+      <field name="name">Personnel extérieur à l'entreprise</field>
+      <field name="code">PEXE</field>
+      <field name="parent_id" ref='report_service_exterieur'/>
+      <field name="domain" eval="[('code', '=like', '621%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="7"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_remuneration_intermediaire" model="account.financial.report">
+      <field name="name">Rémunérations d'intermédiaires et honoraires</field>
+      <field name="code">RIH</field>
+      <field name="parent_id" ref='report_service_exterieur'/>
+      <field name="domain" eval="[('code', '=like', '622%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="8"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_publicite_publication" model="account.financial.report">
+      <field name="name">Publicité, publication, relations publiques</field>
+      <field name="code">PPRP</field>
+      <field name="parent_id" ref='report_service_exterieur'/>
+      <field name="domain" eval="[('code', '=like', '623%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="9"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_transport_fret" model="account.financial.report">
+      <field name="name">Transports et frêts</field>
+      <field name="code">TRFR</field>
+      <field name="parent_id" ref='report_service_exterieur'/>
+      <field name="domain" eval="[('code', '=like', '624%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="10"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_deplac_mission_recep" model="account.financial.report">
+      <field name="name">Déplac./missions/réceptions</field>
+      <field name="code">DMR</field>
+      <field name="parent_id" ref='report_service_exterieur'/>
+      <field name="domain" eval="[('code', '=like', '625%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="11"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_frais_poste_telecom" model="account.financial.report">
+      <field name="name">Frais de postes et télécom</field>
+      <field name="code">FPTELE</field>
+      <field name="parent_id" ref='report_service_exterieur'/>
+      <field name="domain" eval="[('code', '=like', '626%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="12"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_service_bancaire" model="account.financial.report">
+      <field name="name">Services bancaires et assimilés</field>
+      <field name="code">SBASS</field>
+      <field name="parent_id" ref='report_service_exterieur'/>
+      <field name="domain" eval="[('code', '=like', '627%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="13"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_cotisation_divers" model="account.financial.report">
+      <field name="name">Cotisations et divers</field>
+      <field name="code">COTD</field>
+      <field name="parent_id" ref='report_service_exterieur'/>
+      <field name="domain" eval="[('code', '=like', '628%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="14"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_impot_taxe" model="account.financial.report">
+      <field name="name">IMPOTS, TAXES ET VERSEMENTS ASSIMILES</field>
+      <field name="code">IMPTVA</field>
+      <field name="financial_report_id" ref="report_details_charges"/>
+      <field name="parent_id" ref="report_details_charges"/>
+      <field name="formulas">balance = IMPTVAR.balance + DTL.balance + TBR.balance + VTECH.balance + IMPFTA.balance +
+        AIMPT.balance + IRINT.balance
+      </field>
+      <field name="sequence" eval="3"/>
+      <field name="level" eval="1"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">0</field>
+    </record>
+    <record id="report_impot_taxe_remuneration" model="account.financial.report">
+      <field name="name">Impôts, taxes et versements assimilés sur rémunérations</field>
+      <field name="code">IMPTVAR</field>
+      <field name="parent_id" ref='report_impot_taxe'/>
+      <field name="domain" eval="[('code', '=like', '631%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="droit_taxe_locative" model="account.financial.report">
+      <field name="name">Droit et taxe locative</field>
+      <field name="code">DTL</field>
+      <field name="parent_id" ref='report_impot_taxe'/>
+      <field name="domain" eval="[('code', '=like', '632%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_timbre" model="account.financial.report">
+      <field name="name">Timbre</field>
+      <field name="code">TBR</field>
+      <field name="parent_id" ref='report_impot_taxe'/>
+      <field name="domain" eval="[('code', '=like', '6334000%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="sequence" eval="3"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_visite_technique" model="account.financial.report">
+      <field name="name">Visite technique</field>
+      <field name="code">VTECH</field>
+      <field name="parent_id" ref='report_impot_taxe'/>
+      <field name="domain" eval="[('code', '=like', '6337000%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="sequence" eval="4"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_impot_foncier" model="account.financial.report">
+      <field name="name">Impôts foncier et taxe annexe</field>
+      <field name="code">IMPFTA</field>
+      <field name="parent_id" ref='report_impot_taxe'/>
+      <field name="domain" eval="[('code', '=like', '6341300%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="5"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_autre_impot_taxe" model="account.financial.report"><!-- TSY OK -->
+      <field name="name">Autres impôts et taxes</field>
+      <field name="code">AIMPT</field>
+      <field name="parent_id" ref='report_impot_taxe'/>
+      <field name="domain"
+             eval="['|','|','|','|',('code', '=like', '6350%'),('code','=like', '6351%'),('code','=like', '6352%'),('code','=like', '6353%'),('code','=like', '6354%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="6"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_ir_intermittent_paye" model="account.financial.report">
+      <field name="name">IR intermittent payé</field>
+      <field name="code">IRINT</field>
+      <field name="parent_id" ref='report_impot_taxe'/>
+      <field name="domain" eval="[('code', '=like', '6357%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="7"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+
+    <record id="report_charge_de_personnel" model="account.financial.report">
+      <field name="name">CHARGES DE PERSONNEL</field>
+      <field name="code">CPERS</field>
+      <field name="financial_report_id" ref="report_details_charges"/>
+      <field name="parent_id" ref="report_details_charges"/>
+      <field name="formulas">balance = ACS.balance + ACP.balance + COS.balance + RDPERS.balance</field>
+      <field name="sequence" eval="4"/>
+      <field name="level" eval="1"/>
+      <field name="style_overwrite">0</field>
+    </record>
+    <record id="report_remuneration_pers" model="account.financial.report">
+      <field name="name">Rémunération du personnel</field>
+      <field name="code">RDPERS</field>
+      <field name="parent_id" ref='report_charge_de_personnel'/>
+      <field name="domain" eval="[('code', '=like', '641%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+
+
+    <record id="report_cotisation_organisme" model="account.financial.report">
+      <field name="name">Cotisation aux organismes sociaux</field>
+      <field name="code">COS</field>
+      <field name="parent_id" ref='report_charge_de_personnel'/>
+      <field name="domain" eval="[('code', '=like', '645%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_autre_charge_sociale" model="account.financial.report">
+      <field name="name">Autres charges sociales</field>
+      <field name="code">ACS</field>
+      <field name="parent_id" ref='report_charge_de_personnel'/>
+      <field name="domain" eval="[('code', '=like', '647%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="3"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_autre_charge_personnel" model="account.financial.report">
+      <field name="name">Autres charges de personnel</field>
+      <field name="code">ACP</field>
+      <field name="parent_id" ref='report_charge_de_personnel'/>
+      <field name="domain" eval="[('code', '=like', '648%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="4"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+
+    <record id="report_charge_activite_ordinaire_charge" model="account.financial.report">
+      <field name="name">AUTRES CHARGES DES ACTIVITES ORDINAIRES</field>
+      <field name="code">ACAORD</field>
+      <field name="financial_report_id" ref="report_details_charges"/>
+      <field name="parent_id" ref="report_details_charges"/>
+      <field name="formulas">balance = RCBLLVS.balance + MVCANC.balance + PCIRR.balance + QPROFC.balance +
+        APSADL.balance + CEXGC.balance + ACHGC.balance + JDP.balance
+      </field>
+      <field name="sequence" eval="5"/>
+      <field name="level" eval="1"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">0</field>
+    </record>
+    <record id="report_redevance_concession" model="account.financial.report">
+      <field name="name">Redevances pour concessions, brevets, licences, logiciels et valeurs similaires</field>
+      <field name="code">RCBLLVS</field>
+      <field name="parent_id" ref='report_charge_activite_ordinaire_charge'/>
+      <field name="domain" eval="[('code', '=like', '651%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_moins_value" model="account.financial.report">
+      <field name="name">Val. comptables actifs cédés : Moins values sur cession d'actifs non courant</field>
+      <field name="code">MVCANC</field>
+      <field name="parent_id" ref='report_charge_activite_ordinaire_charge'/>
+      <field name="domain" eval="[('code', '=like', '652%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_perte_jeton_presence" model="account.financial.report">
+      <field name="name">Jetons de présence</field>
+      <field name="code">JDP</field>
+      <field name="parent_id" ref='report_charge_activite_ordinaire_charge'/>
+      <field name="domain" eval="[('code', '=like', '653%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="3"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_perte_creance_irrec" model="account.financial.report">
+      <field name="name">Pertes sur créances irrécouvrables</field>
+      <field name="code">PCIRR</field>
+      <field name="parent_id" ref='report_charge_activite_ordinaire_charge'/>
+      <field name="domain" eval="[('code', '=like', '654%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="4"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_quote_part" model="account.financial.report">
+      <field name="name">Quote-part de résultat sur opérations faites en commun</field>
+      <field name="code">QPROFC</field>
+      <field name="parent_id" ref='report_charge_activite_ordinaire_charge'/>
+      <field name="domain" eval="[('code', '=like', '655%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="sequence" eval="5"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_amende_penalite" model="account.financial.report">
+      <field name="name">Amendes et pénalités, subventions accordées, dons et libéralités</field>
+      <field name="code">APSADL</field>
+      <field name="parent_id" ref='report_charge_activite_ordinaire_charge'/>
+      <field name="domain" eval="['|',('code', '=like', '656%'),('code', '=like', '671%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="6"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_charge_exceptionnelle" model="account.financial.report">
+      <field name="name">Charges exceptionelles de gestion courante</field>
+      <field name="code">CEXGC</field>
+      <field name="parent_id" ref='report_charge_activite_ordinaire_charge'/>
+      <field name="domain" eval="[('code', '=like', '657%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="7"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_autre_charge_courante" model="account.financial.report">
+      <field name="name">Autres charges de gestion courante</field>
+      <field name="code">ACHGC</field>
+      <field name="parent_id" ref='report_charge_activite_ordinaire_charge'/>
+      <field name="domain" eval="[('code', '=like', '658%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="8"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+
+    <record id="report_charges_financieres_charge" model="account.financial.report">
+      <field name="name">CHARGES FINANCIERES</field>
+      <field name="code">CFINAN</field>
+      <field name="financial_report_id" ref="report_details_charges"/>
+      <field name="parent_id" ref="report_details_charges"/>
+      <field name="formulas">balance = ACHFI.balance + PERC.balance + INTCC.balance + IDEB.balance + MVCIF.balance +
+        CHINT.balance
+      </field>
+      <field name="sequence" eval="6"/>
+      <field name="level" eval="1"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">0</field>
+    </record>
+    <record id="report_charge_interet" model="account.financial.report">
+      <field name="name">Charges d'intérêts</field>
+      <field name="code">CHINT</field>
+      <field name="parent_id" ref='report_charges_financieres_charge'/>
+      <field name="domain" eval="[('code', '=like', '6610000%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_interet_debiteur" model="account.financial.report">
+      <field name="name">Intérêts débiteurs</field>
+      <field name="code">IDEB</field>
+      <field name="parent_id" ref='report_charges_financieres_charge'/>
+      <field name="domain" eval="[('code', '=like', '6611000%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_interet_compte_courant" model="account.financial.report">
+      <field name="name">Intérêts des comptes courants</field>
+      <field name="code">INTCC</field>
+      <field name="parent_id" ref='report_charges_financieres_charge'/>
+      <field name="domain" eval="[('code', '=like', '6612000%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="3"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_perte_change_charge" model="account.financial.report">
+      <field name="name">Pertes de change</field>
+      <field name="code">PERC</field>
+      <field name="parent_id" ref='report_charges_financieres_charge'/>
+      <field name="domain" eval="[('code', '=like', '666%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="4"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_autre_value_cession" model="account.financial.report">
+      <field name="name">Moins value sur cession instrument financier</field>
+      <field name="code">MVCIF</field>
+      <field name="parent_id" ref='report_charges_financieres_charge'/>
+      <field name="domain" eval="[('code', '=like', '667%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="5"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_autre_charge_fi" model="account.financial.report">
+      <field name="name">Autres charges financières</field>
+      <field name="code">ACHFI</field>
+      <field name="parent_id" ref='report_charges_financieres_charge'/>
+      <field name="domain" eval="[('code', '=like', '668%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="6"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+
+    <record id="dotation_amort_perte_valeur" model="account.financial.report">
+      <field name="name">DOTATION AUX AMORTISSEMENTS, PROVISIONS ET PERTES DE VALEURS</field>
+      <field name="code">DAPPVAL</field>
+      <field name="financial_report_id" ref="report_details_charges"/>
+      <field name="parent_id" ref="report_details_charges"/>
+      <field name="formulas">balance = ANCDOT.balance + ACOT.balance</field>
+      <field name="sequence" eval="7"/>
+      <field name="level" eval="1"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">0</field>
+    </record>
+    <record id="actif_non_courant_dot" model="account.financial.report">
+      <field name="name">Actifs non courants :</field>
+      <field name="code">ANCDOT</field>
+      <field name="parent_id" ref='dotation_amort_perte_valeur'/>
+      <field name="domain" eval="[('code', '=like', '681%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="actif_courant_dot" model="account.financial.report">
+      <field name="name">Actifs courants :</field>
+      <field name="code">ACOT</field>
+      <field name="parent_id" ref='dotation_amort_perte_valeur'/>
+      <field name="domain" eval="[('code', '=like', '685%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+
+
+    <record id="impot_sur_benefice" model="account.financial.report">
+      <field name="name">IMPOTS SUR LES BENEFICES</field>
+      <field name="code">ISB</field>
+      <field name="financial_report_id" ref="report_details_charges"/>
+      <field name="parent_id" ref="report_details_charges"/>
+      <field name="formulas">balance = IMPDIFF.balance + IMPSR.balance</field>
+      <field name="sequence" eval="8"/>
+      <field name="level" eval="1"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">0</field>
+    </record>
+    <record id="report_imposition_differee" model="account.financial.report">
+      <field name="name">Impositions différées</field>
+      <field name="code">IMPDIFF</field>
+      <field name="parent_id" ref='impot_sur_benefice'/>
+      <field name="domain" eval="[('code', '=like', '692%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_impot_resultat" model="account.financial.report">
+      <field name="name">Impôts sur les résultats</field>
+      <field name="code">IMPSR</field>
+      <field name="parent_id" ref='impot_sur_benefice'/>
+      <field name="domain" eval="[('code', '=like', '695%')]"/>
+      <field name="formulas">balance = sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+
+    <record id="details_charges_total_charge_ordinaire" model="account.financial.report">
+      <field name="name">TOTAL DES CHARGES ORDINAIRES</field>
+      <field name="code">CHARGES_TDCO</field>
+      <field name="financial_report_id" ref="report_details_charges"/>
+      <field name="parent_id" ref="report_details_charges"/>
+      <field name="formulas">balance = ISB.balance + DAPPVAL.balance + CFINAN.balance + ACAORD.balance + CPERS.balance +
+        IMPTVA.balance + SEACONS.balance + ACONS.balance
+      </field>
+      <field name="sequence" eval="9"/>
+      <field name="level" eval="1"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">0</field>
+    </record>
+
+<!--    Other account-->
+    <record id="report_account_61" model="account.financial.report">
+      <field name="name">Compte 61</field>
+      <field name="code">CPT_61</field>
+      <field name="parent_id" ref='report_details_charges'/>
+      <field name="domain" eval="[('code', '=like', '61%')]"/>
+      <field name="formulas">balance = -sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+
+     <record id="report_account_62" model="account.financial.report">
+      <field name="name">Compte 62</field>
+      <field name="code">CPT_62</field>
+      <field name="parent_id" ref='report_details_charges'/>
+      <field name="domain" eval="[('code', '=like', '62%')]"/>
+      <field name="formulas">balance = -sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+     <record id="report_account_68" model="account.financial.report">
+      <field name="name">Compte 68</field>
+      <field name="code">CPT_68</field>
+      <field name="parent_id" ref='report_details_charges'/>
+      <field name="domain" eval="[('code', '=like', '68%')]"/>
+      <field name="formulas">balance = -sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="2"/>
+      <field name="type">charge_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+  </data>
+</odoo>

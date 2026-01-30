@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.imaging</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="10"/>
+        <field name="inherit_id" ref="acs_hms_base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='imaging']" position="after">
+                <h2>Imaging</h2>
+                <div class="row mt16 o_settings_container">
+                    <!--div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane"/>
+                        <div class="o_setting_right_pane">
+                            <span class="o_form_label">Stock Location</span>
+                            <div class="text-muted">
+                                Location to take consumed Material in Imaging Test.
+                            </div>
+                            <div class="text-muted">
+                                <field name="imaging_stock_location"/>
+                            </div>
+                        </div>
+                    </div-->
+                    <!--div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane"/>
+                        <div class="o_setting_right_pane">
+                            <span class="o_form_label">Stock Usage Location</span>
+                            <div class="text-muted">
+                                Location to manage consumed Material in Imaging Test.
+                            </div>
+                            <div class="text-muted">
+                                <field name="imaging_usage_location"/>
+                            </div>
+                        </div>
+                    </div-->
+
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="acs_imagingresult_qrcode"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label string="Imaging Result Authentication" for="acs_imagingresult_qrcode"/>
+                            <div class="text-muted" id="acs_imagingresult_qrcode">
+                                Allow user to Autheticate Imaging Result by scanning QrCode from report.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="acs_auto_create_imaging_sample"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label string="Create Sample Automatically" for="acs_auto_create_imaging_sample"/>
+                            <div class="text-muted" id="acs_auto_create_lab_sample">
+                                Auto create Samples when user accept Imaging request.
+                            </div>
+                        </div>
+                    </div-->
+
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane"/>
+                        <div class="o_setting_right_pane">
+                            <span class="o_form_label">Invoice Policy</span>
+                            <div class="text-muted">
+                                Based on Configured option Create Invoice option will be shown on Imaging request.
+                            </div>
+                            <div class="text-muted">
+                                <field name="acs_imaging_invoice_policy"/>
+                            </div>
+                        </div>
+                        <div attrs="{'invisible': [('acs_imaging_invoice_policy','!=','in_advance')]}" >
+                            <div class="o_setting_left_pane">
+                                <field name="acs_check_imaging_payment"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Check Payment Status</span>
+                                <div class="text-muted">
+                                    Do not allow to accept request before completion of payment.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane"/>
+                        <div class="o_setting_right_pane">
+                            <span class="o_form_label">Manage Collection Centers</span>
+                            <div class="text-muted">
+                                Allow Users to manage Collection Centers.
+                            </div>
+                            <div class="text-muted">
+                                <field name="group_manage_collection_center"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane"/>
+                        <div class="o_setting_right_pane">
+                            <span class="o_form_label">Default Disclaimer</span>
+                            <div class="text-muted">
+                                It will set this disclaimer by default on Imaging Result &amp; Request Records.
+                            </div>
+                            <div class="text-muted">
+                                <field name="acs_imaging_disclaimer" placeholder="Instert Your Default Disclaimer here.."/>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

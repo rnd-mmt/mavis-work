@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        
+        <record id="support_user_maintenance_request" model="ir.rule">
+            <field name="name">Maintenance Request - Support User</field>
+            <field name="model_id" ref="maintenance.model_maintenance_request"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4, ref('website_helpdesk_support_ticket.group_helpdesk_user'))]"/>
+        </record>
+        
+        <record id="support_user_equipment_request" model="ir.rule">
+            <field name="name">Equipment Request - Support User</field>
+            <field name="model_id" ref="maintenance.model_maintenance_equipment"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4, ref('website_helpdesk_support_ticket.group_helpdesk_user'))]"/>
+        </record>
+       
+    </data>
+</odoo>

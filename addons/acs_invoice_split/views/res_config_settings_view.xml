@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <!-- Ajouter le champs de configuration dans la vue -->
+        <record id="res_config_settings_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings.invoice.report</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@id='analytic']" position="after">
+                    <h2>Modèle de rapport - Factures</h2>
+                    <div class="row o_settings_container" id="account-report">
+                        <div class="col-12 col-lg-6 o_setting_box"
+                             id="invoices_report_template"
+                             title="Allows you to chose the right report template based on company."
+                             groups="account.group_account_user">
+                            <div class="o_setting_right_pane">
+                                <div>
+                                    <field name="account_report_template_id" />
+                                </div>
+                                <label for="account_report_template_id"/>
+                                <div class="text-muted">
+                                    Choisir le "Template de Facture" pour la société.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

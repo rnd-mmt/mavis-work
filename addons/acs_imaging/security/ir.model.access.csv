@@ -1,0 +1,46 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hms_acs_imaging_test_user,Test Type user,model_acs_imaging_test,acs_hms_base.group_hms_user,1,0,0,0
+access_patient_imaging_test_user,Patient Imaging Test user,model_patient_imaging_test,acs_hms_base.group_hms_user,1,0,0,0
+access_hms_imaging_request_line_user,ACS Patient Imaging Request line user,model_imaging_request_line,acs_hms_base.group_hms_user,1,0,0,0
+access_hms_acs_imaging_request_user,Patient Imaging Request User,model_acs_imaging_request,acs_hms_base.group_hms_user,1,1,0,0
+access_acs_imaging_user,Imaging User,model_acs_imaging,acs_hms_base.group_hms_user,1,0,0,0
+access_imaging_group_line,access_imaging_group_line,model_imaging_group_line,base.group_user,1,0,0,0
+access_imaging_group,access_imaging_group,model_imaging_group,base.group_user,1,0,0,0
+access_imaging_group_line_dr,access_imaging_group_line,model_imaging_group_line,base.group_user,1,1,1,1
+access_imaging_group_dr,access_imaging_group,model_imaging_group,base.group_user,1,1,1,1
+,,,,,,,
+access_patient_imaging_test_imaging_user,Patient Imaging Test phy,model_patient_imaging_test,group_hms_imaging_user,1,1,1,0
+access_hms_patient_imaging_test_imaging_user,ACS Imaging phy,model_acs_imaging_test,group_hms_imaging_user,1,1,1,0
+access_hms_imaging_request_line_imaging_user,ACS Patient Imaging Request line  phy,model_imaging_request_line,group_hms_imaging_user,1,1,1,1
+access_acs_imaging_imaging_user,Imaging Imaging User,model_acs_imaging,group_hms_imaging_user,1,1,1,1
+
+,,,,,,,
+access_hms_acs_imaging_test_imaging_manager,ACS Test Type manager,model_acs_imaging_test,acs_imaging.group_hms_imaging_manager,1,1,1,1
+access_patient_imaging_test_imaging_manager,Patient Imaging Test  manager,model_patient_imaging_test,acs_imaging.group_hms_imaging_manager,1,1,1,1
+access_hms_patient_imaging_test_imaging_manager,Imaging Test manager,model_patient_imaging_test,acs_imaging.group_hms_imaging_manager,1,1,1,1
+access_hms_acs_imaging_request_imaging_manager,patient imaging Request manager,model_acs_imaging_request,acs_imaging.group_hms_imaging_manager,1,1,1,1
+
+,,,,,,,
+access_patient_imaging_test_imaging_resp,Patient Imaging Test phy,model_patient_imaging_test,group_hms_imaging_resp_admin,1,0,0,0
+access_hms_patient_imaging_test_imaging_resp,ACS Imaging phy,model_acs_imaging_test,group_hms_imaging_resp_admin,1,0,0,0
+access_hms_imaging_request_line_imaging_resp,ACS Patient Imaging Request line  phy,model_imaging_request_line,group_hms_imaging_resp_admin,1,0,0,0
+access_acs_imaging_imaging_resp,Imaging Imaging User,model_acs_imaging,group_hms_imaging_resp_admin,1,0,0,0
+access_hms_acs_imaging_request_resp,Patient Imaging Request Responsable SMI,model_acs_imaging_request,group_hms_imaging_resp_admin,1,0,0,0
+
+access_hms_acs_imaging_interpretation1,modele interpretation,model_imaging_template,acs_imaging.group_hms_imaging_manager,1,1,1,1
+
+access_acs_imaging_consummable,Imaging consommable,model_imaging_consumable_line,group_hms_imaging_user,1,1,1,1
+access_acs_imaging_cabine,Imaging Cabine,model_acs_imaging_cabine,group_hms_imaging_user,1,1,1,1
+
+access_img_result_anterieur_wizard,Resultat antérieur imagerie,model_img_result_anterieur_wizard,group_hms_imaging_user,1,1,1,1
+access_img_result_anterieur_wizard_line,Ligne resultat antérieur imagerie,model_img_result_anterieur_wizard_line,group_hms_imaging_user,1,1,1,0
+
+access_imaging_device,Appareil acquisition,model_imaging_device,group_hms_imaging_manager,1,1,1,1
+access_imaging_device_user,Appareil acquisition,model_imaging_device,group_hms_imaging_user,1,0,0,0
+
+access_editable_reason1,Rendre editable,model_imaging_editable_reason,group_imaging_doctor,1,1,1,1
+access_editable_reason2,Rendre editable,model_imaging_editable_reason,group_hms_imaging_manager,1,1,1,1
+
+access_hms_acs_imaging_protocole_imaging_user,protocol imaging user,model_imaging_protocol,acs_imaging.group_hms_imaging_user,1,1,0,0
+access_hms_acs_imaging_interpretation,modele interpretation,model_imaging_template,acs_imaging.group_hms_imaging_user,1,1,0,0
+access_hms_acs_imaging_protocole_imaging_manager,protocol imaging manager,model_imaging_protocol,acs_imaging.group_hms_imaging_manager,1,1,1,1

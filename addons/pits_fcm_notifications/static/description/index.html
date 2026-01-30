@@ -1,0 +1,91 @@
+<section class="oe_container">
+    <div class="oe_row">
+        <div class="col-xs-12 text-justify">
+            <h2 class="oe_slogan" style="color:#875A7B;">FCM Notifications</h2>
+            <p>Firebase Cloud Messaging, formerly known as Google Cloud Messaging, is a cross-platform cloud solution for messages and notifications for Android, iOS, and Web applications, which currently can be used at no cost. The service is provided by Firebase, a subsidiary of Google. It will give you the luxury to inform your user in real time about the new email, task, activity or any other data to get notified. It works on the principle of down streaming messages from FCM servers to user's app and upstream messages from user's apps to FCM servers. </p>
+            <p>PIT Solutions is a global IT services company with their Head Quarters in Switzerland.
+                They focus on offering high end ecommerce solutions to their clients. For more details, please check <a
+                        href="http://www.pitsolutions.ch" target="_blank">PIT Solutions</a></p>
+            <p><b>Please note that the extension is priced at 50 EUR. If you need setup and integration done by PIT Solutions, there is an additional one time fee of 50 EUR.</b></p>
+            <p>Contact us for Odoo support, query, customization, implementation, Version Migration, etc.</p>
+            <ul>
+                <li>Website Contact : <a
+                    href="http://www.pitsolutions.ch">https://www.pitsolutions.ch/en/contact/</a></li> 
+                <li>Write us Mail: kontakt@pitsolutions.ch</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row">
+        <div class="col-xs-12 text-justify">
+            <h2 class="oe_slogan" style="color:#875A7B;">Product Description</h2>
+            <p> FCM Notifications from PIT Solutions can be used to send Push Notifications to the registered iOS, Andriod, Web(Javascript), C++ and Unity applications with the help of Firebase Cloud Messaging. This module works with an external python library "pyfcm".</p>
+            <h3 class="oe_slogan">Usage</h3>
+            <p> After installing the module you can generate FCM Notifications based on Partners as follows
+            <br />
+            <br />
+            <b>Partners.generate_fcm_notification(message_title='message_title',
+                                                            message_body='message_body')</b>
+            <br />
+            <br />
+            Where "Partners" is a record set of model res.partner</p> 
+            <p>Please note that FCM Notifications will be generated only if valid Registration Tokens are defined under each Partner.</p>
+            <p> For example :- </p>
+            <img class="oe_picture oe_screenshot" alt="Sample Request" src="Sample Request.png">
+        
+            <h3 class="oe_slogan">Expected Results</h3>
+            <p>
+                <ol>
+                    <li>Success</li>
+                    <p> When inspecting the logs you can see the status as</p>
+                    <img class="oe_picture oe_screenshot" alt="Success" src="Success.png">
+                    <p> And in the target device the notitification will be generated</p>
+                    <img class="oe_picture oe_screenshot" alt="Message" src="Message.png">
+                    <li>Failure</li>
+                    <img class="oe_picture oe_screenshot" alt="Failure" src="Failure.png">
+                    <li>Unauthorised</li>
+                    <p> For incorrect Server Key the status will be</p>
+                    <img class="oe_picture oe_screenshot" alt="Unauthorised" src="Unauthorised.png">
+                </ol>
+            </p>
+
+            <h2 class="oe_slogan" >Installation Instructions</h2>
+            <!-- <p>For more information watch the <a href="https://www.youtube.com/watch?v=7cNhGpRu5h0" target="_blank">Demo Video</a></p> -->
+            <p>For this module you need to install pyfcm.<br/>
+                Open the terminal and run: <b>sudo pip3 install pyfcm</b></p>
+            <h3 class="oe_slogan">Firebase Configuration</h3>
+            <p>Before starting, please go through <a href="https://firebase.google.com/docs/cloud-messaging" target="_blank">Firebase Cloud Messaging</a></p>
+
+            <p> If you are already having Project and App then <a href="https://console.firebase.google.com/project/_/settings/cloudmessaging/" target="_blank">click here</a></p>
+
+            <p>If you are not having Project and App, please go to the <a href="https://console.firebase.google.com/" target="_blank">Firebase Console</a></p>
+            <ul>
+                <li>Step 1 : Create a Project.</li>
+                <li>Step 2 : Add an App.</li>
+            </ul>
+            <p> Then go to App Setting --> Cloud Messaging</p>
+            <p> Copy the Server Key</p>
+            <img class="oe_picture oe_screenshot" alt="Firebase" src="Firebase.png">
+
+             <p> <b>Device Registration Token</b> can be generated based on your end point technology (Web, Android, iOS, etc.). The method is different for different technologies. For more details, please go through <a href="https://firebase.google.com/docs/cloud-messaging" target="_blank">Firebase Cloud Messaging</a>. You can find the documentation for different technologies separately.</p>
+
+            <h3 class="oe_slogan">Odoo backend configuration</h3>
+
+            <p> Go to Settings --> General Setting --> FCM Notifications</p>
+            <p> Enter the Server Key here </p>
+            <img class="oe_picture oe_screenshot" alt="General Settings" src="General Settings.png">
+            <p> By clicking the "FCM Testing" link you will redirect to a quick testing form.</p>
+            <p> Please note that this will work only if you configured registration token against the curresponding partner as explained in the next step</p> 
+            <img class="oe_picture oe_screenshot" alt="FCM Testing" src="FCM Testing.png">
+            <h3 class="oe_slogan">Device Registration Tokens</h3>
+            <p>Enter the Device Registration Tokens against each Partner.</p>
+            <p>Go to Partner --> FCM Device Tokens</p>
+            <p> Enter the Device Registration Token. You can enter tokens of multiple devices.</p>
+            <img class="oe_picture oe_screenshot" alt="Device Tokens" src="Device Tokens.png">
+
+        </div>
+    </div>
+</section>
+

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="helpdesk_support_maintenance_contract" model="ir.ui.view">
+            <field name="name">Helpdesk support</field>
+            <field name="model">helpdesk.support</field>
+            <field name="inherit_id" ref="website_helpdesk_support_ticket.helpdesk_support_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="imaging_modality"/>
+                    <field name="equipment_id" options="{'no_create': True}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

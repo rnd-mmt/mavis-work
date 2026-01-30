@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record id="view_fcm_test_form" model="ir.ui.view">
+            <field name="name">fcm.test.form</field>
+            <field name="model">fcm.test</field>
+            <field name="arch" type="xml">
+                <form string="FCM Test">
+                  <sheet>
+                    <group>
+                        <div>
+                          <span><b>
+                              Please Note that this partner should have a valid device registration token
+                          </b></span>
+                        </div>
+                      </group>
+                      <group>
+                        <group>
+                          <field name="partner_id" required="1"/>
+                          <field name="message_title" required="1"/>
+                          <field name="message_body" required="1"/>
+                          <button type="object" name="test_fcm" string="Test" class="oe_highlight"/>
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+                  </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_fcm_test" model="ir.actions.act_window">
+             <field name="name">Test Your FCM</field>
+             <field name="type">ir.actions.act_window</field>
+             <field name="res_model">fcm.test</field>
+            <field name="res_id" ref="pits_fcm_notifications.fcm_test_record"/>
+            <field name="target">current</field>
+            <field name="view_id" ref="view_fcm_test_form"/>
+        </record>
+
+
+</odoo>

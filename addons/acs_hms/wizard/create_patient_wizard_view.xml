@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_patient_creation_wizard" model="ir.ui.view">
+            <field name="name">Validation de Création du Patient</field>
+            <field name="model">patient.creation.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Validation de Création du Patient">
+                    <sheet>
+                        <group style="margin: 0; padding: 0;">
+                            <group style="margin: 0; padding: 0;"><field name="patient_code"/></group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="patient_birth_day"/>
+                                <field name="patient_name"/>                       
+                                <field name="patient_gender"/>
+                                <field name="profil_type"/>
+                                <label for="patient_assurance"/>
+                                <div class="o_row">
+                                    <span attrs="{'invisible': [('profil_type','!=','fonc_activity')]}">C - </span>
+                                    <span attrs="{'invisible': [('profil_type','!=','fonc_pensioner')]}">R - </span>
+                                    <field name="patient_assurance" options="{'no_create': True}" attrs="{'invisible': [('profil_type','=','other')]}"/>
+                                </div>
+                                <!-- <field name="patient_assurance" options="{'no_create': True}" attrs="{'invisible': [('profil_type','=','other')]}"/> -->
+                                <field name="patient_pension" attrs="{'invisible': [('profil_type','!=','fonc_pensioner')], 'required':[('profil_type','=','fonc_pensioner')]}"/>
+                                <field name="property_product_pricelist" options="{'no_create': True}"/>
+                            </group>
+                            <group>
+                                <field name="patient_phone" attrs="{'required':['|','&amp;','|',('patient_adress','=',False),('patient_adress','=',''),('gov_code','=',False),('gov_code','=','')]}"/>
+                                <field name="patient_adress" attrs="{'required':['|','&amp;','|',('patient_phone','=',False),('patient_phone','=',''),('gov_code','=',False),('gov_code','=','')]}"/>
+                                <field name="gov_code" attrs="{'required':['|','&amp;','|',('patient_phone','=',False),('patient_phone','=',''),('patient_adress','=',False),('patient_adress','=','')]}"/>
+                                <field name="patient_mail"/>
+                                <field name="patient_person_contact"/>
+                                <field name="patient_marital_status"/>
+                                
+                                <field name="is_btn_create_visible" invisible="1"/>
+                            </group>
+                        </group>
+                        <hr/>
+                        <div class="alert alert-dark" attrs="{'invisible': [('is_btn_create_visible','=', False)]}">
+                            <strong>Aucun enregistrement correspondant aux critères de recherche spécifiés n'a été trouvé.</strong>
+                        </div>
+                            <field name="similar_patient_list" string="" widget="many2many_kanban" attrs="{'invisible': [('is_btn_create_visible','=', True)]}" style="max-height: 380px; overflow: auto;">
+                                <!--                            <tree editable="bottom"> <field name="code"/> <field name="name"/> <field name="birthday"/> <field name="email"/> <field name="phone"/> <field name="create_date"/></tree>-->
+                                <kanban edit="false" group_create="0"  records_draggable="0" class="o_slide_kanban" sample="1">
+                                    <field name="id"/>
+                                    <templates>
+                                        <t t-name="kanban-box">
+                                            <div class="oe_kanban_global_click o_kanban_record_has_image_fill">
+                                                <t t-set="placeholder" t-value="'/base/static/img/avatar_grey.png'"/>
+                                                <div class="o_kanban_image_fill_left d-none d-md-block" t-attf-style="background-image:url('#{kanban_image('hms.patient', 'image_128', record.id.raw_value, placeholder)}')"/>
+                                                <div class="oe_kanban_details">
+                                                    <ul>
+                                                        <li><strong>Code d'identification: </strong><field name="code"/></li>
+                                                        <li><strong>Nom: </strong><field name="name"/></li>
+                                                        <li><strong>Date de naissance: </strong><field name="birthday"/></li>
+                                                        <li><strong>Genre: </strong><field name="gender"/></li>
+                                                        <li><strong>Adresse : </strong><field name="street"/></li>
+                                                        <li><strong>Téléphone : </strong><field name="mobile"/></li>
+                                                        <li class="text-muted">Créé le <field name="create_date"/></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </templates>
+                                </kanban>
+                            </field>
+                    </sheet>
+                    <xpath expr="//form" position="inside">
+                        <script type="text/javascript">
+                            $(document).ready(function () {
+                            function updateSimilarPatientList(event) {
+                            const inputElement = event.target;
+                            $(inputElement).blur();
+                            $(inputElement).focus();
+                            }
+                            $('input[name="patient_code"],input[name="patient_name"], input[name="patient_age"], input[name="patient_phone"], input[name="patient_mail"], input[name="patient_adress"], input[name="patient_person_contact"], input[name="patient_assurance"], input[name="patient_pension"], input[name="property_product_pricelist"], input[name="gov_code"]').on('keyup change', updateSimilarPatientList.bind(this));
+                            });
+                        </script>
+                    </xpath>
+                    <footer>
+                        <button name="confirm_patient_creation" string="Créer un patient" type="object" class="oe_highlight" attrs="{'invisible': [('is_btn_create_visible','=', False)]}"/>
+                        <button string="Annuler" class="btn-dark" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="patient_creation_confirmation_view_form" model="ir.ui.view">
+            <field name="name">Confirmation de la création du patient</field>
+            <field name="model">patient.creation.confirmation</field>
+            <field name="arch" type="xml">
+                <form string="Confirmation Création patient">
+                    <sheet>
+                        <div class="alert alert-info">
+                            <strong>Êtes-vous sûr de vouloir confirmer la création d'un nouveau patient avec les informations suivantes ?</strong>
+                        </div>
+                        <group>
+                            <field name="patient_code" string="Code d'identification" attrs="{'invisible': [('patient_code', '=', False)]}" readonly="1"/>
+                            <field name="patient_name" string="Nom" attrs="{'invisible': [('patient_name', '=', False)]}" readonly="1"/>
+                            <field name="patient_birth_day" string="Date de naissance" attrs="{'invisible': [('patient_birth_day', '=', False)]}" readonly="1"/>
+                            <field name="patient_gender" string="Genre" attrs="{'invisible': [('patient_gender', '=', False)]}" readonly="1"/>
+                            <field name="patient_phone" string="Mobile" attrs="{'invisible': [('patient_phone', '=', False)]}" readonly="1"/>
+                            <field name="patient_mail" string="Mail" attrs="{'invisible': [('patient_mail', '=', False)]}" readonly="1"/>
+                            <field name="patient_adress" string="Adresse de domicile" attrs="{'invisible': [('patient_adress', '=', False)]}" readonly="1"/>
+                            <field name="patient_person_contact" string="Personne de contact" attrs="{'invisible': [('patient_person_contact', '=', False)]}" readonly="1"/>
+                            <field name="patient_marital_status" string="État civil" attrs="{'invisible': [('patient_marital_status', '=', False)]}" readonly="1"/>
+                            <field name="gov_code" string="CIN" attrs="{'invisible': [('gov_code', '=', False)]}" readonly="1"/>
+                            <field name="profil_type" string="Type patient" invisible="1"/>
+                            <field name="patient_assurance" string="Assurance" attrs="{'invisible': [('patient_assurance', '=', False)]}" readonly="1"/>
+                            <field name="patient_pension" string="Numéro pension" attrs="{'invisible': [('patient_pension', '=', False)]}" readonly="1"/>
+                            <field name="property_product_pricelist" attrs="{'invisible': [('property_product_pricelist', '=', False)]}" readonly="1"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="action_create_patient" string="Confirmer" type="object" class="oe_highlight"/>
+                        <button string="Annuler" class="btn-dark" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="action_patient_creation_wizard" model="ir.actions.act_window">
+            <field name="name">Validation de Création du Patient</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">patient.creation.wizard</field>
+            <field name="binding_model_id" ref="acs_hms.model_hms_patient"/>
+            <field name="view_id" ref="acs_hms.view_patient_creation_wizard"/>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <record id="action_patient_creation_confirmation" model="ir.actions.act_window">
+            <field name="name">Patient Creation Confirmation</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">patient.creation.confirmation</field>
+            <field name="binding_model_id" ref="acs_hms.model_hms_patient"/>
+            <field name="view_id" ref="acs_hms.patient_creation_confirmation_view_form"/>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

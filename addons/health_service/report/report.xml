@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <report
+        id="report_health_service"
+        string="Service santé"
+        model="acs.health_service"
+        report_type="qweb-pdf"
+        name="health_service.health_service_report"
+        file="health_service.health_service_report"/>
+
+    <report
+        id="report_proforma"
+        string="Facture Proforma"
+        model="acs.health_service"
+        report_type="qweb-pdf"
+        name="health_service.proforma_report"
+        file="health_service.proforma_report"/>
+
+</odoo>

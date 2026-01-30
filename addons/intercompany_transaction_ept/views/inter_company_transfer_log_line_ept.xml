@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Tree View of Log Book Line -->
+    <record id="inter_company_transfer_log_line_tree_view" model="ir.ui.view">
+        <field name="name">inter.company.transfer.log.line.tree.view</field>
+        <field name="model">inter.company.transfer.log.line.ept</field>
+        <field name="arch" type="xml">
+            <tree decoration-success="ict_log_type=='info'" decoration-danger="ict_log_type=='error'"
+                  default_order="ict_log_id desc" create="false">
+                <field name="ict_log_id"/>
+                <field name="ict_log_type"/>
+                <field name="ict_message"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View of Log Book Line -->
+    <record id="inter_company_transfer_log_line_form_view" model="ir.ui.view">
+        <field name="name">inter.company.transfer.log.line.form.view</field>
+        <field name="model">inter.company.transfer.log.line.ept</field>
+        <field name="arch" type="xml">
+            <form string="Log Line" create="false" edit="false">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="ict_log_type"/>
+                            <field name="ict_log_id"/>
+                        </group>
+                        <group>
+                            <field name="ict_message"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

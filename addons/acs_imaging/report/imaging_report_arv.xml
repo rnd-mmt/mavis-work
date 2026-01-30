@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="img_report_document_arv">
+        <t t-call="web.external_layout">
+            <t t-set="doc" t-value="doc.with_context({'lang':doc.patient_id.lang})"/>
+            <p>NOM: <span t-field="doc.patient_id.name"/></p>
+            <p>AGE: <span t-field="doc.patient_id.age"/></p>
+            <!--p>MOTIF: </p-->
+            <p>DATE D'EXAMEN: <span t-field="doc.date_analysis"/></p>
+            <span t-field="doc.interpretation"/>
+        </t>
+    </template>
+
+    <template id="img_report_arv">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="acs_imaging.img_report_document_arv" t-lang="doc.patient_id.lang"/>
+            </t>
+        </t>
+    </template>
+
+    <record id="img_result_report_id_arv" model="ir.actions.report">
+        <field name="name">Compte rendu AROVY</field>
+        <field name="model">patient.imaging.test</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">acs_imaging.img_report_arv</field>
+        <field name="report_file">acs_imaging.img_report_arv</field>
+        <field name="print_report_name">(object.name).replace('/','_')</field>
+        <field name="binding_model_id" ref="model_patient_imaging_test"/>
+<!--        <field name="groups_id" eval="[(4, ref('acs_hms.group_hms_receptionist'))]"/>-->
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

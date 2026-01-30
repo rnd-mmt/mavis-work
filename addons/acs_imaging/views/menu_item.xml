@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Root Menu -->
+    <menuitem id="menu_imaging" name="Imaging" sequence="35" web_icon="acs_imaging,static/description/icon.png" groups="acs_imaging.group_hms_imaging_user,group_hms_imaging_resp_admin"/> 
+    <menuitem id='menu_imaging_requestss' parent='menu_imaging' action='hms_action_imaging_test_request' sequence="10"/>
+    <menuitem id='menu_imaging_test_result' action='action_imaging_result' parent='menu_imaging' sequence="20" groups="acs_imaging.group_hms_imaging_user"/>
+    <!--menuitem id='menu_imaging_sample' action='action_acs_patient_imaging_sample' parent='menu_imaging' sequence="30"/-->
+
+    <!-- Configuration -->
+    <menuitem id="menu_hms_imaging_cofig" name="Configuration" parent="menu_imaging" groups="acs_hms_base.group_hms_manager" sequence="100"/>
+
+    <menuitem id='menu_imaging_test' parent='menu_hms_imaging_cofig' action='hms_action_form_test' sequence="10"/>
+    <menuitem id='menu_imaging_protocol' parent='menu_hms_imaging_cofig' action='hms_action_imaging_protocol' sequence="10"/>
+    <!--menuitem id='menu_imaging_test_uom' parent='menu_hms_imaging_cofig' action='action_acs_test_uom' sequence="20"/-->
+    <menuitem id='menu_acs_imaging' parent='menu_hms_imaging_cofig' action='action_acs_imaging' sequence="30"/>
+    <menuitem id='menu_acs_collection_center' parent='menu_hms_imaging_cofig' action='action_acs_collection_center' sequence="35" groups="acs_imaging.group_manage_collection_center"/>
+    <menuitem id='menu_acs_imaging_group' parent='menu_hms_imaging_cofig' action='action_imaging_group' sequence="40"/>
+    <menuitem id='menu_acs_imaging_template' parent='menu_hms_imaging_cofig' action="action_imaging_template" sequence="50"/>
+    <menuitem id='menu_acs_imaging_cabin' parent='menu_hms_imaging_cofig' name="Salle d'acquisition" action='action_acs_imaging_cabine' sequence="30"/>
+    <menuitem id='menu_imaging_device' parent='menu_hms_imaging_cofig' name="Appareil d'acquisition" action='action_imaging_device' sequence="30"/>
+
+</odoo>
