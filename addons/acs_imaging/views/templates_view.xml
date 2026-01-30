@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="acs_imagingresult_details" name="Imaging Detail">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="container">
+                    <div id="imagingresult_content" class="col-12 col-lg mt32 mb64 o_portal_html_view shadow p-3" style="background-color: white;">
+                        <t t-call="acs_imaging.report_acs_imaging_test_document">
+                            <t t-set="doc" t-value="imagingresult.sudo()"/>
+                        </t>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+</odoo>

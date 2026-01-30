@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_health_service_creation_wizard" model="ir.ui.view">
+            <field name="name">Healh Service Creation</field>
+            <field name="model">health.service.create.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Création Service Santé">
+                    <sheet>
+                        <div class="alert alert-primary">Filtres Avancés de Recherche Patient</div>
+                        <group>
+                            <group>
+                                <field name="patient_code" string="Code d'identification"/>
+                                <field name="patient_birthday"/>
+                                <field name="patient_name" string="Nom Patient"/>
+                                <field name="patient_gender"/>
+                                <field name="profil_type"/>
+                                <label for="patient_assurance"/>
+                                <div class="o_row">
+                                    <span attrs="{'invisible': [('profil_type','!=','fonc_activity')]}">C - </span>
+                                    <span attrs="{'invisible': [('profil_type','!=','fonc_pensioner')]}">R - </span>
+                                    <field name="patient_assurance" options="{'no_create': True}" attrs="{'invisible': [('profil_type','=','other')]}"/>
+                                </div>
+                                <!-- <field name="patient_assurance" options="{'no_create': True}" attrs="{'invisible': [('profil_type','=','other')]}"/> -->
+                                <field name="patient_pension" attrs="{'invisible': [('profil_type','!=','fonc_pensioner')], 'required':[('profil_type','=','fonc_pensioner')]}"/>
+                                <field name="property_product_pricelist" options="{'no_create': True}"/>
+                                <field name="is_btn_create_visible" invisible="1"/>
+                            </group>
+                            <group>
+                                <field name="patient_phone" attrs="{'required':['|','&amp;','|',('patient_adress','=',False),('patient_adress','=',''),('gov_code','=',False),('gov_code','=','')]}"/>
+                                <field name="patient_adress" attrs="{'required':['|','&amp;','|',('patient_phone','=',False),('patient_phone','=',''),('gov_code','=',False),('gov_code','=','')]}"/>
+                                <field name="gov_code" attrs="{'required':['|','&amp;','|',('patient_phone','=',False),('patient_phone','=',''),('patient_adress','=',False),('patient_adress','=','')]}"/>
+                                <field name="patient_mail"/>
+                                <field name="patient_person_contact"/>
+                                <field name="patient_marital_status"/>
+                            </group>
+                        </group>
+                        <hr/>
+                        <field name="similar_patient_list" string="" style="max-height: 380px; overflow: auto;">
+                            <kanban>
+                                <templates>
+                                    <t t-name="kanban-box">
+                                        <div class="oe_kanban_global_click o_kanban_record_has_image_fill">
+                                            <t t-set="placeholder" t-value="'/base/static/img/avatar_grey.png'"/>
+                                            <div class="o_kanban_image_fill_left d-none d-md-block" t-attf-style="background-image:url('#{kanban_image('hms.patient', 'image_128', record.id.raw_value, placeholder)}')"/>
+                                            <div class="oe_kanban_details">
+                                                <ul>
+                                                    <li>Code d'identification:
+                                                        <strong>
+                                                            <field name="code"/>
+                                                        </strong>
+                                                    </li>
+                                                    <li>Nom:
+                                                        <strong>
+                                                            <field name="name"/>
+                                                        </strong>
+                                                    </li>
+                                                    <li>Date de naissance :
+                                                        <field name="birthday"/>
+                                                    </li>
+                                                    <li> Genre:
+                                                        <field name="gender"/>
+                                                    </li>
+                                                    <li>Adresse :
+                                                        <field name="street"/>
+                                                    </li>
+                                                    <li>Téléphone :
+                                                        <field name="mobile"/>
+                                                    </li>
+                                                    <li class="text-muted"> Créé le
+                                                        <field name="create_date"/>
+                                                    </li>
+                                                </ul>
+                                                <div>
+                                                    <span class="patient-id" style="display:none;">
+                                                        <field name="id"/>
+                                                    </span>
+                                                    <a type="button" class="btn btn-primary oe_kanban_action_button" style="color: #ffffff !important;">
+                                                        Créer Service Santé
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </templates>
+                            </kanban>
+                        </field>
+                    </sheet>
+                    <xpath expr="//form" position="inside">
+                        <script type="text/javascript">
+                            $(document).ready(function () {
+                                function updateSimilarPatientList(event) {
+                                    const inputElement = event.target;
+                                    $(inputElement).blur();
+                                    $(inputElement).focus();
+                                }
+                                $('input[name="patient_code"],input[name="patient_name"], input[name="patient_age"], input[name="patient_phone"], input[name="patient_mail"], input[name="patient_adress"], input[name="patient_person_contact"], input[name="patient_assurance"], input[name="patient_pension"], input[name="property_product_pricelist"], input[name="gov_code"]').on('keyup change', updateSimilarPatientList.bind(this));
+                            });
+                    </script>
+                    </xpath>
+                    <footer>
+                        <button name="confirm_patient_creation_from_hs" string="Créer un patient" type="object" class="oe_highlight" attrs="{'invisible': [('is_btn_create_visible','=', False)]}"/>
+                        <button string="Annuler" class="oe_link oe_highlight" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="patient_creation_confirmation_from_hs_view_form" model="ir.ui.view">
+            <field name="name">Confirmation de la création Service Santé</field>
+            <field name="model">create.patient.health.service</field>
+            <field name="arch" type="xml">
+                <form string="Confirmation - Création Service Santé à partir d'un nouveau patient">
+                    <sheet>
+                        <div class="alert alert-info">
+                            <strong>Êtes-vous sûr de vouloir confirmer la création d'un service santé à partir du nouveau patient avec les informations suivantes ?</strong>
+                        </div>
+                        <group>
+                            <field name="patient_name" string="Nom" attrs="{'invisible': [('patient_name', '=', False)]}" readonly="1"/>
+                            <field name="patient_birthday" string="Date de naissance" attrs="{'invisible': [('patient_birthday', '=', False)]}" readonly="1"/>
+                            <field name="patient_gender" string="Genre" attrs="{'invisible': [('patient_gender', '=', False)]}" readonly="1"/>
+                            <field name="patient_phone" string="Mobile" attrs="{'invisible': [('patient_phone', '=', False)]}" readonly="1"/>
+                            <field name="patient_mail" string="Mail" attrs="{'invisible': [('patient_mail', '=', False)]}" readonly="1"/>
+                            <field name="patient_adress" string="Adresse de domicile" attrs="{'invisible': [('patient_adress', '=', False)]}" readonly="1"/>
+                            <field name="patient_person_contact" string="Personne de contact" attrs="{'invisible': [('patient_person_contact', '=', False)]}" readonly="1"/>
+                            <field name="patient_marital_status" string="État civil" attrs="{'invisible': [('patient_marital_status', '=', False)]}" readonly="1"/>
+                            <field name="gov_code" string="CIN" attrs="{'invisible': [('gov_code', '=', False)]}" readonly="1"/>
+                            <field name="profil_type" string="Type patient" invisible="1"/>
+                            <field name="patient_assurance" string="Assurance" attrs="{'invisible': [('patient_assurance', '=', False)]}" readonly="1"/>
+                            <field name="patient_pension" string="Numéro pension" attrs="{'invisible': [('patient_pension', '=', False)]}" readonly="1"/>
+                            <field name="property_product_pricelist" attrs="{'invisible': [('property_product_pricelist', '=', False)]}" readonly="1"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="action_create_patient_hs" string="Confirmer" type="object" class="oe_highlight"/>
+                        <button string="Annuler" class="btn-dark" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="action_health_service_creation_wizard" model="ir.actions.act_window">
+            <field name="name">Création Service Santé</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">health.service.create.wizard</field>
+            <field name="binding_model_id" ref="model_acs_health_service"/>
+            <field name="view_id" ref="health_service.view_health_service_creation_wizard"/>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        <record id="action_patient_creation_confirmation_from_hs" model="ir.actions.act_window">
+            <field name="name">Confirmation - Création Service Santé à partir d'un nouveau patient</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">create.patient.health.service</field>
+            <!-- <field name="binding_model_id" ref="health_service.model_acs_health_service"/>
+        <field name="view_id" ref="health_service.patient_creation_confirmation_from_hs_view_form"/> -->
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

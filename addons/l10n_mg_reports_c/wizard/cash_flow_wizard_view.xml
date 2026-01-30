@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data noupdate="0">
+    <record id="flux_view_wizard" model="ir.ui.view">
+      <field name="name">Report Flux de Tresorerie View</field>
+      <field name="model">cash.flow.wizard</field>
+      <field name="arch" type="xml">
+        <form>
+          <group>
+            <field name="period" string="Période" attrs="{'invisible':[('is_custom','=',True)]}"/>
+            <field name="is_custom" string="Personnalisé"/>
+            <field name="start_date" string="Date début" attrs="{'invisible':[('is_custom','=',False)]}"/>
+            <field name="end_date" string="Date fin" attrs="{'invisible':[('is_custom','=',False)]}"/>
+            <field name="type" attrs="{'invisible': True}"/>
+          </group>
+          <footer>
+            <button type="object" name="print_pdf" string="Print PDF" class="oe_highlight"/>
+            <button type="object" name="export_excel" string="Export Excel" class="oe_highlight"/>
+            <button special="cancel" string="Annuler"/>
+          </footer>
+        </form>
+      </field>
+    </record>
+    <!-- direct -->
+    <record id='action_direct_cash_flow' model='ir.actions.act_window'>
+      <field name="name">Flux de trésorerie (méthode directe)</field>
+      <field name="res_model">cash.flow.wizard</field>
+      <field name="view_mode">form</field>
+      <field name="target">new</field>
+      <field name="context">{'default_type': 'direct'}</field>
+    </record>
+<!--    <menuitem id="menu_action_account_report_flux_tresorerie_directe_v2" name="Flux de trésorerie (méthode directe)"-->
+<!--              sequence="4"-->
+<!--              action="action_direct_cash_flow" parent="l10n_mg_reports_c.account_reports_mg_statements_menu"/>-->
+    <!-- indirect -->
+    <record id='action_indirect_cash_flow' model='ir.actions.act_window'>
+      <field name="name">Flux de trésorerie (méthode indirecte)</field>
+      <field name="res_model">cash.flow.wizard</field>
+      <field name="view_mode">form</field>
+      <field name="target">new</field>
+      <field name="context">{'default_type': 'indirect'}</field>
+    </record>
+    <menuitem id="menu_action_account_report_flux_tresorerie_indirecte_v2" name="Flux de trésorerie (méthode indirecte)"
+              sequence="5"
+              action="action_indirect_cash_flow" parent="l10n_mg_reports_c.account_reports_mg_statements_menu"/>
+  </data>
+</odoo>

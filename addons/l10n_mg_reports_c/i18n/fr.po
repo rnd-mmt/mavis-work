@@ -1,0 +1,2327 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* l10n_mg_reports_c
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0-20210517\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-08-19 12:28+0000\n"
+"PO-Revision-Date: 2021-08-19 12:28+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_line_10_mg_cdr_rnao
+msgid " VIII- RESULTAT NET DES ACTIVITES ORDINAIRES"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields.selection,name:l10n_mg_reports_c.selection__account_financial_report__type__sum_mg
+msgid "View MG"
+msgstr "Vue MG"
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.evcp_report_template
+msgid "<b> ETAT DE VARIATION DES CAPITAUX PROPRES</b>"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.indirect_flux_report_template
+msgid "<b>A - FLUX DE TRESORERIE GENERES PAR L'ACTIVITE</b>"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.flux_tresorerie_report_template
+msgid ""
+"<b>A - FLUX DE TRESORERIE NET PROVENANT DES ACTIVITES OPERATIONNELLES</b>"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.indirect_flux_report_template
+msgid "<b>Ajustements pour :</b>"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.indirect_flux_report_template
+msgid "<b>B - FLUX DE TRESORERIE LIES AUX OPERATIONS D'INVESTISSEMENT</b>"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.flux_tresorerie_report_template
+msgid ""
+"<b>B - FLUX DE TRESORERIE NET PROVENANT DES ACTIVITES D'INVESTISSEMENT</b>"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.indirect_flux_report_template
+msgid "<b>C - FLUX DE TRESORERIE LIES AUX OPERATIONS DE FINANCEMENT</b>"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.flux_tresorerie_report_template
+msgid ""
+"<b>C - FLUX DE TRESORERIE NET PROVENANT DES ACTIVITES DE FINANCEMENT</b>"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.flux_tresorerie_report_template
+msgid "<b>FLUX DE TRESORERIE LIES AUX ACTIVITES D'INVESTISSEMENT</b>"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.flux_tresorerie_report_template
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.indirect_flux_report_template
+msgid "<b>FLUX DE TRESORERIE LIES AUX ACTIVITES DE FINANCEMENT</b>"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.indirect_flux_report_template
+msgid "<b>FLUX DE TRESORERIE LIES AUX ACTIVITES OPERATIONNELLES</b>"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.indirect_flux_report_template
+msgid "<b>FLUX DE TRESORERIE LIES AUX OPERATIONS D'INVESTISSEMENT</b>"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.flux_tresorerie_report_template
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.indirect_flux_report_template
+msgid "<b>VARIATION DE TRESORERIE DE LA PERIODE (A+B+C)</b>"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.flux_tresorerie_report_template
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.indirect_flux_report_template
+msgid "<b>VARIATION DE TRESORERIE DE LA PERIODE</b>"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.l10n_in_report_invoice_document_inherit
+msgid "<strong>Total (en lettre): </strong>"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_flux_lies_activites
+msgid "A - FLUX DE TRESORERIE LIES A L'ACTIVITE"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_tresorerie_activites_operationnelles_directe
+msgid "A - FLUX DE TRESORERIE LIES AUX ACTIVITES OPERATIONNELLES"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_balance_sheet_actv_ac_ex
+msgid "A l'extérieur"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_achat_consomme
+msgid "ACHATS CONSOMMES"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_balance_sheet_actv
+msgid "ACTIFS"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_balance_sheet_actv_ac
+msgid "ACTIFS COURANTS"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_balance_sheet_actv_anc
+msgid "ACTIFS NON COURANTS"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_label_ajustement
+msgid "AJUSTEMENTS POUR :"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_charge_activite_ordinaire_charge
+msgid "AUTRES CHARGES DES ACTIVITES ORDINAIRES"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_autre_produit_operationnel
+msgid "AUTRES PRODUITS OPERATIONNELS"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model,name:l10n_mg_reports_c.model_account_account
+msgid "Account"
+msgstr "Compte"
+
+#. module: l10n_mg_reports_c
+#: model:ir.model,name:l10n_mg_reports_c.model_account_financial_report
+msgid "Account Report"
+msgstr "Rapport de compte"
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields.selection,name:l10n_mg_reports_c.selection__account_financial_report__type__account_type
+msgid "Account Type"
+msgstr "Type de compte"
+
+#. module: l10n_mg_reports_c
+#: model:ir.model,name:l10n_mg_reports_c.model_accounting_report
+msgid "Accounting Report"
+msgstr "Rapport comptable"
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields.selection,name:l10n_mg_reports_c.selection__account_financial_report__type__accounts
+msgid "Accounts"
+msgstr "Comptes"
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_line_mg_cde_ac
+#: model:account.financial.report,name:l10n_mg_reports_c.nature_report_achat_conso
+msgid "Achats consommés"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_line_mg_cde_ac_1
+msgid "Achats consommés(soustractifs)"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_achat_etude_prestation
+msgid "Achats d'études et de prestations de services"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_achat_marchandise
+msgid "Achats de marchandises"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_achat_matieres
+msgid "Achats de matières et fournitures consommables"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_achat_non_stocke
+msgid "Achats non stockés de matières et fournitures"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.actif_courant_dot
+msgid "Actifs courants :"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.actif_non_courant_dot
+msgid "Actifs non courants :"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.evcp_report_template
+msgid "Affectation du résultat précédent"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_amende_penalite
+msgid "Amendes et pénalités, subventions accordées, dons et libéralités"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.report_active_balance_sheet
+msgid "Amorti"
+msgstr "Amorti"
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.indirect_flux_report_template
+msgid "Amortissement et provisions"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_amortissement_provision
+msgid "Amortissements et provisions"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.evcp_view_wizard
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.flux_view_wizard
+msgid "Annuler"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.indirect_flux_report_template
+msgid "Augmentation de capital en numeraire"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_augmentation_capital_numeraire
+#: model:account.financial.report,name:l10n_mg_reports_c.report_augmentation_capital_numeraire_directe
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.flux_tresorerie_report_template
+msgid "Augmentation de capital en numéraire"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_balance_sheet_actv_anc_ic_oth
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_balance_sheet_actv_anc_ii_oth
+msgid "Autres"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_l10n_mg_bsel_psv_cp_acprn
+msgid "Autres capitaux propres - report à nouveau"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_autre_charge_courante
+msgid "Autres charges de gestion courante"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_autre_charge_personnel
+msgid "Autres charges de personnel"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_autre_charge_fi
+msgid "Autres charges financières"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_line_mg_ro_aco
+#: model:account.financial.report,name:l10n_mg_reports_c.report_autre_charge_operationnelle_fonction
+msgid "Autres charges opérationnelles"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_autres_charges_operationnels_nature
+msgid "Autres charges opérationnels"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_autre_charge_sociale
+msgid "Autres charges sociales"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_balance_sheet_actv_ac_cea_acaa
+msgid "Autres créances et actifs assimilés"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_balance_sheet_actv_ac_cea_acaa_b
+msgid "Autres créances et actifs assimilés - Balance"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_balance_sheet_actv_ac_cea_acaa_d
+msgid "Autres créances et actifs assimilés - Débit"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_l10n_mg_bsel_psv_pc_ad
+msgid "Autres dettes"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_encaissement_cession_immo_financieres1
+msgid "Autres formes de participation"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_autre_impot_taxe
+msgid "Autres impôts et taxes"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_balance_sheet_actv_anc_if_apcr
+msgid "Autres participations et créances rattachées"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_autre_produit_gestion_courante
+msgid "Autres produits de gestion courante"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.evcp_report_template
+msgid "Autres produits et charges"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_autre_produit_financier
+msgid "Autres produits financiers"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_line_mg_ro_apo
+#: model:account.financial.report,name:l10n_mg_reports_c.report_autre_produit_operationnel_fonction
+#: model:account.financial.report,name:l10n_mg_reports_c.report_autres_produits_operationnels_nature
+msgid "Autres produits opérationnels"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_autre_subvention_exploitation
+msgid "Autres subventions d'exploitation"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_balance_sheet_actv_anc_if_ati
+msgid "Autres titres immobilisés"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_vente_autres_marchandises
+msgid "Autres ventes de marchandises"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_tresorerie_activites_investissement_directe
+msgid "B - FLUX DE TRESORERIE LIES AUX ACTIVITES D'INVESTISSEMENT"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_flux_lies_invest
+msgid "B - FLUX DE TRESORERIE LIES AUX OPERATIONS D'INVESTISSEMENT"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.report_active_balance_sheet
+msgid "Balance"
+msgstr ""
+
+
+#. module: l10n_mg_reports_c
+#: model:ir.actions.act_window,name:l10n_mg_reports_c.action_account_report_bsa
+msgid "Active balance sheet"
+msgstr "Bilan Actif"
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_l10n_mg_bsel
+#: model:ir.ui.menu,name:l10n_mg_reports_c.menu_account_report_bsel_mg
+msgid "Balance Sheet Equity And Liabilities"
+msgstr "Bilan Capitaux propres et Passifs"
+
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.report_active_balance_sheet
+msgid "Brut"
+msgstr "Brut"
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_flux_lies_financement
+msgid "C - FLUX DE TRESORERIE LIEES AUX ACTIVITES DE FINANCEMENT"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_tresorerie_activites_financement_directe
+msgid "C - FLUX DE TRESORERIE LIES AUX ACTIVITES DE FINANCEMENT"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_l10n_mg_bsel_psv_cp
+msgid "CAPITAUX PROPRES"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_l10n_mg_bsel_psv
+msgid "CAPITAUX PROPRES ET PASSIFS"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_charge_de_personnel
+msgid "CHARGES DE PERSONNEL"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_charges_financieres_charge
+msgid "CHARGES FINANCIERES"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_chiffre_d_affaire
+msgid "CHIFFRES D'AFFAIRES"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.evcp_report_template
+msgid "Capital social"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_l10n_mg_bsel_psv_cp_ce
+msgid "Capital émis"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields.selection,name:l10n_mg_reports_c.selection__account_financial_report__type__report_mg_cp_p
+msgid "Equity and liabilities MG"
+msgstr "Capitaux propres et passifs MG"
+
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields.selection,name:l10n_mg_reports_c.selection__account_financial_report__type__report_mg_cf
+msgid "Cash FLow MG"
+msgstr "Flux de trésorerie MG"
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields.selection,name:l10n_mg_reports_c.selection__cash_flow_wizard__period__1_1
+msgid "This month"
+msgstr "Ce mois"
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields.selection,name:l10n_mg_reports_c.selection__cash_flow_wizard__period__2_1
+msgid "This quarter"
+msgstr "Ce trimestre"
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields.selection,name:l10n_mg_reports_c.selection__cash_flow_wizard__period__3_1
+#: model:ir.model.fields.selection,name:l10n_mg_reports_c.selection__evcp_view__period__3_1
+msgid "This fiscal year"
+msgstr "Cette année fiscale"
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.evcp_report_template
+msgid "Changement de méthode comptable"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields.selection,name:l10n_mg_reports_c.selection__account_financial_report__type__charge_details
+msgid "Charge details MG"
+msgstr "Détails des charges MG"
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_charge_admin_fonction
+msgid "Charges Administratives"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_charge_interet
+msgid "Charges d'intérêts"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_nature_charge_personnel
+msgid "Charges de personnel"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_line_mg_ebe_cp
+msgid "Charges de personnel (A)"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_charge_exceptionnelle
+msgid "Charges exceptionelles de gestion courante"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_charge_extraordinaire
+msgid "Charges extraordinaires"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_line_mg_rf_cf
+#: model:account.financial.report,name:l10n_mg_reports_c.report_charge_financiere_fonction
+#: model:account.financial.report,name:l10n_mg_reports_c.report_charges_financieres
+msgid "Charges financières"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_nature_chiffre_affaire
+msgid "Chiffre d'affaire"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_line_mg_pde_cda
+msgid "Chiffres d'affaires"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_line_mg_pde_cda_1
+msgid "Chiffres d'affaires(soustractifs)"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_account_financial_report__children_ids
+msgid "Children"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_balance_sheet_actv_ac_cea_cad
+msgid "Clients et autres débiteurs"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_account_financial_report__code
+msgid "Code"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_commissions_courtages
+msgid "Commissions et courtages"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields.selection,name:l10n_mg_reports_c.selection__account_financial_report__type_financial_report_mg__income_statement
+#: model:ir.model.fields.selection,name:l10n_mg_reports_c.selection__accounting_report__type_financial_report_mg__income_statement
+msgid "Profit and loss account"
+msgstr "Compte de résultat"
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_compte_resultat_fonction
+#: model:ir.actions.act_window,name:l10n_mg_reports_c.action_account_report_compte_resultat_fonction
+#: model:ir.ui.menu,name:l10n_mg_reports_c.menu_action_account_report_compte_resultat_fonction
+msgid "Compte de résultat par fonction"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_compte_resultat_nature
+#: model:ir.actions.act_window,name:l10n_mg_reports_c.action_account_report_compte_resultat_nature
+#: model:ir.ui.menu,name:l10n_mg_reports_c.menu_action_account_report_compte_resultat_nature
+msgid "Compte de résultat par nature"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_l10n_mg_cdr
+msgid "Compte de résultats"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_l10n_mg_bsel_psv_pc_ctdb
+msgid "Compte de trésorerie (découverts bancaires)"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_balance_sheet_actv_anc_ii_cbllv
+msgid "Concession, brevets, licences, logiciels et valeurs similaires"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_balance_sheet_actv_anc_ic_cstr
+msgid "Construction"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.evcp_report_template
+msgid "Correction d'erreurs"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_cotisation_organisme
+msgid "Cotisation aux organismes sociaux"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_cotisation_divers
+msgid "Cotisations et divers"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_couts_commerciaux_fonction
+msgid "Coûts commerciaux"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_cout_vente
+msgid "Coûts des ventes"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_cash_flow_wizard__create_uid
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_evcp_view__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_cash_flow_wizard__create_date
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_evcp_view__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_balance_sheet_actv_ac_cea
+msgid "Créances et emplois assimilés"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.report_active_balance_sheet
+msgid "Crédit"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model,name:l10n_mg_reports_c.model_res_currency
+msgid "Currency"
+msgstr "Devise"
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.dotation_amort_perte_valeur
+msgid "DOTATION AUX AMORTISSEMENTS, PROVISIONS ET PERTES DE VALEURS"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_evcp_view__date_start
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.evcp_view_wizard
+msgid "Date"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.flux_view_wizard
+msgid "Date début"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.flux_view_wizard
+msgid "Date fin"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.indirect_flux_report_template
+msgid "Decaissement sur acquisition d'immobilisations"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields.selection,name:l10n_mg_reports_c.selection__cash_flow_wizard__period__2_2
+msgid "Last quarter"
+msgstr "Dernier trimestre"
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields.selection,name:l10n_mg_reports_c.selection__cash_flow_wizard__period__3_2
+#: model:ir.model.fields.selection,name:l10n_mg_reports_c.selection__evcp_view__period__3_2
+msgid "Last fiscal year"
+msgstr "Dernière année fiscale"
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields.selection,name:l10n_mg_reports_c.selection__account_financial_report__type_financial_report_mg__charge_details
+#: model:ir.model.fields.selection,name:l10n_mg_reports_c.selection__accounting_report__type_financial_report_mg__charge_details
+msgid "Details of charges"
+msgstr "Details des charges"
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields.selection,name:l10n_mg_reports_c.selection__account_financial_report__type_financial_report_mg__product_details
+#: model:ir.model.fields.selection,name:l10n_mg_reports_c.selection__accounting_report__type_financial_report_mg__product_details
+msgid "Product details"
+msgstr "Details des produits"
+
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_l10n_mg_bsel_psv_pc_dctpctdlt
+msgid "Dettes court terme - partie court terme de dettes long terme"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields.selection,name:l10n_mg_reports_c.selection__cash_flow_wizard__type__direct
+msgid "Direct"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_account_account__display_name
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_account_financial_report__display_name
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_account_move__display_name
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_account_move_line__display_name
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_accounting_report__display_name
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_cash_flow_wizard__display_name
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_evcp_view__display_name
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_ir_actions_report__display_name
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_report_accounting_pdf_reports_report_financial__display_name
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_report_l10n_mg_reports_c_evcp_report_template__display_name
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_report_l10n_mg_reports_c_flux_tresorerie_report_template__display_name
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_report_l10n_mg_reports_c_indirect_flux_report_template__display_name
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_res_currency__display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.indirect_flux_report_template
+msgid "Dividende versee aux actionnaires"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_dividende_verse_actionnaire
+msgid "Dividende versés aux actionnaires"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.flux_tresorerie_report_template
+msgid "Dividendes at autres distributions effectués"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_dividende_deistribution_effectue
+msgid "Dividendes et autres distributions effectuées"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_dividende_quote_part_resultat_recu
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.flux_tresorerie_report_template
+msgid "Dividendes et quote part de résultats reçus"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_documentation_divers
+msgid "Documentation et divers"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_account_financial_report__domain
+msgid "Domain"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_dotation_amort_provision_perte_valeur
+msgid "Dotation aux amortis/provisions et pertes de valeurs"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_line_mg_ro_dappv
+msgid "Dotations aux amortissements, aux provisions et pertes de valeur"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.droit_taxe_locative
+msgid "Droit et taxe locative"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.report_active_balance_sheet
+msgid "Débit"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_decaissement_acquisition_immo
+msgid "Décaissement sur acquisition d'immobilisations"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_decaissement_acquisition_immo_corpo_incorpo
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.flux_tresorerie_report_template
+msgid ""
+"Décaissement sur acquisition d'immobilisations corporelles ou incorporelles"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_decaissement_acquisition_immo_financieres
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.flux_tresorerie_report_template
+msgid "Décaissement sur acquisition d'immobilisations financières"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_deplac_mission_recep
+msgid "Déplac./missions/réceptions"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_details_charges
+msgid "Détails charges"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_produits_details
+msgid "Détails produits"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_balance_sheet_actv_anc_ea
+msgid "Ecart d'aquisition (ou goodwill)"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.indirect_flux_report_template
+msgid "Ecart d'evaluation"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_ecart_evaluation
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.evcp_report_template
+msgid "Ecart d'évaluation"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_l10n_mg_bsel_psv_cp_eequ
+msgid "Ecarts d'équivalence"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_l10n_mg_bsel_psv_cp_eevl
+msgid "Ecarts d'évaluation"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_extraordinaire_charge
+msgid "Elements extraordinaires charges -(à préciser)"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_extraordinaire_produit
+msgid "Elements extraordinaires produits -(à préciser)"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.indirect_flux_report_template
+msgid "Eliminations des elements de passifs/actifs"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_elimination_passif_actif
+msgid "Eliminations des élements de Passifs/Actifs"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_line_mg_re_eec
+msgid "Eléments extraordinaires (charges) – à préciser"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_line_mg_re_eep
+msgid "Eléments extraordinaires (produits) – à préciser"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_emission_emprunt
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.indirect_flux_report_template
+msgid "Emission d'emprunt"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_balance_sheet_actv_ac_ecrprod
+msgid "En cours de production"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_encaissement_recu_clients
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.flux_tresorerie_report_template
+msgid "Encaissement reçus des clients"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_encaissement_cession_immo
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.indirect_flux_report_template
+msgid "Encaissement sur cession d'immobilisations"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_encaissement_cession_immo_corpo_incorpo
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.flux_tresorerie_report_template
+msgid ""
+"Encaissement sur cession d'immobilisations corporelles ou incorporelles"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_encaissement_cession_immo_financieres
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.flux_tresorerie_report_template
+msgid "Encaissement sur cessions d'immobilisations financières"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_encaissement_provenant_emprunt
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.flux_tresorerie_report_template
+msgid "Encaissements provenant d'emprunts"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_ancaissement_suite_emission_actions
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.flux_tresorerie_report_template
+msgid "Encaissements suite à l'émissions d'actions"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_cash_flow_wizard__end_date
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_evcp_view__end_date
+msgid "End date"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_entretien_reparation
+msgid "Entretiens et réparations"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.actions.report,name:l10n_mg_reports_c.action_report_financial_evcp
+#: model:ir.ui.menu,name:l10n_mg_reports_c.evcp_menu_action
+msgid "Etat de variation des capitaux propres"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_etude_recherche
+msgid "Etudes et recherches"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.accounting_report_view_inherit
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.evcp_view_wizard
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.flux_view_wizard
+msgid "Export Excel"
+msgstr "Exporter Excel"
+
+#. module: l10n_mg_reports_c
+#: code:addons/l10n_mg_reports_c/models/account_account.py:0
+#, python-format
+msgid "Export a template for the chart of accounts"
+msgstr "Exporter un modèle pour le plan comptable"
+
+#. module: l10n_mg_reports_c
+#: code:addons/l10n_mg_reports_c/models/account_move.py:0
+#, python-format
+msgid "Export a template for accounting documents"
+msgstr "Exporter un modèle pour les pièces comptables"
+
+#. module: l10n_mg_reports_c
+#: code:addons/l10n_mg_reports_c/models/account_move.py:0
+#, python-format
+msgid "Export a template for accounting entries"
+msgstr "Exporter un modèle pour les écritures comptables"
+
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.flux_tresorerie_report_template
+msgid "FLUX DE TRESORERIE LIES AUX ACTIVITES OPERATIONNELLES du"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_account_financial_report__financial_report_id
+msgid "Financial Report"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model,name:l10n_mg_reports_c.model_report_accounting_pdf_reports_report_financial
+msgid "Financial Reports"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields.selection,name:l10n_mg_reports_c.selection__account_financial_report__type_financial_report_mg__cash_flow
+#: model:ir.model.fields.selection,name:l10n_mg_reports_c.selection__accounting_report__type_financial_report_mg__cash_flow
+msgid "Cash flow"
+msgstr "Flux de trésorerie"
+
+
+#. module: l10n_mg_reports_c
+#: model:ir.actions.act_window,name:l10n_mg_reports_c.action_direct_cash_flow
+#: model:ir.ui.menu,name:l10n_mg_reports_c.menu_action_account_report_flux_tresorerie_directe_v2
+msgid "Cash flow (direct method)"
+msgstr "Flux de trésorerie (méthode directe)"
+
+#. module: l10n_mg_reports_c
+#: model:ir.actions.act_window,name:l10n_mg_reports_c.action_indirect_cash_flow
+#: model:ir.ui.menu,name:l10n_mg_reports_c.menu_action_account_report_flux_tresorerie_indirecte_v2
+msgid "Cash flow (indirect method)"
+msgstr "Flux de trésorerie (méthode indirecte)"
+
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_flux_avant_extraordinaire
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.flux_tresorerie_report_template
+msgid "Flux de trésorerie avant éléments extraordinaires"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_flux_evenement_extraordinaire
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.flux_tresorerie_report_template
+msgid "Flux de trésorerie lié à des événements extraordinaires (à préciser)"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: code:addons/l10n_mg_reports_c/report/evcp_render_report.py:0
+#, python-format
+msgid "Form content is missing, this report cannot be printed."
+msgstr "Le contenu du formulaire est manquant, ce rapport ne peut pas être imprimé."
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_account_financial_report__formulas
+msgid "Formulas"
+msgstr "Formules"
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_l10n_mg_bsel_psv_pc_fcr
+msgid "Fournisseurs et comptes rattachés"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_l10n_mg_bsel_psv_pc_fcr_blcadd
+msgid "Fournisseurs et comptes rattachés - Balance"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_l10n_mg_bsel_psv_pc_fcr_cdtadd
+msgid "Fournisseurs et comptes rattachés - Crédit"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_frais_accesories
+msgid "Frais accessoires refacturés"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_frais_accessoire
+msgid "Frais accessoires sur achats"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_balance_sheet_actv_anc_ii_fdi
+msgid "Frais de développement immobilier"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_frais_poste_telecom
+msgid "Frais de postes et télécom"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_gain_change
+msgid "Gains de change"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_account_financial_report__groupby
+msgid "Group by"
+msgstr "Groupe par"
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_account_financial_report__hide_if_empty
+msgid "Hide If Empty"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_account_financial_report__hide_if_zero
+msgid "Hide If Zero"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_account_financial_report__is_hidden
+msgid "Hide line in report"
+msgstr "Masquer la ligne dans le rapport"
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_production_exercice
+msgid "I - PRODUCTION DE L'EXERCICE"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_line_01_mg_cdr_pde
+msgid "I- Production de l'excercice"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_account_account__id
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_account_financial_report__id
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_account_move__id
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_account_move_line__id
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_accounting_report__id
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_cash_flow_wizard__id
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_evcp_view__id
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_ir_actions_report__id
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_report_accounting_pdf_reports_report_financial__id
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_report_l10n_mg_reports_c_evcp_report_template__id
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_report_l10n_mg_reports_c_flux_tresorerie_report_template__id
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_report_l10n_mg_reports_c_indirect_flux_report_template__id
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_res_currency__id
+msgid "ID"
+msgstr "identifiant"
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_nature_conso_exercice
+msgid "II - CONSOMMATION DE L'EXERCICE"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_line_02_mg_cdr_cde
+msgid "II- Consommation de l’exercice"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_nature_valeur_ajoutee
+msgid "III - VALEUR AJOUTEE (I - II)"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_line_03_mg_cdr_vae
+msgid "III- VALEUR AJOUTEE D’EXPLOITATION (I - II)"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.impot_sur_benefice
+msgid "IMPOTS SUR LES BENEFICES"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_impot_taxe
+msgid "IMPOTS, TAXES ET VERSEMENTS ASSIMILES"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_ir_intermittent_paye
+msgid "IR intermittent payé"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_nature_excedent_brut
+msgid "IV - EXCEDENT BRUT D'EXPLOITATION"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_line_04_mg_cdr_ebe
+msgid "IV- EXCEDENT BRUT D’EXPLOITATION"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_resultat_extraordinaire_nature
+msgid "IX - RESULTAT EXTRAORDINAIRE"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_line_11_mg_cdr_re
+msgid "IX- RESULTAT EXTRAORDINAIRE"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_balance_sheet_actv_anc_ic
+msgid "Immobilisations corporelles"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_balance_sheet_actv_anc_iec
+msgid "Immobilisations en cours"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_balance_sheet_actv_anc_if
+msgid "Immobilisations financières"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_balance_sheet_actv_anc_ii
+msgid "Immobilisations incorporelles"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_balance_sheet_actv_anc_imc
+msgid "Immobilisations mis en concession"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_imposition_differee
+msgid "Impositions différées"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_l10n_mg_bsel_psv_pnc_id
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_line_mg_rnao_id
+#: model:account.financial.report,name:l10n_mg_reports_c.report_impot_differe
+msgid "Impôts différés"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_nature_impot_differe_variation
+msgid "Impôts différés (variations)"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_balance_sheet_actv_anc_idanc
+msgid "Impôts différés actifs - non courants"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_impot_exigible_sur_resultat
+msgid "Impôts exigibles sur les résultats"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_nature_impot_exigible
+msgid "Impôts exigibles sur résultat"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_line_mg_rnao_ier
+msgid "Impôts exigibles sur résultats"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_impot_foncier
+msgid "Impôts foncier et taxe annexe"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_impot_resultat
+msgid "Impôts sur les résultats"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_impots_sur_resultat_payes
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.flux_tresorerie_report_template
+msgid "Impôts sur les résultats payés"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_line_mg_ebe_itva
+#: model:account.financial.report,name:l10n_mg_reports_c.report_nature_impot_taxe_versement_assimile
+msgid "Impôts, taxes et versements assimilés"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_impot_taxe_remuneration
+msgid "Impôts, taxes et versements assimilés sur rémunérations"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.indirect_flux_report_template
+msgid "Incidence des variations de cours de devises"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_incidence_variation
+msgid "Incidence des variations de cours des devises"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.indirect_flux_report_template
+msgid "Incidence des variations de perimetre de consolidation"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_incidence_variation_perimetre
+msgid "Incidence des variations de périmètre de consolidation (1)"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_incidence_variation_taux_change_liquidite_quasi
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.flux_tresorerie_report_template
+msgid ""
+"Incidences des variations des taux de change sur liquidités et quasi-"
+"liquidités"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields.selection,name:l10n_mg_reports_c.selection__cash_flow_wizard__type__indirect
+msgid "Indirect"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_balance_sheet_actv_anc_ic_it
+msgid "Installation technique"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_interet_compte_courant
+msgid "Intérêts des comptes courants"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_interet_debiteur
+msgid "Intérêts débiteurs"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_interets_encaisses_placements_financiers
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.flux_tresorerie_report_template
+msgid "Intérêts encaissés sur placements financiers"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_interets_autres_frais_financiers_payes
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.flux_tresorerie_report_template
+msgid "Intérêts et autres frais financiers payés"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_cash_flow_wizard__is_custom
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_evcp_view__is_custom
+msgid "Is Custom"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_account_financial_report__green_on_positive
+msgid "Is growth good when positive"
+msgstr "La croissance est-elle bonne quand elle est positive"
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_perte_jeton_presence
+msgid "Jetons de présence"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_jeton_presence_remuneration_gerant
+msgid "Jetons de présences et rémunérations d'administrateurs ou de gérant"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model,name:l10n_mg_reports_c.model_account_move
+msgid "Journal Entry"
+msgstr "Pièce comptable"
+
+#. module: l10n_mg_reports_c
+#: model:ir.model,name:l10n_mg_reports_c.model_account_move_line
+msgid "Journal Item"
+msgstr "Écriture comptable"
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_account_account____last_update
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_account_financial_report____last_update
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_account_move____last_update
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_account_move_line____last_update
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_accounting_report____last_update
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_cash_flow_wizard____last_update
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_evcp_view____last_update
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_ir_actions_report____last_update
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_report_accounting_pdf_reports_report_financial____last_update
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_report_l10n_mg_reports_c_evcp_report_template____last_update
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_report_l10n_mg_reports_c_flux_tresorerie_report_template____last_update
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_report_l10n_mg_reports_c_indirect_flux_report_template____last_update
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_res_currency____last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_cash_flow_wizard__write_uid
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_evcp_view__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_cash_flow_wizard__write_date
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_evcp_view__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields.selection,name:l10n_mg_reports_c.selection__cash_flow_wizard__period__1_2
+msgid "The last month"
+msgstr "Le mois dernier"
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_account_financial_report__level
+msgid "Level"
+msgstr "Niveau"
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_liberalite_percue
+msgid "Libéralités perçues, rentrées sur créances amorties"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_location
+msgid "Locations"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_marge_brute
+msgid "MARGE BRUTE"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.ui.menu,name:l10n_mg_reports_c.account_reports_mg_statements_menu
+msgid "Madagascar"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_balance_sheet_actv_ac_ma
+msgid "Marchandises"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_balance_sheet_actv_ac_mp
+msgid "Matière première"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_variation_moins_plus_values_cession
+msgid "Moins ou (Plus) values de cession, nettes d'impôts"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.indirect_flux_report_template
+msgid "Moins ou Plus values de cession nettes d'impots"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_autre_value_cession
+msgid "Moins value sur cession instrument financier"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_account_financial_report__last_year_mg
+msgid "N-1"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.report_active_balance_sheet
+msgid "Name"
+msgstr "Nom"
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.report_active_balance_sheet
+msgid "Net"
+msgstr "Net"
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_account_financial_report__note_mg
+msgid "Note"
+msgstr "Note"
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.evcp_report_template
+msgid "Opération en capital"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_l10n_mg_bsel_psv_pc
+msgid "PASSIFS COURANTS"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_l10n_mg_bsel_psv_pnc
+msgid "PASSIFS NON-COURANTS"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_production_immobilisee
+msgid "PRODUCTION IMMOBILISEE"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_production_stockee_destockee
+msgid "PRODUCTION STOCKEE (ou destockage)"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_produit_financier
+msgid "PRODUITS FINANCIERS"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_cash_flow_wizard__period
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_evcp_view__period
+msgid "Period"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.evcp_view_wizard
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.flux_view_wizard
+msgid "Personnalisé"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_personnel_exterieur
+msgid "Personnel extérieur à l'entreprise"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_perte_change
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.flux_tresorerie_report_template
+msgid "Perte de change"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_encaissement_cession_immo_financieres2
+msgid "Perte de valeur sur participation et création"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_perte_change_charge
+msgid "Pertes de change"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_perte_creance_irrec
+msgid "Pertes sur créances irrécouvrables"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_balance_sheet_actv_ac_tet_paet
+msgid "Placements et autres équivalents de trésorerie"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: code:addons/l10n_mg_reports_c/wizard/evcp_wizard.py:0
+#: code:addons/l10n_mg_reports_c/wizard/evcp_wizard.py:0
+#, python-format
+msgid "Please select a date"
+msgstr "Veuillez choisir une date"
+
+#. module: l10n_mg_reports_c
+#: code:addons/l10n_mg_reports_c/report/report_financial_mg.py:0
+#, python-format
+msgid "Please, check your domains. Make sure that your keys are in: %s"
+msgstr "S'il vous plaît, vérifiez vos domaines. Assurez-vous que vos clés sont dans: %s"
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_plus_values_cession_actif_non_courant
+msgid "Plues values sur cession d'actifs non courants"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_primes_assurances
+msgid "Primes d'assurances"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.evcp_report_template
+msgid "Primes et Réserves"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_l10n_mg_bsel_psv_cp_prc
+msgid "Primes et réserves consolidées"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.accounting_report_view_inherit
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.evcp_view_wizard
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.flux_view_wizard
+msgid "Print PDF"
+msgstr "Imprimer PDF"
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields.selection,name:l10n_mg_reports_c.selection__account_financial_report__type__product_details
+msgid "Product details MG"
+msgstr "Détails du produit MG"
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_line_mg_pde_pi
+#: model:account.financial.report,name:l10n_mg_reports_c.report_nature_production_immobilisee
+#: model:account.financial.report,name:l10n_mg_reports_c.report_production_immobilisee_sous
+msgid "Production immobilisée"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_line_mg_pde_ps
+#: model:account.financial.report,name:l10n_mg_reports_c.report_nature_production_stockee
+msgid "Production stockée"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_produit_participation
+msgid "Produits de participations"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_activite_annexe
+msgid "Produits des activités annexes"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_produit_activite_ordinaire
+msgid "Produits des activités ordinaires"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_produit_autre_immobilisation_fi
+msgid "Produits des autres immobilisations financières"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_l10n_mg_bsel_psv_pnc_pdsi
+msgid "Produits différés : subventions d'investissement"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_produit_exceptionnel_gestion
+msgid "Produits exceptionnels sur opérations de gestion"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_produit_extraordinaire
+msgid "Produits extraordinaires"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_line_mg_rf_pf
+#: model:account.financial.report,name:l10n_mg_reports_c.report_produit_financier_fonction
+#: model:account.financial.report,name:l10n_mg_reports_c.report_produits_financiers
+msgid "Produits financiers"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_balance_sheet_actv_ac_pf
+msgid "Produits finis"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_produit_net_cession_mobiliere
+msgid "Produits nets sur cession de valeurs mobilières de placement"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields.selection,name:l10n_mg_reports_c.selection__account_financial_report__type__report_mg_pl
+msgid "Profit and Loss MG"
+msgstr "Compte de résultat MG"
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_profi_change
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.flux_tresorerie_report_template
+msgid "Profits de change"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_l10n_mg_bsel_psv_pnc_edf
+msgid "Provisions et produits constatés d'avance"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_l10n_mg_bsel_psv_pc_ppcapc
+msgid "Provisions et produits constatés d'avance - passifs courants"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_balance_sheet_actv_anc_if_paif
+msgid "Prêts et autres immobilisations financières"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_publicite_publication
+msgid "Publicité, publication, relations publiques"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.evcp_view_wizard
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.flux_view_wizard
+msgid "Période"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_quote_part
+msgid "Quote-part de résultat sur opérations faites en commun"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_quote_part_subvention
+msgid ""
+"Quote-part des subventions d'investissement virée au résultat de l'exercice"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.reprise_provision_perte_valeur
+msgid "REPRISES SUR PROVISIONS ET PERTES DE VALEUR"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.resultat_avant_impots
+msgid "RESULTAT AVANT IMPOTS"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_resultat_extraordinaire
+msgid "RESULTAT EXTRAORDINAIRE"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_resultat_financier_fonction
+msgid "RESULTAT FINANCIER"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.flux_report_resultat_net_exo
+#: model:account.financial.report,name:l10n_mg_reports_c.resultat_net_de_l_exercice
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.indirect_flux_report_template
+msgid "RESULTAT NET DE L'EXERCICE"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_resultat_net_activite_ordinaire
+msgid "RESULTAT NET DES ACTIVITES ORDINAIRES"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_resultat_operationnel_fonction
+msgid "RESULTAT OPERATIONNEL"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_redevance_concession_brevet
+msgid ""
+"Redevances pour concessions, brevets, licence, logiciels et valeurs "
+"similaires"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_redevance_concession
+msgid ""
+"Redevances pour concessions, brevets, licences, logiciels et valeurs "
+"similaires"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_remboursement_emprunt
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.indirect_flux_report_template
+msgid "Remboursement d'emprunt"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_remboursement_emprunt_dette_assimiles
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.flux_tresorerie_report_template
+msgid "Remboursement d'emprunts ou d'autres dettes assimilés"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model,name:l10n_mg_reports_c.model_ir_actions_report
+msgid "Report Action"
+msgstr "Signaler l'action"
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields.selection,name:l10n_mg_reports_c.selection__account_financial_report__type__sum_active
+msgid "Report Active balance Sheet Value"
+msgstr "Rapport Valeur du bilan actif"
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_ir_actions_report__report_type
+msgid "Report Type"
+msgstr "Type de rapport"
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields.selection,name:l10n_mg_reports_c.selection__account_financial_report__type__account_report
+msgid "Report Value"
+msgstr "Valeur du rapport"
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_account_financial_report__first_parent_id
+msgid "Report name"
+msgstr "Nom du rapport"
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_line_mg_ro_rppv
+#: model:account.financial.report,name:l10n_mg_reports_c.report_reprise_provision_perte_valeur_nature
+msgid "Reprise sur provisions et pertes de valeurs"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_revenu_autre_creance
+msgid "Revenu des autres créances"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_revenu_plus_values_mobiliere
+msgid "Revenu et plus values des valeurs mobilières de placement"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_remuneration_pers
+msgid "Rémunération du personnel"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_remuneration_intermediaire
+msgid "Rémunérations d'intermédiaires et honoraires"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.evcp_report_template
+msgid "Résultat et Report à nouveau"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_l10n_mg_bsel_psv_cp_rnpg
+msgid "Résultat net - part du groupe"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.evcp_report_template
+msgid "Résultat net au 31 déc"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_service_exterieur
+msgid "SERVICES EXTERIEURS ET AUTRES CONSOMMATIONS"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_subvention_exploitation
+msgid "SUBVENTION D'EXPLOITATION"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_account_financial_report__sequence
+msgid "Sequence"
+msgstr "Séquence"
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_service_bancaire
+msgid "Services bancaires et assimilés"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.nature_report_service_exterieur_autre_conso
+msgid "Services extérieures et autres consommations"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_line_mg_cde_SEAC
+msgid "Services extérieurs et autres consommations"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_line_mg_cde_SEAC_1
+msgid "Services extérieurs et autres consommations(soustractifs)"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.evcp_report_template
+msgid "Solde au 31 décembre"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_somme_versee_fournisseur_au_personnel
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.flux_tresorerie_report_template
+msgid "Sommes versées aux fournisseurs et au personnel"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_sous_traitance
+msgid "Sous traitance générale"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_cash_flow_wizard__start_date
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_evcp_view__start_date
+msgid "Start date"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_balance_sheet_actv_ac_stkecr
+msgid "Stocks et en cours"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_nature_subvention_exploit
+msgid "Subvention d'exploitation"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_subvention_equilibre
+msgid "Subvention d'équilibre"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_line_mg_ebe_se
+msgid "Subvention d’exploitation"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.indirect_flux_report_template
+msgid "TABLEAU DES FLUX DE TRESORERIE (METHODE INDIRECTE) du"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_balance_sheet_tactv
+msgid "TOTAL ACTIFS"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_balance_sheet_actv_tac
+msgid "TOTAL ACTIFS COURANTS"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_balance_sheet_actv_tanc
+msgid "TOTAL ACTIFS NON COURANTS"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_l10n_mg_bsel_psv_tcp
+msgid "TOTAL CAPITAUX PROPRES"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_l10n_mg_bsel_tpsv
+msgid "TOTAL CAPITAUX PROPRES ET PASSIFS"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_line_9_mg_cdr_tcao
+#: model:account.financial.report,name:l10n_mg_reports_c.report_total_charge_activite_ordinaire
+msgid "TOTAL DES CHARGES DES ACTIVITES ORDINAIRES"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.details_charges_total_charge_ordinaire
+msgid "TOTAL DES CHARGES ORDINAIRES"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_line_8_mg_cdr_tpao
+msgid "TOTAL DES PRODUITS DES ACTIVITES ORDINAIRE"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_total_produit_ordinaire
+msgid "TOTAL DES PRODUITS DES ACTIVITES ORDINAIRES"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_produit_ordinaire
+msgid "TOTAL DES PRODUITS ORDINAIRES"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_l10n_mg_bsel_psv_tpc
+msgid "TOTAL PASSIFS COURANTS"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_l10n_mg_bsel_psv_tpnc
+msgid "TOTAL PASSIFS NON-COURANTS"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_flux_tresorerie_directe
+#: model:ir.actions.report,name:l10n_mg_reports_c.flux_tresorerie_report
+msgid "Tableau des flux de trésorerie (méthode directe)"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.actions.report,name:l10n_mg_reports_c.indirect_flux_tresorerie_report
+msgid "Tableau des flux de trésorerie (méthode indirecte)"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_balance_sheet_actv_anc_ic_trs
+msgid "Terrains"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: code:addons/l10n_mg_reports_c/report/report_financial_mg.py:0
+#: code:addons/l10n_mg_reports_c/report/report_financial_mg.py:0
+#, python-format
+msgid "The report '%s' should have domain."
+msgstr "Le rapport '%s' devrait avoir un domaine. "
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields,help:l10n_mg_reports_c.field_ir_actions_report__report_type
+msgid ""
+"The type of the report that will be rendered, each one having its own "
+"rendering method. HTML means the report will be opened directly in your "
+"browser PDF means the report will be rendered using Wkhtmltopdf and "
+"downloaded by the user."
+msgstr ""
+"Le type du rapport qui sera rendu, chacun ayant sa propre méthode de rendu. "
+"HTML signifie que le rapport sera ouvert directement dans votre navigateur. "
+"PDF signifie que le rapport sera rendu à l'aide de Wkhtmltopdf et téléchargé"
+" par l'utilisateur."
+
+#. module: l10n_mg_reports_c
+#: code:addons/l10n_mg_reports_c/report/report_financial_mg.py:0
+#, python-format
+msgid "There is 2 reports line having the same code, please fix it."
+msgstr "Il y a 2 lignes de rapports ayant le même code, merci de le corriger."
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_timbre
+msgid "Timbre"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_balance_sheet_actv_anc_if_tme
+msgid "Titres mis en équivalence"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.evcp_report_template
+msgid "Total"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_account_bank_statement_line__amount_total_words
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_account_move__amount_total_words
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_account_payment__amount_total_words
+msgid "Total (In Words)"
+msgstr "Total (en lettre)"
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_transport_fret
+msgid "Transports et frêts"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.indirect_flux_report_template
+msgid "Tresorerie d'ouverture"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.indirect_flux_report_template
+msgid "Tresorerie de cloture"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_tresorerie_active_directe
+msgid "Trésorerie"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_balance_sheet_actv_ac_tet_tfcdv
+msgid "Trésorerie (fonds en caisse et dépôts à vue)"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_tresorerie_ouverture
+msgid "Trésorerie d'ouverture"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_tresorerie_cloture
+msgid "Trésorerie de clôture"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_balance_sheet_actv_ac_tet
+msgid "Trésorerie et équivalents de trésorerie"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_tresorerie_equivalent_ouverture_exo
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.flux_tresorerie_report_template
+msgid "Trésorerie et équivalents de trésorerie à l'ouverture de l'exercice"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_tresorerie_equivalent_cloture_exo
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.flux_tresorerie_report_template
+msgid "Trésorerie et équivalents de trésorerie à la clôture de l'exercice"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_flux_tresorerie_indirecte
+msgid "Trésorerie indirecte"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_tresorerie_passive_directe
+msgid "Trésorerie passive"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_tresorerie_equivalent_tres_ouverture1
+msgid "Trésorerie passive à l'ouverture"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_tresorerie_equivalent_tres__ouverture1
+msgid "Trésorerie à l'ouverture"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_account_financial_report__type
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_cash_flow_wizard__type
+msgid "Type"
+msgstr "Taper"
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_account_financial_report__type_financial_report_mg
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_accounting_report__type_financial_report_mg
+msgid "Type of financial report"
+msgstr "Type de rapport financier"
+
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields,field_description:l10n_mg_reports_c.field_account_financial_report__monetary_unit_mg
+msgid "Monetary unit"
+msgstr "Unité monétaire"
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.evcp_report_template
+msgid "Monetary unit : Ariary"
+msgstr "Unité monétaire : Ariary"
+
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_resultat_operationnel_nature
+msgid "V - RESULTAT OPERATIONNEL"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_line_05_mg_cdr_ro
+msgid "V- RESULTAT OPERATIONNEL"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_variation_tres_periode
+#: model:account.financial.report,name:l10n_mg_reports_c.report_variation_tresorerie_periode_directe
+msgid "VARIATION DE TRESORERIE DE LA PERIODE"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_variation_periode
+#: model:account.financial.report,name:l10n_mg_reports_c.report_variation_tresorerie_directe
+msgid "VARIATION DE TRESORERIE DE LA PERIODE (A+B+C)"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_resultat_financier_nature
+msgid "VI - RESULTAT FINANCIER"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_line_06_mg_cdr_rf
+msgid "VI- RESULTAT FINANCIER"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_nature_resultat_avant_impots_nature
+msgid "VII - RESULTAT AVANT IMPOTS (V + VI)"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_line_07_mg_cdr_rai
+msgid "VII- RESULTAT AVANT IMPOTS (V + VI)"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_resultat_net_ordinaire
+msgid "VIII - RESULTAT NET DES ACTIVITES ORDINAIRES"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_moins_value
+msgid ""
+"Val. comptables actifs cédés : Moins values sur cession d'actifs non courant"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_variation_stock_produit
+msgid "Variation de stock de produit"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_variation_stock_en_cours
+msgid "Variation de stock encours"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_variation_stock_produit_fini
+msgid "Variation de stock produit fini"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.actions.act_window,name:l10n_mg_reports_c.action_evcp
+msgid "Variation des capitaux propres"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.indirect_flux_report_template
+msgid "Variation des clients et autres creances"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.indirect_flux_report_template
+msgid "Variation des fournisseurs et autres dettes"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.indirect_flux_report_template
+msgid "Variation des impots differes"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.indirect_flux_report_template
+msgid "Variation des provisions et produits constates d'avance"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_variation_provision
+msgid "Variation des provisions et produits constatés d'avance"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.indirect_flux_report_template
+msgid "Variation des stocks"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_variation_clients_autres_creances
+msgid "Variations des clients et autres créances"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_variation_fournisseur
+msgid "Variations des fournisseurs et autres dettes"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_variation_impot_diff
+msgid "Variations des impôts différés"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_variation_stocks
+#: model:account.financial.report,name:l10n_mg_reports_c.report_variations_stocks
+msgid "Variations des stocks"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_vente_prestation_service
+msgid "Vente prestations de service"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_vente_produit_intermediaire
+msgid "Vente produits intermédiaires"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_vente_produit_locaux
+msgid "Vente produits locaux"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_vente_net_rabais
+msgid "Ventes nets des Rabais remises ristournes Accordés"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields.selection,name:l10n_mg_reports_c.selection__account_financial_report__type__sum
+msgid "View"
+msgstr "Vue"
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_visite_technique
+msgid "Visite technique"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model,name:l10n_mg_reports_c.model_evcp_view
+msgid "Wizard for generating EVCP report view"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model,name:l10n_mg_reports_c.model_cash_flow_wizard
+msgid "Wizard for generating cash flow report view"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.report_nature_resultat_net_exercice
+msgid "X - RESULTAT NET DE L'EXERCICE"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_line_12_mg_cdr_rne
+msgid "X- RESULTAT NET DE L’EXERCICE"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:account.financial.report,name:l10n_mg_reports_c.account_financial_report_line_13_mg_cdr_rnec
+msgid "XI- RESULTAT NET DE L’ENSEMBLE CONSOLIDE"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model.fields.selection,name:l10n_mg_reports_c.selection__ir_actions_report__report_type__xlsx
+msgid "XLSX"
+msgstr "XLSX"
+
+#. module: l10n_mg_reports_c
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.flux_tresorerie_report_template
+#: model_terms:ir.ui.view,arch_db:l10n_mg_reports_c.indirect_flux_report_template
+msgid "au"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model,name:l10n_mg_reports_c.model_report_l10n_mg_reports_c_evcp_report_template
+msgid "report.l10n_mg_reports_c.evcp_report_template"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model,name:l10n_mg_reports_c.model_report_l10n_mg_reports_c_flux_tresorerie_report_template
+msgid "report.l10n_mg_reports_c.flux_tresorerie_report_template"
+msgstr ""
+
+#. module: l10n_mg_reports_c
+#: model:ir.model,name:l10n_mg_reports_c.model_report_l10n_mg_reports_c_indirect_flux_report_template
+msgid "report.l10n_mg_reports_c.indirect_flux_report_template"
+msgstr ""

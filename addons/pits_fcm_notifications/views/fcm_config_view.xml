@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="res_config_settings_view_form_fcm" model="ir.ui.view">
+	    <field name="name">res.config.settings.view.form</field>
+	    <field name="model">res.config.settings</field>
+	    <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+	    <field name="arch" type="xml">
+	        <div id="business_documents" position="after">
+	            <h2 id="fcm_configuration">FCM Notifications</h2>
+	            <div class="row mt16 o_settings_container" name="fcm_configuration_key">
+	            	<div class="col-12 col-lg-8 o_setting_box">
+	                    <div class="o_setting_left_pane">
+	                    </div>
+	                    <div class="o_setting_right_pane">
+	                        <span class="o_form_label">Configuration</span>
+                            <div class="text-muted">
+                                Set the Firebase Clound Messaging Server Key
+                            </div>
+                            <div class="content-group">
+                                <div class="mt16 row">
+                                	<label for="fcm_server_key" string="Server Key" class="col-3 o_light_label"/>
+                                    <field name="fcm_server_key" class="col-5" password="True"/>
+                                </div>
+                                <div >
+				                   <button type="action" name="%(pits_fcm_notifications.action_fcm_test)d" string="FCM Testing" icon="fa-arrow-right" class="btn-link"/>
+				                </div>
+                            </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </field>
+	</record>
+
+</odoo>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="pits_fcm_notifications.fcm_test_record" model="fcm.test">
+            <field name="partner_id" ref="base.partner_admin" />
+            <field name="message_title">New Mesaage</field>
+            <field name="message_body">New notification for you</field>
+        </record>
+
+    </data>
+</odoo>

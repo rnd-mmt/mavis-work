@@ -1,0 +1,200 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* website_modal
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0-20210607\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-06-10 21:39+0000\n"
+"PO-Revision-Date: 2021-06-10 21:39+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: website_modal
+#: model_terms:ir.ui.view,arch_db:website_modal.website_modal_view_form
+msgid "(only once"
+msgstr "(juste une fois"
+
+#. module: website_modal
+#: model_terms:ir.ui.view,arch_db:website_modal.website_modal_view_form
+msgid "/boutique"
+msgstr ""
+
+#. module: website_modal
+#: model_terms:ir.ui.view,arch_db:website_modal.website_modal_view_form
+msgid "/boutique/panier"
+msgstr ""
+
+#. module: website_modal
+#: model_terms:ir.ui.view,arch_db:website_modal.website_modal_view_form
+msgid "<strong>Note:</strong> To enable popup on all pages use <strong>*</strong> for url."
+msgstr "<strong>Note:</strong> Pour activer le popup sur toutes les pages, utilisez <strong>*</strong> pour url"
+
+#. module: website_modal
+#: selection:website.modal,size:0
+msgid "Big"
+msgstr "Gros"
+
+#. module: website_modal
+#: model:ir.model.fields,field_description:website_modal.field_website_modal__create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: website_modal
+#: model:ir.model.fields,field_description:website_modal.field_website_modal__create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: website_modal
+#: model:ir.model.fields,field_description:website_modal.field_website_modal__display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: website_modal
+#: model:ir.model.fields,field_description:website_modal.field_website_modal__html
+#: model:ir.model.fields,field_description:website_modal.field_website_modal__html_text
+msgid "HTML"
+msgstr ""
+
+#. module: website_modal
+#: model:ir.model.fields,field_description:website_modal.field_website_modal__id
+msgid "ID"
+msgstr ""
+
+#. module: website_modal
+#: model_terms:ir.ui.view,arch_db:website_modal.website_modal_view_form
+msgid "Intending to exit page"
+msgstr "Intention de quitter la page"
+
+#. module: website_modal
+#: model:ir.model.fields,field_description:website_modal.field_website_modal____last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: website_modal
+#: model:ir.model.fields,field_description:website_modal.field_website_modal__write_uid
+msgid "Last Updated by"
+msgstr "Dernière mise à jour par"
+
+#. module: website_modal
+#: model:ir.model.fields,field_description:website_modal.field_website_modal__write_date
+msgid "Last Updated on"
+msgstr "Dernière mise à jour le"
+
+#. module: website_modal
+#: model:ir.model.fields,field_description:website_modal.field_website_modal__name
+msgid "Name"
+msgstr "Nom"
+
+#. module: website_modal
+#: model:ir.model.fields,field_description:website_modal.field_website_modal__appear_exit
+msgid "Page Exit Intent"
+msgstr "Intention de sortir de la page"
+
+#. module: website_modal
+#: model:ir.model.fields,field_description:website_modal.field_website_modal__appear_exit_first
+msgid "Page Exit Intent (only once)"
+msgstr "Intention de sortir de la page (une seule fois)"
+
+#. module: website_modal
+#: model_terms:ir.ui.view,arch_db:website_modal.website_modal_view_form
+msgid "Popup HTML Content"
+msgstr "Contenu HTML du popup"
+
+#. module: website_modal
+#: model:ir.actions.act_window,name:website_modal.act_window_website_modal
+#: model:ir.model,name:website_modal.model_website_modal
+#: model:ir.ui.menu,name:website_modal.menu_website_modal
+#: model_terms:ir.ui.view,arch_db:website_modal.website_modal_view_form
+msgid "Popups"
+msgstr ""
+
+#. module: website_modal
+#: model_terms:ir.ui.view,arch_db:website_modal.website_modal_view_form
+msgid "Raise popup when"
+msgstr "Faire apparaître le popup lorsque"
+
+#. module: website_modal
+#: model:ir.model.fields,field_description:website_modal.field_website_modal__appear_scroll
+#: model_terms:ir.ui.view,arch_db:website_modal.website_modal_view_form
+msgid "Scroll to Bottom of Page"
+msgstr "Faites défiler vers le bas de la page"
+
+#. module: website_modal
+#: model:ir.model.fields,field_description:website_modal.field_website_modal__appear_scroll_first
+msgid "Scroll to Bottom of Page (only once)"
+msgstr "Faites défiler jusqu'en bas de la page (une seule fois)"
+
+#. module: website_modal
+#: model:ir.model.fields,field_description:website_modal.field_website_modal__size
+msgid "Size"
+msgstr "Taille"
+
+#. module: website_modal
+#: selection:website.modal,size:0
+msgid "Small"
+msgstr "Petit"
+
+#. module: website_modal
+#: model_terms:ir.ui.view,arch_db:website_modal.website_modal_view_form
+msgid "Stay on page"
+msgstr "Rester à la page"
+
+#. module: website_modal
+#: model:ir.model.fields,field_description:website_modal.field_website_modal__appear_time_val
+msgid "Time (seconds)"
+msgstr "Temps (secondes)"
+
+#. module: website_modal
+#: model:ir.model.fields,field_description:website_modal.field_website_modal__appear_time
+msgid "Time on Page"
+msgstr "Temps passé sur la page"
+
+#. module: website_modal
+#: model:ir.model.fields,field_description:website_modal.field_website_modal__appear_time_first
+msgid "Time on Page (only once)"
+msgstr "Temps passé sur la page (une seule fois)"
+
+#. module: website_modal
+#: model:ir.model.fields,field_description:website_modal.field_website_modal__appear_exit_url
+#: model:ir.model.fields,field_description:website_modal.field_website_modal__appear_scroll_url
+#: model:ir.model.fields,field_description:website_modal.field_website_modal__appear_time_url
+#: model:ir.model.fields,field_description:website_modal.field_website_modal__appear_visit_url
+msgid "URL"
+msgstr ""
+
+#. module: website_modal
+#: model:ir.model.fields,field_description:website_modal.field_website_modal__plain_html
+msgid "Use plain HTML field (usually used for pasting HTML)"
+msgstr "Utiliser un champ HTML brut (généralement utilisé pour coller du HTML)"
+
+#. module: website_modal
+#: model:ir.model.fields,field_description:website_modal.field_website_modal__appear_visit
+msgid "Visit Page"
+msgstr "Page de visite"
+
+#. module: website_modal
+#: model:ir.model.fields,field_description:website_modal.field_website_modal__appear_visit_first
+msgid "Visit Page (only once)"
+msgstr "Visiter la page (une seule fois)"
+
+#. module: website_modal
+#: model_terms:ir.ui.view,arch_db:website_modal.website_modal_view_form
+msgid "Visiting page"
+msgstr "Page de visite"
+
+#. module: website_modal
+#: model_terms:ir.ui.view,arch_db:website_modal.website_modal_view_form
+msgid "for"
+msgstr "pour"
+
+#. module: website_modal
+#: model_terms:ir.ui.view,arch_db:website_modal.website_modal_view_form
+msgid "seconds"
+msgstr ""
+

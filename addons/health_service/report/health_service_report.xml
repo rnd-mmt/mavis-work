@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_health_service_document">
+            <t t-call="web.external_layout">
+                <t t-set="o" t-value="o.with_context(lang=lang)" />
+                <div class="page">
+                    <div class="text-center mt32 mb32" t-if="o.company_id.name =='INSTITUT MEDICAL DE MADAGASCAR SA'">
+                        <h2>FICHE PATIENT</h2>
+                    </div>
+                    <h3>
+                        <span t-field="o.name"/>
+                    </h3>
+
+                    <div id="informations" class="row mt-4 mb-4">
+                        <div class="col-auto col-3 mw-100 mb-2" t-if="o.service_date" name="service_date">
+                            <strong>Date:</strong>
+                            <p class="m-0" t-field="o.service_date"/>
+                        </div>
+                        <div class="col-auto col-3 mw-100 mb-2" t-if="o.patient_id" name="patient_id.name">
+                            <strong>Patient:</strong>
+                            <p class="m-0" t-field="o.patient_id.name"/>
+                        </div>
+                        <div class="col-auto col-3 mw-100 mb-2" t-if="o.invoice_to" name="invoice_to.name">
+                            <strong>Adresse de facturation:</strong>
+                            <p class="m-0" t-field="o.invoice_to.name"/>
+                        </div>
+                        <div class="col-auto col-3 mw-100 mb-2" t-if="o.desc" name="desc">
+                            <strong>Description:</strong>
+                            <p class="m-0" t-field="o.desc"/>
+                        </div>
+                    </div>
+
+                    <table class="table table-bordered table-sm o_main_table" name="health_service_line_table">
+                        <thead>
+                            <tr>
+                                <th name="th_product" class="text-left"><span>Product</span></th>
+                                <th name="th_quantity" class="text-right"><span>Quantity</span></th>
+                            </tr>
+                        </thead>
+                        <tbody class="invoice_tbody">
+                            <t t-set="lines" t-value="o.service_line.sorted(key=lambda l: (-l.sequence,-l.id), reverse=True)"/>
+                            <t t-foreach="lines" t-as="line">
+<!--                                <tr t-att-class="'bg-200 font-weight-bold o_line_section'">-->
+<!--                                    <t t-if="line.id">-->
+<!--                                        <td class="text-left"><span t-field="line.product.name" t-options="{'widget': 'text'}"/></td>-->
+<!--                                        <td class="text-right">-->
+<!--                                            <span t-field="line.quantity"/>-->
+<!--                                        </td>-->
+<!--                                    </t>-->
+<!--                                </tr>-->
+                                <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
+                                    <t t-if="not line.display_type">
+                                        <td class="text-left"><span t-field="line.product.name" t-options="{'widget': 'text'}"/></td>
+                                        <td class="text-right">
+                                            <span t-field="line.quantity"/>
+                                        </td>
+                                    </t>
+                                    <t t-if="line.display_type == 'line_section'">
+                                        <td name="td_section_line" colspan="99">
+                                            <span t-field="line.name"/>
+                                        </td>
+                                        <t t-set="current_section" t-value="line"/>
+                                        <t t-set="current_subtotal" t-value="0"/>
+                                    </t>
+                                    <t t-if="line.display_type == 'line_note'">
+                                        <td name="td_note_line" colspan="99">
+                                            <span t-field="line.name"/>
+                                        </td>
+                                    </t>
+                                </tr>
+
+                            </t>
+                        </tbody>
+                    </table>
+                    <img t-if="o.patient_id.code" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' %('Code128',o.patient_id.code,200,70)" align="right"/>
+                    <div t-if="o.company_id.name =='INSTITUT MEDICAL DE MADAGASCAR SA'">
+                        <p>Veuillez vous munir de la présente fiche pour récupérer vos résultats.</p>
+                        <p>Entina ity taratasy ity rehefa maka ny valin'ny fitiliana.</p>
+                    </div>
+                    <div>
+                        <p t-field="o.notes"></p>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="health_service_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-set="lang" t-value="o.invoice_to.lang"/>
+                    <t t-call="health_service.report_health_service_document" t-lang="lang"/>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

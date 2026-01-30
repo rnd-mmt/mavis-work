@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!-- Define the report action -->
+        <record id="account_recap_and_invoices_report" model="ir.actions.report">
+            <field name="name">Etat récapitulatif et facture combiné</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">acs_invoice_split.combine_recap_fact</field>
+            <field name="report_file">acs_invoice_split.combine_recap_fact</field>
+            <field name="binding_model_id" ref="model_account_move"/>
+        </record>
+
+        <template id="combine_recap_fact">
+            <t t-call="acs_invoice_split.recap_content"/>
+            <t t-call="account.report_invoice"/>
+        </template>
+
+        <record id="account_recap_and_invoices_patient_report" model="ir.actions.report">
+            <field name="name">Etat récapitulatif et facture patient combiné</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">acs_invoice_split.combine_recap_fact_patient</field>
+            <field name="report_file">acs_invoice_split.combine_recap_fact_patient</field>
+            <field name="binding_model_id" ref="model_account_move"/>
+        </record>
+
+        <template id="combine_recap_fact_patient">
+            <t t-call="acs_invoice_split.recap_content_patient"/>
+            <t t-call="account.report_invoice"/>
+        </template>
+
+        
+    </data>
+</odoo>

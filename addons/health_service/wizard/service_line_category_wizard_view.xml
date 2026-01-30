@@ -1,0 +1,44 @@
+<odoo>
+    <record id="view_service_line_category_wizard_form" model="ir.ui.view">
+        <field name="name">service.line.category.wizard.form</field>
+        <field name="model">service.line.category.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Création ligne d'articles ">
+                <sheet>
+                    <group style="margin: 0;">
+                        <group style="margin: 0;">
+                            <field name="product_categ_id" string="Catégorie" style="margin: 0;"  options="{'no_create': True}"/>
+                        </group>
+                    </group>
+                    <hr/>
+                    <field name="product_ids" nolabel="1" colspan="4" widget="section_and_note_one2many">
+                        <tree editable="bottom">
+                            <field name="product" string="Product" options="{'no_create': True}"/>
+                            <field name="product_uom_category_id" invisible="1"/>
+                            <field name="name"  optional="show"/>
+                            <field name="quantity"/>
+                            <field name="product_uom" options="{'no_create': True}"/>
+                            <field name="sale_price" force_save="1"/>
+                            <field name="product_type" optional="hide"/>
+                            <field name="category" invisible="1"/>
+                            <field name="parent_category" invisible="1"/>
+                        </tree>
+                    </field>
+                    
+                </sheet>
+                
+                <footer>
+                    <button name="add_health_service_article" string="Créer un Articles" type="object" class="oe_highlight"/>
+                    <button string="Annuler" class="btn btn-dark" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_service_line_category_wizard" model="ir.actions.act_window">
+        <field name="name">Add Service Lines</field>
+        <field name="res_model">service.line.category.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_service_id': active_id}</field>
+    </record>
+</odoo>

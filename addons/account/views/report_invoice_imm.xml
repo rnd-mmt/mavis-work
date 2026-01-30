@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="header_footer">
+            <div t-attf-class="header">
+                <t t-set="company" t-value="o.company_id"/>
+                <div class="row">
+                    <div class="col-4 mb4">
+                        <div class="row align-middle" style="align-items:center;">
+                            <div class="col-3">
+                                <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 145px;" alt="Logo"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-8 " name="company_address">
+                        <div t-field="company.partner_id" class="font-weight-bold  text-uppercase" style="font-weight:bold; font-family: normal sans-serif" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot; ,  &quot;name&quot;], &quot;no_marker&quot;: true}"/>
+                        <span class="font-weight-bold" style="font-family: normal sans-serif">CAPITAL 500.000.000 Ar</span>
+                    </div>
+                </div>
+                <div t-if="company.logo or company.report_header" class="row zero_min_height">
+                    <div class="col-12">
+                        <div style="border-bottom: 1px solid black;"/>
+                        <br/>
+                    </div>
+                </div>
+                <div class="container-fluid">
+                    <div id="info_patient"></div>
+                    <div>
+                        <strong>Prise en charge: </strong><span t-field="o.partner_id.name"/>
+                    </div>
+                    <div>
+                        <strong>Médecin prescripteur: </strong><span t-field="o.ref_physician_id.name"/>
+                    </div>
+                    
+                </div>
+                <hr style="border-top: 1px solid"/>
+                <div style="display: none;">
+                    <t t-set="address">
+                    <address t-field="o.partner_id" t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}' />
+                    <div t-if="o.partner_id.vat" class="mt16">
+                        <t t-if="o.company_id.country_id.vat_label" t-esc="o.company_id.country_id.vat_label" id="inv_tax_id_label"/>
+                        <t t-else="">Tax ID</t>: <span t-field="o.partner_id.vat"/></div>
+                </t>
+                </div>
+                <div id="informations" class="row mt32 mb32">
+                        <div class="col-auto col-3 mw-100 mb-2" t-if="o.invoice_date" name="invoice_date">
+                            <strong>Date:</strong>
+                            <span class="m-0" t-field="o.invoice_date"/>
+                        </div>
+                        <div class="col-auto col-3 mw-100 mb-2">
+                            <strong>FACTURE N°:</strong><span class="m-0" t-field="o.name"/>
+                        </div>
+                    </div>
+
+            </div>  
+        
+            <div t-attf-class="footer" style="font-size: 70%;">
+                <div style="border-top: 1px solid black; ">
+                    <span class="font-weight-bold " style="font-weight:bold; font-family: normal sans-serif;font-size: 15px !important;">Coordonnées
+                        bancaires :
+                    </span>
+                    <div class="row ">
+                        <div class="col-4">
+                            <span style="font-size: 15px !important;">Titulaire: Institut Médical de Madagascar</span>
+                            <br/>
+                            <span style="font-size: 15px !important;">Banque: BOA MADAGASCAR</span>
+                            <br/>
+                            <span style="font-size: 15px !important;">Agence : CAF Andraharo</span>
+                        </div>
+
+                        <div class="col-8">
+                            <div class="row ">
+                                <!--div class="col-3 text-center">
+                                    <span style="font-size: 15px !important;">Code banque</span>
+                                    <br/>
+                                    <span style="font-size: 15px !important;">0009</span>
+                                    <br/>
+                                    <span style="font-size: 15px !important;">Domiciliation</span>
+                                </div>
+                                <div class="col-3 text-center">
+                                    <span style="font-size: 15px !important;">Code guichet</span>
+                                    <br/>
+                                    <span style="font-size: 15px !important;">07000</span>
+                                </div>
+                                <div class="col-3 text-center">
+                                    <span style="font-size: 15px !important;">N° de compte</span>
+                                    <br/>
+                                    <span style="font-size: 15px !important;">15710720019</span>
+                                    <br/>
+                                    <span style="font-size: 15px !important;">BOA MADAGASCAR</span>
+                                </div>
+                                <div class="col-3 text-center">
+                                    <span style="font-size: 15px !important;">Clé RIB</span>
+                                    <br/>
+                                    <span style="font-size: 15px !important;">95</span>
+
+                                </div-->
+                                <t t-if="o.invoice_date.strftime('%Y-%m-%d') &lt; '2024-08-15'">
+                                    <div class="col-3 text-center">
+                                        <span style="font-size: 15px !important;">Code banque</span>
+                                        <br/>
+                                        <span style="font-size: 15px !important;">0009</span>
+                                        <br/>
+                                        <span style="font-size: 15px !important;">Domiciliation</span>
+                                    </div>
+                                    <div class="col-3 text-center">
+                                        <span style="font-size: 15px !important;">Code guichet</span>
+                                        <br/>
+                                        <span style="font-size: 15px !important;">07000</span>
+                                    </div>
+                                    <div class="col-3 text-center">
+                                        <span style="font-size: 15px !important;">N° de compte</span>
+                                        <br/>
+                                        <span style="font-size: 15px !important;">15710720019</span>
+                                        <br/>
+                                        <span style="font-size: 15px !important;">BOA MADAGASCAR</span>
+                                    </div>
+                                    <div class="col-3 text-center">
+                                        <span style="font-size: 15px !important;">Clé RIB</span>
+                                        <br/>
+                                        <span style="font-size: 15px !important;">95</span>
+
+                                    </div>
+                                </t>
+                                <t t-else="">
+                                    <div class="col-3 text-center">
+                                        <span style="font-size: 15px !important;">Code banque</span>
+                                        <br/>
+                                        <span style="font-size: 15px !important;">00009</span>
+                                        <br/>
+                                        <span style="font-size: 15px !important;">Domiciliation</span>
+                                    </div>
+                                    <div class="col-3 text-center">
+                                        <span style="font-size: 15px !important;">Code guichet</span>
+                                        <br/>
+                                        <span style="font-size: 15px !important;">07100</span>
+                                    </div>
+                                    <div class="col-3 text-center">
+                                        <span style="font-size: 15px !important;">N° de compte</span>
+                                        <br/>
+                                        <span style="font-size: 15px !important;">15710720019</span>
+                                        <br/>
+                                        <span style="font-size: 15px !important;">BOA MADAGASCAR</span>
+                                    </div>
+                                    <div class="col-3 text-center">
+                                        <span style="font-size: 15px !important;">Clé RIB</span>
+                                        <br/>
+                                        <span style="font-size: 15px !important;">50</span>
+
+                                    </div>  
+                                </t>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div style=" width:100%; position:relative; margin-top:5px;">
+                        <div style="border: 1px solid black; width:80%; padding:5px; position:relative;">
+                            <span style="font-size: 15px !important;">Tél: 034 17 452 69</span>
+                            <br/>
+                            <span style="font-size: 15px !important;">Fixe: 020 22 303 92</span>
+                            <br/>
+                            <span style="font-size: 15px !important;">Web site:</span> <span style="font-size: 15px !important;" t-esc="company.website"/>
+                            <br/>
+                            <span style="font-size: 15px !important;">e-mail:</span> <span style="font-size: 15px !important;" t-esc="company.email"/>
+                            <br/>
+                            <div class="row">
+                                <div class="col-3">
+                                    <span style="font-size: 15px !important;">NIF: 2000070423</span>
+                                </div>
+                                <div class="col-6">
+                                    <span style="font-size: 15px !important;">STAT: 85121  11  2004  01  0324</span>
+                                </div>
+                                <div class="col-3">
+                                    <span style="font-size: 15px !important;">RCS: 2004 B 0133</span>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div style="position:absolute; right:10px; bottom:10px;">
+                                <div t-if="report_type == 'pdf'" class="text-muted">
+                                    Page:
+                                    <span class="page"/>
+                                    /
+                                    <span class="topage"/>
+                                </div>
+                                <div t-if="report_type == 'pdf' and display_name_in_footer" class="text-muted">
+                                    <span t-field="o.name"/>
+                                </div>
+                            </div>
+                    </div>
+
+                </div>
+            </div>
+        </template>
+
+        <template id="report_invoice_imm_document">
+                <t t-set="o" t-value="o.with_context(lang=lang)" />
+                <div style="display: none;">
+                    <t t-set="address">
+                    <address t-field="o.partner_id" t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}' />
+                    <div t-if="o.partner_id.vat" class="mt16">
+                        <t t-if="o.company_id.country_id.vat_label" t-esc="o.company_id.country_id.vat_label" id="inv_tax_id_label"/>
+                        <t t-else="">Tax ID</t>: <span t-field="o.partner_id.vat"/></div>
+                </t>
+                </div>
+                
+            
+                <div class="page">
+                    <h2 style="display: none;">
+                        <span t-if="o.move_type == 'out_invoice' and o.state == 'posted'">Invoice</span>
+                        <span t-if="o.move_type == 'out_invoice' and o.state == 'draft'">Draft Invoice</span>
+                        <span t-if="o.move_type == 'out_invoice' and o.state == 'cancel'">Cancelled Invoice</span>
+                        <span t-if="o.move_type == 'out_refund'">Credit Note</span>
+                        <span t-if="o.move_type == 'in_refund'">Vendor Credit Note</span>
+                        <span t-if="o.move_type == 'in_invoice'">Vendor Bill</span>
+                        <span t-if="o.name != '/'" t-field="o.name"/>
+                    </h2>
+
+                    <t t-set="display_discount" t-value="any(l.discount for l in o.invoice_line_ids)"/>
+                    <br/>
+                    <table class="table table-sm o_main_table" name="invoice_line_table" style="font-size: 90% !important;font-family: Arial !important;">
+                        <thead>
+                            <tr>
+                                <th name="th_description" class="text-left"><span>Désignations</span></th>
+                                <th name="th_quantity" class="text-right"><span>Quantité</span></th>
+                                <th name="th_priceunit" t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}"><span>Prix unitaire</span></th>
+                                <th name="th_price_unit" t-if="display_discount" t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
+                                    <span>Remise</span>
+                                </th>
+                                <!-- <th name="th_taxes" t-attf-class="text-left {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}"><span>Taxes</span></th> -->
+                                <th name="th_subtotal" class="text-right">
+                                    <span groups="account.group_show_line_subtotals_tax_excluded">Montant TTC</span>
+                                    <span groups="account.group_show_line_subtotals_tax_included">Montant TTC</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="invoice_tbody">
+                            <t t-set="current_subtotal" t-value="0"/>
+                            <t t-set="lines" t-value="o.invoice_line_ids.sorted(key=lambda l: (-l.sequence, l.date, l.move_name, -l.id), reverse=True)"/>
+
+                            <t t-foreach="lines" t-as="line">
+                                <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
+                                <t t-set="current_subtotal" t-value="current_subtotal + line.price_total" groups="account.group_show_line_subtotals_tax_included"/>
+
+                                <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
+                                    <t t-if="not line.display_type" name="account_invoice_line_accountable">
+                                        <td name="account_invoice_line_name"><span t-field="line.name" t-options="{'widget': 'text'}"/></td>
+                                        <td class="text-right">
+                                            <span style="margin-right: 5px;" t-field="line.quantity"/><span t-field="line.product_uom_id" groups="uom.group_uom"/>
+                                        </td>
+                                        <td t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
+                                            <span class="text-nowrap" t-field="line.price_unit"/>
+                                        </td>
+                                        <td t-if="display_discount" t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
+                                            <span class="text-nowrap" t-field="line.discount"/>
+                                        </td>
+                                        <!-- <td t-attf-class="text-left {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
+                                            <span t-esc="', '.join(map(lambda x: (x.description or x.name), line.tax_ids))" id="line_tax_ids"/>
+                                        </td> -->
+                                        <td class="text-right o_price_total">
+                                            <span class="text-nowrap" t-field="line.price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
+                                            <span class="text-nowrap" t-field="line.price_total" groups="account.group_show_line_subtotals_tax_included"/>
+                                        </td>
+                                    </t>
+                                    <t t-if="line.display_type == 'line_section'">
+                                        <td colspan="99">
+                                            <span t-field="line.name" t-options="{'widget': 'text'}"/>
+                                        </td>
+                                        <t t-set="current_section" t-value="line"/>
+                                        <t t-set="current_subtotal" t-value="0"/>
+                                    </t>
+                                    <t t-if="line.display_type == 'line_note'">
+                                        <td colspan="99">
+                                            <span t-field="line.name" t-options="{'widget': 'text'}"/>
+                                        </td>
+                                    </t>
+                                </tr>
+
+                                <t t-if="current_section and (line_last or lines[line_index+1].display_type == 'line_section')">
+                                    <tr class="is-subtotal text-right">
+                                        <td colspan="99">
+                                            <strong class="mr16">Subtotal</strong>
+                                            <span
+                                                t-esc="current_subtotal"
+                                                t-options='{"widget": "monetary", "display_currency": o.currency_id}'
+                                            />
+                                        </td>
+                                    </tr>
+                                </t>
+                            </t>
+                        </tbody>
+                    </table>
+                    <br/>
+                    <div class="container-fluid" style="padding: 0 10px; page-break-inside: avoid; break-inside: avoid-column;">
+                        <div class="row">
+                            <div class="col-7" style="padding: 0;">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-4" style="padding: 0 5px;">
+                                            <div class="box" style="border: solid 1px rgba(0,0,0,.3); padding: 15px; min-height: 120px;">
+                                                <p style="text-align:center;">Pour IMM</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-4" style="padding: 0 5px;">
+                                            <div class="box" style="border: solid 1px rgba(0,0,0,.3); padding: 15px; min-height: 120px;">
+                                                <p style="text-align:center;">Le patient</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-4" style="padding: 0 5px;">
+                                            <div class="box" style="border: solid 1px rgba(0,0,0,.3); padding: 15px; min-height: 120px;">
+                                                <p style="text-align:center;">Mode de règlement</p>
+                                                <div style="text-align:center;"><b><span class="text-nowrap" t-field="o.type_paid"/></b></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-5" style="padding: 0;">
+                                <div class="row">
+                                    <div class="container-fluid">
+                                        <div class="col" style="padding: 0 5px;">
+                                            <div id='total' style="border: solid 1px rgba(0,0,0,.3); padding: 15px; min-height: 120px;">
+                                                <!-- <t t-foreach="o.amount_by_group" t-as="amount_by_group">
+                                                    <t t-if="len(o.line_ids.filtered(lambda line: line.tax_line_id)) in [0, 1] and float_compare(o.amount_untaxed, amount_by_group[2], precision_rounding=o.currency_id.rounding) == 0">
+                                                        <p style="display: flex;justify-content: space-between;"><span class="text-nowrap" t-esc="amount_by_group[0]"/> : <span class="text-nowrap" t-esc="amount_by_group[3]" /> </p>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <p style="display: flex;justify-content: space-between;"> <span t-esc="amount_by_group[0]"/> <span class="text-nowrap"> on <t t-esc="amount_by_group[4]"/></span> : <span class="text-nowrap" t-esc="amount_by_group[3]"/></p>
+                                                    </t>
+                                                </t> -->
+                                                <div class="row">
+                                                    <div class="col-6">TOTAL TTC :</div>
+                                                    <div class="col-6"><p style="text-align: right;"><span t-field="o.amount_total"/></p></div>
+                                                </div>
+                                                <div class="row" >
+                                                    <div class="col-6">NET A PAYER :</div>
+                                                    <div class="col-6"><p style="text-align: right;"><span class="text-nowrap" t-field="o.amount_total"/></p></div>
+                                                </div>
+                                                <t t-if="print_with_payments">
+                                                    <t t-if="o.payment_state != 'invoicing_legacy'">
+                                                        <t t-set="payments_vals" t-value="o.sudo()._get_reconciled_info_JSON_values()"/>
+                                                        <t t-foreach="payments_vals" t-as="payment_vals">
+                                                            <p style="display: flex;justify-content: space-between;"> <span> <i class="oe_form_field text-right oe_payment_label">Paid on <t t-esc="payment_vals['date']" t-options='{"widget": "date"}'/></i> </span> :
+                                                                <span class="text-right">
+                                                                    <span t-esc="payment_vals['amount']" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                                                </span>
+                                                            </p>
+                                                        </t>
+                                                        <t t-if="len(payments_vals) > 0">
+                                                            <p style="display: flex;justify-content: space-between;">
+                                                                <span><strong>Amount Due : </strong></span>
+                                                                <span class="text-right">
+                                                                    <span t-field="o.amount_residual"/>
+                                                                </span>
+                                                            </p>
+                                                        </t>
+                                                    </t>
+                                                </t>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="in_word">
+                            <p t-if="o.narration" name="comment">
+                                <span t-field="o.narration"/>
+                            </p>
+                        </div>
+                    </div>
+
+                    <p t-if="o.invoice_payment_term_id" name="payment_term">
+                        <span t-field="o.invoice_payment_term_id.note"/>
+                    </p>
+                    
+                    <p t-if="o.fiscal_position_id.note" name="note">
+                        <span t-field="o.fiscal_position_id.note"/>
+                    </p>
+                    <p t-if="o.invoice_incoterm_id" name="incoterm">
+                        <strong>Incoterm: </strong><span t-field="o.invoice_incoterm_id.code"/> - <span t-field="o.invoice_incoterm_id.name"/>
+                    </p>
+                    <div id="qrcode" t-if="o.display_qr_code and o.amount_residual > 0">
+                        <p t-if="qr_code_urls.get(o.id)">
+                            <strong class="text-center">Scan me with your banking app.</strong><br/><br/>
+                            <img class="border border-dark rounded" t-att-src="qr_code_urls[o.id]"/>
+                        </p>
+                    </div>
+                </div>
+        </template>
+
+        <template id="report_invoice_imm">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <div t-attf-class="article o_report_layout_imm_standard" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                        <t t-call="account.header_footer" t-lang="lang"/>
+                        <!-- <t t-set="print_invoice_surgery" t-value="True"/> -->
+                        <t t-call="account.report_invoice_imm_document" t-lang="lang"/>
+                    </div>                   
+                </t>
+            </t>
+        </template>
+
+        
+
+        <!--We need to create the following empty report template for the action report
+            "action_account_original_vendor_bill" to work. The action is merging the
+            original vendor bill(s) that were used to create the vendor bill(s) into one PDF. -->
+        <template id="report_original_vendor_bill_imm">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <div class="article"  t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')"></div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

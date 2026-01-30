@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Root Menu -->
+    <menuitem id="menu_healthservice" name="Service santé" sequence="35" web_icon="health_service,static/description/logo.png" groups="health_service.group_healthservice_user,health_service.group_healthservice_lecture"/>
+    <menuitem id='menu_health_service_id' parent='menu_healthservice' action='hms_action_health_service' sequence="10"/>
+    <menuitem id="menu_invoice_patient" name="Facture" parent='menu_healthservice' action="account.action_move_out_invoice_type" sequence="11"/>
+     <!-- groups="acs_hms.group_superviseur" -->
+    <!-- <menuitem id="menu_price_simulator_submenu" name="Simulateur de prix" parent='menu_healthservice' action="action_pricelist_simulator" sequence="13"/> -->
+</odoo>

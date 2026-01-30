@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+    <template id="popup" name="Popup">
+        <div class="wpopup modal fade"
+             tabindex="-1"
+             role="dialog"
+             aria-hidden="true"
+             t-attf-id="popup_#{popup.id}"
+             t-att-data-visit="popup.appear_visit"
+             t-att-data-visit-once="popup.appear_visit_first"
+             t-att-data-visit-url="popup.appear_visit_url"
+             t-att-data-exit="popup.appear_exit"
+             t-att-data-exit-once="popup.appear_exit_first"
+             t-att-data-exit-url="popup.appear_exit_url"
+             t-att-data-time="popup.appear_time"
+             t-att-data-time-once="popup.appear_time_first"
+             t-att-data-time-val="popup.appear_time_val"
+             t-att-data-time-url="popup.appear_time_url"
+             t-att-data-scroll="popup.appear_scroll"
+             t-att-data-scroll-once="popup.appear_scroll_first"
+             t-att-data-scroll-url="popup.appear_scroll_url">
+            <div t-attf-class="modal-dialog #{popup.size}">
+
+                <div class="modal-content">
+                    <button type="button" class="close" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></button>
+                    <div class="modal-body">
+                        <t t-raw="popup.html_text"/>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </template>
+
+    <template id="layout" inherit_id="website.layout" customize_show="True" active="True" name="Popups">
+
+        <xpath expr="//div[@id='wrapwrap']" position="after">
+            <t t-set="popups" t-value="request.env['website.modal'].sudo().search([])"/>
+            <t t-foreach="popups" t-as="popup">
+                <t t-call="website_modal.popup"/>
+            </t>
+        </xpath>
+
+    </template>
+    
+</odoo>

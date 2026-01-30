@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Split Record -->
+    <record id="view_resultat_anterieur_wizard" model="ir.ui.view">
+        <field name="name">result.anterieur.wizard.form</field>
+        <field name="model">result.anterieur.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Résultat antérieur">
+                <group>
+                    <group>
+                        <field name="patient_id"/>
+                    </group>
+                    <field name="line_ids" nolabel="1" colspan="4" widget="section_and_note_one2many">
+                        <tree string="Lines" create='false'>
+                            <field name="date" string="Date"/>
+                            <field name="name"/>
+                            <field name="normal_range"/>
+                            <field name="lab_uom_id"/>
+                            <field name="result"/>
+                            <field name="result_type"/>
+                            <field name="remark"/>
+                        </tree>
+                    </field>
+                </group>
+                <footer>
+                    <button name="insert_record" type="object" string="Insérer" class="oe_highlight"/>
+                    or
+                    <button special="cancel" string="Annuler" type="object"/>
+                </footer>
+           </form>
+        </field>
+    </record>
+
+    <record id="action_get_resultat_anterieur_wizard" model="ir.actions.act_window">
+        <field name="name">Résultat antérieur</field>
+        <field name="res_model">result.anterieur.wizard</field>
+        <field name="binding_model_id" ref="acs_laboratory.model_patient_laboratory_test"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_resultat_anterieur_wizard"/>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

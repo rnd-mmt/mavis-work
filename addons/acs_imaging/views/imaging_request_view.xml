@@ -1,0 +1,303 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record model="ir.ui.view" id="patient_imaging_test_request_form">
+        <field name="name">Test Requests</field>
+        <field name="model">acs.imaging.request</field>
+        <field name="arch" type="xml">
+            <form string="Imaging Requests">
+                <header>
+                    <button name="button_requested" states="draft" string="Ordonnance vérifiée" class="oe_highlight" type="object"
+                        groups="acs_imaging.group_imaging_manip, acs_imaging.group_imaging_doctor,acs_imaging.group_imaging_nurse, acs_imaging.group_imaging_jr_doctor, acs_imaging.group_imaging_sm, acs_imaging.group_hms_imaging_manager"/>
+                    
+                    <button name="button_in_progress" states="accepted,requested,sent" string="Acquisition en cours" class="oe_highlight" type="object"
+                        groups="acs_imaging.group_imaging_manip, acs_imaging.group_hms_imaging_manager,acs_imaging.group_imaging_nurse, acs_imaging.group_imaging_aidesoignant"/>
+                    
+                    <button name="button_done" states="in_progress,send" string="Fait" class="oe_highlight" type="object"
+                        groups="acs_imaging.group_imaging_manip, acs_imaging.group_hms_imaging_manager,acs_imaging.group_imaging_nurse, acs_imaging.group_imaging_aidesoignant"/>
+                    
+                    <!--button name="create_invoicew" string="Create Invoice" attrs="{'invisible': ['|','|','|',('state', 'in', ['cancel','to_invoice']),('no_invoice', '=', True),('invoice_id', '!=', False),('acs_imaging_invoice_policy','!=','any_time')]}" type="object" class="oe_highlight" groups="account.group_account_invoice"/>
+                    <button name="create_invoicew" string="Create Invoice" attrs="{'invisible': ['|','|','|',('state', '!=', 'requested'),('no_invoice', '=', True),('invoice_id', '!=', False),('acs_imaging_invoice_policy','!=','in_advance')]}" type="object" class="oe_highlight" groups="account.group_account_invoice"/>
+                    <button name="create_invoicew" string="Create Invoice" attrs="{'invisible': ['|','|',('state', '!=', 'to_invoice'),('no_invoice', '=', True),('invoice_id', '!=', False)]}" type="object" class="oe_highlight" groups="account.group_account_invoice"/-->
+                    <button name="button_cancel" states="requested,accepted,in_progress" string="Cancel" type="object" invisible="1"/>
+                    <button name="button_draft" states="cancel" string="Reset To Draft" type="object" invisible="1"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,requested,in_progress,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="view_invoice" string="View Invoice" attrs="{'invisible': [('invoice_id', '=', False)]}" type="object" class="oe_stat_button" icon="fa-pencil-square-o" groups="account.group_account_invoice"/>
+                        <button name="action_view_test_results" string="Test Results" class="oe_stat_button" icon="fa-list" type="object" attrs="{'invisible': [('state', 'not in', ['done'])]}"/>
+                        <!--button name="action_view_lab_samples" string="Test Samples" class="oe_stat_button" icon="fa-list" type="object"/-->
+                        <button name="action_open_pj" type="object" class="oe_stat_button" icon="fa-download">
+                            <field string="Ordonnances" name="pj_count" widget="statinfo" />
+                        </button>
+                    </div>
+                    <h1>
+                        <field name="name" class="oe_inline"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="patient_id"/>
+                            <field name="date"/>
+                            <field name="physician_id" invisible="1"/>
+                            <field name="prescripteur"/>
+                            <!--field name="imaging_group_id"/-->
+                            <field name="is_group_request" invisible="1"/>
+                            <field name="group_patient_ids" widget="many2many_tags" attrs="{'invisible': [('is_group_request','=',False)], 'required': [('is_group_request','=',True)]}"/>
+                        </group>
+                        <group>
+                            <field name="test_type" required="1"/>
+                            <field name="collection_center_id" domain="[('is_collection_center','=',True)]" groups="acs_imaging.group_manage_collection_center" invisible="1"/>
+                            <field name="health_service_id"/>
+                            <field name="description"/>
+                            <field name="clinic_info"/>
+
+                            <field name="cabine_id" invisible="1"/>
+                            <field name="department_id" invisible="1"/>
+                            <field name="file_patient" invisible="1"/>
+                            
+                            <!--field name="other_imaging"/>
+                            <field name="imaging_id" attrs="{'invisible': [('other_imaging','=',False)], 'required': [('other_imaging','=',True)]}"/>
+                            <button name="action_sendmail" type="object" string="Send mail" icon="fa-envelope" class="oe_link" attrs="{'invisible': [('other_imaging','=',False)]}"/>
+                            <button name="create_imaging_bill" type="object" string="Create Bill" icon="fa-money" class="oe_link" attrs="{'invisible': ['|',('other_imaging','=',False),('imaging_bill_id','!=',False)]}" groups="account.group_account_invoice"/-->
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Lines" name="lines">
+                            <group>
+                                <field name="line_ids" nolabel="1" colspan="4" >
+                                    <tree string="Lines" editable="bottom">
+                                        <field name="test_id" string="Test" domain="[('test_type','=',parent.test_type)]" readonly="1"/>
+                                        <field name="acs_tat" invisible="1"/>
+                                        <field name="sale_price" invisible="1"/>
+                                        <field name="quantity" attrs="{'column_invisible': ([('parent.is_group_request','=', False)])}" invisible="1"/>
+                                        <field name="instruction" widget="many2many_tags" options="{'no_create': True}"/>
+                                        <field name="test_type" optional="hide"/>
+                                        <field name="amount_total"  invisible="1"/>
+                                        <field name="state"  invisible="1"/>
+                                    </tree>
+                                </field>
+                                <group class="oe_subtotal_footer oe_right" invisible="1">
+                                    <field name="total_price"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Autre Information" name="other_info">
+                            <group>
+                                <group>
+                                    <field name="acquisition_date"/>
+                                    <field name="group_manip" widget="many2many_tags" attrs="{'readonly': [('state', 'not in', ['draft','requested'])]}"/>
+                                    <field name="group_medimg" widget="many2many_tags" attrs="{'readonly': [('state', 'not in', ['draft','requested'])]}"/>
+                                    <!--field name="imaging_bill_id" readonly="1" attrs="{'invisible': ['|',('other_imaging','=',False),('imaging_bill_id','=',False)]}" groups="account.group_account_invoice"/-->
+                                </group>
+                                <group>
+                                    <field name="no_invoice" groups="acs_hms_base.group_acs_invoice_exemption" invisible="1"/>
+                                    <field name="invoice_id" invisible="1"/>
+                                    <field name="acs_imaging_invoice_policy" invisible="1"/>
+                                    <field name="payment_state" invisible="1"/>                    
+                                    <field name="pricelist_id" groups="product.group_product_pricelist" options="{'no_open':True,'no_create': True}" invisible="1"/>
+                                    <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                    <field name="notes" placeholder="Notes" nolabel="1" colspan="4"/>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="patient_imaging_test_request_tree">
+        <field name="name">Test Requests</field>
+        <field name="model">acs.imaging.request</field>
+        <field name="arch" type="xml">
+            <tree string="Test Requests" decoration-info="state=='draft'" decoration-muted="state=='cancel'" decoration-danger="state=='waiting'" name="request_tree">
+                <field name="name"/>
+                <field name="file_patient" invisible="1"/>
+                <field name="patient_id"/>
+                <field name="date"/>
+                <field name="test_type" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="state" string="Status"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_acs_imaging_request_search" model="ir.ui.view">
+        <field name="name">acs.imaging.request.search</field>
+        <field name="model">acs.imaging.request</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <search string="Patient Imaging Test">
+                <field name="patient_id"/>
+                <field name="test_type"/>
+                <field name="name"/>
+                <field name="physician_id"/>
+                <filter name="draft" string="Draft" domain="[('state','=','draft')]"/>
+                <filter name="done" string="Done" domain="[('state','=','done')]"/>
+                <filter name="invoiced" string="Invoiced" domain="[('state','=','invoiced')]"/>
+                <filter name="invoice_exempt" string="Invoice Exempt" domain="[('state','=','invoice_exempt')]"/>
+                <filter name="today" string="Demande du jour" domain="[('date','&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0))), ('date','&lt;=', datetime.datetime.combine(context_today(), datetime.time(23,59,59)))]"/>
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter name="group_by_patient_id" string="Patient" context="{'group_by':'patient_id'}"/>
+                    <filter name="group_by_date" string="Date" context="{'group_by':'date'}"/>
+                    <filter name="group_by_physician" string="Doctor" context="{'group_by':'physician_id'}"/>
+                    <filter name="group_by_company" string="Institution" context="{'group_by':'company_id'}"/>
+                    <filter name="group_by_state" string="Status" context="{'group_by':'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_acs_imaging_request_calendar" model="ir.ui.view">
+        <field name="name">acs.imaging.request.calendar</field>
+        <field name="model">acs.imaging.request</field>
+        <field name="type">calendar</field>
+        <field name="arch" type="xml">
+            <calendar string="Patient Imaging Test" color="physician_id" date_start="date">
+                <field name="physician_id"/>
+                <field name="patient_id"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="acs_imaging_request_pivot" model="ir.ui.view">
+        <field name="name">acs.imaging.request.pivot</field>
+        <field name="model">acs.imaging.request</field>
+        <field name="arch" type="xml">
+            <pivot string="Patient Imaging Test">
+                <field name="date" type="row"/>
+                <field name="physician_id" type="row"/>
+                <field name="patient_id" type="row"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="hms_action_imaging_test_request">
+        <field name="name">Demandes imagerie</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">acs.imaging.request</field>
+        <field name="view_mode">tree,form,calendar,pivot</field>
+        <field name="context">{'search_default_today': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Record Found
+            </p>
+            <p>
+                Click to add new Imaging Request.
+            </p>
+        </field>
+    </record>
+
+    <!-- Laboratory Request Group -->
+    <record id="view_imaging_group_tree" model="ir.ui.view">
+        <field name="name">imaging.group.tree</field>
+        <field name="model">imaging.group</field>
+        <field name="priority" eval="8" />
+        <field name="arch" type="xml">
+            <tree string="Line">
+                <field name="name"/>
+                <field name="test_type"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_imaging_group_form" model="ir.ui.view">
+        <field name="name">imaging.group.form</field>
+        <field name="model">imaging.group</field>
+        <field name="priority" eval="8" />
+        <field name="arch" type="xml">
+            <form string="Imaging Group">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" placeholder="Imaging Group"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="test_type"/>
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+                    <field name="line_ids">
+                        <tree string="Lines" editable="bottom">
+                            <field name="test_id" string="Test" domain="[('test_type','=',parent.test_type)]"/>
+                            <field name="acs_tat" optional="show"/>
+                            <field name="sale_price"/>
+                            <field name="instruction"/>
+                            <field name="test_type" optional="hide"/>
+                        </tree>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_imaging_group" model="ir.actions.act_window">
+        <field name="name">Imaging Group</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">imaging.group</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Record Found
+            </p>
+            <p>
+                Click to add new Laboratory Group.
+            </p>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="imaging_protocol_form_view">
+        <field name="name">Protocole</field>
+        <field name="model">imaging.protocol</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="test_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="imaging_protocol_tree_view">
+        <field name="name">Protocole</field>
+        <field name="model">imaging.protocol</field>
+        <field name="arch" type="xml">
+            <tree>
+               <field name="name"/>
+                <field name="test_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="hms_action_imaging_protocol" model="ir.actions.act_window">
+        <field name="name">Protocole imagerie</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">imaging.protocol</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Record Found
+            </p>
+            <p>
+                Click to add new Laboratory Group.
+            </p>
+        </field>
+    </record>
+
+</odoo>

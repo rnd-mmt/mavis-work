@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="lab_worklist_report">
+        <div style="width:350px;float:left;margin:0;font-size:10px;margin-bottom:0px;border:0px solid #fff;position:relative!important;">
+            <div style="text-align: center !important;">
+                <img t-if="lab.request_id" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' %('Code128',lab.request_id.name,300,30)"/>
+            </div>
+
+            <span style="display: block !important; text-align: center !important;" t-field="lab.request_id.name"/>
+        </div>
+    </template>
+
+    <template id="report_worklist_result">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.basic_layout">
+                    <div class="page">
+                        <div class="oe_structure"/>
+                        <t t-call="acs_laboratory.lab_worklist_report">
+                            <t t-set="lab" t-value="doc"/>
+                        </t>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="acs_lab_worklist_report" model="ir.actions.report">
+        <field name="name">Liste de travail à code-barre</field>
+        <field name="model">patient.laboratory.test</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">acs_laboratory.report_worklist_result</field>
+        <field name="report_file">acs_laboratory.report_worklist_result</field>
+        <field name="binding_model_id" ref="model_patient_laboratory_test"/>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

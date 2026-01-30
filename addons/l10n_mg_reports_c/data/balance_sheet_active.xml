@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+    <!--ACTIVE BALANCE SHEET-->
+    <record id="account_financial_report_balance_sheet_asset" model="account.financial.report">
+      <field name="name">Bilan actif</field>
+      <field name="sign">-1</field>
+      <field name="type">sum</field>
+      <field name="is_hidden" eval="True"/>
+      <field name="type_financial_report_mg">balance_sheet</field>
+    </record>
+
+    <record id="account_financial_report_balance_sheet_actv" model="account.financial.report">
+      <field name="name">ACTIFS</field>
+      <field name="parent_id" ref="account_financial_report_balance_sheet_asset"/>
+      <field name="sequence" eval="0"/>
+      <field name="level" eval="0"/>
+      <field name="style_overwrite">1</field>
+      <field name="is_hidden">True</field>
+    </record>
+
+    <record id="account_financial_report_balance_sheet_actv_anc" model="account.financial.report">
+      <field name="name">ACTIFS NON COURANTS</field>
+      <field name="parent_id" ref="account_financial_report_balance_sheet_actv"/>
+      <field name="sequence" eval="0"/>
+      <field name="level" eval="1"/>
+      <field name="style_overwrite">1</field>
+      <field name="is_hidden">True</field>
+    </record>
+
+    <record id="account_financial_report_balance_sheet_actv_anc_ea" model="account.financial.report">
+      <field name="name">Ecart d'aquisition (ou goodwill)</field>
+      <field name="code">EA_ANC_ACTV_BS_MG</field>
+      <field name="parent_id" ref='account_financial_report_balance_sheet_actv_anc'/>
+      <field name="formulas">brut = sum.balance ; amort = -sum.balance</field>
+      <field name="domain">brut = ['|',('code', '=like', '206%'),('code', '=like', '207%')] ; amort = ['|',('code',
+        '=like', '2906%'),('code', '=like', '2807%')]
+      </field>
+      <field name="sequence" eval="0"/>
+      <field name="level" eval="2"/>
+      <field name="style_overwrite">2</field>
+      <field name="type">sum</field>
+    </record>
+
+    <record id="account_financial_report_balance_sheet_actv_anc_ii" model="account.financial.report">
+      <field name="name">Immobilisations incorporelles</field>
+      <field name="code">II_ANC_ACTV_BS_MG</field>
+      <field name="parent_id" ref='account_financial_report_balance_sheet_actv_anc'/>
+      <field name="formulas">brut = FDI_II_ANC_ACTV_BS_MG.brut + CBLLV_II_ANC_ACTV_BS_MG.brut +
+        OTH_II_ANC_ACTV_BS_MG.brut ; amort = FDI_II_ANC_ACTV_BS_MG.amort + CBLLV_II_ANC_ACTV_BS_MG.amort +
+        OTH_II_ANC_ACTV_BS_MG.amort
+      </field>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="2"/>
+      <field name="style_overwrite">2</field>
+      <field name="type">sum</field>
+    </record>
+
+    <record id="account_financial_report_balance_sheet_actv_anc_ii_fdi" model="account.financial.report">
+      <field name="name">Frais de développement immobilier</field>
+      <field name="code">FDI_II_ANC_ACTV_BS_MG</field>
+      <field name="parent_id" ref='account_financial_report_balance_sheet_actv_anc_ii'/>
+      <field name="formulas">brut = sum.balance ; amort = -sum.balance</field>
+      <field name="domain">brut = [('code', '=like', '203%')] ; amort = [('code', '=like', '2803%')]</field>
+      <field name="sequence" eval="0"/>
+      <field name="level" eval="3"/>
+      <field name="style_overwrite">3</field>
+    </record>
+
+    <record id="account_financial_report_balance_sheet_actv_anc_ii_cbllv" model="account.financial.report">
+      <field name="name">Concession, brevets, licences, logiciels et valeurs similaires</field>
+      <field name="code">CBLLV_II_ANC_ACTV_BS_MG</field>
+      <field name="parent_id" ref='account_financial_report_balance_sheet_actv_anc_ii'/>
+      <field name="formulas">brut = sum.balance ; amort = -sum.balance</field>
+      <field name="domain">brut = ['|',('code', '=like', '204%'),('code', '=like', '205%')] ; amort = ['|',('code',
+        '=like', '2804%'),('code', '=like', '2805%')]
+      </field>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="3"/>
+      <field name="style_overwrite">3</field>
+    </record>
+
+    <record id="account_financial_report_balance_sheet_actv_anc_ii_oth" model="account.financial.report">
+      <field name="name">Autres</field>
+      <field name="code">OTH_II_ANC_ACTV_BS_MG</field>
+      <field name="parent_id" ref='account_financial_report_balance_sheet_actv_anc_ii'/>
+      <field name="formulas">brut = sum.balance ; amort = -sum.balance</field>
+      <field name="domain">brut = [('code', '=like', '208%')] ; amort = [('code', '=like', '2808%')]</field>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="3"/>
+      <field name="style_overwrite">3</field>
+    </record>
+
+    <record id="account_financial_report_balance_sheet_actv_anc_ic" model="account.financial.report">
+      <field name="name">Immobilisations corporelles</field>
+      <field name="code">IC_ANC_ACTV_BS_MG</field>
+      <field name="parent_id" ref='account_financial_report_balance_sheet_actv_anc'/>
+      <field name="formulas">brut = TRS_IC_ANC_ACTV_BS_MG.brut + CSTR_IC_ANC_ACTV_BS_MG.brut +
+        IT_IC_ANC_ACTV_BS_MG.brut + OTH_IC_ANC_ACTV_BS_MG.brut ; amort = TRS_IC_ANC_ACTV_BS_MG.amort +
+        CSTR_IC_ANC_ACTV_BS_MG.amort + IT_IC_ANC_ACTV_BS_MG.amort + OTH_IC_ANC_ACTV_BS_MG.amort
+      </field>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="2"/>
+      <field name="style_overwrite">2</field>
+    </record>
+
+    <record id="account_financial_report_balance_sheet_actv_anc_ic_trs" model="account.financial.report">
+      <field name="name">Terrains</field>
+      <field name="code">TRS_IC_ANC_ACTV_BS_MG</field>
+      <field name="parent_id" ref='account_financial_report_balance_sheet_actv_anc_ic'/>
+      <field name="formulas">brut = sum.balance ; amort = -sum.balance</field>
+      <field name="domain">brut = ['|',('code', '=like', '211%'),('code', '=like', '212%')] ; amort = ['|',('code',
+        '=like', '2811%'),('code', '=like', '2812%')]
+      </field>
+      <field name="sequence" eval="0"/>
+      <field name="level" eval="3"/>
+      <field name="style_overwrite">3</field>
+    </record>
+
+    <record id="account_financial_report_balance_sheet_actv_anc_ic_cstr" model="account.financial.report">
+      <field name="name">Construction</field>
+      <field name="code">CSTR_IC_ANC_ACTV_BS_MG</field>
+      <field name="parent_id" ref='account_financial_report_balance_sheet_actv_anc_ic'/>
+      <field name="formulas">brut = sum.balance ; amort = -sum.balance</field>
+      <field name="domain">brut = [('code', '=like', '213%')] ; amort = ['|',('code', '=like', '2813%'),('code',
+        '=like', '2913%')]
+      </field>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="3"/>
+      <field name="style_overwrite">3</field>
+    </record>
+
+    <record id="account_financial_report_balance_sheet_actv_anc_ic_it" model="account.financial.report">
+      <field name="name">Installation technique</field>
+      <field name="code">IT_IC_ANC_ACTV_BS_MG</field>
+      <field name="parent_id" ref='account_financial_report_balance_sheet_actv_anc_ic'/>
+      <field name="formulas">brut = sum.balance ; amort = -sum.balance</field>
+      <field name="domain">brut = [('code', '=like', '215%')] ; amort = ['|',('code', '=like', '2815%'),('code',
+        '=like', '2915%')]
+      </field>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="3"/>
+      <field name="style_overwrite">3</field>
+    </record>
+
+    <record id="account_financial_report_balance_sheet_actv_anc_ic_oth" model="account.financial.report">
+      <field name="name">Autres</field>
+      <field name="code">OTH_IC_ANC_ACTV_BS_MG</field>
+      <field name="parent_id" ref='account_financial_report_balance_sheet_actv_anc_ic'/>
+      <field name="formulas">brut = sum.balance ; amort = -sum.balance</field>
+      <field name="domain">brut = [('code', '=like', '218%')] ; amort = ['|',('code', '=like', '2818%'),('code',
+        '=like', '2918%')]
+      </field>
+      <field name="sequence" eval="3"/>
+      <field name="level" eval="3"/>
+      <field name="style_overwrite">3</field>
+    </record>
+
+    <record id="account_financial_report_balance_sheet_actv_anc_imc" model="account.financial.report">
+      <field name="name">Immobilisations mis en concession</field>
+      <field name="code">IMC_ANC_ACTV_BS_MG</field>
+      <field name="parent_id" ref='account_financial_report_balance_sheet_actv_anc'/>
+      <field name="formulas">brut = sum.balance ; amort = -sum.balance</field>
+      <field name="domain">brut = [('code', '=like', '22%')] ; amort = ['|',('code', '=like', '282%'),('code', '=like',
+        '292%')]
+      </field>
+      <field name="sequence" eval="3"/>
+      <field name="level" eval="2"/>
+      <field name="style_overwrite">2</field>
+    </record>
+
+    <record id="account_financial_report_balance_sheet_actv_anc_iec" model="account.financial.report">
+      <field name="name">Immobilisations en cours</field>
+      <field name="code">IEC_ANC_ACTV_BS_MG</field>
+      <field name="parent_id" ref='account_financial_report_balance_sheet_actv_anc'/>
+      <field name="formulas">brut = sum.balance ; amort = -sum.balance</field>
+      <field name="domain">brut = ['|','|',('code', '=like', '232%'),('code', '=like', '237%'),('code', '=like',
+        '238%')] ; amort = ['|','|',('code', '=like', '2932%'),('code', '=like', '2937%'),('code', '=like', '2938%')]
+      </field>
+      <field name="sequence" eval="4"/>
+      <field name="level" eval="2"/>
+      <field name="style_overwrite">2</field>
+
+    </record>
+
+    <record id="account_financial_report_balance_sheet_actv_anc_if" model="account.financial.report">
+      <field name="name">Immobilisations financières</field>
+      <field name="code">IF_ANC_ACTV_BS_MG</field>
+      <field name="parent_id" ref='account_financial_report_balance_sheet_actv_anc'/>
+      <field name="formulas">brut = TME_IF_ANC_ACTV_BS_MG.brut + APCR_IF_ANC_ACTV_BS_MG.brut +
+        ATI_IF_ANC_ACTV_BS_MG.brut + PAIF_IF_ANC_ACTV_BS_MG.brut ; amort = TME_IF_ANC_ACTV_BS_MG.amort +
+        APCR_IF_ANC_ACTV_BS_MG.amort + ATI_IF_ANC_ACTV_BS_MG.amort + PAIF_IF_ANC_ACTV_BS_MG.amort
+      </field>
+      <field name="sequence" eval="5"/>
+      <field name="level" eval="2"/>
+      <field name="style_overwrite">2</field>
+    </record>
+
+    <record id="account_financial_report_balance_sheet_actv_anc_if_tme" model="account.financial.report">
+      <field name="name">Titres mis en équivalence</field>
+      <field name="code">TME_IF_ANC_ACTV_BS_MG</field>
+      <field name="parent_id" ref='account_financial_report_balance_sheet_actv_anc_if'/>
+      <field name="formulas">brut = sum.balance ; amort = -sum.balance</field>
+      <field name="domain">brut = ['|','|',('code', '=like', '261%'),('code', '=like', '262%'),('code', '=like',
+        '265%')] ; amort = ['|','|',('code', '=like', '2961%'),('code', '=like', '2962%'),('code', '=like', '2965%')]
+      </field>
+      <field name="sequence" eval="0"/>
+      <field name="level" eval="3"/>
+      <field name="style_overwrite">3</field>
+    </record>
+
+    <record id="account_financial_report_balance_sheet_actv_anc_if_apcr" model="account.financial.report">
+      <field name="name">Autres participations et créances rattachées</field>
+      <field name="code">APCR_IF_ANC_ACTV_BS_MG</field>
+      <field name="parent_id" ref='account_financial_report_balance_sheet_actv_anc_if'/>
+      <field name="formulas">brut = sum.balance ; amort = -sum.balance</field>
+      <field name="domain">brut = ['|','|','|',('code', '=like', '266%'),('code', '=like', '267%'),('code', '=like',
+        '268%'),('code', '=like', '269%')] ; amort = ['|','|',('code', '=like', '2966%'),('code', '=like',
+        '2967%'),('code', '=like', '2968%')]
+      </field>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="3"/>
+      <field name="style_overwrite">3</field>
+    </record>
+
+    <record id="account_financial_report_balance_sheet_actv_anc_if_ati" model="account.financial.report">
+      <field name="name">Autres titres immobilisés</field>
+      <field name="code">ATI_IF_ANC_ACTV_BS_MG</field>
+      <field name="parent_id" ref='account_financial_report_balance_sheet_actv_anc_if'/>
+      <field name="formulas">brut = sum.balance ; amort = -sum.balance</field>
+      <field name="domain">brut = ['|','|',('code', '=like', '271%'),('code', '=like', '272%'),('code', '=like',
+        '273%')] ; amort = ['|','|',('code', '=like', '2971%'),('code', '=like', '2972%'),('code', '=like', '2973%')]
+      </field>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="3"/>
+      <field name="style_overwrite">3</field>
+    </record>
+
+    <record id="account_financial_report_balance_sheet_actv_anc_if_paif" model="account.financial.report">
+      <field name="name">Prêts et autres immobilisations financières</field>
+      <field name="code">PAIF_IF_ANC_ACTV_BS_MG</field>
+      <field name="parent_id" ref='account_financial_report_balance_sheet_actv_anc_if'/>
+      <field name="formulas">brut = sum.balance ; amort = -sum.balance</field>
+      <field name="domain">brut = ['|','|','|','|',('code', '=like', '274%'),('code', '=like', '275%'),('code', '=like',
+        '276%'),('code', '=like', '277%'),('code', '=like', '279%')] ; amort = ['|','|','|','|',('code', '=like',
+        '2974%'),('code', '=like', '2975%'),('code', '=like', '2976%'),('code', '=like', '2977%'),('code', '=like',
+        '2979%')]
+      </field>
+      <field name="sequence" eval="3"/>
+      <field name="level" eval="3"/>
+      <field name="style_overwrite">3</field>
+    </record>
+
+    <record id="account_financial_report_balance_sheet_actv_anc_idanc" model="account.financial.report">
+      <field name="name">Impôts différés actifs - non courants</field>
+      <field name="code">IDANC_ANC_ACTV_BS_MG</field>
+      <field name="parent_id" ref='account_financial_report_balance_sheet_actv_anc'/>
+      <field name="formulas">brut = sum.balance</field>
+      <field name="domain">brut = [('code', '=like', '133%')]</field>
+      <field name="sequence" eval="6"/>
+      <field name="level" eval="2"/>
+      <field name="style_overwrite">2</field>
+    </record>
+
+    <record id="account_financial_report_balance_sheet_actv_tanc" model="account.financial.report">
+      <field name="name">TOTAL ACTIFS NON COURANTS</field>
+      <field name="code">TANC_ACTV_BS_MG</field>
+      <field name="parent_id" ref="account_financial_report_balance_sheet_actv"/>
+      <field name="formulas">brut = EA_ANC_ACTV_BS_MG.brut + II_ANC_ACTV_BS_MG.brut + IC_ANC_ACTV_BS_MG.brut +
+        IMC_ANC_ACTV_BS_MG.brut + IEC_ANC_ACTV_BS_MG.brut + IF_ANC_ACTV_BS_MG.brut +
+        IDANC_ANC_ACTV_BS_MG.brut ; amort = EA_ANC_ACTV_BS_MG.amort + II_ANC_ACTV_BS_MG.amort +
+        IC_ANC_ACTV_BS_MG.amort + IMC_ANC_ACTV_BS_MG.amort + IEC_ANC_ACTV_BS_MG.amort + IF_ANC_ACTV_BS_MG.amort
+        + IDANC_ANC_ACTV_BS_MG.amort
+      </field>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="1"/>
+      <field name="style_overwrite">1</field>
+    </record>
+
+    <record id="account_financial_report_balance_sheet_actv_ac" model="account.financial.report">
+      <field name="name">ACTIFS COURANTS</field>
+      <field name="code">AC_ACTV_BS_MG</field>
+      <field name="parent_id" ref="account_financial_report_balance_sheet_actv"/>
+      <field name="formulas"/>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="1"/>
+      <field name="style_overwrite">1</field>
+      <field name="is_hidden">True</field>
+    </record>
+
+    <record id="account_financial_report_balance_sheet_actv_ac_stkecr" model="account.financial.report">
+      <field name="name">Stocks et en cours</field>
+      <field name="code">STKECR_AC_ACTV_BS_MG</field>
+      <field name="parent_id" ref='account_financial_report_balance_sheet_actv_ac'/>
+      <field name="formulas">brut = MP_AC_ACTV_BS_MG.brut + ECRPROD_AC_ACTV_BS_MG.brut + PF_AC_ACTV_BS_MG.brut +
+        MA_AC_ACTV_BS_MG.brut + EX_AC_ACTV_BS_MG.brut ; amort = MP_AC_ACTV_BS_MG.amort + ECRPROD_AC_ACTV_BS_MG.amort +
+        PF_AC_ACTV_BS_MG.amort + MA_AC_ACTV_BS_MG.amort + EX_AC_ACTV_BS_MG.amort
+      </field>
+      <!--      <field name="domain">brut = ['|',('code', '=like', '31%'),('code', '=like', '32%')] ; amort = ['|',('code', '=like', '391%'),('code', '=like', '392%')]</field>-->
+      <field name="sequence" eval="0"/>
+      <field name="level" eval="2"/>
+      <field name="style_overwrite">2</field>
+    </record>
+
+    <record id="account_financial_report_balance_sheet_actv_ac_mp" model="account.financial.report">
+      <field name="name">Matière première</field>
+      <field name="code">MP_AC_ACTV_BS_MG</field>
+      <field name="parent_id" ref='account_financial_report_balance_sheet_actv_ac_stkecr'/>
+      <field name="formulas">brut = sum.balance ; amort = -sum.balance</field>
+      <field name="domain">brut = ['|',('code', '=like', '31%'),('code', '=like', '32%')] ; amort = ['|',('code',
+        '=like', '391%'),('code', '=like', '392%')]
+      </field>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="3"/>
+      <field name="style_overwrite">3</field>
+    </record>
+
+    <record id="account_financial_report_balance_sheet_actv_ac_ecrprod" model="account.financial.report">
+      <field name="name">En cours de production</field>
+      <field name="code">ECRPROD_AC_ACTV_BS_MG</field>
+      <field name="parent_id" ref='account_financial_report_balance_sheet_actv_ac_stkecr'/>
+      <field name="formulas">brut = sum.balance ; amort = -sum.balance</field>
+      <field name="domain">brut = ['|',('code', '=like', '33%'),('code', '=like', '34%')] ; amort = ['|',('code',
+        '=like', '393%'),('code', '=like', '394%')]
+      </field>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="3"/>
+      <field name="style_overwrite">3</field>
+    </record>
+
+    <record id="account_financial_report_balance_sheet_actv_ac_pf" model="account.financial.report">
+      <field name="name">Produits finis</field>
+      <field name="code">PF_AC_ACTV_BS_MG</field>
+      <field name="parent_id" ref='account_financial_report_balance_sheet_actv_ac_stkecr'/>
+      <field name="formulas">brut = sum.balance ; amort = -sum.balance</field>
+      <field name="domain">brut = [('code', '=like', '35%')] ; amort = [('code', '=like', '395%')]</field>
+      <field name="sequence" eval="3"/>
+      <field name="level" eval="3"/>
+      <field name="style_overwrite">3</field>
+    </record>
+
+    <record id="account_financial_report_balance_sheet_actv_ac_ma" model="account.financial.report">
+      <field name="name">Marchandises</field>
+      <field name="code">MA_AC_ACTV_BS_MG</field>
+      <field name="parent_id" ref='account_financial_report_balance_sheet_actv_ac_stkecr'/>
+      <field name="formulas">brut = sum.balance ; amort = -sum.balance</field>
+      <field name="domain">brut = [('code', '=like', '37%')] ; amort = [('code', '=like', '397%')]</field>
+      <field name="sequence" eval="4"/>
+      <field name="level" eval="3"/>
+      <field name="style_overwrite">3</field>
+    </record>
+
+    <record id="account_financial_report_balance_sheet_actv_ac_ex" model="account.financial.report">
+      <field name="name">A l'extérieur</field>
+      <field name="code">EX_AC_ACTV_BS_MG</field>
+      <field name="parent_id" ref='account_financial_report_balance_sheet_actv_ac_stkecr'/>
+      <field name="formulas">brut = sum.balance ; amort = -sum.balance</field>
+      <field name="domain">brut = [('code', '=like', '38%')] ; amort = [('code', '=like', '398%')]</field>
+      <field name="sequence" eval="4"/>
+      <field name="level" eval="3"/>
+      <field name="style_overwrite">3</field>
+    </record>
+
+    <record id="account_financial_report_balance_sheet_actv_ac_cea" model="account.financial.report">
+      <field name="name">Créances et emplois assimilés</field>
+      <field name="code">CEA_AC_ACTV_BS_MG</field>
+      <field name="parent_id" ref='account_financial_report_balance_sheet_actv_ac'/>
+      <field name="formulas">brut = CAD_CEA_AC_ACTV_BS_MG.brut +IMP_CEA_AC_ACTV_BS_MG.brut + ACAA_CEA_AC_ACTV_BS_MG.brut ; amort =
+        CAD_CEA_AC_ACTV_BS_MG.amort + ACAA_CEA_AC_ACTV_BS_MG.amort
+      </field>
+      <field name="sequence" eval="5"/>
+      <field name="level" eval="2"/>
+      <field name="style_overwrite">2</field>
+    </record>
+
+    <record id="account_financial_report_balance_sheet_actv_ac_cea_cad" model="account.financial.report">
+      <field name="name">Clients et autres débiteurs</field>
+      <field name="code">CAD_CEA_AC_ACTV_BS_MG</field>
+      <field name="parent_id" ref='account_financial_report_balance_sheet_actv_ac_cea'/>
+      <field name="formulas">brut = sum.balance ; amort = -sum.balance</field>
+      <field name="domain">brut = ['|','|','|','|','|',('code', '=like', '409%'),('code', '=like', '411%'),('code',
+        '=like', '413%'),('code', '=like', '416%'),('code', '=like', '417%'),('code', '=like', '418%')] ; amort =
+        [('code', '=like', '491%')]
+      </field>
+      <field name="sequence" eval="0"/>
+      <field name="level" eval="3"/>
+      <field name="style_overwrite">3</field>
+    </record>
+    <record id="account_financial_report_balance_sheet_actv_ac_cea_imp" model="account.financial.report">
+      <field name="name">Impôts</field>
+      <field name="code">IMP_CEA_AC_ACTV_BS_MG</field>
+      <field name="parent_id" ref='account_financial_report_balance_sheet_actv_ac_cea'/>
+      <field name="formulas">brut = sum.debit </field>
+      <field name="domain">brut = [('code', '=like', '44%')] </field>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="3"/>
+      <field name="style_overwrite">3</field>
+    </record>
+    <record id="account_financial_report_balance_sheet_actv_ac_cea_acaa" model="account.financial.report">
+      <field name="name">Autres créances et actifs assimilés</field>
+      <field name="code">ACAA_CEA_AC_ACTV_BS_MG</field>
+      <field name="parent_id" ref='account_financial_report_balance_sheet_actv_ac_cea'/>
+      <field name="formulas">brut = sum.debit      </field>
+       <field name="domain">brut = ['|','|','|',('code', '=like', '42%'),('code', '=like', '43%'),('code', '=like', '45%'),('code', '=like', '46%')] </field>
+<!--      <field name="formulas">brut = BLC_ACAA_CEA_AC_ACTV_BS_MG.brut + DBT_ACAA_CEA_AC_ACTV_BS_MG.brut ; amort =-->
+<!--        BLC_ACAA_CEA_AC_ACTV_BS_MG.amort-->
+<!--      </field>-->
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="3"/>
+      <field name="style_overwrite">3</field>
+    </record>
+
+<!--    <record id="account_financial_report_balance_sheet_actv_ac_cea_acaa_b" model="account.financial.report">-->
+<!--      <field name="name">Autres créances et actifs assimilés - Balance</field>-->
+<!--      <field name="code">BLC_ACAA_CEA_AC_ACTV_BS_MG</field>-->
+<!--      <field name="parent_id" ref='account_financial_report_balance_sheet_actv_ac_cea_acaa'/>-->
+<!--      <field name="formulas">brut = sum.balance ; amort = -sum.balance</field>-->
+<!--      <field name="domain">brut = ['|','|','|','|','|','|','|',('code', '=like', '425%'),('code', '=like',-->
+<!--        '4287%'),('code', '=like', '441%'),('code', '=like', '4487%'),('code', '=like', '462%'),('code', '=like',-->
+<!--        '465%'),('code', '=like', '4687%'),('code', '=like', '486%')] ; amort = ['|',('code', '=like', '495%'),('code',-->
+<!--        '=like', '496%')]-->
+<!--      </field>-->
+<!--      <field name="sequence" eval="0"/>-->
+<!--      <field name="level" eval="4"/>-->
+<!--      <field name="style_overwrite">4</field>-->
+<!--    </record>-->
+
+<!--    <record id="account_financial_report_balance_sheet_actv_ac_cea_acaa_d" model="account.financial.report">-->
+<!--      <field name="name">Autres créances et actifs assimilés - Débit</field>-->
+<!--      <field name="code">DBT_ACAA_CEA_AC_ACTV_BS_MG</field>-->
+<!--      <field name="parent_id" ref='account_financial_report_balance_sheet_actv_ac_cea_acaa'/>-->
+<!--      <field name="formulas">brut = sum.debit</field>-->
+<!--      <field name="domain">brut = ['|','|','|','|','|','|','|',('code', '=like', '422%'),('code', '=like',-->
+<!--        '442%'),('code', '=like', '443%'),('code', '=like', '445%'),('code', '=like', '451%'),('code', '=like',-->
+<!--        '456%'),('code', '=like', '458%'),('code', '=like', '467%')]-->
+<!--      </field>-->
+<!--      <field name="sequence" eval="1"/>-->
+<!--      <field name="level" eval="4"/>-->
+<!--      <field name="style_overwrite">4</field>-->
+<!--    </record>-->
+
+    <record id="account_financial_report_balance_sheet_actv_ac_tet" model="account.financial.report">
+      <field name="name">Trésorerie et équivalents de trésorerie</field>
+      <field name="code">TET_AC_ACTV_BS_MG</field>
+      <field name="parent_id" ref='account_financial_report_balance_sheet_actv_ac'/>
+      <field name="formulas">brut = PAET_CEA_AC_ACTV_BS_MG.brut + TFCDV_CEA_AC_ACTV_BS_MG.brut ; amort =
+        PAET_CEA_AC_ACTV_BS_MG.amort + TFCDV_CEA_AC_ACTV_BS_MG.amort
+      </field>
+      <field name="sequence" eval="6"/>
+      <field name="level" eval="2"/>
+      <field name="style_overwrite">2</field>
+    </record>
+
+    <record id="account_financial_report_balance_sheet_actv_ac_tet_paet" model="account.financial.report">
+      <field name="name">Placements et autres équivalents de trésorerie</field>
+      <field name="code">PAET_CEA_AC_ACTV_BS_MG</field>
+      <field name="parent_id" ref='account_financial_report_balance_sheet_actv_ac_tet'/>
+      <field name="formulas">brut = sum.balance ; amort = -sum.balance</field>
+      <field name="domain">brut = [('code', '=like', '50%')] ; amort = [('code', '=like', '59%')]</field>
+      <field name="sequence" eval="0"/>
+      <field name="level" eval="3"/>
+      <field name="style_overwrite">3</field>
+    </record>
+
+    <record id="account_financial_report_balance_sheet_actv_ac_tet_tfcdv" model="account.financial.report">
+      <field name="name">Trésorerie (fonds en caisse et dépôts à vue)</field>
+      <field name="code">TFCDV_CEA_AC_ACTV_BS_MG</field>
+      <field name="parent_id" ref='account_financial_report_balance_sheet_actv_ac_tet'/>
+      <field name="formulas">brut = sum.balance</field>
+      <field name="domain">brut = ['|','|','|','|','|','|','|',('code', '=like', '511%'),('code', '=like',
+        '512%'),('code', '=like', '515%'),('code', '=like', '517%'),('code', '=like', '5187%'),('code', '=like',
+        '52%'),('code', '=like', '53%'),('code', '=like', '54%')]
+      </field>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="3"/>
+      <field name="style_overwrite">3</field>
+    </record>
+
+    <record id="account_financial_report_balance_sheet_actv_tac" model="account.financial.report">
+      <field name="name">TOTAL ACTIFS COURANTS</field>
+      <field name="code">TAC_ACTV_BS_MG</field>
+      <field name="parent_id" ref="account_financial_report_balance_sheet_actv"/>
+      <field name="formulas">brut = STKECR_AC_ACTV_BS_MG.brut + CEA_AC_ACTV_BS_MG.brut + TET_AC_ACTV_BS_MG.brut ; amort
+        = STKECR_AC_ACTV_BS_MG.amort + CEA_AC_ACTV_BS_MG.amort + TET_AC_ACTV_BS_MG.amort
+      </field>
+      <field name="sequence" eval="3"/>
+      <field name="level" eval="1"/>
+      <field name="style_overwrite">1</field>
+    </record>
+
+    <record id="account_financial_report_balance_sheet_tactv" model="account.financial.report">
+      <field name="name">TOTAL ACTIFS</field>
+      <field name="code">TACTV_BS_MG</field>
+      <field name="parent_id" ref="account_financial_report_balance_sheet_asset"/>
+      <field name="formulas">brut = TANC_ACTV_BS_MG.brut + TAC_ACTV_BS_MG.brut ; amort = TANC_ACTV_BS_MG.amort +
+        TAC_ACTV_BS_MG.amort
+      </field>
+      <field name="sequence" eval="4"/>
+      <field name="level" eval="1"/>
+      <field name="style_overwrite">1</field>
+    </record>
+    <!--    -->
+    <record id="action_account_report_bsa" model="ir.actions.act_window">
+      <field name="name">Bilan Actif</field>
+      <field name="res_model">accounting.report</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="view_mode">form</field>
+      <field name="view_id" ref="accounting_pdf_reports.accounting_report_view"/>
+      <field name="target">new</field>
+      <field name="context"
+             eval="{'default_account_report_id':ref('l10n_mg_reports_c.account_financial_report_balance_sheet_asset')}"/>
+    </record>
+    <menuitem
+        id="account_reports_mg_statements_bilan_actif_menu_action"
+        name="Bilan actif"
+        parent="account_reports_mg_statements_menu"
+        action="action_account_report_bsa"
+        sequence="2" groups="account.group_account_user"/>
+  </data>
+</odoo>

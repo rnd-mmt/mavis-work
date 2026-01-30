@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data noupdate="0">
+    <!-- Tableau des flux de trésorerie méthode directe -->
+    <record id="report_flux_tresorerie_directe" model="account.financial.report">
+      <field name="name">Tableau des flux de trésorerie (méthode directe)</field>
+      <field name='type_financial_report_mg'>cash_flow</field>
+      <field name='note_mg' eval="True"/>
+    </record>
+    <record id="report_tresorerie_activites_operationnelles_directe" model="account.financial.report">
+      <field name="name">A - FLUX DE TRESORERIE LIES AUX ACTIVITES OPERATIONNELLES</field>
+      <field name="code">FLUX_ACT_OP</field>
+      <field name="financial_report_id" ref="report_flux_tresorerie_directe"/>
+      <field name="parent_id" ref="report_flux_tresorerie_directe"/>
+      <field name="formulas">balance = FLUX_AVANT_EXTRA.balance + FLUX_EVT_EXTRA.balance</field>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="1"/>
+      <field name="type">report_mg_cf</field>
+      <field name="style_overwrite">0</field>
+    </record>
+    <record id="report_flux_avant_extraordinaire" model="account.financial.report">
+      <field name="name">Flux de trésorerie avant éléments extraordinaires</field>
+      <field name="code">FLUX_AVANT_EXTRA</field>
+      <field name="parent_id" ref="report_tresorerie_activites_operationnelles_directe"/>
+      <field name="formulas">balance = ENC_CLIENT.balance + SOMME_FRNS_PERS.balance + INT_FRAIS_FI.balance +
+        IMPOTS_RP.balance
+      </field>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="2"/>
+      <field name="type">report_mg_cf</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_encaissement_recu_clients" model="account.financial.report">
+      <field name="name">Encaissement reçus des clients</field>
+      <field name="code">ENC_CLIENT</field>
+      <field name="parent_id" ref="report_flux_avant_extraordinaire"/>
+      <field name="domain" eval=""/>
+      <field name="groupby">account_id</field>
+      <field name="formulas"></field>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="3"/>
+      <field name="type">report_mg_cf</field>
+      <field name="style_overwrite">2</field>
+    </record>
+    <record id="report_somme_versee_fournisseur_au_personnel" model="account.financial.report">
+      <field name="name">Sommes versées aux fournisseurs et au personnel</field>
+      <field name="code">SOMME_FRNS_PERS</field>
+      <field name="parent_id" ref="report_flux_avant_extraordinaire"/>
+      <field name="domain" eval=""/>
+      <field name="groupby">account_id</field>
+      <field name="formulas"></field>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="3"/>
+      <field name="type">report_mg_cf</field>
+      <field name="style_overwrite">2</field>
+    </record>
+    <record id="report_interets_autres_frais_financiers_payes" model="account.financial.report">
+      <field name="name">Intérêts et autres frais financiers payés</field>
+      <field name="code">INT_FRAIS_FI</field>
+      <field name="parent_id" ref="report_flux_avant_extraordinaire"/>
+      <field name="domain" eval="['|',('code', '=like', '61%'),('code', '=like', '62%')]"/>
+      <field name="groupby">account_id</field>
+      <field name="formulas">balance = -sum.debit</field>
+      <field name="sequence" eval="3"/>
+      <field name="level" eval="3"/>
+      <field name="type">report_mg_cf</field>
+      <field name="style_overwrite">2</field>
+    </record>
+    <record id="report_impots_sur_resultat_payes" model="account.financial.report">
+      <field name="name">Impôts sur les résultats payés</field>
+      <field name="code">IMPOTS_RP</field>
+      <field name="parent_id" ref="report_flux_avant_extraordinaire"/>
+      <field name="domain" eval="[('code', '=like', '695%')]"/>
+      <field name="groupby">account_id</field>
+      <field name="formulas">balance = -sum.debit</field>
+      <field name="sequence" eval="4"/>
+      <field name="level" eval="3"/>
+      <field name="type">report_mg_cf</field>
+      <field name="style_overwrite">2</field>
+    </record>
+    <record id="report_flux_evenement_extraordinaire" model="account.financial.report">
+      <field name="name">Flux de trésorerie lié à des événements extraordinaires (à préciser)</field>
+      <field name="code">FLUX_EVT_EXTRA</field>
+      <field name="parent_id" ref="report_tresorerie_activites_operationnelles_directe"/>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="2"/>
+      <field name="type">report_mg_cf</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_tresorerie_activites_investissement_directe" model="account.financial.report">
+      <field name="name">B - FLUX DE TRESORERIE LIES AUX ACTIVITES D'INVESTISSEMENT</field>
+      <field name="code">FLUX_ACT_INV</field>
+      <field name="financial_report_id" ref="report_flux_tresorerie_directe"/>
+      <field name="parent_id" ref="report_flux_tresorerie_directe"/>
+      <field name="formulas">balance = DVDE_QP_RES.balance + INT_ENC_PFI.balance + ENC_CIMMO_FIN.balance +
+        DEC_ACQUIMMO_FIN.balance + ENC_CIMMO.balance + DEC_ACQIMMO.balance
+      </field>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="1"/>
+      <field name="type">report_mg_cf</field>
+      <field name="style_overwrite">0</field>
+    </record>
+    <record id="report_decaissement_acquisition_immo_corpo_incorpo" model="account.financial.report">
+      <field name="name">Décaissement sur acquisition d'immobilisations corporelles ou incorporelles</field>
+      <field name="code">DEC_ACQIMMO</field>
+      <field name="parent_id" ref="report_tresorerie_activites_investissement_directe"/>
+      <field name="domain" eval=""/>
+      <field name="groupby">account_id</field>
+      <field name="formulas"></field>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="2"/>
+      <field name="type">report_mg_cf</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_encaissement_cession_immo_corpo_incorpo" model="account.financial.report">
+      <field name="name">Encaissement sur cession d'immobilisations corporelles ou incorporelles</field>
+      <field name="code">ENC_CIMMO</field>
+      <field name="parent_id" ref="report_tresorerie_activites_investissement_directe"/>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="2"/>
+      <field name="type">report_mg_cf</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_decaissement_acquisition_immo_financieres" model="account.financial.report">
+      <field name="name">Décaissement sur acquisition d'immobilisations financières</field>
+      <field name="code">DEC_ACQUIMMO_FIN</field>
+      <field name="parent_id" ref="report_tresorerie_activites_investissement_directe"/>
+      <field name="sequence" eval="3"/>
+      <field name="level" eval="2"/>
+      <field name="type">report_mg_cf</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_encaissement_cession_immo_financieres" model="account.financial.report">
+      <field name="name">Encaissement sur cessions d'immobilisations financières</field>
+      <field name="code">ENC_CIMMO_FIN</field><!--à modifier-->
+      <field name="parent_id" ref="report_tresorerie_activites_investissement_directe"/>
+      <field name="formulas">balance = ENC_CIMMO_FIN1.balance + ENC_CIMMO_FIN2.balance</field><!-- A modifier -->
+      <field name="sequence" eval="4"/>
+      <field name="level" eval="2"/>
+      <field name="type">report_mg_cf</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_encaissement_cession_immo_financieres1" model="account.financial.report">
+      <field name="name">Autres formes de participation</field>
+      <field name="code">ENC_CIMMO_FIN1</field>
+      <field name="parent_id" ref="report_encaissement_cession_immo_financieres"/>
+      <field name="domain" eval="[('code', '=like', '262%')]"/>
+      <field name="groupby">account_id</field>
+      <field name="formulas">balance = sum.credit</field>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="3"/>
+      <field name="type">report_mg_cf</field>
+      <field name="style_overwrite">2</field>
+    </record>
+    <record id="report_encaissement_cession_immo_financieres2" model="account.financial.report">
+      <field name="name">Perte de valeur sur participation et création</field>
+      <field name="code">ENC_CIMMO_FIN2</field>
+      <field name="parent_id" ref="report_encaissement_cession_immo_financieres"/>
+      <field name="domain" eval="[('code', '=like', '296%')]"/>
+      <field name="groupby">account_id</field>
+      <field name="formulas">balance = -sum.debit</field>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="3"/>
+      <field name="type">report_mg_cf</field>
+      <field name="style_overwrite">2</field>
+    </record>
+    <record id="report_interets_encaisses_placements_financiers" model="account.financial.report">
+      <field name="name">Intérêts encaissés sur placements financiers</field>
+      <field name="code">INT_ENC_PFI</field>
+      <field name="parent_id" ref="report_tresorerie_activites_investissement_directe"/>
+      <field name="sequence" eval="5"/>
+      <field name="level" eval="2"/>
+      <field name="type">report_mg_cf</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_dividende_quote_part_resultat_recu" model="account.financial.report">
+      <field name="name">Dividendes et quote part de résultats reçus</field>
+      <field name="code">DVDE_QP_RES</field>
+      <field name="parent_id" ref="report_tresorerie_activites_investissement_directe"/>
+      <field name="sequence" eval="6"/>
+      <field name="level" eval="2"/>
+      <field name="type">report_mg_cf</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_tresorerie_activites_financement_directe" model="account.financial.report">
+      <field name="name">C - FLUX DE TRESORERIE LIES AUX ACTIVITES DE FINANCEMENT</field>
+      <field name="code">FLUX_ACT_FIN</field>
+      <field name="financial_report_id" ref="report_flux_tresorerie_directe"/>
+      <field name="parent_id" ref="report_flux_tresorerie_directe"/>
+      <field name="formulas">balance = REMB_EMP_DETTE.balance + ENC_PEMP.balance + ACAP_NUM.balance + DVDE_ADIST.balance
+        + ENC_SUITE_EMACT.balance
+      </field>
+      <field name="sequence" eval="3"/>
+      <field name="level" eval="1"/>
+      <field name="type">report_mg_cf</field>
+      <field name="style_overwrite">0</field>
+    </record>
+    <record id="report_ancaissement_suite_emission_actions" model="account.financial.report">
+      <field name="name">Encaissements suite à l'émissions d'actions</field>
+      <field name="code">ENC_SUITE_EMACT</field>
+      <field name="parent_id" ref="report_tresorerie_activites_financement_directe"/>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="2"/>
+      <field name="type">report_mg_cf</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_dividende_deistribution_effectue" model="account.financial.report">
+      <field name="name">Dividendes et autres distributions effectuées</field>
+      <field name="code">DVDE_ADIST</field><!--A modifier-->
+      <field name="parent_id" ref="report_tresorerie_activites_financement_directe"/>
+      <field name="domain" eval="['|',('code', '=like', '10%'),('code', '=like', '11%')]"/>
+      <field name="groupby">account_id</field>
+      <field name="formulas">balance = -sum.balance</field>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="2"/>
+      <field name="type">report_mg_cf</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_augmentation_capital_numeraire_directe" model="account.financial.report">
+      <field name="name">Augmentation de capital en numéraire</field>
+      <field name="code">ACAP_NUM</field>
+      <field name="parent_id" ref="report_tresorerie_activites_financement_directe"/>
+      <field name="sequence" eval="3"/>
+      <field name="level" eval="2"/>
+      <field name="type">report_mg_cf</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_encaissement_provenant_emprunt" model="account.financial.report">
+      <field name="name">Encaissements provenant d'emprunts</field>
+      <field name="code">ENC_PEMP</field>
+      <field name="parent_id" ref="report_tresorerie_activites_financement_directe"/>
+      <field name="sequence" eval="4"/>
+      <field name="level" eval="2"/>
+      <field name="type">report_mg_cf</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_remboursement_emprunt_dette_assimiles" model="account.financial.report">
+      <field name="name">Remboursement d'emprunts ou d'autres dettes assimilés</field>
+      <field name="code">REMB_EMP_DETTE</field>
+      <field name="parent_id" ref="report_tresorerie_activites_financement_directe"/>
+      <field name="sequence" eval="5"/>
+      <field name="level" eval="2"/>
+      <field name="type">report_mg_cf</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_incidence_variation_taux_change_liquidite_quasi" model="account.financial.report">
+      <field name="name">Incidences des variations des taux de change sur liquidités et quasi-liquidités</field>
+      <field name="code">INC_VAR_TLIQ</field>
+      <field name="financial_report_id" ref="report_flux_tresorerie_directe"/>
+      <field name="parent_id" ref="report_flux_tresorerie_directe"/>
+      <field name="sequence" eval="4"/>
+      <field name="level" eval="2"/>
+      <field name="type">report_mg_cf</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_profi_change" model="account.financial.report">
+      <field name="name">Profits de change</field>
+      <field name="code">PROFITC</field>
+      <field name="parent_id" ref="report_incidence_variation_taux_change_liquidite_quasi"/>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="3"/>
+      <field name="type">report_mg_cf</field>
+      <field name="style_overwrite">2</field>
+    </record>
+    <record id="report_perte_change" model="account.financial.report">
+      <field name="name">Perte de change</field>
+      <field name="code">PERTEC</field>
+      <field name="parent_id" ref="report_incidence_variation_taux_change_liquidite_quasi"/>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="3"/>
+      <field name="type">report_mg_cf</field>
+      <field name="style_overwrite">2</field>
+    </record>
+    <record id="report_variation_tresorerie_directe" model="account.financial.report">
+      <field name="name">VARIATION DE TRESORERIE DE LA PERIODE (A+B+C)</field>
+      <field name="code">VAR_TRESORERIE</field>
+      <field name="financial_report_id" ref="report_flux_tresorerie_directe"/>
+      <field name="parent_id" ref="report_flux_tresorerie_directe"/>
+      <field name="formulas">balance = PROFITC.balance + PERTEC.balance + FLUX_ACT_OP.balance + FLUX_ACT_INV.balance +
+        FLUX_ACT_FIN.balance
+      </field>
+      <field name="sequence" eval="5"/>
+      <field name="level" eval="1"/>
+      <field name="type">report_mg_cf</field>
+      <field name="style_overwrite">0</field>
+    </record>
+    <record id="report_tresorerie_equivalent_ouverture_exo" model="account.financial.report">
+      <field name="name">Trésorerie et équivalents de trésorerie à l'ouverture de l'exercice</field>
+      <field name="code">TRES_OUV</field><!--année précédente-->
+      <field name="financial_report_id" ref="report_flux_tresorerie_directe"/>
+      <field name="parent_id" ref="report_flux_tresorerie_directe"/>
+      <field name="formulas">balance = TRES_OUV1.balance - TRES_OUV2.balance</field>
+      <field name="sequence" eval="6"/>
+      <field name="level" eval="2"/>
+      <field name="type">report_mg_cf</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_tresorerie_equivalent_tres__ouverture1" model="account.financial.report">
+      <field name="name">Trésorerie à l'ouverture</field>
+      <field name="code">TRES_OUV1</field><!--formule inconnue-->
+      <field name="parent_id" ref="report_tresorerie_equivalent_ouverture_exo"/>
+      <field name="domain" eval="[('code', '=like', '457%')]"/>
+      <field name="groupby">account_id</field>
+      <field name="formulas">balance = sum.debit</field>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="3"/>
+      <field name="type">report_mg_cf</field>
+      <field name="style_overwrite">2</field>
+    </record>
+    <record id="report_tresorerie_equivalent_tres_ouverture1" model="account.financial.report">
+      <field name="name">Trésorerie passive à l'ouverture</field>
+      <field name="code">TRES_OUV2</field><!--année précédente-->
+      <field name="parent_id" ref="report_tresorerie_equivalent_ouverture_exo"/>
+      <field name="domain" eval="[('code', '=like', '5122%')]"/>
+      <field name="groupby">account_id</field>
+      <field name="formulas">balance = -sum.credit</field>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="3"/>
+      <field name="type">report_mg_cf</field>
+      <field name="style_overwrite">2</field>
+    </record>
+    <record id="report_tresorerie_equivalent_cloture_exo" model="account.financial.report">
+      <field name="name">Trésorerie et équivalents de trésorerie à la clôture de l'exercice</field>
+      <field name="code">TRES_CLOT</field>
+      <field name="financial_report_id" ref="report_flux_tresorerie_directe"/>
+      <field name="parent_id" ref="report_flux_tresorerie_directe"/>
+      <field name="formulas">balance = TRES_CLOT1.balance + TRES_CLOT2.balance</field>
+      <field name="sequence" eval="7"/>
+      <field name="level" eval="2"/>
+      <field name="type">report_mg_cf</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_tresorerie_active_directe" model="account.financial.report">
+      <field name="name">Trésorerie</field>
+      <field name="code">TRES_CLOT1</field>
+      <field name="parent_id" ref="report_tresorerie_equivalent_cloture_exo"/>
+      <field name="domain" eval="['|',('code', '=like', '512%'),('code', '=like', '548%')]"/>
+      <field name="groupby">account_id</field>
+      <field name="formulas">balance = sum.debit</field>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="3"/>
+      <field name="type">report_mg_cf</field>
+      <field name="style_overwrite">2</field>
+    </record>
+    <record id="report_tresorerie_passive_directe" model="account.financial.report">
+      <field name="name">Trésorerie passive</field>
+      <field name="code">TRES_CLOT2</field>
+      <field name="parent_id" ref="report_tresorerie_equivalent_cloture_exo"/>
+      <field name="domain" eval="[('code', '=like', '5122%')]"/>
+      <field name="groupby">account_id</field>
+      <field name="formulas">balance = -sum.credit</field>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="3"/>
+      <field name="type">report_mg_cf</field>
+      <field name="style_overwrite">2</field>
+    </record>
+    <record id="report_variation_tresorerie_periode_directe" model="account.financial.report">
+      <field name="name">VARIATION DE TRESORERIE DE LA PERIODE</field>
+      <field name="code">VAR_TRES_PERIODE</field>
+      <field name="financial_report_id" ref="report_flux_tresorerie_directe"/>
+      <field name="parent_id" ref="report_flux_tresorerie_directe"/>
+      <field name="formulas">balance = TRES_CLOT.balance - TRES_OUV.balance</field>
+      <field name="sequence" eval="8"/>
+      <field name="level" eval="1"/>
+      <field name="style_overwrite">0</field>
+    </record>
+  </data>
+</odoo>

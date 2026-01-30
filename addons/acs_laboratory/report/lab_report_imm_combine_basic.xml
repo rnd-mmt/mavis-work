@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="report_basic_lab_result_combine_table">
+        <style>
+            .o_font_bold {
+                    font-family:"Arial" !important;
+                    font-weight: bold !important;
+            }
+        </style>
+        <p style="padding: 5px; border: solid 1px; border-radius: 5px"><strong><span t-field="doc.cat_analyse"/></strong></p>
+        <table style="border:none; margin-bottom: 10px !important;" class="table table-borderless">
+            <thead style="border:solid 1px;">
+                <tr style="border:none;">
+                    <th style="border:none; width: 25% !important; word-break: break-all !important; overflow-wrap: break-word !important; white-space: normal !important; vertical-align: middle !important; padding-top: 5px !important; padding-bottom: 5px !important;" >
+                        <strong style="font-size:.80em !important; font-weight: 700 !important;font-family: Arial !important; line-height: .75em !important;">PARAMETRES</strong>
+                    </th>
+                    <th style="border:none; width: 13% !important; word-break: break-all !important; overflow-wrap: break-word !important; white-space: normal !important; vertical-align: middle !important; padding-top: 5px !important; padding-bottom: 5px !important;">
+                        <strong style="font-size:.80em !important; font-weight: 700 !important; font-family: Arial !important; line-height: .75em !important;">RESULTATS</strong>
+                    </th>
+                    <th style="border:none; width: 5% !important; word-break: break-all !important; overflow-wrap: break-word !important; white-space: normal !important; vertical-align: middle !important; padding-top: 5px !important; padding-bottom: 5px !important;">
+                        <strong style="font-size:.80em !important; font-weight: 700 !important; font-family: Arial !important; line-height: .75em !important;">%</strong>
+                    </th>
+                    <th style="border:none; width: 11% !important; word-break: break-all !important; overflow-wrap: break-word !important; white-space: normal !important; vertical-align: middle !important; padding-top: 5px !important; padding-bottom: 5px !important;">
+                        <strong style="font-size:.80em !important; font-weight: 700 !important; font-family: Arial !important; line-height: .75em !important;">UNITE</strong>
+                    </th>
+                    <th style="border:none; width: 13% !important; word-break: break-all !important; overflow-wrap: break-word !important; white-space: normal !important; vertical-align: middle !important; padding-top: 5px !important; padding-bottom: 5px !important;">
+                        <strong style="font-size:.80em !important; font-weight: 700 !important; font-family: Arial !important; line-height: .75em !important;"><span>VALEURS DE<br/>REFERENCE</span></strong>
+                    </th>
+                    <th style="border:none; width: 20% !important; word-break: break-all !important; overflow-wrap: break-word !important; white-space: normal !important; vertical-align: middle !important; padding-top: 5px !important; padding-bottom: 5px !important;">
+                        <strong style="font-size:.80em !important; font-weight: 700 !important; font-family: Arial !important; line-height: .75em !important;">REMARQUES</strong>
+                    </th>
+                    <th style="border:none; width: 13% !important; word-break: break-all !important; overflow-wrap: break-word !important; white-space: normal !important; vertical-align: middle !important; padding-top: 5px !important; padding-bottom: 5px !important;">
+                        <strong style="font-size:.80em !important; font-weight: 700 !important; font-family: Arial !important; line-height: .75em !important;">RESULTATS <br/>ANTERIEURS</strong>
+                    </th>
+                </tr>
+            </thead>
+            <tbody style="border:none;">
+                <tr style="border:none;margin-left:5px !important;">
+                    <t t-if="doc.aspect_sang">
+                        <td class="td_parameter">
+                            <span>Aspect macroscopique sang</span>
+                        </td>
+                        <td style="border:none;margin-left:5px !important;" colspan="6" class="td_results">
+                            <span t-field="doc.aspect_sang"/>
+                        </td>
+
+                    </t>
+                </tr>
+                <tr style="border:none;margin-left:5px !important;">
+                    <t t-if="doc.aspect_urine">
+                        <td class="td_parameter">
+                            <span>Aspect macroscopique urine</span>
+                        </td>
+                        <td class="td_results" colspan="6">
+                            <span t-field="doc.aspect_urine"/>
+                        </td>
+                    </t>
+                </tr>
+                <t t-foreach="doc.critearea_ids" t-as="line">
+                    <tr style="border:none;margin-left:5px !important;" t-att-class="'bg-200 font-weight-b o_line_section' if line.display_type == 'line_section' else ''">
+                        <t t-if="not line.display_type">
+                            <t t-if="line.result">
+                                <td style="border:none;margin-left:5px !important;font-family: Arial !important; width: width: 25% !important; word-break: break-all !important; overflow-wrap: break-word !important; white-space: normal !important;"
+                                    t-attf-class="#{'o_font_bold' if line.result_type in ['high','low','warning'] else ''}">
+                                    <span t-esc="line.name"/>
+                                </td>
+                                <td style="border:none;margin-left:5px !important;font-family: Arial !important; width: width: 13% !important; word-break: break-all !important; overflow-wrap: break-word !important; white-space: normal !important;"
+                                    t-attf-class="#{'o_font_bold' if line.result_type in ['high','low','warning'] else ''}">
+                                    <span t-esc="line.result"/><span t-if="line.result_type not in ['normal','negative']">*</span>
+                                </td>
+                                <td style="border:none;margin-left:5px !important;font-family: Arial !important; width: width: 5% !important; word-break: break-all !important; overflow-wrap: break-word !important; white-space: normal !important;"
+                                    t-attf-class="#{'o_font_bold' if line.result_type in ['high','low','warning'] else ''}">
+                                    <span t-if="line.lab_uom_id != 0" t-esc="line.pourcentage"/>
+                                </td>
+                                <td style="border:none;margin-left:5px !important;font-family: Arial !important; width: width: 11% !important; word-break: break-all !important; overflow-wrap: break-word !important; white-space: normal !important;"
+                                    t-attf-class="#{'o_font_bold' if line.result_type in ['high','low','warning'] else ''}">
+                                    <span t-if="line.lab_uom_id" t-field="line.lab_uom_id"/>
+                                </td>
+                                <td style="border:none;margin-left:5px !important;font-family: Arial !important; width: width: 13% !important; word-break: break-all !important; overflow-wrap: break-word !important; white-space: normal !important;"
+                                    t-attf-class="#{'o_font_bold' if line.result_type in ['high','low','warning'] else ''}">
+                                    <span t-esc="line.normal_range"/>
+                                </td>
+                                <td style="border:none;margin-left:5px !important;font-family: Arial !important; width: width: 20% !important; word-break: break-all !important; overflow-wrap: break-word !important; white-space: normal !important;"
+                                    t-attf-class="#{'o_font_bold' if line.result_type in ['high','low','warning'] else ''}">
+                                    <span t-esc="line.remark"/>
+                                </td>
+                                <td style="border:none;margin-left:5px !important;font-family: Arial !important; width: width: 13% !important; word-break: break-all !important; overflow-wrap: break-word !important; white-space: normal !important;"
+                                    t-attf-class="#{'o_font_bold' if line.result_type in ['high','low','warning'] else ''}">
+                                    <span t-esc="line.prev_result"/>
+                                </td>
+                            </t>
+
+                        </t>
+                        <t t-if="line.display_type == 'line_section'">
+                            <td style="border:none;" colspan="7">
+                               <span style="font-weight: bold !important;font-family: Arial !important;"><span t-field="line.name"/></span>
+                            </td>
+                        </t>
+                        <t t-if="line.display_type == 'line_note'">
+                            <td style="border:none;" colspan="7">
+                               <pre><span t-field="line.name"/></pre>
+                            </td>
+                        </t>
+                    </tr>
+                </t>
+            </tbody>
+        </table>
+        <pre><span t-field="doc.antibiogramme"/></pre><br/>
+
+
+        <p class="mt64" t-if="doc.diagnosis">
+            <strong style="text-decoration: underline;">Diagnostic:</strong>
+            <ul class="info_group"><span t-esc="doc.diagnosis"/> <br/>
+            </ul>
+        </p>
+        <p class="mt64" t-if="doc.note">
+            <strong style="text-decoration: underline;">Conclusion:</strong>
+            <ul class="info_group"><span t-esc="doc.note"/><br/></ul>
+        </p>
+        <p class="mt64" t-if="doc.disclaimer">
+            <strong style="text-decoration: underline;">Disclaimer:</strong>
+            <ul class="info_group"><span t-field="doc.disclaimer"/> <br/></ul>
+        </p>
+
+    </template>
+
+    <template id="info__basic_patient_analyse">
+        <t t-set="doc" t-value="doc.sudo()"/>
+        <t t-set="doc" t-value="doc.with_context({'lang':doc.patient_id.lang})"/>
+        <div class="oe_structure"/>
+        <br/><br/>
+        <div>
+            <strong>Résultats de: </strong><span t-field="doc.patient_id"/>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <strong>Date de naissance: </strong> <span t-field="doc.patient_id.birthday"/>
+            </div>
+            <div class="col-2">
+                <strong>Sexe: </strong><span t-field="doc.patient_id.gender" />
+            </div>
+            <div class="col-6">
+                <span>Mme/Mlle/Mr: </span><strong><span t-field="doc.patient_id"/></strong>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <strong>Prescripteur: </strong> <span  t-field="doc.physician_id"/>
+            </div>
+            <div class="col-6">
+                <strong>Dossier N°: </strong><span t-field="doc.name"/>
+            </div>
+        </div>
+        <div>
+            <strong>RC: </strong><span t-field="doc.clinic_info"/>
+        </div>
+    </template>
+
+    <template id="interpretation_info_basic">
+        <t t-foreach="docs" t-as="doc">
+            <pre><span t-field="doc.antibiogramme"/></pre><br/>
+        </t>
+
+
+        <p class="mt64" t-if="doc.diagnosis">
+            <strong style="text-decoration: underline;">Diagnostic:</strong>
+            <ul class="info_group">
+                <t t-foreach="docs" t-as="doc">
+                    <span t-esc="doc.diagnosis"/> <br/>
+                </t>
+            </ul>
+        </p>
+        <p class="mt64" t-if="doc.note">
+            <strong style="text-decoration: underline;">Conclusion:</strong>
+            <ul class="info_group">
+                <t t-foreach="docs" t-as="doc">
+                    <span t-esc="doc.note"/><br/>
+                </t>
+            </ul>
+        </p>
+        <p class="mt64" t-if="doc.disclaimer">
+            <strong style="text-decoration: underline;">Disclaimer:</strong>
+            <ul class="info_group">
+                <t t-foreach="docs" t-as="doc">
+                    <span t-field="doc.disclaimer"/> <br/>
+                </t>
+            </ul>
+        </p>
+    </template>
+
+    <template id="signature_basic">
+        <p class="mt16 pull-right">
+            <span>Antananarivo, le </span><span t-field="doc.date_analysis"/><br/>
+            <span class="font-weight-bold" style="font-weight: bold !important;">Signature</span>
+            <t t-set="foo" t-value="False"/>
+            <t t-foreach="doc.group_medlab" t-as="line">
+                <t t-if="foo == False">
+                    <span t-field="line.signature" t-options="{'widget': 'image', 'class': 'img-rounded', 'style':'max-height: 100px !important;max-width: 100px !important'}"/>
+                </t>
+                <t t-set="foo" t-value="True"/>
+            </t>
+        </p>
+    </template>
+
+    <template id="report_acs_lab_test_combine_document_basic">
+        <!-- Just for Portal Isuse -->
+        <t t-call="web.html_container">
+            <style>
+                span { font-family: Arial !important; font-size: 22px !important; ; font-weight: unset !important;}
+                p { margin-bottom: 0 !important; font-size: 22px !important; ; }
+                strong{ font-family: Arial !important;font-weight: bold !important;}
+
+            </style>
+            <t t-call="web.basic_layout">
+                <div class="page" style="">
+                    <div class="header">
+                        <div class="row">
+                            <div class="col-1">
+                            <img src="/acs_laboratory/static/description/logo_imm.png" alt="Logo" width="130px" height="130px"/>
+                            </div>
+                            <div class="col-5" style="padding-left: 80px !important;">
+                                <p style="color: #0c71c3!important; font-size: 18px !important; text-align: center !important; margin-bottom:0 !important; font-weight: bold; ">
+                                    <span>LABORATOIRE</span>
+                                    <br/><span>D'ANALYSES MEDICALES</span>
+                                </p>
+                                <p style="text-align: center !important;margin-bottom:0 !important; font-size: 16px !important;">
+                                    <span style="color: #666 !important;">INSTITUT MEDICAL DE MADAGASCAR</span>
+                                    <br/><span style="color: #666 !important;">RUE ANDRIAMIFIDY - ANOSY</span>
+                                </p>
+                            </div>
+                            <div class="col-6" style="padding-left: 60px !important;">
+                                <p style="color: #666 !important; ; font-weight: bold !important; margin-bottom: 0 !important;">Médecins biologistes:</p>
+                                <ul style="margin-bottom: 0 !important;">
+                                    <li style="color: #666 !important;">Pr RAKOTOVAO LUC</li>
+                                    <li style="color: #666 !important;">Dr RASOANAIVO NIVO HANITRA</li>
+                                </ul>
+                                <p style="color: #666 !important; ; font-weight: bold !important;margin-bottom: 0 !important;">Médecins assistants en biologie:</p>
+                                <ul style="margin-bottom: 0 !important;">
+                                    <li style="color: #666 !important;">Dr RANDRIAMAHEFA HASIMBOLOLONIRAINY</li>
+                                    <li style="color: #666 !important;">Dr RAHAJANIRINA SOLO RUNO VALDO</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <hr style="border-bottom: solid 4px #0c71c3!important; margin-bottom: 10px !important;"/>
+                    </div>
+                    <div class="body">
+                        <div class="oe_structure"/>
+                        <t t-call="acs_laboratory.info__basic_patient_analyse" >
+                            <t t-set="doc" t-value="docs[0]"/>
+                        </t>
+                        <t t-foreach="docs" t-as="doc">
+                            <t t-call="acs_laboratory.report_basic_lab_result_combine_table">
+                                <t t-set="doc" t-value="doc"/>
+                            </t>
+                        </t>
+                        <t t-call="acs_laboratory.signature_basic">
+                            <t t-set="doc" t-value="docs[0]"/>
+                        </t>
+                    </div>
+                    <div class="footer">
+                        <hr style="border-bottom: solid 4px #0c71c3!important; margin-bottom:5px !important;"/>
+                        <p style="text-align: center !important;margin-bottom:5px !important;">
+                            <span style="font-weight: 400 !important; color: #666 !important;">BP : 13039 - Téléphone: 020 22 217 17</span>
+                        </p>
+                        <p style="text-align: center !important;margin-bottom:0 !important; color: #666 !important;">
+                            <span style="font-weight: 400 !important;">RCS: 2004 B 0133-NIF: 20000 70 423 -STAT: 85121 11 2004 0 10324</span>
+                        </p>
+                    </div>                 
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_report_basic_lab_combine_imm" model="ir.actions.report">
+        <field name="name">Rapprot de laboratoire Analyses combiné (basic template)</field>
+        <field name="model">patient.laboratory.test</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">acs_laboratory.report_acs_lab_test_combine_document_basic</field>
+        <field name="report_file">acs_laboratory.report_acs_lab_test_combine_document_basic</field>
+        <field name="print_report_name">(object.name or 'LabReport').replace('/','_') + '_LabReport'</field>
+        <field name="binding_model_id" ref="model_patient_laboratory_test"/>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data noupdate="0">
+    <record id="paperformat_choco_landscape" model="report.paperformat">
+      <field name="name">European A4 Portrait</field>
+      <field name="default" eval="True"/>
+      <field name="format">A4</field>
+      <field name="page_height">0</field>
+      <field name="page_width">0</field>
+      <field name="orientation">Portrait</field>
+      <field name="margin_top">45</field>
+      <field name="margin_bottom">30</field>
+      <field name="margin_left">7</field>
+      <field name="margin_right">7</field>
+      <field name="header_line" eval="False"/>
+      <field name="header_spacing">35</field>
+      <field name="dpi">90</field>
+    </record>
+
+    <template id="indirect_flux_report_template">
+      <t t-call="web.html_container">
+        <t t-call="web.external_layout">
+          <div class="page">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th colspan="2" class="text-center"><b>TABLEAU DES FLUX DE TRESORERIE (METHODE INDIRECTE) du <span
+                      t-esc="start_date_ef"/> au <span t-esc="end_date_ef"/></b></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><b>FLUX DE TRESORERIE LIES AUX ACTIVITES OPERATIONNELLES</b></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>RESULTAT NET DE L'EXERCICE</td>
+                  <td class="text-right">
+                    <t t-if="float(result.get('resultat_net')) &lt; 0">(</t>
+                    <span
+                        t-esc="'{:10,.2f}'.format(abs(float(result.get('resultat_net')))).replace(',', ' ').replace('.', ',')"/>
+                    <t t-if="float(result.get('resultat_net')) &lt; 0">)</t>
+                  </td>
+                </tr>
+                <tr>
+                  <td><b>Ajustements pour :</b></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>Amortissement et provisions</td>
+                  <td class="text-right">
+                    <t t-if="float(result.get('amort_provision')) &lt; 0">(</t>
+                    <span
+                        t-esc="'{:10,.2f}'.format(abs(float(result.get('amort_provision')))).replace(',', ' ').replace('.', ',')"/>
+                    <t t-if="float(result.get('amort_provision')) &lt; 0">)</t>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Variation des provisions et produits constates d'avance</td>
+                  <td class="text-right">
+                    <t t-if="float(result.get('variation_prov')) &lt; 0">(</t>
+                    <span
+                        t-esc="'{:10,.2f}'.format(abs(float(result.get('variation_prov')))).replace(',', ' ').replace('.', ',')"/>
+                    <t t-if="float(result.get('variation_prov')) &lt; 0">)</t>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Variation des impots differes</td>
+                  <td class="text-right">
+                    <t t-if="float(result.get('variation_impot')) &lt; 0">(</t>
+                    <span
+                        t-esc="'{:10,.2f}'.format(abs(float(result.get('variation_impot')))).replace(',', ' ').replace('.', ',')"/>
+                    <t t-if="float(result.get('variation_impot')) &lt; 0">)</t>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Variation des stocks</td>
+                  <td class="text-right">
+                    <t t-if="float(result.get('variation_stock')) &lt; 0">(</t>
+                    <span
+                        t-esc="'{:10,.2f}'.format(abs(float(result.get('variation_stock')))).replace(',', ' ').replace('.', ',')"/>
+                    <t t-if="float(result.get('variation_stock')) &lt; 0">)</t>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Variation des clients et autres creances</td>
+                  <td class="text-right">
+                    <t t-if="float(result.get('variation_client_creance')) &lt; 0">(</t>
+                    <span
+                        t-esc="'{:10,.2f}'.format(abs(float(result.get('variation_client_creance')))).replace(',', ' ').replace('.', ',')"/>
+                    <t t-if="float(result.get('variation_client_creance')) &lt; 0">)</t>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Variation des fournisseurs et autres dettes</td>
+                  <td class="text-right">
+                    <t t-if="float(result.get('variation_frns_dette')) &lt; 0">(</t>
+                    <span
+                        t-esc="'{:10,.2f}'.format(abs(float(result.get('variation_frns_dette')))).replace(',', ' ').replace('.', ',')"/>
+                    <t t-if="float(result.get('variation_frns_dette')) &lt; 0">)</t>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Moins ou Plus values de cession nettes d'impots</td>
+                  <td class="text-right">
+                    <t t-if="float(result.get('moins_plus_value')) &lt; 0">(</t>
+                    <span
+                        t-esc="'{:10,.2f}'.format(abs(float(result.get('moins_plus_value')))).replace(',', ' ').replace('.', ',')"/>
+                    <t t-if="float(result.get('moins_plus_value')) &lt; 0">)</t>
+                  </td>
+                </tr>
+                <tr>
+                  <td><b>A - FLUX DE TRESORERIE GENERES PAR L'ACTIVITE</b></td>
+                  <td class="text-right">
+                    <b>
+                      <t t-if="float(result.get('flux_activite')) &lt; 0">(</t>
+                      <span
+                          t-esc="'{:10,.2f}'.format(abs(float(result.get('flux_activite')))).replace(',', ' ').replace('.', ',')"/>
+                      <t t-if="float(result.get('flux_activite')) &lt; 0">)</t>
+                    </b>
+                  </td>
+                </tr>
+                <tr>
+                  <td><b>FLUX DE TRESORERIE LIES AUX OPERATIONS D'INVESTISSEMENT</b></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>Decaissement sur acquisition d'immobilisations</td>
+                  <td class="text-right">
+                    <t t-if="float(result.get('decaiss_acqui_immo')) &lt; 0">(</t>
+                    <span
+                        t-esc="'{:10,.2f}'.format(float(abs(result.get('decaiss_acqui_immo')))).replace(',', ' ').replace('.', ',')"/>
+                    <t t-if="float(result.get('decaiss_acqui_immo')) &lt; 0">)</t>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Encaissement sur cession d'immobilisations</td>
+                  <td class="text-right">
+                    <t t-if="float(result.get('encaiss_cess_immo')) &lt; 0">(</t>
+                    <span
+                        t-esc="'{:10,.2f}'.format(abs(float(result.get('encaiss_cess_immo')))).replace(',', ' ').replace('.', ',')"/>
+                    <t t-if="float(result.get('encaiss_cess_immo')) &lt; 0">)</t>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Incidence des variations de perimetre de consolidation</td>
+                  <td class="text-right">
+                    <t t-if="float(result.get('incidence_var')) &lt; 0">(</t>
+                    <span
+                        t-esc="'{:10,.2f}'.format(abs(float(result.get('incidence_var')))).replace(',', ' ').replace('.', ',')"/>
+                    <t t-if="float(result.get('incidence_var')) &lt; 0">)</t>
+                  </td>
+                </tr>
+                <tr>
+                  <td><b>B - FLUX DE TRESORERIE LIES AUX OPERATIONS D'INVESTISSEMENT</b></td>
+                  <td class="text-right">
+                    <b>
+                      <t t-if="float(result.get('flux_invest')) &lt; 0">(</t>
+                      <span
+                          t-esc="'{:10,.2f}'.format(abs(float(result.get('flux_invest')))).replace(',', ' ').replace('.', ',')"/>
+                      <t t-if="float(result.get('flux_invest')) &lt; 0">)</t>
+                    </b>
+                  </td>
+                </tr>
+                <tr>
+                  <td><b>FLUX DE TRESORERIE LIES AUX ACTIVITES DE FINANCEMENT</b></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>Dividende versee aux actionnaires</td>
+                  <td class="text-right">
+                    <t t-if="float(result.get('dividende')) &lt; 0">(</t>
+                    <span
+                        t-esc="'{:10,.2f}'.format(abs(float(result.get('dividende')))).replace(',', ' ').replace('.', ',')"/>
+                    <t t-if="float(result.get('dividende')) &lt; 0">)</t>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Augmentation de capital en numeraire</td>
+                  <td class="text-right">
+                    <t t-if="float(result.get('augment_num')) &lt; 0">(</t>
+                    <span
+                        t-esc="'{:10,.2f}'.format(abs(float(result.get('augment_num')))).replace(',', ' ').replace('.', ',')"/>
+                    <t t-if="float(result.get('augment_num')) &lt; 0">)</t>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Ecart d'evaluation</td>
+                  <td class="text-right">
+                    <t t-if="float(result.get('ecart_eval')) &lt; 0">(</t>
+                    <span
+                        t-esc="'{:10,.2f}'.format(abs(float(result.get('ecart_eval')))).replace(',', ' ').replace('.', ',')"/>
+                    <t t-if="float(result.get('ecart_eval')) &lt; 0">)</t>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Eliminations des elements de passifs/actifs</td>
+                  <td class="text-right">
+                    <t t-if="float(result.get('elimination')) &lt; 0">(</t>
+                    <span
+                        t-esc="'{:10,.2f}'.format(abs(float(result.get('elimination')))).replace(',', ' ').replace('.', ',')"/>
+                    <t t-if="float(result.get('elimination')) &lt; 0">)</t>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Emission d'emprunt</td>
+                  <td class="text-right">
+                    <t t-if="float(result.get('emission_emprunt')) &lt; 0">(</t>
+                    <span
+                        t-esc="'{:10,.2f}'.format(abs(float(result.get('emission_emprunt')))).replace(',', ' ').replace('.', ',')"/>
+                    <t t-if="float(result.get('emission_emprunt')) &lt; 0">)</t>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Remboursement d'emprunt</td>
+                  <td class="text-right">
+                    <t t-if="float(result.get('remb_emprunt')) &lt; 0">(</t>
+                    <span
+                        t-esc="'{:10,.2f}'.format(abs(float(result.get('remb_emprunt')))).replace(',', ' ').replace('.', ',')"/>
+                    <t t-if="float(result.get('remb_emprunt')) &lt; 0">)</t>
+                  </td>
+                </tr>
+                  <tr>
+                  <td>Subvention d'investissement</td>
+                  <td class="text-right">
+                    <t t-if="float(result.get('subv_invest')) &lt; 0">(</t>
+                    <span
+                        t-esc="'{:10,.2f}'.format(abs(float(result.get('subv_invest')))).replace(',', ' ').replace('.', ',')"/>
+                    <t t-if="float(result.get('subv_invest')) &lt; 0">)</t>
+                  </td>
+                </tr>
+                <tr>
+                  <td><b>C - FLUX DE TRESORERIE LIES AUX OPERATIONS DE FINANCEMENT</b></td>
+                  <td class="text-right">
+                    <b>
+                      <t t-if="float(result.get('flux_finance')) &lt; 0">(</t>
+                      <span
+                          t-esc="'{:10,.2f}'.format(abs(float(result.get('flux_finance')))).replace(',', ' ').replace('.', ',')"/>
+                      <t t-if="float(result.get('flux_finance')) &lt; 0">)</t>
+                    </b>
+                  </td>
+                </tr>
+                <tr>
+                  <td><b>VARIATION DE TRESORERIE DE LA PERIODE (A+B+C)</b></td>
+                  <td class="text-right">
+                    <b>
+                      <t t-if="float(result.get('variation_periode_abc')) &lt; 0">(</t>
+                      <span
+                          t-esc="'{:10,.2f}'.format(abs(float(result.get('variation_periode_abc')))).replace(',', ' ').replace('.', ',')"/>
+                      <t t-if="float(result.get('variation_periode_abc')) &lt; 0">)</t>
+                    </b>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Tresorerie d'ouverture</td>
+                  <td class="text-right">
+                    <t t-if="float(result.get('tresorerie_ouv')) &lt; 0">(</t>
+                    <span
+                        t-esc="'{:10,.2f}'.format(abs(float(result.get('tresorerie_ouv')))).replace(',', ' ').replace('.', ',')"/>
+                    <t t-if="float(result.get('tresorerie_ouv')) &lt; 0">)</t>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Tresorerie de cloture</td>
+                  <td class="text-right">
+                    <t t-if="float(result.get('tresorerie_clot')) &lt; 0">(</t>
+                    <span
+                        t-esc="'{:10,.2f}'.format(abs(float(result.get('tresorerie_clot')))).replace(',', ' ').replace('.', ',')"/>
+                    <t t-if="float(result.get('tresorerie_clot')) &lt; 0">)</t>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Incidence des variations de cours de devises</td>
+                  <td class="text-right">
+                    <t t-if="float(result.get('incidence_dev')) &lt; 0">(</t>
+                    <span
+                        t-esc="'{:10,.2f}'.format(abs(float(result.get('incidence_dev')))).replace(',', ' ').replace('.', ',')"/>
+                    <t t-if="float(result.get('incidence_dev')) &lt; 0">)</t>
+                  </td>
+                </tr>
+                <tr>
+                  <td><b>VARIATION DE TRESORERIE DE LA PERIODE</b></td>
+                  <td class="text-right">
+                    <b>
+                      <t t-if="float(result.get('variation_periode')) &lt; 0">(</t>
+                      <span
+                          t-esc="'{:10,.2f}'.format(abs(float(result.get('variation_periode')))).replace(',', ' ').replace('.', ',')"/>
+                      <t t-if="float(result.get('variation_periode')) &lt; 0">)</t>
+                    </b>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </t>
+      </t>
+    </template>
+    <report
+        id="indirect_flux_tresorerie_report"
+        model="account.move.line"
+        string="Tableau des flux de trésorerie (méthode indirecte)"
+        report_type="qweb-pdf"
+        name="l10n_mg_reports_c.indirect_flux_report_template"
+        file="l10n_mg_reports_c.indirect_flux_report_template"
+        paperformat="paperformat_choco_landscape"/>
+
+  </data>
+</odoo>

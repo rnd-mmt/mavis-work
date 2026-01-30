@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record model="ir.module.category" id="module_category_imaging_usertype">
+            <field name="name">Imagerie</field>
+            <field name="description">Choix du profil de l'utilisateur imagerie</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="group_hms_imaging_user" model="res.groups">
+            <field name="name">Utilisateur imagerie</field>
+            <field name="category_id" ref="acs_hms_base.module_category_hms"/>
+            <field name="implied_ids" eval="[(4, ref('acs_hms_base.group_hms_user'))]"/>
+        </record>
+
+        <record id="group_hms_imaging_resp_admin" model="res.groups">
+            <field name="name">Responsable SMI Imagerie</field>
+            <field name="category_id" ref="acs_hms_base.module_category_hms"/>
+            <field name="implied_ids" eval="[(4, ref('acs_hms_base.group_hms_user'))]"/>
+        </record>
+
+        <record id="group_hms_imaging_manager" model="res.groups">
+            <field name="name">Configuration Imagerie</field>
+            <field name="category_id" ref="acs_hms_base.module_category_hms"/>
+            <field name="implied_ids" eval="[(4, ref('group_hms_imaging_user'))]"/>
+        </record>
+
+        <record id="group_imaging_doctor" model="res.groups">
+            <field name="name">Medecin imagerie</field>
+            <field name="category_id" ref="module_category_imaging_usertype"/>
+        </record>
+        <record id="group_imaging_jr_doctor" model="res.groups">
+            <field name="name">Medecin imagerie junior</field>
+            <field name="category_id" ref="module_category_imaging_usertype"/>
+        </record>
+        <record id="group_imaging_sm" model="res.groups">
+            <field name="name">Secretaire medical imagerie</field>
+            <field name="category_id" ref="module_category_imaging_usertype"/>
+        </record>
+        <record id="group_imaging_manip" model="res.groups">
+            <field name="name">Manipulateur imagerie</field>
+            <field name="category_id" ref="module_category_imaging_usertype"/>
+        </record>
+        <record id="group_imaging_nurse" model="res.groups">
+            <field name="name">Infirmier imagerie</field>
+            <field name="category_id" ref="module_category_imaging_usertype"/>
+        </record>
+        <record id="group_imaging_aidesoignant" model="res.groups">
+            <field name="name">Aides-soignants imagerie</field>
+            <field name="category_id" ref="module_category_imaging_usertype"/>
+        </record>
+
+        <record id ="group_manage_collection_center" model="res.groups">
+            <field name="name">Manage Collection Center1</field>
+            <field name="category_id" ref="acs_hms_base.module_category_hms_extra"/>
+            <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+        </record>
+
+        <record id="base.user_admin" model="res.users">
+            <field name="groups_id" eval="[(4, ref('acs_imaging.group_hms_imaging_manager'))]"/>
+        </record>
+
+        <record id="acs_hms_base.group_hms_manager" model="res.groups">
+            <field name="implied_ids" eval="[(4, ref('acs_imaging.group_hms_imaging_manager'))]"/>
+        </record>
+
+    </data>
+    <data noupdate="1">
+
+        <!-- Imaging Req Rules-->
+        <!-- See own imaging Req -->
+        <record id="hms_imaging_request_rule" model="ir.rule">
+            <field name="name">Patient's Own Imaging Req</field>
+            <field name="model_id" ref="model_acs_imaging_request"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[('patient_id.user_id.id','=',user.id)]</field>
+            <field name="groups" eval="[(4, ref('acs_hms_base.group_hms_user'))]"/>
+        </record>
+        <!-- See All Imaging Req -->
+        <record id="all_hms_imaging_request_rule" model="ir.rule">
+            <field name="name">All Imaging Requests</field>
+            <field name="model_id" ref="model_acs_imaging_request"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_hms_imaging_user'))]"/>
+        </record>
+
+        <!-- Imaging Result Rules-->
+        <!-- See own imaging result -->
+        <record id="patient_imaging_test_rule" model="ir.rule">
+            <field name="name">Patient's Own Imaging Result</field>
+            <field name="model_id" ref="model_patient_imaging_test"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[('patient_id.user_id.id','=',user.id)]</field>
+            <field name="groups" eval="[(4, ref('acs_hms_base.group_hms_user'))]"/>
+        </record>
+        <!-- See All Imaging Req -->
+        <record id="all_patient_imaging_test_rule" model="ir.rule">
+            <field name="name">All Imaging Result</field>
+            <field name="model_id" ref="model_patient_imaging_test"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_hms_imaging_user'))]"/>
+        </record>
+        <record model="ir.rule" id="imaging_req_cal_comp_rule">
+            <field name="name">Imaging Request multi-company</field>
+            <field name="model_id" ref="model_acs_imaging_request"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+        <record model="ir.rule" id="imaging_test_comp_rule">
+            <field name="name">Patient Imaging Test multi-company</field>
+            <field name="model_id" ref="model_patient_imaging_test"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+        <record model="ir.rule" id="imaging_comp_rule">
+            <field name="name">Imaging Test multi-company</field>
+            <field name="model_id" ref="model_acs_imaging_test"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record model="ir.rule" id="acs_imaging_comp_rule">
+            <field name="name">Imaging multi-company</field>
+            <field name="model_id" ref="model_acs_imaging"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <!-- Portal -->
+        <record id="hms_imaging_request_portal_rule_1" model="ir.rule">
+            <field name="name">Portal Patient's Own Imaging Req</field>
+            <field name="model_id" ref="acs_imaging.model_acs_imaging_request"/>
+            <field name="domain_force">[('patient_id.partner_id','=',user.commercial_partner_id.id)]</field>
+            <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_create" eval="False"/>
+        </record>
+
+        <record id="hms_imaging_test_portal_rule_1" model="ir.rule">
+            <field name="name">Portal Patient's Own Imaging test</field>
+            <field name="model_id" ref="acs_imaging.model_patient_imaging_test"/>
+            <field name="domain_force">[('patient_id.partner_id','=',user.commercial_partner_id.id)]</field>
+            <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_create" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,341 @@
+<?xml version="1.0"?>
+<odoo>
+    
+    <!--Patient Test Results-->
+    <record model="ir.ui.view" id="patient_imaging_test_view">
+        <field name="name">Imaging Test</field>
+        <field name="model">patient.imaging.test</field>
+        <field name="arch" type="xml">
+            <form string="Imaging Test">
+                <header>
+                    <button name="action_print_cliche" string="Impr. cliché/image/tracé/gravage"
+                        attrs="{'invisible': ['|',('resp_cliche', '!=', False),('state','not in', ['draft', 'assign_pret', 'pret', 'assign_relu','relu'])]}" type="object" class="oe_highlight"
+                        groups="acs_imaging.group_imaging_manip, acs_imaging.group_imaging_nurse, acs_imaging.group_imaging_aidesoignant, acs_imaging.group_hms_imaging_manager"/>
+                    
+                    <button name="action_assign_pret" states="draft" string="Interprétation assignée" type="object" class="oe_highlight"
+                        groups="acs_imaging.group_imaging_doctor, acs_imaging.group_imaging_jr_doctor, acs_imaging.group_hms_imaging_manager"/>
+                    <button name="input_interp_done" type="object" string=" Saisie compte rendu fait" 
+                        attrs="{'invisible': ['|',('resp_saisie', '!=', False),('state','not in', ['assign_pret', 'pret'])]}"
+                        groups="acs_imaging.group_imaging_doctor,acs_imaging.group_imaging_jr_doctor, acs_imaging.group_imaging_sm, acs_imaging.group_hms_imaging_manager"/>
+                    <button name="action_interpretation_done" states="assign_pret" string="Interprétation Faite" type="object" class="oe_highlight"
+                        groups="acs_imaging.group_imaging_doctor, acs_imaging.group_imaging_jr_doctor, acs_imaging.group_hms_imaging_manager"/>
+                    
+                    <button name="action_assign_relu" states="pret" string="Relecture assignée" type="object" class="oe_highlight"
+                        groups="acs_imaging.group_imaging_doctor, acs_imaging.group_hms_imaging_manager"/>
+                    <button name="action_relecture_done" states="assign_relu" string="Relecture Faite" type="object" class="oe_highlight"
+                        groups="acs_imaging.group_imaging_doctor, acs_imaging.group_hms_imaging_manager"/>
+                    
+                    <button name="action_mise_enveloppe" states="relu" string="Mise en enveloppe" type="object" class="oe_highlight"
+                        groups="acs_imaging.group_imaging_manip, acs_imaging.group_imaging_nurse, acs_imaging.group_imaging_sm, acs_imaging.group_hms_imaging_manager"/>
+                    
+                    <button name="action_redone" string="Fait" states='verified' type="object" class="oe_highlight" groups="acs_imaging.group_imaging_doctor, acs_imaging.group_hms_imaging_manager"/>
+                    <button name="delivered" states="done" string="Résultat livré" type="object" class="oe_highlight" groups='acs_hms.group_hms_receptionist'/>
+                    <button name="action_cancel" states="draft" string="Cancel" type="object" invisible="1"/>
+                    <!-- <button name="action_open_sms" states="done" string="Envoi SMS" type="object"/> -->
+                    <button name="reverified_record" string="Re-vérifier" states="relu,done" class="btn-danger"  type="object" groups="acs_imaging.group_imaging_doctor, acs_imaging.group_hms_imaging_manager"/>
+                    <!-- <button name="consume_imaging_medicament" string="Sortie de stock" type="object" attrs="{'invisible': [('mvt_stock', '=', True)]}"/> -->
+                    <field name="state" widget="statusbar" statusbar_visible="draft,pret,relu,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object"
+                        name="action_view_attachments" icon="fa-files-o">
+                            <field string="Documents" name="attach_count" widget="statinfo"/>
+                        </button>
+                        <button class="oe_stat_button" type="object"
+                            name="action_attachments_preview" icon="fa-files-o" string="Imaging">
+                        </button>
+                        <button name="action_open_pj" type="object" class="oe_stat_button" icon="fa-download">
+                            <field string="Ordonnances" name="pj_count" widget="statinfo" />
+                        </button>
+                    </div>
+
+                    <h1>
+                        <field name="name" class="oe_inline"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="patient_id" readonly="1"/>
+                            <field name="mobile" readonly="1"/>
+                            <field name="test_id" required="1" readonly="1"/>
+                            
+                            <field name="imaging_id" attrs="{'invisible': [('imaging_id', '=', False)]}" domain=" [('is_collection_center', '=', False)]" readonly="1"/>
+                            <field name="physician_id" invisible="1"/>
+                            <field name="prescripteur" readonly="1"/>
+                            
+                            <field name="mvt_stock" invisible="1"/>
+                            <!--field name="sample_ids" widget="many2many_tags" domain="[('request_id','=',request_id),('patient_id','=',patient_id)]" options="{'no_create': True}"/-->
+                        </group>
+                        <group>
+                            <field name="user_id" required="1" invisible="1"/>
+                            <field name="collection_center_id" domain=" [('is_collection_center', '=', True)]" invisible="1"/>
+                            <field name="date_requested" readonly="1"/>
+                            <field name="date_analysis" readonly="1"/>
+                            <field name="request_id" domain="[('patient_id','=',patient_id)]" readonly="1"/>
+                            <field name="health_service_id"/>
+                            <field name="description"/>
+                            <field name="department_id" invisible="1"/>
+                            <field name="clinic_info" attrs="{'readonly': [('state', 'in', ['done', 'deliver'])]}"/>
+                        </group>
+                    </group>
+                    <group string="Details appareil d'acquisition">
+                        <group>
+                            <field name="device"/>
+                            <field name="device_firt_using"/>
+                        </group>
+                        <group>
+                            <field name="sonde" widget="many2many_tags"/>
+                            <field name="instruction"/>
+                            <field name="pdl_t"/>
+                            
+                        </group>                                
+                    </group>
+                    <notebook>
+                        <page name="old_result" string="Résultat antérieur">
+                            <group>
+                                <group>
+                                    <field name="result_date_antérieur"/>
+                                    <field name="old_rc"/>
+                                </group>
+                                <group>
+                                    <button name="get_previous_result" type="object" string=" Résultat antérieure" help="Choisir un résultat antérieur à cette date" class="btn-link mb-1 px-0" icon="fa-refresh"
+                                        groups="acs_imaging.group_imaging_doctor, acs_imaging.group_imaging_jr_doctor, acs_imaging.group_hms_imaging_manager"/>
+                                </group>
+                            </group>
+                            
+                            <separator string="Compte rendu antérieur"/>
+                            <field name="old_interpretation" type="html" class="oe_memo" readonly="1"/>
+                        </page>
+
+                        <page name="diagnosis" string="Diagnosis">
+                            <group>
+                                <group string="Impression cliché/image/tracé/gravage" groups="acs_imaging.group_imaging_manip, acs_imaging.group_imaging_aidesoignant, acs_imaging.group_hms_imaging_manager">
+                                    <!-- <field name="print_state" attrs="{'readonly': [('state', 'in', ['done', 'deliver'])]}"/> -->
+                                    <field name="print_state" readonly="1"/>
+                                </group>
+                                <group string="Interpretation" groups="acs_imaging.group_imaging_doctor, acs_imaging.group_imaging_jr_doctor, acs_imaging.group_imaging_sm, acs_imaging.group_hms_imaging_manager">
+                                    <!-- <field name="interpretation_state" attrs="{'readonly': [('state', 'in', ['relu','done', 'deliver'])]}" groups="acs_imaging.group_imaging_doctor, acs_imaging.group_hms_imaging_manager"/> -->
+                                    <field name="interpretation_state" readonly="1"/>
+                                    <field name="template"/>
+                                    <!-- <button name="input_interp_done" type="object" string=" Saisie compte rendu fait" class="btn-link mb-1 px-0" icon="fa-refresh" attrs="{'invisible': [('resp_saisie', '!=', False)]}"/> -->
+                                </group>
+
+                                <group string="Mise en enveloppe" groups="acs_imaging.group_imaging_manip, acs_imaging.group_imaging_sm, acs_imaging.group_hms_imaging_manager">
+                                    <!-- <field name="make_envelope" attrs="{'invisible': [('relecture_state', '!=', 'done')], 'readonly': [('state', 'in', ['deliver'])]}"/> -->
+                                    <field name="make_envelope" readonly="1"/>
+                                </group>
+                                
+                                <group string="Relecture" groups="acs_imaging.group_imaging_doctor, acs_imaging.group_imaging_jr_doctor, acs_imaging.group_hms_imaging_manager">
+                                    <!-- <field name="relecture_state" attrs="{'invisible': [('interpretation_state', '!=', 'done')], 'readonly': [('state', 'in', ['done', 'deliver'])]}"/> -->
+                                    <field name="relecture_state" readonly="1"/>
+                                </group>
+                            </group>
+                            <group>
+                                
+                                <group string="Hypothèse" groups="acs_imaging.group_imaging_doctor, acs_imaging.group_imaging_jr_doctor, acs_imaging.group_hms_imaging_manager">
+                                    <field name="diseases_ids" widget="many2many_tags" groups="acs_hms.group_hms_jr_doctor,acs_hms.group_hms_doctor_smi"/>
+                                </group>
+                            </group>
+                            
+                            <separator string="Compte rendu"/>
+                            <field name="interp_jr" type="html" attrs="{'readonly': [('state', 'in', ['pret','assign_relu','relu','done','deliver','verified','cancel'])]}" class="oe_memo" groups="acs_imaging.group_imaging_doctor, acs_imaging.group_imaging_jr_doctor, acs_imaging.group_imaging_sm, acs_imaging.group_hms_imaging_manager"/>
+
+                            <field name="diagnosis" placeholder="Diagnosis" invisible="1"/>
+                            <field name="note" placeholder="Extra Note" invisible="1"/>
+                        </page>
+                        <page name="senior_interp" string="Pour relecture">
+                            <field name="is_jr_doctor" invisible="1"/>
+                            <field name="interpretation" type="html" class="oe_memo" attrs="{'readonly': ['|',('is_jr_doctor', '=', True),('state', 'in', ['relu','done','deliver','cancel'])]}"
+                            groups="acs_imaging.group_imaging_doctor, acs_imaging.group_imaging_jr_doctor,acs_imaging.group_imaging_sm, acs_imaging.group_hms_imaging_manager"/>
+                        </page>
+                        <page name="logging" string="Historique">
+                            <group>
+                                <group>
+                                    <field name="resp_cliche" force_save="1" readonly="1"/>
+                                    <field name="resp_saisie" force_save="1" readonly="1"/>
+                                    <field name="resp_interpretation" force_save="1" readonly="1"/>
+                                    <field name="resp_relecture" force_save="1" readonly="1"/>
+                                    <field name="resp_enveloppe" force_save="1" readonly="1"/>
+
+                                    <field name="group_manip" widget="many2many_tags" options="{'no_create': True}"
+                                           attrs="{'invisible': [('print_state', '=', False)],'readonly': [('state', 'in', ['relu','done'])]}" invisible="1"/>
+                                    <field name="group_medimg_interpret" widget="many2many_tags" invisible="1"
+                                           attrs="{'invisible': [('interpretation_state', '=', False)], 'readonly': [('state', 'in', ['relu','done'])]}"/>
+                                    <field name="group_medimg_relecture" widget="many2many_tags" invisible="1"
+                                           attrs="{'invisible': [('relecture_state', '=', False)],
+                                            'readonly': [('state', '=', 'done')]}"/>
+                                </group>
+                                <group>
+                                    <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                                </group>                                  
+                            </group>
+                        </page>
+                        <page name="imaging_consumable_line" string="Consommables" invisible="1">
+                            <field name="imaging_consumable_line_ids" nolabel="1">
+                                <tree editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="lot_id" options="{'no_create': True}"/>
+                                    <field name="quantity"/>
+                                    <field name="product_uom" force_save="1"/>
+                                    <field name="qty_available"/>
+                                    <field name="company_id" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        
+                    </notebook>
+                    <field name="disclaimer" placeholder="Disclaimer" nolabel="1" colspan="4"/>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="patient_imaging_test_tree">
+        <field name="name">Imaging Test</field>
+        <field name="model">patient.imaging.test</field>
+        <field name="arch" type="xml">
+            <tree string="Imaging Test">
+                <header>
+                    <button name="make_envelope_tree" string="Mise en enveloppe" class="btn-success" type="object"
+                        groups="acs_imaging.group_imaging_manip, acs_imaging.group_imaging_sm, acs_imaging.group_hms_imaging_manager"/>
+                    <button name="delivered_tree" string="Resultat livré" class="btn-default" type="object"
+                        groups="acs_hms.group_hms_receptionist"/>
+                </header>
+                <field name="name"/>
+                <field name="test_id"/>
+                <field name="patient_id"/>
+                <field name="date_analysis"/>
+                <field name="print_state" widget="badge" decoration-info="print_state == 'assign'" decoration-success="print_state == 'done'"/>
+                <field name="interpretation_state" widget="badge" decoration-info="interpretation_state == 'assign'" decoration-success="interpretation_state == 'done'"/>
+                <field name="relecture_state" widget="badge" decoration-info="relecture_state == 'assign'" decoration-success="relecture_state == 'done'"/>
+                <field name="make_envelope" widget="badge" decoration-info="make_envelope == 'assign'" decoration-success="make_envelope == 'done'"/>
+                
+                <field name="state" widget="badge" decoration-info="state == 'pret'" decoration-warning="state == 'relu'"
+                       decoration-success="state == 'done' " decoration-danger="state == 'cancel'"/>
+                <field name="company_id" groups="base.group_multi_company" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_hms_patient_imaging_test_search" model="ir.ui.view">
+        <field name="name">patient.imaging.test.search</field>
+        <field name="model">patient.imaging.test</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <search string="Patient Imaging Test Results">
+                <field name="name"/>
+                <field name="test_id"/>
+                <field name="patient_id"/>
+                <field name="date_analysis"/>
+                <field name="print_state"/>
+                <field name="interpretation_state"/>
+                <field name="relecture_state"/>
+                <filter name="today" string="Resultat du jour" domain="[('date_analysis','&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0))), ('date_analysis','&lt;=', datetime.datetime.combine(context_today(), datetime.time(23,59,59)))]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_by_patient_id" string="Patient" context="{'group_by':'patient_id'}"/>
+                    <filter name="group_by_imaging_test" string="Imaging Request" context="{'group_by':'request_id'}"/>
+                    <filter name="group_by_test" string="Test" context="{'group_by':'test_id'}"/>
+                    <filter name="group_by_user" string="Tested By" context="{'group_by':'user_id'}"/>
+                    <filter name="group_by_req" string=" Prescribing Doctor" context="{'group_by':'physician_id'}"/>
+                    <filter name="group_by_state" string="State" context="{'group_by':'state'}"/>
+                    <filter string="Impression cliché faite" name="print_state" domain="[('print_state', '=', 'done')]"/>
+                    <filter string="Impression cliché à faire" name="print_state" domain="[('print_state', '=', 'to_do')]"/>
+                    <filter string="Interprétation faite" name="interpretation_state" domain="[('interpretation_state', '=', 'done')]"/>
+                    <filter string="Interprétation à faire" name="interpretation_state" domain="[('interpretation_state', '=', 'to_do')]"/>
+                    <filter string="Relecture faite" name="relecture_state" domain="[('relecture_state', '=', 'done')]"/>
+                    <filter string="Relecture à faire" name="relecture_state" domain="[('relecture_state', '=', 'to_do')]"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_patient_imaging_test_calendar" model="ir.ui.view">
+        <field name="name">patient.imaging.test.calendar</field>
+        <field name="model">patient.imaging.test</field>
+        <field name="type">calendar</field>
+        <field name="arch" type="xml">
+            <calendar string="Patient Imaging Test" color="physician_id" date_start="date_requested">
+                <field name="physician_id"/>
+                <field name="patient_id"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="patient_imaging_test_pivot" model="ir.ui.view">
+        <field name="name">patient.imaging.test.pivot</field>
+        <field name="model">patient.imaging.test</field>
+        <field name="arch" type="xml">
+            <pivot string="Patient Imaging Test">
+                <field name="date_analysis" type="row"/>
+                <field name="physician_id" type="row"/>
+                <field name="patient_id" type="row"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_imaging_result">
+        <field name="name">Resultats imagerie</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">patient.imaging.test</field>
+        <field name="view_mode">tree,form,calendar,pivot</field>
+        <field name="context">{'search_default_today': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Record Found
+            </p>
+            <p>
+                Click to add new Lab Test Result.
+            </p>
+        </field>
+    </record>
+
+    <record id="view_interpretation_template_tree" model="ir.ui.view">
+            <field name="name">Interpretation Template</field>
+            <field name="model">imaging.template</field>
+            <field name="arch" type="xml">
+                <tree string="Interpretation Template">
+                    <field name="name"/>
+                </tree>
+            </field>
+    </record>
+
+    <record id="view_acs_imaging_template_form" model="ir.ui.view">
+            <field name="name">Imaging template Report</field>
+            <field name="model">imaging.template</field>
+            <field name="arch" type="xml">
+                <form string="Contenu du template">
+                    <sheet>
+                        <group colspan="2" cols="2">
+                            <field name="name" required="True"/>
+                            <field name="user_id"/>
+                        </group>
+                        <div>
+                            <label for="interpretation_content"/>
+                            <field name="interpretation_content" placeholder="Content"/>
+                        </div>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_imaging_template" model="ir.actions.act_window">
+            <field name="name">Modèle compte rendu imagerie</field>
+            <field name="res_model">imaging.template</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Click to add Imaging Interpretation Template.
+                </p>
+            </field>
+        </record>
+
+</odoo>

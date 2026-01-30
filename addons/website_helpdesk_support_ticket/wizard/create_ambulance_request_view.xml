@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="view_ambulance_request_form" model="ir.ui.view">
+            <field name="name">create.ambulance.request.wizard.form</field>
+            <field name="model">create.ambulance.request.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Create Ambulance Request">
+                    <group>
+                        <label for="date"/>
+                        <div name="date">
+                            <div>
+                               <field name="date" class="oe_inline"/>-<field name="date_to" class="oe_inline"/>
+                            </div>
+                        </div>
+                        <field name="pick_location"/>
+                        <field name="drop_location"/>
+                        <field name="user_id"/>
+                        <field name="vehicle_id"/>
+                        <field name="driver_id"/>
+                        <field name="remark"/>
+                    </group>
+                    <footer>
+                        <button name="action_create_ambulance_request" string="Create" class="btn-primary" type="object"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_ambulance_request" model="ir.actions.act_window">
+                <field name="name">Create Ambulance Request</field>
+                <field name="type">ir.actions.act_window</field>
+                <field name="res_model">create.ambulance.request.wizard</field>
+                <!-- <field name="view_type">form</field> --> <!-- odoo13 -->
+                <field name="view_mode">form</field>
+                <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

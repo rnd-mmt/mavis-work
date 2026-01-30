@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="inter_company_transfer_ept_account_move_form_view" model="ir.ui.view">
+        <field name="name">inter.company.transfer.ept.account.move.form.view</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@id='header_right_group']/div[@name='journal_div']" position="after">
+                <field name="inter_company_transfer_id" attrs="{'invisible':[('inter_company_transfer_id','=',False)]}"
+                       readonly="1"/>
+                <field name="department_associe" attrs="{'invisible':[('department_associe','=',False)]}" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="inter_company_transfer_ept_invoice_search_view" model="ir.ui.view">
+        <field name="name">inter.company.transfer.ept.invoice.view.search</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+        <field name="arch" type="xml">
+            <field name="date" position="after">
+                <field name="inter_company_transfer_id"/>
+            </field>
+            <xpath expr="//filter[@name='activities_upcoming_all']" position="after">
+                <separator/>
+                <filter string="ICT Invoices" name="inter_company_transfer_id"
+                        domain="[('inter_company_transfer_id','!=', False)]"/>
+                <separator/>
+            </xpath>
+        </field>
+    </record>
+
+    <template id="report_invoice_material_request_inherit" inherit_id="account.report_invoice_document">
+        <xpath expr="//div[@id='informations']" position="after">
+            <div id="informations" class="row mt-4 mb-4">
+                <div class="col-auto col-3 mw-100 mb-2" t-if="o.inter_company_transfer_id">
+                    <strong>ICT:</strong>
+                    <span class="m-0" t-field="o.inter_company_transfer_id"/>
+                </div>
+                <div class="col-auto col-3 mw-100 mb-2" t-if="o.department_associe">
+                    <strong>Departement client:</strong>
+                    <span class="m-0" t-field="o.department_associe"/>
+                </div>
+                <div class="col-auto col-3 mw-100 mb-2" t-if="o.department_id">
+                    <strong>Departement:</strong>
+                    <span class="m-0" t-field="o.department_id"/>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>

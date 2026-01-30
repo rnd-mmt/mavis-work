@@ -1,0 +1,664 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- Tree view of Car Reservation -->
+    <record id="car_reservation_tree" model="ir.ui.view">
+        <field name="name">car.reservation.tree</field>
+        <field name="model">car.reservation</field>
+        <field name="arch" type="xml">
+            <tree string="Reservation Detail">
+                <field name="name" />
+                <field name="vehicle_id" />
+                <field name="employee_id" />
+                <field name="approvar_id" />
+                <field name="driver_id" required="1" />
+                <field name="start_date" />
+                <field name="end_date" />
+                <field name="pickup_location_id" />
+                <field name="drop_location_id" />
+                <field name="state" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- Pickup Location Map View -->
+    <record id="view_car_res_rec_map" model="ir.ui.view">
+        <field name="name">view.car.reservation.map</field>
+        <field name="model">car.reservation</field>
+        <field name="arch" type="xml">
+            <google_map string="Map" lat="latitude" lng="longitude">
+                <field name="latitude"/>
+                <field name="longitude"/>
+                <field name="pickup_location_id"/>
+                <field name="reservation_no"/>
+                <field name="pick_street"/>
+                <field name="pick_street2"/>
+                <field name="pick_zip"/>
+                <field name="pick_city"/>
+                <field name="pick_state_id"/>
+                <field name="pick_country_id"/>
+                <field name="pick_website"/>
+                <field name="pick_phone"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click o_kanban_record_has_image_fill o_res_partner_kanban"
+                            style="background-color: yellow;">
+                            <div class="oe_kanban_details">
+                                <strong class="o_kanban_record_title oe_partner_heading">
+                                    Reservation For : <field name="display_name"/>
+                                </strong>
+                                <div class="o_kanban_tags_section oe_kanban_partner_categories"/>
+                                <ul>
+                                    <li t-if="record.reservation_no and record.reservation_no.raw_value">
+                                        <b>Reservation Number : </b>
+                                        <field name="reservation_no"/>
+                                    </li>
+                                    <li t-if="record.pickup_location_id and record.pickup_location_id.raw_value">
+                                        <b>Pickup Location : </b>
+                                        <field name="pickup_location_id"/>
+                                    </li>
+                                    <li t-if="record.latitude and record.latitude.raw_value">
+                                        <b>Latitude : </b>
+                                        <field name="latitude"/>
+                                    </li>
+                                    <li t-if="record.longitude and record.longitude.raw_value">
+                                        <b>Longitude : </b>
+                                        <field name="longitude"/>
+                                    </li>
+                                    <li t-if="record.pick_street and
+                                        record.pick_street.raw_value">
+                                        <field name="pick_street"/>
+                                    </li>
+                                    <li t-if="record.pick_street2 and record.pick_street2.raw_value">
+                                        <field name="pick_street2"/>
+                                    </li>
+                                    <li t-if="record.pick_city and record.pick_city.raw_value">
+                                        <field name="pick_city"/>
+                                    </li>
+                                    <li t-if="record.pick_state_id and record.pick_state_id.raw_value">
+                                        <field name="pick_state_id"/>
+                                        <t t-if="record.pick_zip and record.pick_zip.raw_value">
+                                            , <field name="pick_zip"/>
+                                        </t>
+                                    </li>
+                                    <li t-if="record.pick_country_id and record.pick_country_id.raw_value">
+                                        <field name="pick_country_id"/>
+                                    </li>
+                                    <li t-if="record.pick_phone and record.pick_phone.raw_value">
+                                        <field name="pick_phone"/>
+                                    </li>
+                                    <li t-if="record.pick_website and record.pick_website.raw_value">
+                                        <field name="pick_website"/>
+                                    </li>
+                                </ul>
+                                <div class="oe_kanban_partner_links"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </google_map>
+        </field>
+    </record>
+
+    <!-- Drop Location Map View -->
+    <record id="view_car_res_rec_drop_map" model="ir.ui.view">
+        <field name="name">view.car.reservation.drop.map</field>
+        <field name="model">car.reservation</field>
+        <field name="arch" type="xml">
+            <google_map string="Map" lat="drop_latitude" lng="drop_longitude">
+                <field name="drop_latitude"/>
+                <field name="drop_longitude"/>
+                <field name="drop_location_id"/>
+                <field name="reservation_no"/>
+                <field name="drop_street"/>
+                <field name="drop_street2"/>
+                <field name="drop_zip"/>
+                <field name="drop_city"/>
+                <field name="drop_state_id"/>
+                <field name="drop_country_id"/>
+                <field name="drop_website"/>
+                <field name="drop_phone"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click o_kanban_record_has_image_fill o_res_partner_kanban"
+                            style="background-color: greenyellow;">
+                            <div class="oe_kanban_details">
+                                <strong class="o_kanban_record_title oe_partner_heading">
+                                    Reservation For : <field name="display_name"/>
+                                </strong>
+                                <div class="o_kanban_tags_section oe_kanban_partner_categories"/>
+                                <ul>
+                                    <li t-if="record.reservation_no and record.reservation_no.raw_value">
+                                        <b>Reservation Number : </b>
+                                        <field name="reservation_no"/>
+                                    </li>
+                                    <li t-if="record.drop_location_id and record.drop_location_id.raw_value">
+                                        <b>Drop Location : </b>
+                                        <field name="drop_location_id"/>
+                                    </li>
+                                    <li t-if="record.drop_latitude and record.drop_latitude.raw_value">
+                                        <b>Latitude : </b>
+                                        <field name="drop_latitude"/>
+                                    </li>
+                                    <li t-if="record.drop_longitude and record.drop_longitude.raw_value">
+                                        <b>Longitude : </b>
+                                        <field name="drop_longitude"/>
+                                    </li>
+                                    <li t-if="record.drop_street and record.drop_street.raw_value">
+                                        <field name="drop_street"/>
+                                    </li>
+                                    <li t-if="record.drop_street2 and record.drop_street2.raw_value">
+                                        <field name="drop_street2"/>
+                                    </li>
+                                    <li t-if="record.drop_city and record.drop_city.raw_value">
+                                        <field name="drop_city"/>
+                                    </li>
+                                    <li t-if="record.drop_state_id and record.drop_state_id.raw_value">
+                                        <field name="drop_state_id"/>
+                                        <t t-if="record.drop_zip and record.drop_zip.raw_value">
+                                            , <field name="drop_zip"/>
+                                        </t>
+                                    </li>
+                                    <li t-if="record.drop_country_id and record.drop_country_id.raw_value">
+                                        <field name="drop_country_id"/>
+                                    </li>
+                                    <li t-if="record.drop_phone and record.drop_phone.raw_value">
+                                        <field name="drop_phone"/>
+                                    </li>
+                                    <li t-if="record.drop_website and record.drop_website.raw_value">
+                                        <field name="drop_website"/>
+                                    </li>
+                                </ul>
+                                <div class="oe_kanban_partner_links"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </google_map>
+        </field>
+    </record>
+
+    <!-- Action for Pickup Location  -->
+    <record id="act_car_res_rec_map" model="ir.actions.act_window">
+        <field name="name">Car Reservations Pickup</field>
+        <field name="res_model">car.reservation</field>
+        <field name="view_mode">google_map</field>
+    </record>
+
+    <record id="action_car_reservation_pickup" model="ir.actions.act_window.view">
+        <field eval="3" name="sequence" />
+        <field name="view_mode">google_map</field>
+        <field name="view_id" ref="view_car_res_rec_map" />
+        <field name="act_window_id" ref="act_car_res_rec_map" />
+    </record>
+
+    <!-- Action for Drop Location  -->
+    <record id="act_car_res_rec_drop_map" model="ir.actions.act_window">
+        <field name="name">Car Reservations Drop</field>
+        <field name="res_model">car.reservation</field>
+        <field name="view_mode">google_map</field>
+    </record>
+
+    <record id="action_car_reservation_drop" model="ir.actions.act_window.view">
+        <field eval="3" name="sequence" />
+        <field name="view_mode">google_map</field>
+        <field name="view_id" ref="view_car_res_rec_drop_map" />
+        <field name="act_window_id" ref="act_car_res_rec_drop_map" />
+    </record>
+
+    <!-- Form view of Car Reservation -->
+    <record id="car_reserve_form" model="ir.ui.view">
+        <field name="name">car.reservation.form</field>
+        <field name="model">car.reservation</field>
+        <field name="arch" type="xml">
+            <form string="Reservation Details">
+                <header>
+                    <field
+                        name="state"
+                        widget="statusbar"
+                        statusbar_visible="draft,approved,done"
+                    />
+                    <button
+                        name="update_state"
+                        string="Reset to draft"
+                        type="object"
+                        class="oe_highlight"
+                        states="cancel"
+                        context="{'state':'draft'}"
+                    />
+                    <button
+                        name="update_state"
+                        string="Approve"
+                        type="object"
+                        class="oe_highlight"
+                        states="draft"
+                        groups="fleet.fleet_group_manager"
+                        context="{'state':'approved'}"
+                    />
+                    <button
+                        name="update_state"
+                        string="Reserve"
+                        type="object"
+                        class="oe_highlight"
+                        states="approved"
+                        groups="fleet.fleet_group_manager"
+                        context="{'state':'reserved'}"
+                    />
+                    <button
+                        name="update_state"
+                        string="Cancel"
+                        type="object"
+                        class="oe_highlight"
+                        states="draft,approved"
+                        context="{'state':'cancel'}"
+                    />
+                    <button
+                        name="update_state"
+                        string="Set to Done"
+                        type="object"
+                        class="oe_highlight"
+                        states="reserved"
+                        groups="fleet.fleet_group_manager"
+                        context="{'state':'done'}"
+                    />
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field
+                                name="name"
+                                required="1"
+                                placeholder="Reservation Name..."
+                            />
+                        </h1>
+                    </div>
+                    <group name="reservation_number">
+                        <field
+                            name="reservation_no"
+                            readonly="1"
+                            attrs="{'invisible': [('reservation_no', '=', False)]}"
+                        />
+                    </group>
+                    <group colspan="4" col="4">
+                        <field name="vehicle_id" required="1" />
+                        <field name="approvar_id" required="1" />
+                        <field name="driver_id" required="1" />
+                        <field name="emp_type" required="1" />
+                        <field
+                            name="employee_id"
+                            required="0"
+                            attrs="{'invisible':[('emp_type','=', 'contacts')],'required':[('emp_type','!=', 'contacts')]}"
+                        />
+                        <field
+                            name="partner_id"
+                            required="0"
+                            attrs="{'invisible':[('emp_type','=', 'employee')],'required':[('emp_type','!=', 'employee')]}"
+                        />
+                    </group>
+                    <separator
+                        name="Timing &amp; Location information"
+                        string="Timing information"
+                    />
+                    <group colspan="4" col="4">
+                        <field name="start_date" required="1" />
+                        <field name="end_date" required="1" />
+                    </group>
+                    <group colspan="4" col="4">
+                        <field name="latitude" invisible="1" />
+                        <field name="longitude" invisible="1" />
+                    </group>
+                    <separator
+                        name="Location information"
+                        string="Location information"
+                    />
+                    <group colspan="4" col="4">
+                        <label for="drop_location_id" string="Pickup Location" />
+                        <div>
+                            <field name="pickup_location_id" required="1" />
+                        </div>
+                        <div>
+                            <button
+                                name="%(act_car_res_rec_map)d"
+                                type="action"
+                                class="oe_stat_button"
+                                icon="fa-map-marker"
+                                string="View Pickup Location"
+                            />
+                        </div>
+                    </group>
+                    <group colspan="4" col="4">
+                        <label for="drop_location_id" string="Drop Location" />
+                        <div>
+                            <field name="drop_location_id" required="1" />
+                        </div>
+                        <div>
+                            <button
+                                name="%(act_car_res_rec_drop_map)d"
+                                type="action"
+                                class="oe_stat_button"
+                                context="{'search_default_name': name}"
+                                icon="fa-map-marker"
+                                string="View Drop Location"
+                            />
+                        </div>
+                        <field name="value" required="1" />
+                    </group>
+                    <group colspan="4" col="4">
+                        <field name="drop_latitude" invisible="1" />
+                        <field name="drop_longitude" invisible="1" />
+                    </group>
+                    <separator name="Description" string="Description" />
+                    <field name="notes" />
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search view of Car Reservation -->
+    <record id="view_car_reservation_search" model="ir.ui.view">
+        <field name="name">view.car.reservation.search</field>
+        <field name="model">car.reservation</field>
+        <field name="arch" type="xml">
+            <search string="Car Reservation">
+                <field name="name" />
+                <field name="vehicle_id" />
+                <field name="employee_id" />
+                <field name="partner_id" />
+                <field name="approvar_id" />
+                <field name="pickup_location_id" />
+                <field name="drop_location_id" />
+                <field name="driver_id" />
+                <filter string="New" domain="[('state','=','draft')]" name="draft" />
+                <filter
+                    string="Approved"
+                    domain="[('state','=','approved')]"
+                    name="approved"
+                />
+                <filter
+                    string="Reserved"
+                    domain="[('state','=','reserved')]"
+                    name="reserved"
+                />
+                <filter
+                    string="Cancelled"
+                    domain="[('state','=','cancel')]"
+                    name="cancelled"
+                />
+                <filter string="Done" domain="[('state','=','done')]" name="done" />
+                <group expand="0" string="Group By...">
+                    <filter
+                        string="Vehicle"
+                        domain="[]"
+                        context="{'group_by':'vehicle_id'}"
+                        name="vehicle_group_by"
+                    />
+                    <filter
+                        string="Employee"
+                        domain="[]"
+                        context="{'group_by':'employee_id'}"
+                        name="employee_group_by"
+                    />
+                    <filter
+                        string="Contact"
+                        domain="[]"
+                        context="{'group_by':'partner_id'}"
+                        name="partner_group_by"
+                    />
+                    <filter
+                        string="Approved By"
+                        domain="[]"
+                        context="{'group_by':'approvar_id'}"
+                        name="approvar_group_by"
+                    />
+                    <filter
+                        string="Driver"
+                        domain="[]"
+                        context="{'group_by':'driver_id'}"
+                        name="driver_group_by"
+                    />
+                    <filter
+                        string="Pickup Location"
+                        domain="[]"
+                        context="{'group_by':'pickup_location_id'}"
+                        name="pickup_location_id_group_by"
+                    />
+                    <filter
+                        string="Drop Location"
+                        domain="[]"
+                        context="{'group_by':'drop_location_id'}"
+                        name="drop_location_id_group_by"
+                    />
+                    <filter
+                        string="Status"
+                        context="{'group_by':'state'}"
+                        name="status_group_by"
+                    />
+                    <filter
+                        name="today_group_by"
+                        string="Today"
+                        domain="[('start_date', '&gt;=', datetime.datetime.now().replace(hour=0, minute=0, second=0)),('start_date', '&lt;=', datetime.datetime.now().replace(hour=23, minute=59, second=59))]"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Calendar: Car Reservation -->
+    <record id="view_car_reservation_calendar" model="ir.ui.view">
+        <field name="name">Car Reservation</field>
+        <field name="model">car.reservation</field>
+        <field name="arch" type="xml">
+            <calendar
+                string="Car Reservation Detail"
+                color="employee_id"
+                date_start="start_date"
+                date_stop="end_date"
+                mode="month"
+                quick_add="False"
+            >
+            </calendar>
+        </field>
+    </record>
+
+    <!-- Action of Car Reservation -->
+    <record id="action_car_reservation" model="ir.actions.act_window">
+        <field name="name">Car Reservations</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">car.reservation</field>
+        <!-- <field name="view_type">form</field> -->
+        <field name="view_mode">tree,form,search,calendar</field>
+    </record>
+
+    <!-- Inherited Form view of Fleet Vehicle -->
+    <record id="fleet_vehicle_extended_form" model="ir.ui.view">
+        <field name="name">fleet.vehicle.extended.form</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_form" />
+        <field name="arch" type="xml">
+            <!--        <xpath expr="//header/field[@name='state_id']" position="replace">
+                <field name="state" widget="statusbar"
+                    statusbar_visible="inspection,reserved,available" />
+            </xpath> -->
+            <field name="odometer" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </field>
+            <xpath
+                expr="//form/sheet/div[1]/button[@name='return_action_to_open']"
+                position="after"
+            >
+                <button
+                    name="%(action_car_reservation)d"
+                    type="action"
+                    class="oe_stat_button"
+                    icon="fa-tachometer"
+                    context="{'search_default_vehicle_id':id}"
+                    help="show the reservations for this vehicle"
+                >
+                    <field name="reservation_count" widget="statinfo" />
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Inherited Search view of Fleet -->
+    <record id="fleet_vehicle_view_search_car_inherit" model="ir.ui.view">
+        <field name="name">fleet.vehicle.search.car.inherit</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_search" />
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="fuel_type" />
+                <field name="seats" />
+                <field name="doors" />
+                <field name="color" />
+                <field name="state" />
+            </field>
+            <xpath expr="//search/group" position="inside">
+                <filter
+                    name="groupby_status"
+                    context="{'group_by' : 'state'}"
+                    string="Status"
+                />
+                <filter
+                    name="groupby_fuel_type"
+                    context="{'group_by' : 'fuel_type'}"
+                    string="Fuel Type"
+                />
+                <filter
+                    name="groupby_doors"
+                    context="{'group_by' : 'doors'}"
+                    string="Doors Number"
+                />
+                <filter
+                    name="groupby_seats"
+                    context="{'group_by' : 'seats'}"
+                    string="Seats Number"
+                />
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Inherited Tree view of Fleet -->
+    <record id='fleet_vehicle_odometer_view_tree_car_inherit' model='ir.ui.view'>
+        <field name="name">fleet.vehicle.odometer.tree.car.inherit</field>
+        <field name="model">fleet.vehicle.odometer</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_odometer_view_tree" />
+        <field name="arch" type="xml">
+            <field name="unit" position="after">
+                <field name="pickup_location_id" />
+                <field name="drop_location_id" />
+            </field>
+        </field>
+    </record>
+
+    <!-- Inherited Kanban view of Fleet -->
+    <record id='fleet_vehicle_view_kanban_car_inherit' model='ir.ui.view'>
+        <field name="name">fleet.vehicle.kanban.car.inherit</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_kanban" />
+        <field name="arch" type="xml">
+            <xpath expr="//kanban[@default_group_by='state_id']" position="attributes">
+                <attribute name="default_group_by">state</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Menu of Car Reservation -->
+    <menuitem
+        id="menu_car_reservation"
+        action="action_car_reservation"
+        parent="fleet.fleet_vehicles"
+        sequence="1"/>
+
+    <!-- Form view of Reservation Location -->
+    <record id="view_reservation_location_form" model="ir.ui.view">
+        <field name="name">view.reservation.location.form</field>
+        <field name="model">reservation.location</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button
+                        string="Geolocate"
+                        name="geo_localize"
+                        colspan="2"
+                        icon="fa-check"
+                        type="object"
+                        attrs="{'invisible': [('id', '=', False)]}"
+                    />
+                </header>
+                <group>
+                    <group>
+                        <field
+                            name="name"
+                            required="1"
+                            widget="gplaces_autocomplete"
+                            options="{'lat':'partner_latitude', 'lng':'partner_longitude'}"/>
+                        <field name="partner_latitude" />
+                        <field name="partner_longitude" />
+                    </group>
+                    <group>
+                        <label for="street" string="Address" />
+                        <div class="o_address_format">
+                            <field
+                                name="street"
+                                placeholder="Street..."
+                                class="o_address_street"
+                            />
+                            <field
+                                name="street2"
+                                placeholder="Street 2..."
+                                class="o_address_street"
+                            />
+                            <field name="city" placeholder="City" class="o_address_city" />
+                            <field
+                                name="state_id"
+                                class="o_address_state"
+                                placeholder="State"
+                                options='{"no_open": True}'
+                            />
+                            <field name="zip" placeholder="ZIP" class="o_address_zip" />
+                            <field
+                                name="country_id"
+                                placeholder="Country"
+                                class="o_address_country"
+                                options='{"no_open": True, "no_create": True}'
+                            />
+                        </div>
+                        <field name="phone" widget="phone" />
+                        <field name="website" widget="url"
+                            placeholder="e.g. www.odoo.com"/>
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree view of Reservation Location -->
+    <record id="view_reservation_location_tree" model="ir.ui.view">
+        <field name="name">view.reservation.location.tree</field>
+        <field name="model">reservation.location</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="partner_latitude"/>
+                <field name="partner_longitude"/>
+                <field name="phone"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Action of Reservation Location -->
+    <record id="reservation_location_action" model="ir.actions.act_window">
+        <field name="name">Reservation Locations</field>
+        <field name="res_model">reservation.location</field>
+        <!-- <field name="view_type">form</field> -->
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Menu item of Reservation Location -->
+    <menuitem
+        action="reservation_location_action"
+        id="menu_reservation_location"
+        parent="fleet.fleet_configuration"/>
+</odoo>
+

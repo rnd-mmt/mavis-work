@@ -1,0 +1,118 @@
+
+.o_arvinv_footer, .o_arvinv_header, .o_report_layout_arvinv {
+    color: #000;
+}
+
+.o_arvinv_header{
+    border-bottom: 3px solid #829baf;
+}
+
+.o_arvinv_header img {
+    max-height: 140px;
+    max-width: 300px;
+}
+
+.o_arvinv_footer {
+    margin: 0 3px;
+    margin-top: 200px;
+    border-top: 3px solid #829baf;
+    h4 {
+        color: #829baf;
+        font-weight: bolder;
+    }
+    .pagenumber {
+        border: 3px solid #176882;
+        background-color: #829baf;
+        color: white;
+        padding: 4px 8px;
+        text-align: center;
+    }
+}
+
+.o_report_layout_arvinv {
+    h1, h2, h3 {
+        color: #176882;
+        font-weight: bolder;
+    }
+    strong {
+        color: #829baf;
+    }
+
+    table {
+       /* &.o_main_table {
+            margin-bottom: 0;
+        }*/
+
+        thead {
+            background-color: rgba(#829baf, 0.9);
+            color: #fff;
+            /*color: #829baf;*/
+            tr th {
+                border-top: 2px solid gray('400') !important;
+               /* border-left: 2px solid gray('400') !important;
+                border-right: 2px solid gray('400') !important;*/
+                /*text-transform: uppercase;*/
+            }
+            tr th:first-child {
+                width: 48%;
+            }
+        }
+        tbody {
+            color: #000;
+            tr td {
+                border-top: 2px solid gray('400') !important;
+                border-left: 2px solid gray('400') !important;
+                border-right: 2px solid gray('400') !important;
+            }
+            tr:last-child td {
+                border-bottom: 2px solid gray('400') !important;
+            }
+            /*tr {
+                td {
+                    padding: 15px 5px;
+                }
+                td:last-child {
+                }
+            }*/
+        }
+    }
+    #total {
+        /*strong {
+            color: #829baf;
+        }*/
+    }
+    /*Total table*/
+    /* compat 12.0 */
+    .row:not(#total) > div:has(table) {
+        top: -16px;
+    }
+    /* row col rule compat 12.0 */
+    .row > div > table,
+    div#total table {
+        tr {
+            &:first-child td,
+            &.o_subtotal {
+                border-top: 2px solid gray('400') !important;
+            }
+            &:last-child td,
+            &.o_total {
+                strong{
+                    color: #fff;
+                }
+                background-color: rgba(#829baf, 0.9);
+                color: #fff;
+                border-top: 2px solid gray('400') !important;
+            }
+        }
+    }
+    /*insertion signature facture*/
+    #fact_sign_tampon{
+        background-image: url('/web/static/src/img/sign_arv.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        width: 300px;
+        height: 156px;
+        position: absolute;
+        right: 40px;
+    }
+}

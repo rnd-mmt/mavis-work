@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t t-inherit="web.ControlPanel" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('o_cp_bottom_left')]" position="before">
+                <button class="btn btn-primary health_service_creation o_hidden" style="min-width: 108px; margin-right: 5px; ">Créer Service Santé</button>
+                <style>
+                    
+                div.modal-dialog button.health_service_creation {
+                    display: none !important;
+                }
+                </style>
+		</xpath>
+    </t>
+</templates>

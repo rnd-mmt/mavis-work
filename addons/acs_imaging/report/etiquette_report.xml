@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="img_request_label_document">
+        <style>
+          
+            body {
+                font-family: "Arial", sans-serif; 
+                /*font-size: 8px; */
+                line-height: 1.0; 
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: center; 
+                align-items: center; 
+                height: 100vh;
+                text-align: left;
+            }
+
+            p {
+                margin: 1.8mm 0;
+                padding: 0;
+            }
+
+            strong {
+                font-weight: bold;
+               /* font-size: 8px; */
+            }
+        </style>
+        <t t-set="doc" t-value="doc.sudo()"/>
+        <t t-set="doc" t-value="doc.with_context({'lang':doc.patient_id.lang})"/>
+        <div class="container">
+            <p>Nom et Prénoms :
+                <strong>
+                    <span t-field="doc.patient_id.name"/>
+                </strong>
+            </p>
+            <p>Date de naissance :
+                <strong>
+                    <span t-field="doc.patient_id.birthday"/>
+                </strong>
+            </p>
+            <p>Date d'examen :
+                <strong>
+                    <span t-field="doc.acquisition_date"/>
+                </strong>
+            </p>
+            <p>Type d'examen :
+                <strong>
+                    <span t-field="doc.test_type"/>
+                </strong>
+            </p>
+            <p>Référence service :
+                <strong>
+                    <span t-field="doc.health_service_id.name"/>
+                </strong>
+            </p>
+            <p style="page-break-before:always;"> </p>
+        </div>
+    </template>
+    <template id="img_request_label">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="acs_imaging.img_request_label_document" t-lang="doc.patient_id.lang"/>
+            </t>
+        </t>
+    </template>
+    <record id="img_request_label_report_id" model="ir.actions.report">
+        <field name="name">Etiquette Examen Imagérie</field>
+        <field name="model">acs.imaging.request</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">acs_imaging.img_request_label</field>
+        <field name="report_file">acs_imaging.img_request_label</field>
+        <field name="print_report_name">(object.name or 'Etiquette').replace('/','_')</field>
+        <field name="binding_model_id" ref="model_acs_imaging_request"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

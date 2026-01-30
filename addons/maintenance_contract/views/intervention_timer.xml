@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="project_task_timer_inherit_view" model="ir.ui.view">
+            <field name="name">project task timer</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//header" position="inside">
+                    <button name="start_task_intervention" type="object" class="btn-success" string="Arreter l'equipement" attrs="{'invisible': [('task_timer', '=', True)]}" />
+                    <button name="stop_task_intervention" type="object" class="btn-danger" string="Démarrer l'équipement" attrs="{'invisible': [('task_timer', '=', False)]}" />
+                </xpath>
+
+                <xpath expr="//field[@name='tag_ids']" position="after">
+                    <label for="task_timer"/>
+                    <div class="o_row" style="display: inline-block;">
+                        <field name="task_timer" widget="boolean_toggle"/>
+                    </div>
+                </xpath>
+
+                <xpath expr="//div[@name='button_box']" position="inside">
+                    <div style="margin-top:10px;">
+                    <widget name="web_ribbon" text="En cours de maintenance"
+                                attrs="{'invisible': [('task_timer', '=', False)]}"/>
+                    </div>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="project_task_timer_inherit_view1" model="ir.ui.view">
+            <field name="name">project task timer1</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="maintenance_contract.project_task_timer_inherit_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='timesheet_ids']/tree/field[@name='unit_amount']" position="before">
+                    <field name="date_start"/>
+                    <field name="date_end"/>
+                    <field name="timer_duration" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='progress']" position="after">
+                    <field name="is_user_working" invisible="1"/>
+                    <label for="duration"/>
+                    <div>
+                        <button style="pointer-events: none;" class="oe_inline label label-default">
+                            <field name="duration" id="duration" widget="intervention_duration" style="color: red;" string="Temps d’arrêt (down time)"/>
+                        </button>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

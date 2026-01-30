@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data noupdate="0">
+    <!-- Compte de résultat par fonction -->
+    <record id="report_compte_resultat_fonction" model="account.financial.report">
+      <field name="name">Compte de résultat par fonction</field>
+      <field name='type_financial_report_mg'>income_statement</field>
+      <field name="type">sum_mg</field>
+    </record>
+
+    <record id="report_marge_brute" model="account.financial.report">
+      <field name="name">MARGE BRUTE</field>
+      <field name="code">MB</field>
+      <field name="financial_report_id" ref="report_compte_resultat_fonction"/>
+      <field name="parent_id" ref="report_compte_resultat_fonction"/>
+      <field name="formulas">balance = PAO.balance + CV.balance</field>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="1"/>
+      <field name="type">report_mg_pl</field>
+      <field name="style_overwrite">0</field>
+    </record>
+    <record id="report_produit_activite_ordinaire" model="account.financial.report">
+      <field name="name">Produits des activités ordinaires</field>
+      <field name="code">PAO</field>
+      <field name="parent_id" ref='report_marge_brute'/>
+      <field name="domain" eval="[('code', '=like', '70%')]"/>
+      <field name="formulas">balance = -sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="2"/>
+      <field name="type">report_mg_pl</field>
+      <field name="style_overwrite">1</field>
+    </record>
+
+<!--    <record id="report_cout_vente" model="account.financial.report">-->
+<!--      <field name="name">Coûts des ventes</field>-->
+<!--      <field name="code">CV</field>-->
+<!--      <field name="parent_id" ref='report_marge_brute'/>-->
+<!--      <field name="formulas">balance = PSN.balance</field>-->
+<!--      <field name="groupby">account_id</field>-->
+<!--      <field name="sequence" eval="2"/>-->
+<!--      <field name="level" eval="2"/>-->
+<!--      <field name="type">report_mg_pl</field>-->
+<!--      <field name="style_overwrite">1</field>-->
+<!--    </record>-->
+    <record id="report_cout_vente" model="account.financial.report">
+      <field name="name">Coûts des ventes</field>
+      <field name="code">CV</field>
+      <field name="parent_id" ref='report_marge_brute'/>
+      <field name="formulas">balance = -sum.balance</field>
+			 <field name="domain" eval="[('code', '=like', '60%')]"/>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="2"/>
+      <field name="type">report_mg_pl</field>
+      <field name="style_overwrite">1</field>
+    </record>
+
+    <record id="report_resultat_operationnel_fonction" model="account.financial.report">
+      <field name="name">RESULTAT OPERATIONNEL</field>
+      <field name="code">ROPF</field>
+      <field name="financial_report_id" ref="report_compte_resultat_fonction"/>
+      <field name="parent_id" ref="report_compte_resultat_fonction"/>
+      <field name="formulas">balance = APOF.balance + CCOMF.balance + CADMINF.balance + ACOF.balance + MB.balance
+      </field>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="1"/>
+      <field name="type">report_mg_pl</field>
+      <field name="style_overwrite">0</field>
+    </record>
+<!--    <record id="report_autre_produit_operationnel_fonction" model="account.financial.report">-->
+<!--      <field name="name">Autres produits opérationnels</field>-->
+<!--      <field name="code">APOF</field>-->
+<!--      <field name="parent_id" ref='report_resultat_operationnel_fonction'/>&lt;!&ndash; 7571 7572 758 &ndash;&gt;-->
+<!--      <field name="formulas">balance = APON.balance</field>-->
+<!--      <field name="groupby">account_id</field>-->
+<!--      <field name="sequence" eval="1"/>-->
+<!--      <field name="level" eval="2"/>-->
+<!--      <field name="type">report_mg_pl</field>-->
+<!--      <field name="style_overwrite">1</field>-->
+<!--    </record>-->
+      <record id="report_autre_produit_operationnel_fonction" model="account.financial.report">
+      <field name="name">Autres produits opérationnels</field>
+      <field name="code">APOF</field>
+      <field name="parent_id" ref='report_resultat_operationnel_fonction'/><!-- 7571 7572 758 -->
+      <field name="formulas">balance = -sum.balance</field>
+        <field name="domain" eval="['|','|','|',('code', '=like', '74%'),('code', '=like', '75%'),('code', '=like', '71%'),('code', '=like', '72%')]"/>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="2"/>
+      <field name="type">report_mg_pl</field>
+      <field name="style_overwrite">1</field>
+    </record>
+
+<!--    <record id="report_couts_commerciaux_fonction" model="account.financial.report">-->
+<!--      <field name="name">Coûts commerciaux</field>-->
+<!--      <field name="code">CCOMF</field>-->
+<!--      <field name="parent_id" ref='report_resultat_operationnel_fonction'/>-->
+<!--      <field name="formulas">balance = CEN.balance</field>-->
+<!--      <field name="groupby">account_id</field>-->
+<!--      <field name="sequence" eval="2"/>-->
+<!--      <field name="level" eval="2"/>-->
+<!--      <field name="type">report_mg_pl</field>-->
+<!--      <field name="style_overwrite">1</field>-->
+<!--    </record>-->
+
+     <record id="report_couts_commerciaux_fonction" model="account.financial.report">
+      <field name="name">Coûts commerciaux</field>
+      <field name="code">CCOMF</field>
+      <field name="parent_id" ref='report_resultat_operationnel_fonction'/>
+      <field name="formulas"></field>
+<!--       <field name="domain" eval="['|',('code', '=like', '420%'),('code', '=like', '642%')]"/>-->
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="2"/>
+      <field name="type">report_mg_pl</field>
+      <field name="style_overwrite">1</field>
+    </record>
+
+    <record id="report_charge_admin_fonction" model="account.financial.report">
+      <field name="name">Charges Administratives</field>
+      <field name="code">CADMINF</field>
+      <field name="parent_id" ref='report_resultat_operationnel_fonction'/>
+      <field name="formulas">balance = CPT_61.balance + CPT_62.balance + CDP.balance + ITVA.balance + CPT_68.balance - RPROPV.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="3"/>
+      <field name="level" eval="2"/>
+      <field name="type">report_mg_pl</field>
+      <field name="style_overwrite">1</field>
+    </record>
+
+
+<!--    <record id="report_autre_charge_operationnelle_fonction" model="account.financial.report">-->
+<!--      <field name="name">Autres charges opérationnelles</field>-->
+<!--      <field name="code">ACOF</field>-->
+<!--      <field name="parent_id" ref='report_resultat_operationnel_fonction'/>-->
+<!--      <field name="formulas">balance = ACON.balance</field>-->
+<!--      <field name="groupby">account_id</field>-->
+<!--      <field name="sequence" eval="4"/>-->
+<!--      <field name="level" eval="2"/>-->
+<!--      <field name="type">report_mg_pl</field>-->
+<!--      <field name="style_overwrite">1</field>-->
+<!--    </record>-->
+     <record id="report_autre_charge_operationnelle_fonction" model="account.financial.report">
+      <field name="name">Autres charges opérationnelles</field>
+      <field name="code">ACOF</field>
+      <field name="parent_id" ref='report_resultat_operationnel_fonction'/>
+      <field name="formulas">balance = -sum.balance</field>
+        <field name="domain" eval="[('code', '=like', '65%')]"/>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="4"/>
+      <field name="level" eval="2"/>
+      <field name="type">report_mg_pl</field>
+      <field name="style_overwrite">1</field>
+    </record>
+
+    <record id="report_resultat_financier_fonction" model="account.financial.report">
+      <field name="name">RESULTAT FINANCIER</field>
+      <field name="code">RFI</field>
+      <field name="financial_report_id" ref="report_compte_resultat_fonction"/>
+      <field name="parent_id" ref="report_compte_resultat_fonction"/>
+      <field name="formulas">balance = PRODFIF.balance + CHFI.balance</field>
+      <field name="sequence" eval="3"/>
+      <field name="level" eval="1"/>
+      <field name="type">report_mg_pl</field>
+      <field name="style_overwrite">0</field>
+    </record>
+    <record id="report_produit_financier_fonction" model="account.financial.report">
+      <field name="name">Produits financiers</field>
+      <field name="code">PRODFIF</field>
+      <field name="parent_id" ref='report_resultat_financier_fonction'/>
+      <field name="formulas">balance = PFI.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="2"/>
+      <field name="type">report_mg_pl</field>
+      <field name="style_overwrite">1</field>
+    </record>
+
+    <record id="report_charge_financiere_fonction" model="account.financial.report">
+      <field name="name">Charges financières</field>
+      <field name="code">CHFI</field>
+      <field name="parent_id" ref='report_resultat_financier_fonction'/>
+      <field name="formulas">balance = CFI.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="2"/>
+      <field name="type">report_mg_pl</field>
+      <field name="style_overwrite">1</field>
+    </record>
+
+
+    <record id="resultat_avant_impots" model="account.financial.report">
+      <field name="name">RESULTAT AVANT IMPOTS</field>
+      <field name="code">RESAVIMP</field>
+      <field name="financial_report_id" ref="report_compte_resultat_fonction"/>
+      <field name="parent_id" ref="report_compte_resultat_fonction"/>
+      <field name="formulas">balance = ROPF.balance + RFI.balance</field>
+      <field name="sequence" eval="4"/>
+      <field name="level" eval="1"/>
+      <field name="type">report_mg_pl</field>
+      <field name="style_overwrite">0</field>
+    </record>
+
+    <record id="report_impot_exigible_sur_resultat" model="account.financial.report">
+      <field name="name">Impôts exigibles sur les résultats</field>
+      <field name="code">IESR</field>
+      <field name="financial_report_id" ref="report_compte_resultat_fonction"/>
+      <field name="parent_id" ref="report_compte_resultat_fonction"/>
+      <field name="formulas">balance = IESRN.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="5"/>
+      <field name="level" eval="2"/>
+      <field name="type">report_mg_pl</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_impot_differe" model="account.financial.report">
+      <field name="name">Impôts différés</field>
+      <field name="code">IDIFF</field>
+      <field name="financial_report_id" ref="report_compte_resultat_fonction"/>
+      <field name="parent_id" ref="report_compte_resultat_fonction"/>
+      <field name="formulas">balance = IDIFFV.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="6"/>
+      <field name="level" eval="2"/>
+      <field name="type">report_mg_pl</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_resultat_net_activite_ordinaire" model="account.financial.report">
+      <field name="name">RESULTAT NET DES ACTIVITES ORDINAIRES</field>
+      <field name="code">RESNAO</field>
+      <field name="financial_report_id" ref="report_compte_resultat_fonction"/>
+      <field name="parent_id" ref="report_compte_resultat_fonction"/>
+      <field name="formulas">balance = RESAVIMP.balance + IESR.balance + IDIFF.balance</field>
+      <field name="sequence" eval="7"/>
+      <field name="level" eval="1"/>
+      <field name="type">report_mg_pl</field>
+      <field name="style_overwrite">0</field>
+    </record>
+    <record id="report_resultat_extraordinaire" model="account.financial.report">
+      <field name="name">RESULTAT EXTRAORDINAIRE</field>
+      <field name="code">RESEXT</field>
+      <field name="financial_report_id" ref="report_compte_resultat_fonction"/>
+      <field name="parent_id" ref="report_compte_resultat_fonction"/>
+      <field name="formulas">balance = PRODEX.balance - CHEX.balance</field>
+      <field name="sequence" eval="8"/>
+      <field name="level" eval="1"/>
+      <field name="type">report_mg_pl</field>
+      <field name="style_overwrite">0</field>
+    </record>
+    <record id="report_produit_extraordinaire" model="account.financial.report">
+      <field name="name">Produits extraordinaires</field>
+      <field name="code">PRODEX</field>
+      <field name="parent_id" ref='report_resultat_extraordinaire'/>
+      <field name="formulas">balance = -sum.balance</field>
+       <field name="domain" eval="[('code', '=like', '770%')]"/>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="2"/>
+      <field name="type">report_mg_pl</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_charge_extraordinaire" model="account.financial.report">
+      <field name="name">Charges extraordinaires</field>
+      <field name="code">CHEX</field>
+      <field name="parent_id" ref='report_resultat_extraordinaire'/>
+      <field name="formulas">balance = -sum.balance</field>
+       <field name="domain" eval="[('code', '=like', '670%')]"/>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="2"/>
+      <field name="type">report_mg_pl</field>
+      <field name="style_overwrite">1</field>
+    </record>
+
+    <record id="resultat_net_de_l_exercice" model="account.financial.report">
+      <field name="name">RESULTAT NET DE L'EXERCICE</field>
+      <field name="code">RESNEXO</field>
+      <field name="financial_report_id" ref="report_compte_resultat_fonction"/>
+      <field name="parent_id" ref="report_compte_resultat_fonction"/>
+      <field name="formulas">balance = RESNAO.balance + RESEXT.balance</field>
+      <field name="sequence" eval="9"/>
+      <field name="level" eval="1"/>
+      <field name="type">report_mg_pl</field>
+      <field name="style_overwrite">0</field>
+    </record>
+
+    <!-- add action and menu -->
+    <record id="action_account_report_compte_resultat_fonction" model="ir.actions.act_window">
+      <field name="name">Compte de résultat par fonction</field>
+      <field name="res_model">accounting.report</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="view_mode">form</field>
+      <field name="view_id" ref="accounting_pdf_reports.accounting_report_view"/>
+      <field name="target">new</field>
+      <field name="context" eval="{'default_account_report_id':ref('report_compte_resultat_fonction')}"/>
+    </record>
+
+
+    <menuitem id="menu_action_account_report_compte_resultat_fonction"
+              name="Compte de résultat par fonction"
+              sequence="1"
+              action="action_account_report_compte_resultat_fonction"
+              parent="l10n_mg_reports_c.account_reports_mg_statements_menu"
+              groups="account.group_account_user,account.group_account_manager"/>
+  </data>
+</odoo>

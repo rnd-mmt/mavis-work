@@ -1,0 +1,229 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <!-- Laboratory -->
+    <record id="view_acs_imaging_tree" model="ir.ui.view">
+        <field name="name">acs.imaging.tree</field>
+        <field name="model">acs.imaging</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="description"/>
+                <field name="is_collection_center"/>
+                <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_acs_imaging_form" model="ir.ui.view">
+        <field name="name">acs.imaging.form</field>
+        <field name="model">acs.imaging</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" required="1"/>
+                        <field name="partner_id" readonly="1" required="0"/>
+                        <field name="is_collection_center"/>
+                        <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_acs_imaging" model="ir.actions.act_window">
+        <field name="name">Imaging</field>
+        <field name="res_model">acs.imaging</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('is_collection_center','=',False)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Click to add a new Imaging.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_acs_collection_center" model="ir.actions.act_window">
+        <field name="name">Collection Center</field>
+        <field name="res_model">acs.imaging</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('is_collection_center','=',True)]</field>
+        <field name="context">{'default_is_collection_center':True}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Click to add a new Collection Center.
+            </p>
+        </field>
+    </record>
+
+    <!-- Imaging Test type -->
+    <record model="ir.ui.view" id="hms_test_view">
+        <field name="name">Imaging Test</field>
+        <field name="model">acs.imaging.test</field>
+        <field name="arch" type="xml">
+            <form string="Imaging Tests">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="product_id" domain="[('type','=','service'), ('hospital_product_type', 'in', ['CT','MR','CR','US','MG','AU','scanner', 'echo', 'irm','radio_img','radio_int', 'exploration'])]" context="{'default_type': 'service', 'default_hospital_product_type': 'CT'}"/>
+                            <field name="acs_tat"/>
+                            <!--field name="sample_type_id"/-->
+                        </group>
+                        <group>
+                            <field name="code"/>
+                            <field name="test_type"/>
+                            <!--field name="result_value_type"/-->
+                            <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page name="diagnosis" string="Diagnosis">
+                            <!--field name="critearea_ids" colspan="4" nolabel="1" widget="section_and_note_one2many" context="{'default_result_value_type': result_value_type}">
+                                <tree editable="bottom" string="Test Cases">
+                                    <control>
+                                        <create string="Add a line"/>
+                                        <create string="Add a section" context="{'default_display_type': 'line_section'}"/>
+                                    </control>
+                                    <field name="sequence" widget="handle"/> 
+                                    <field name="display_type" invisible="1"/>
+                                    <field name="name" required="1" widget="section_and_note"/>
+                                    <field name="normal_range_male" attrs="{ 'required': [('display_type', '=', False)]}"/>
+                                    <field name="normal_range_female" attrs="{ 'required': [('display_type', '=', False)]}"/>
+                                    <field name="lab_uom_id"/>
+                                    <field name="result_value_type"/>
+                                    <field name="remark"/>
+                                </tree>
+                            </field-->
+                        </page>
+                        <!--page name="consumable_lines" string="Consumed Material">
+                            <field name="consumable_line_ids" nolabel="1" colspan="4">
+                                <tree string="Line" editable="top">
+                                    <field name="product_id" expand="1" required="1" domain="[('tracking','=','none')]"/>
+                                    <field name="product_uom" required="1"/>
+                                    <field name="qty" required="1"/>
+                                    <field name="date" required="1"/>
+                                    <field name="move_id" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page-->
+                    </notebook>
+                    <field name="description" placeholder="Description"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="hms_test_tree">
+        <field name="name">Imaging Tests</field>
+        <field name="model">acs.imaging.test</field>
+        <field name="arch" type="xml">
+            <tree string="Imaging test type">
+                <field name="name"></field>
+                <field name="code"></field>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="hms_action_form_test">
+        <field name="name">Imaging Tests</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">acs.imaging.test</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Record Found
+            </p>
+            <p>
+                Click to add new Imaging Test.
+            </p>
+        </field>
+    </record>
+
+    <!--CABINE-->
+    <record id="view_acs_cabine_tree" model="ir.ui.view">
+        <field name="name">acs.imaging.cabine.tree</field>
+        <field name="model">acs.imaging.cabine</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="test_type"/>
+                <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_acs_cabine_form" model="ir.ui.view">
+        <field name="name">acs.imaging.cabine.form</field>
+        <field name="model">acs.imaging.cabine</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" required="1"/>
+                        <field name="test_type"/>
+                        <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_acs_imaging_cabine" model="ir.actions.act_window">
+        <field name="name">Salle acquisition</field>
+        <field name="res_model">acs.imaging.cabine</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Click to add a new Cabine.
+            </p>
+        </field>
+    </record>
+
+    <!--APPAREIL-->
+    <record id="view_imaging_device_tree" model="ir.ui.view">
+        <field name="name">imaging.device.tree</field>
+        <field name="model">imaging.device</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="type"/>
+                <field name="first_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_imaging_device_form" model="ir.ui.view">
+        <field name="name">imaging.device.form</field>
+        <field name="model">imaging.device</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" required="1"/>
+                        <field name="type"/>
+                        <field name="first_date"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_imaging_device" model="ir.actions.act_window">
+        <field name="name">Appareil imagerie</field>
+        <field name="res_model">imaging.device</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Click to add a new Cabine.
+            </p>
+        </field>
+    </record>
+
+</odoo>

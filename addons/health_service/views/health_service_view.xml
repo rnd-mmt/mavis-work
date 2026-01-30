@@ -1,0 +1,239 @@
+<?xml version="1.0"?>
+<odoo>
+    <template id="assets_backend" name="Creation health service" inherit_id="web.assets_backend" >
+        <xpath expr="//script[last()]" position="after">
+            <script type="text/javascript" src="/health_service/static/src/js/create_service.js" />
+        </xpath>
+    </template>
+    <!-- Form Views -->
+    <record id="product_pricelist_inherit_form_view" model="ir.ui.view">
+        <field name="name">product.pricelist.inherit.form</field>
+        <field name="model">product.pricelist</field>
+        <field name="inherit_id" ref="product.product_pricelist_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='active']" position="after">
+                <field name="for_insurance"/>
+                <field name="code_desc"/>
+            </xpath>
+        </field>
+    </record>
+    <!-- Product categorie View -->
+    <record id="product_category_form_health_service_view" model="ir.ui.view">
+        <field name="name">product.category.health.serviceform</field>
+        <field name="model">product.category</field>
+        <field name="inherit_id" ref="product.product_category_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='first']" position="after">
+                <group>
+                    <field name="is_nomenclature"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+    <!--COMPANY CONFIGURATION-->
+    <record id="view_health_service_company_form" model="ir.ui.view">
+        <field name="name">res.company.form.health_service</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[@name='general_info']" position="after">
+                <page string="Type de centre médicale">
+                    <group>
+                        <group>
+                            <field name="is_consultation"/>
+                            <field name="is_surgery"/>
+                        </group>
+                        <group>
+                            <field name="is_hospitalization"/>
+                            <field name="is_imaging"/>
+                            <field name="is_laboratory"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="patient_health_service_form">
+        <field name="name">Service Santé</field>
+        <field name="model">acs.health_service</field>
+        <field name="arch" type="xml">
+            <form string="Service Santé">
+                <div class="alert alert-error text-center" role="alert" style="margin-bottom:0px; background-color:#4584b6;"  attrs="{'invisible': [('smi','=',False)]}">
+                    <h2 style="text-color: #ffffff;">SMI</h2>
+                </div>
+                <header>
+                    <button name="create_invoice" string="Créer une facture" attrs="{'invisible': [('state', '!=', 'confirm')]}" type="object" class="oe_highlight"
+                            confirm="Voulez êtes sur le point de créer une facture." groups="account.group_account_caisse,account.group_account_operateur,account.group_account_facturier"/>
+                    <button name="button_draft" states="cancel" string="Remettre en brouillon" attrs="{'invisible': [('state', 'not in', ['draft', 'proforma'])]}" type="object"/>
+                    <button name="button_proforma" states="cancel" string="Demande de Proforma" attrs="{'invisible': [('state', '!=', 'draft')]}" type="object"/>
+                    <button name="button_confirm" states="cancel" string="Confirmer"
+                        confirm="Cela mettra à jour tous les prix unitaires sur la base de la liste de prix actuellement définie.." attrs="{'invisible': [('state', 'not in', ['draft', 'proforma'])]}" type="object"/>
+                    <button name="create_testrequest" string="Créer des requêtes" attrs="{'invisible': [('state', '!=', 'invoiced')]}" type="object"
+                            confirm="Voulez vous créer les demandes examens?" class="oe_highlight"/>
+                    <button name="button_done" states="cancel" string="Fait" attrs="{'invisible': [('state', 'not in', ['requested'])]}" type="object"/>
+                    <button name="button_cancel" states="cancel" confirm="Voulez-vous annuler ce service?" string="Annulé" attrs="{'invisible': [('state', 'not in', ['draft', 'proforma', 'editable'])]}" type="object"/>
+                    <button name="set_editable" string="Rendre editable" groups="acs_hms.group_superviseur" type="object" states="done" class="oe_highlight"/>
+                    <button name="re_done" string="Fait" groups="" type="object" states="editable" class="oe_highlight"/>
+                    <button name="action_open_sms" states="done" string="Envoi SMS" type="object" invisible="1"/>
+                    <button name="print_sample" string="Print Samples" groups="" type="object" attrs="{'invisible': [('check_sample', '=', False)]}" class="oe_highlight"/>
+                    <button name="print_img_etiquette" string="Imprimé étiquette" groups="" type="object" attrs="{'invisible': [('check_img', '=', False)]}" class="oe_highlight"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,proforma,confirm,invoiced,requested,done,cancel"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="view_invoice" type="object" class="oe_stat_button" icon="fa-pencil-square-o" groups="account.group_account_caisse,account.group_account_operateur,account.group_account_facturier">
+                            <field string="Facture" name="invoice_count" widget="statinfo" />
+                        </button>
+                    </div>
+                    <h1>
+                        <field name="name" class="oe_inline"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="patient_id" options="{'no_create': True}"/>
+                            <field name="invoice_to"/>
+                            <field name="desc" readonly="1"/>
+                            <field name="clinic_info" required="1"/>
+                            <field name="prescripteur"/>
+                            <field name="is_group_request" invisible="1"/>
+                            <field name="group_patient_ids" widget="many2many_tags" attrs="{'invisible': [('is_group_request','=',False)], 'required': [('is_group_request','=',True)]}"/>
+                            <!--field name="physician_id"/-->
+                        </group>
+                        <group>
+                            <field name="birthday" force_save="1"/>
+                            <field name="mobile" force_save="1"/>
+                            <field name="service_date" readonly="1"/>
+                            <field name="ref_acte" attrs="{'invisible': [('ref_acte','=',False)]}"/>
+                            <field name="department_id" options="{'no_create': True}"/>
+                            <field name="nurse_id" invisible="1"/>
+                            <field name="pricelist_id" groups="product.group_product_pricelist" options="{'no_open':True,'no_create': True}"/>
+                            <field name="show_update_pricelist" invisible="1"/>
+                            <!-- <button name="update_price" type="object" string="Mise à jour des prix"
+                                    help="Recalculer tous les prix sur la base de cette liste de prix."
+                                    class="btn-link mb-1 px-0" icon="fa-refresh"
+                                    confirm="Cela mettra à jour tous les prix unitaires sur la base de la liste de prix actuellement définie."
+                                    attrs="{'invisible': ['|', ('show_update_pricelist', '=', False), ('state', 'in', ['invoiced', 'requested','done'])]}"/> -->
+                            <field name="currency_id" invisible="1"/>
+                            <field name="check_sample" invisible="1"/>
+                            <field name="check_img" invisible="1"/>
+                            <field name="smi" invisible="1" force_save="1"/>
+                            <field name="show_rdv" invisible="1"/>
+                            <field name="show_ot" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Ligne de service" name="lines">
+                            <group>
+                                <group>
+                                    <button name="add_service_line" string="Ajouter article" groups="" type="object" class="oe_highlight"/>
+                                </group>
+                                <group class="oe_subtotal_footer oe_right">
+                                    <field name="nb_service_line"/>
+                                </group>
+                            </group>
+                            <group>
+                                <field name="service_line" nolabel="1" colspan="4" widget="section_and_note_one2many">
+                                    <tree string="Lignes" editable="bottom">
+                                        <control>
+                                            <create name="add_line_control" string="Add a line"/>
+                                            <create name="add_section_control" string="Add a section" context="{'default_display_type': 'line_section'}"/>
+                                            <create name="add_note_control" string="Add a note" context="{'default_display_type': 'line_note'}"/>
+                                        </control>
+                                        <field name="sequence" widget="handle" />
+                                        <field name="product" string="Product" widget="product_configurator" options="{'no_create': True}"/>
+                                        <field name="display_type" invisible="1"/>
+                                        <field name="product_uom_category_id" invisible="1" options="{'no_create': True}"/>
+                                        <field name="name" widget="section_and_note_text" optional="show"/>
+                                        <field name="quantity"/>
+                                        <field name="product_uom" readonly="1"/>
+                                        <field name="sale_price" force_save="1"/>
+                                        <field name="product_type" optional="hide"/>
+                                        <field name="amount_total" widget="monetary" optional="hide"/>
+                                        <field name="to_invoice" optional="hide"/>
+                                        <field name="currency_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                                <group class="oe_subtotal_footer oe_right">
+                                    <field name="total_price" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                </group>
+                            </group>
+                            <group>
+                                <group name="request">
+                                    <field name="physician_id" widget="many2many_tags" attrs="{'invisible':[('show_rdv','=',False)]}"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Other Information" name="other_info">
+                            <group>
+                                <group>
+                                    <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                                    <!--                                    <field name="pricelist_id" groups="product.group_product_pricelist" options="{'no_open':True,'no_create': True}"/>-->
+                                </group>
+                                <group>
+                                    <field name="mode_payd" invisible="1"/>
+                                    <field name="type_paid"/>
+                                    <field name="ref_payd"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                    <field name="notes" placeholder="Notes" nolabel="1" colspan="4"/>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="patient_health_service_tree">
+        <field name="name">Service santé</field>
+        <field name="model">acs.health_service</field>
+        <field name="arch" type="xml">
+            <tree string="Service Santé" name="request_tree">
+                <field name="name"/>
+                <field name="patient_id"/>
+                <field name="service_date"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="state" string="Status"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_acs_health_service_search" model="ir.ui.view">
+        <field name="name">acs.health_service.search</field>
+        <field name="model">acs.health_service</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <search string="Service Santé">
+                <field name="patient_id"/>
+                <field name="name"/>
+                <field name="physician_id"/>
+                <filter name="draft" string="Draft" domain="[('state','=','draft')]"/>
+                <filter name="validated" string="Validé" domain="[('state','=','validate')]"/>
+                <filter name="invoiced" string="Facturé" domain="[('state','=','invoiced')]"/>
+                <filter name="today" string="Service ce jour" domain="[('service_date','&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0))), ('service_date','&lt;=', datetime.datetime.combine(context_today(), datetime.time(23,59,59)))]"/>
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter name="group_by_patient_id" string="Patient" context="{'group_by':'patient_id'}"/>
+                    <filter name="group_by_date" string="Date" context="{'group_by':'service_date'}"/>
+                    <filter name="group_by_physician" string="Doctor" context="{'group_by':'physician_id'}"/>
+                    <filter name="group_by_company" string="Institution" context="{'group_by':'company_id'}"/>
+                    <filter name="group_by_state" string="Status" context="{'group_by':'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="hms_action_health_service">
+        <field name="name">Service santé</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">acs.health_service</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_today': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Record Found
+            </p>
+        </field>
+    </record>
+</odoo>

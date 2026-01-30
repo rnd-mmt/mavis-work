@@ -1,0 +1,19 @@
+.wpopup button[class="close"]
+{
+	position: absolute;
+	right: 5px;
+	top: 2px;
+    z-index: 999;
+}
+
+.wpopup .modal-content
+{
+	-webkit-border-radius: 0px; 
+	-moz-border-radius: 0px; 
+	border-radius: 0px; 
+}
+
+.wpopup .modal-body
+{
+	padding: 0px;
+}

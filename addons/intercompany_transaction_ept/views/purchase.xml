@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="inter_company_transfer_ept_purchase_form_view" model="ir.ui.view">
+        <field name="name">inter.company.transfer.ept.purchase.form.view</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <field name="origin" position="after">
+                <field name="inter_company_transfer_id" readonly="1"
+                       attrs="{'invisible':[('inter_company_transfer_id','=',False)]}"/>
+                <field name="department_id" readonly="1"
+                       attrs="{'invisible':[('inter_company_transfer_id','=',False)]}"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="inter_company_transfer_ept_purchase_search_view" model="ir.ui.view">
+        <field name="name">inter.company.transfer.ept.purchase.search.view</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_view_search"/>
+        <field name="arch" type="xml">
+            <field name="product_id" position="after">
+                <field name="inter_company_transfer_id"/>
+            </field>
+            <xpath expr="//filter[@name='invoiced']" position="after">
+                <filter string="ICT Purchases" name='inter_company_transfer_id'
+                        domain="[('inter_company_transfer_id','!=', False)]"/>
+                <separator/>
+            </xpath>
+        </field>
+    </record>
+
+    <template id="purchase_report_inherit" inherit_id="purchase.report_purchaseorder_document">
+        <xpath expr="//div[@id='informations']" position="after">
+            <div id="informations" class="row mt-4 mb-4">
+                <div class="col-auto col-3 mw-100 mb-2" t-if="o.inter_company_transfer_id">
+                    <strong>ICT:</strong>
+                    <span class="m-0" t-field="o.inter_company_transfer_id"/>
+                </div>
+                <div class="col-auto col-3 mw-100 mb-2" t-if="o.department_id">
+                    <strong>Departement:</strong>
+                    <span class="m-0" t-field="o.department_id"/>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>
