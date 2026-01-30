@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <template id="l10n_in_report_invoice_document_inherit" inherit_id="account.report_invoice_document">
+      <!-- <xpath expr="//p[@t-if='o.narration']" position="before">
+        <p id="total_in_words" class="mb16">
+          <strong>Arrêté à la somme de: </strong>
+          <span t-field="o.amount_total_words"/>
+        </p>
+      </xpath> -->
+    </template>
+    <template id="l10n_in_report_invoice_surgery_document_inherit" inherit_id="account.report_invoice_surgery_document">
+      <!-- <xpath expr="//p[@t-if='o.narration']" position="before">
+        <p id="total_in_words" class="mb16">
+          <strong>Arrêté à la somme de: </strong>
+          <span t-field="o.amount_total_words"/>
+        </p>
+      </xpath> -->
+    </template>
+  </data>
+</odoo>

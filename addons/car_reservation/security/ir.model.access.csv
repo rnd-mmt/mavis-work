@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_car_reservation_user,access_car_reservation,model_car_reservation,fleet.fleet_group_manager,1,1,1,1
+access_car_reservation_mngr,access_car_reservation,model_car_reservation,fleet.fleet_group_user,1,1,1,0
+access_reservation_location_fleet_user,access_reservation_location,model_reservation_location,fleet.fleet_group_user,1,0,0,0
+access_reservation_location_fleet_mngr,access_reservation_location,model_reservation_location,fleet.fleet_group_manager,1,1,1,1
+access_car_reserve_details_export,access_car_reserve_details_export,model_wiz_car_reserve_details_export,,1,1,1,1
+access_download_reserve_report,access_download_reserve_report,model_wiz_download_reserve_report,,1,1,1,1

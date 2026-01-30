@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="new_patient_blood_report_document">
+        <t t-call="web.basic_layout">
+            <t t-set="doc" t-value="doc.with_context({'lang':doc.partner_id.lang})"/>
+            <div style="position: absolute; top: 10px; left:275px;">
+                <t t-if="doc.code">
+                    <img alt="Barcode" t-if="len(doc.code) == 13" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;quiet=%s' % ('EAN13', doc.code, 130,40,0)" style="width:130px;height:40px;"/>
+                    <img alt="Barcode" t-elif="len(doc.code) == 8" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;quiet=%s' % ('EAN8', doc.code, 130,40,0)" style="width:130px;height:40px;"/>
+                    <img alt="Barcode" t-else="" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;&amp;quiet=%s' % ('Code128', doc.code, 130,40,0)" style="width:130px;height:40px;"/>
+                </t>
+            </div>
+            <!-- <div class="page" style="position: relative; margin:0 !important;padding:0 !important;">
+                <span t-esc="doc.name.split(' ')[0]" style="position: absolute; top: 110px; left: 40px; font-family: 'Myriad Pro' !importnat;  font-weight: bold !important; font-style: normal; "/>
+                <span t-esc="doc.name.split(' ', 1)[1]"  style="position: absolute; top: 131px; left: 70px;  font-weight: bold; font-style: normal; "/>
+                <span t-field="doc.birthday"  style="position: absolute; top: 151px; left: 118px; " />
+                <span t-field="doc.gender"  style="position: absolute; top: 171.5px; left:45px; " />
+                <span t-field="doc.phone"  style="position: absolute; top: 192px; left:55px; " />
+                <span t-field="doc.first_determination"  style="position: absolute; top: 213px; left: 117px; " />
+                <span t-field="doc.second_determination"  style="position: absolute; top: 231.9px; left: 117px; " />
+            </div> -->
+            <div class="page" style="position: relative; margin:0 !important;padding:0 !important;">
+                <div style="position: relative !important; top: 114px !important; left: 10px !important; height: 140px !important; overflow: hidden; ">
+                    <div class="informations">
+                        <p style="line-height: 16px !important; margin-bottom: 0 !important;">
+                            <span style="font-family: Arial !important; font-size: 12px !important; font-weight: bold !important; color: #144f9c !important;">Nom :</span>
+                            <span style="letter-spacing: 0.4px !important; font-family: 'Times New Roman', serif !important; font-weight: bold !important; font-size: 12px !important; text-overflow: ellipsis !important; overflow: hidden !important; white-space: nowrap !important; width: 120px !important; height: 18px !important;" t-esc="doc.name.split(' ')[0]"/>
+                        </p>
+
+                        <!--p style="line-height: 16px !important; margin-bottom: 0 !important;">
+                            <span style="font-family: Arial !important; font-size: 12px !important; font-weight: bold !important; color: #144f9c !important;">Prénom(s) :</span>
+                            <t t-if="len(doc.name.split(' ')) &gt; 2">
+                                <t t-if="doc.name.split(' ')[1] and len(doc.name.split(' ', 1)[1]) > 30">
+                                <span style="letter-spacing: 0.4px !important; font-family: 'Times New Roman', serif !important; font-weight: bold !important; font-size: 12px !important;" t-esc="doc.name.split(' ', 1)[1][:30]"/>...
+                                </t>
+                                <t t-else="">
+                                    <span style="letter-spacing: 0.4px !important; font-family: 'Times New Roman', serif !important; font-weight: bold !important; font-size: 12px !important;" t-esc="doc.name.split(' ', 1)[1]"/>
+                                </t>
+                            </t>                            
+                        </p-->
+
+                        <p style="line-height: 16px !important; margin-bottom: 0 !important;">
+                          <span style="font-family: Arial !important; font-size: 12px !important; font-weight: bold !important; color: #144f9c !important;">Prénom(s) :</span>
+                          <t t-if="len(doc.name.split(' ')) &gt;= 2">
+                              <t t-set="prenom" t-value="doc.name.split(' ', 1)[1]" />
+                              <t t-if="len(prenom) &gt; 30">
+                                  <span style="letter-spacing: 0.4px !important; font-family: 'Times New Roman', serif !important; font-weight: bold !important; font-size: 12px !important;" t-esc="prenom[:30]"/>...
+                              </t>
+                              <t t-else="">
+                                  <span style="letter-spacing: 0.4px !important; font-family: 'Times New Roman', serif !important; font-weight: bold !important; font-size: 12px !important;" t-esc="prenom"/>
+                              </t>
+                          </t>
+                        </p>
+
+                        <p style="line-height: 16px !important; margin-bottom: 0 !important;">
+                            <span style="font-family: Arial !important; font-size: 12px !important; font-weight: bold !important; color: #144f9c !important;">Date de naissance :</span>
+                            <span style="letter-spacing: 0.4px !important; font-family: 'Times New Roman', serif !important; font-weight: bold !important; font-size: 12px !important;" t-field="doc.birthday"/>
+                        </p>
+
+                        <p style="line-height: 16px !important; margin-bottom: 0 !important;">
+                            <span style="font-family: Arial !important; font-size: 12px !important; font-weight: bold !important; color: #144f9c !important;">Genre :</span>
+                            <t t-if="doc.gender == 'male'">
+                                <span style="letter-spacing: 0.4px !important; font-family: 'Times New Roman', serif !important; font-weight: bold !important; font-size: 12px !important;">Homme</span>
+                            </t>
+                            <t t-elif="doc.gender == 'female'">
+                                <span style="letter-spacing: 0.4px !important; font-family: 'Times New Roman', serif !important; font-weight: bold !important; font-size: 12px !important;">Femme</span>
+                            </t>
+                            <t t-else="">
+                                <span style="letter-spacing: 0.4px !important; font-family: 'Times New Roman', serif !important; font-weight: bold !important; font-size: 12px !important;">Autre</span>
+                            </t>
+                        </p>
+
+                        <p style="line-height: 16px !important; margin-bottom: 0 !important;">
+                            <span style="font-family: Arial !important; font-size: 12px !important; font-weight: bold !important; color: #144f9c !important;">Contact :</span>
+                            <span style="letter-spacing: 0.4px !important; font-family: 'Times New Roman', serif !important; font-weight: bold !important; font-size: 12px !important;" t-if="doc.mobile" t-field="doc.mobile"/>
+                        </p>
+
+                        <p style="line-height: 16px !important; margin-bottom: 0 !important;">
+                            <span style="font-family: Arial !important; font-size: 12px !important; font-weight: bold !important; color: #144f9c !important;">1ère détermination :</span>
+                            <span t-if="doc.first_determination" t-field="doc.first_determination" style="letter-spacing: 0.4px !important; font-family: 'Times New Roman', serif !important; font-weight: bold !important; font-size: 12px !important;"/>
+                        </p>
+
+                        <p style="line-height: 16px !important; margin-bottom: 0 !important;">
+                            <span style="font-family: Arial !important; font-size: 12px !important; font-weight: bold !important; color: #144f9c !important;">2ème détermination :</span>
+                            <span t-if="doc.second_determination" t-field="doc.second_determination" style="letter-spacing: 0.4px !important; font-family: 'Times New Roman', serif !important; font-weight: bold !important; font-size: 12px !important;"/>
+                        </p>
+                    </div>
+
+                    <div class="groupe-sanguin" style="position: absolute; top:35px; left: 305px; width: 70px !important; height: 70px !important; text-align: center; border: solid 2px #144f9c !important; background-color: #ffffff !important; border-radius: 8px !important; padding-top: 10px !important;">
+                        <span style="letter-spacing: 0.4px !important; font-family: 'Times New Roman', serif !important; font-weight: bold !important; font-size: 30px !important;" t-if="doc.blood_group" t-field="doc.blood_group"/>
+                    </div>
+                </div>
+
+            </div>
+        </t>
+    </template>
+    <template id="patient_blood_card_report">
+        <t t-call="web.html_container">
+            <div style="border:2px solid green;">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="acs_hms_base.new_patient_blood_report_document" t-lang="doc.partner_id.lang"/>
+            </t>
+            </div>
+        </t>
+    </template>
+    <record id="patient_blood_card_report_action" model="ir.actions.report">
+        <field name="name">Carte sangiun</field>
+        <field name="model">hms.patient</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">acs_hms_base.patient_blood_card_report</field>
+        <field name="report_file">acs_hms_base.patient_blood_card_report</field>
+        <field name="print_report_name">(object.code or object.name).replace('/','_')</field>
+        <field name="binding_model_id" ref="model_hms_patient"/>
+        <!-- <field name="groups_id" eval="[(4, ref('acs_hms.group_hms_receptionist'))]"/> -->
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

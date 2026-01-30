@@ -1,0 +1,25 @@
+.o_web_client > .o_action_manager > .o_action > .o_content::-webkit-scrollbar ,.o_controller_with_searchpanel .o_renderer_with_searchpanel::-webkit-scrollba-track  {
+    width: 20px;
+}
+
+.o_web_client > .o_action_manager > .o_action > .o_content::-webkit-scrollbar-track ,.o_controller_with_searchpanel .o_renderer_with_searchpanel::-webkit-scrollbar-track  {
+    background-color: #f1f1f1;
+}
+
+.o_web_client > .o_action_manager > .o_action > .o_content::-webkit-scrollbar-thumb ,.o_controller_with_searchpanel .o_renderer_with_searchpanel::-webkit-scrollbar-thumb {
+    background-color: #d6dee1;
+    border-radius: 20px;
+    border: 6px solid transparent;
+    background-clip: content-box;
+}
+
+.o_web_client > .o_action_manager > .o_action > .o_content::-webkit-scrollbar-thumb:hover ,.o_controller_with_searchpanel .o_renderer_with_searchpanel::-webkit-scrollbar-thumb:hover {
+    background-color: #a8bbbf;
+}
+
+.o_controller_with_searchpanel .o_renderer_with_searchpanel {
+    flex: 1 1 100%;
+    overflow: visible !important;
+    max-height: 100%;
+    position: relative;
+}

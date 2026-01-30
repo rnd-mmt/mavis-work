@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Search View of Log Book. -->
+    <record id="inter_company_transfer_log_book_search_view" model="ir.ui.view">
+        <field name="name">Inter Company Transfer Log Search View</field>
+        <field name="model">inter.company.transfer.log.book.ept</field>
+        <field name="type">search</field>
+        <field name="arch" type="xml">
+            <search string="Inter Company Transfer LOG">
+                <field name="name" string="Name" filter_domain="[('name','ilike',self)]"/>
+                <field name="ict_log_date"/>
+                <field name="ict_process"/>
+                <field name="operation"/>
+                <group expand="0" string="Group By">
+                    <filter string="Process" name="ict_process" context="{'group_by':'ict_process'}"/>
+                    <filter string="Operation" name="operation" context="{'group_by':'operation'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Tree View of Log Book. -->
+    <record id="inter_company_transfer_log_book_tree_view" model="ir.ui.view">
+        <field name="name">inter.company.transfer.log.book.tree.view</field>
+        <field name="model">inter.company.transfer.log.book.ept</field>
+        <field name="arch" type="xml">
+            <tree default_order="name desc" create="false">
+                <field name="name"/>
+                <field name="ict_process"/>
+                <field name="operation"/>
+                <field name="ict_log_date"/>
+                <field name="inter_company_transfer_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View of Log Book -->
+    <record id="inter_company_transfer_log_book_form_view" model="ir.ui.view">
+        <field name="name">inter.company.transfer.log.book.form.view</field>
+        <field name="model">inter.company.transfer.log.book.ept</field>
+        <field name="arch" type="xml">
+            <form string="Inter Company Transfer Log" create="false" edit="false">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="ict_log_date"/>
+                        </group>
+                        <group>
+                            <field name="ict_process"/>
+                            <field name="operation"/>
+                            <field name="inter_company_transfer_id" readonly="1"/>
+                        </group>
+                        <group colspan="4" string="Log Lines">
+                            <field name="ict_log_line_ids" nolabel="1">
+                                <tree>
+                                    <field name="ict_log_type"/>
+                                    <field name="ict_message"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action of Log Book. -->
+    <record id="inter_company_transfer_process_log_action" model="ir.actions.act_window">
+        <field name="name">Operation Logs</field>
+        <field name="res_model">inter.company.transfer.log.book.ept</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Menu for Log Books. -->
+    <menuitem id="inter_company_transfer_log_ept_menu" action="inter_company_transfer_process_log_action"
+              parent="inter_company_transfer_ept_main_menu" name="Logs" sequence='17'/>
+
+</odoo>

@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <!-- Patient -->
+    <record id="hms_patient_view_imaging_test" model="ir.ui.view">
+        <field name="name">Patient Imaging Test</field>
+        <field name="model">hms.patient</field>
+        <field name="inherit_id" ref="acs_hms_base.view_patient_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="action_imaging_requests" class="oe_stat_button" icon="fa-th-list" type="object" title="Imaging Requests" groups="acs_imaging.group_hms_imaging_user,acs_hms.group_hms_doctor_smi">
+                    <field string="Imaging Requests" name="img_request_count" widget="statinfo"/>
+                </button>
+                <button name="action_view_img_test_results" class="oe_stat_button" icon="fa-list" type="object" title="Test Results" groups="acs_imaging.group_hms_imaging_user,acs_hms.group_hms_doctor_smi">
+                    <field string="Test Results" name="img_test_count" widget="statinfo"/>
+                </button>
+            </div>
+        </field>
+    </record>
+
+    <record id="view_physician_form" model="ir.ui.view">
+        <field name="name">physician.form</field>
+        <field name="model">hms.physician</field>
+        <field name="inherit_id" ref="acs_hms_base.view_physician_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="action_imaging_request" type="object" groups="acs_hms.group_hms_jr_doctor" class="oe_stat_button" icon="fa-th-list">
+                    <field string="Imaging Request" name="Imaging_request_count" widget="statinfo"/>
+                </button>
+
+                <button name="action_imaging_result" type="object" groups="acs_hms.group_hms_jr_doctor" class="oe_stat_button" icon="fa-flask">
+                    <field string="Imaging Result" name="Imaging_result_count" widget="statinfo"/>
+                </button>
+            </div>
+        </field>
+    </record>
+
+    <!-- ACS Note : Option to configure the Collection center in user and set directly in imaging request in version 15
+    <record id="view_user_collection_center" model="ir.ui.view">
+        <field name="name">User Form</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <field name="notification_type" position="after">
+                <field name="collection_center_id" string="imagingoratory Collection Center" domain="[('is_collection_center','=',True)]"/>
+            </field>
+        </field>
+    </record> -->
+
+
+</odoo>

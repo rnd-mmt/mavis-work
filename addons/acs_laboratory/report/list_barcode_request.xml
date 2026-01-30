@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!-- Define the report action -->
+        <record id="list_request_lab_report" model="ir.actions.report">
+            <field name="name">Liste requête - Code-barres</field>
+            <field name="model">acs.laboratory.request</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">acs_laboratory.list_request</field>
+            <field name="report_file">acs_invoice_split.list_request</field>
+            <field name="binding_model_id" ref="model_acs_laboratory_request"/>
+        </record>
+
+        <!-- Define the report template -->
+        <template id="list_request">
+            <t t-call="web.basic_layout">
+                <div class="page">
+                    <style>
+                        .grid-container {width: 100%;}
+                        .grid-item { float: left;width: 25%;box-sizing: border-box;}
+                    </style>
+                    <t t-call="web.html_container">
+                        <h6 style="text-align:center">LISTE DES DEMANDES DE LABORATOIRE</h6>
+                        <div class="grid-container">
+                            <t t-foreach="docs" t-as="o">
+                                <div class="grid-item">
+                                    <img t-if="o.name" style="margin: 0 auto;" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' %('Code128',o.name,300,40)"/>
+                                    <span style="display: block !important; text-align: center !important;" t-field="o.name" />
+                                </div>
+                            </t>
+                        </div>
+
+                    </t>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t t-inherit="web.ControlPanel" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('o_cp_bottom_right')]" position="before">
+            <div t-if="env.view and env.view.type == 'list'" class="dropdown refresh_button">
+                <button class="reload_list_view btn btn-primary fa fa-refresh"></button>
+            </div>
+            <div t-if="env.view and env.view.type == 'form'" class="dropdown refresh_button">
+                <button class="reload_form_view btn btn-primary fa fa-refresh"></button>
+            </div>
+            <div t-if="(env.view and env.view.type != 'form' and env.view and env.view.type != 'list')" class="dropdown refresh_button">
+                <button class="reload_view btn btn-primary fa fa-refresh"></button>
+            </div>
+		</xpath>                        
+    </t>
+</templates>

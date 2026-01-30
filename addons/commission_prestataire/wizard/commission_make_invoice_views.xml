@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_coprest_invoice" model="ir.ui.view">
+        <field name="name">Facture Commission prestataire</field>
+        <field name="model">coprest.invoice</field>
+        <field name="arch" type="xml">
+            <form string="Facture Commission prestataire">
+                <p class="oe_grey">
+                   Les factures seront créées sous forme de brouillon afin que vous puissiez les réviser avant de les valider.
+                </p>
+                <group>
+                    <group>
+                        <field name="journal_id"/>
+                        <field name="hide_groupby_partner" invisible="1"/>
+                    </group>
+                    <group/>
+                </group>
+                <group>
+                    <div>
+                        <div>
+                            <field name="print_commission" invisible="1"/>
+                            <label for="print_commission" invisible="1"/>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <field name="groupby_partner" invisible="1"/>
+                            <label for="groupby_partner" invisible="1"/>
+                        </div>
+                    </div>
+                </group>
+                <footer>
+                    <button name="create_invoices" string="Créer et voir les factures" type="object"
+                        context="{'open_invoices': True}" class="btn-primary"/>
+                    <button name="create_invoices" string="Créer les factures" type="object"
+                        class="btn-primary"/>
+                    <button string="Annuler" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_view_coprest_invoice" model="ir.actions.act_window">
+        <field name="name">Facture Commission prestataire</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">coprest.invoice</field>
+        <field name="binding_model_id" ref="model_commission_prestataire"/>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

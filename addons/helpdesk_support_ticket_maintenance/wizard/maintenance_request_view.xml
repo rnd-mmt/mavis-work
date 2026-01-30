@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<odoo>
+   <data>
+       
+        <record id="maintenance_request_wizard_view" model="ir.ui.view">
+           <field name="name">maintenance.request.wizard.form</field>
+           <field name="model">maintenance.request.wizard</field>
+           <field name="arch" type="xml">
+               <form string="Maintenance Request Wizard">
+                <p>This wizard will create Maintenance Request.</p>
+                    <group>
+                        <group>
+                            <field name="user_id"/>
+                            <field name="employee_id"/>
+                        </group>
+                        <group>
+                            <field name="maintenance_team_id"/>
+                            <field name="equipment_id"/>
+                        </group>
+                   </group>
+                   <footer>
+                       <button string="Create Maintenance" name="create_maintenance_request" type="object" class="oe_highlight"/> or 
+                       <button string="Cancel" name ="cancel" type="cancel"/>
+                   </footer>
+               </form>
+           </field>
+       </record>
+       
+       <record id="helpdesk_maintenance_request_action" model="ir.actions.act_window">
+            <field name="name">Maintenance Request</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">maintenance.request.wizard</field>
+            <!-- <field name="view_type">form</field> --> <!-- odoo13 -->
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+       
+   </data>
+</odoo>

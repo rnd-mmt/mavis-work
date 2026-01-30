@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Dr. View -->
+    <record id="view_coprest_physician_form" model="ir.ui.view">
+        <field name="name">hms.physician.form</field>
+        <field name="model">hms.physician</field>
+        <field name="inherit_id" ref="acs_hms.view_physician_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button class="oe_stat_button" type="object"  name="coprest_action" icon="fa-list" string="Paiement prestataire" groups="commission_prestataire.group_coprest_user"/>
+            </div>
+
+            <xpath expr="//notebook" position="inside">
+                <page name="coprest" string="Paiement prestataire" groups="commission_prestataire.group_coprest_user">
+                    <group>
+                        <group>
+                            <field name="prest_commission" string="Commissions prestataire"/>
+                            <field name="coprest_role_id" attrs="{'invisible': [('prest_commission','=',False)]}"/>
+                        </group>
+                        <group>
+                            <field name="coprest_percentage" string="Paiement en pourcentage" attrs="{'invisible': [('prest_commission','=',False)]}"/>
+                        </group>
+                    </group>
+
+                    <field name="coprest_rule_ids" context="{'default_rule_type': 'user', 'physician_id_id': active_id}" attrs="{'invisible': [('prest_commission','=',False)]}">
+                        <tree editable="bottom">
+                            <field name="sequence" widget="handle"/>
+                            <field name="physician_id" invisible="1"/>
+                            <field name="role_id" invisible="1"/>
+                            <field name="rule_on"/>
+                            <field name="product_category_id" attrs="{'invisible': [('rule_on','!=','product_category')], 'required': [('rule_on','=','product_category')]}"/>
+                            <field name="product_id" attrs="{'invisible': [('rule_on','!=','product')], 'required': [('rule_on','=','product')]}"/>
+                            <field name="percentage" string="Pourcentage"/>
+                            <field name="get_number"/>
+                            <field name="part_prest"/>
+                        </tree>
+                    </field>
+
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="action_medecin_prestataire" model="ir.actions.act_window">
+        <field name="name">Médecin prestataire</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hms.physician</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="domain">[('prest_commission','=',True)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Record Found
+            </p>
+            <p>
+                Click to add a Referring Doctor.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_physician_prestataire" sequence="2" parent="acs_hms_base.main_menu_physician" action='action_medecin_prestataire'/>
+
+    <!-- Partner Views -->
+    <record id="view_coprest_partner_form" model="ir.ui.view">
+        <field name="name">res.partner.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button class="oe_stat_button" type="object"  name="coprest_action" icon="fa-list" string="Commissions prestataire" groups="commission_prestataire.group_coprest_user"/> 
+            </div>
+
+            <xpath expr="//notebook" position="inside">
+                <page name="coprest" string="Commissions prestataire" groups="commission_prestataire.group_coprest_user">
+                    <group>
+                        <group>
+                            <field name="prest_commission" string="Attribuer un paiement"/>
+                            <field name="coprest_role_id" attrs="{'invisible': [('prest_commission','=',False)]}"/>
+                        </group>
+                        <group>
+                            <field name="coprest_percentage" string="Paiement en pourcentage" attrs="{'invisible': [('prest_commission','=',False)]}"/>
+                        </group>
+                    </group>
+
+                    <field name="coprest_rule_ids" context="{'default_rule_type': 'user', 'physician_id_id': active_id}" attrs="{'invisible': [('prest_commission','=',False)]}">
+                        <tree editable="bottom">
+                            <field name="sequence" widget="handle"/>
+                            <field name="physician_id" invisible="1"/>
+                            <field name="role_id" invisible="1"/>
+                            <field name="rule_on"/>
+                            <field name="product_category_id" attrs="{'invisible': [('rule_on','!=','product_category')], 'required': [('rule_on','=','product_category')]}"/>
+                            <field name="product_id" attrs="{'invisible': [('rule_on','!=','product')], 'required': [('rule_on','=','product')]}"/>
+                            <field name="percentage" string="Pourcentage"/>
+                            <field name="get_number"/>
+                            <field name="part_prest"/>
+                        </tree>
+                    </field>
+
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

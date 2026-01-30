@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data noupdate="0">
+    <record id="evcp_view_wizard" model="ir.ui.view">
+      <field name="name">Etat de variation des capitaux propres</field>
+      <field name="model">evcp.view</field>
+      <field name="arch" type="xml">
+        <form>
+          <group>
+            <field name="period" string="Période" attrs="{'invisible':1}"/>
+            <field name="is_custom" string="Personnalisé" attrs="{'invisible':1}"/>
+            <field name="date_start" string="Date" attrs="{'invisible':[('is_custom','=',False)]}"/>
+          </group>
+          <footer>
+            <button type="object" name="confirm_evcp" string="Print PDF" class="oe_highlight"/>
+            <button type="object" name="print_xlsx" string="Export Excel" class="oe_highlight"/>
+            <button special="cancel" string="Annuler"/>
+          </footer>
+        </form>
+      </field>
+    </record>
+    <record id='action_evcp' model='ir.actions.act_window'>
+      <field name="name">Variation des capitaux propres</field>
+      <field name="res_model">evcp.view</field>
+      <field name="view_mode">form</field>
+      <field name="target">new</field>
+    </record>
+
+    <menuitem id='evcp_menu_action'
+              name='Etat de variation des capitaux propres'
+              parent='account_reports_mg_statements_menu'
+              action='action_evcp'
+              sequence='6'
+              groups="account.group_account_user"/>
+  </data>
+</odoo>

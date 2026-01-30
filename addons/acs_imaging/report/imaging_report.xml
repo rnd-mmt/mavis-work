@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="report_acs_imaging_test_document">
+        <!-- Just for Portal Isuse -->
+        <t t-set="doc" t-value="doc.sudo()"/>
+        <t t-call="web.external_layout">
+            <t t-set="doc" t-value="doc.with_context({'lang':doc.patient_id.lang})"/>
+            <div class="page">
+                <div class="oe_structure"/>
+                <h2 class="text-center mt32">Investigation</h2>
+                <div class="row mt32 mb32" id="informations">
+                    <div t-if="doc.patient_id" class="col-auto col-3 mw-100 mb-2">
+                        <strong>Patient:</strong>
+                        <p class="m-0" t-field="doc.patient_id"/>
+                    </div>
+                    <div t-if="doc.test_id" class="col-auto col-3 mw-100 mb-2">
+                        <strong>Test Name:</strong>
+                        <p class="m-0" t-field="doc.test_id"/>
+                    </div>
+                    <div t-if="doc.user_id" class="col-auto col-3 mw-100 mb-2">
+                        <strong>Responsible:</strong>
+                        <p class="m-0" t-field="doc.user_id"/>
+                    </div>
+                    
+                    <div t-if="doc.name" class="col-auto col-3 mw-100 mb-2">
+                        <strong>Reference:</strong>
+                        <p class="m-0" t-field="doc.name"/>
+                    </div>
+                    <div t-if="doc.date_analysis" class="col-auto col-3 mw-100 mb-2">
+                        <strong>Date:</strong>
+                        <p class="m-0" t-field="doc.date_analysis"/>
+                    </div>
+                </div>
+                <div class="row mt32 mb32" id="informations">
+                    <div t-if="doc.physician_id" class="col-auto col-3 mw-100 mb-2">
+                        <strong>Prescribing Doctor:</strong>
+                        <p class="m-0" t-field="doc.physician_id"/>
+                    </div>
+                    <div t-if="doc.imaging_id" class="col-auto col-3 mw-100 mb-2">
+                        <strong>Imaging:</strong>
+                        <p class="m-0" t-field="doc.imaging_id"/>
+                    </div>
+                    <div t-if="doc.collection_center_id" class="col-auto col-3 mw-100 mb-2">
+                        <strong>Collection Center:</strong>
+                        <p class="m-0" t-field="doc.collection_center_id.name"/>
+                    </div>
+                </div>
+
+                <!--t t-call="acs_imaging.report_imaging_result_table">
+                    <t t-set="imaging_test" t-value="doc"/>
+                </t-->
+                <span t-field="doc.interpretation"/>
+
+                <div class="row" t-if="doc.sudo().company_id.acs_imagingresult_qrcode">
+                    <div class="col-12 pull-right">
+                        <img t-if="doc.qr_image" t-att-src="image_data_uri(doc.qr_image)" alt="LAB Result QR" style="width: 100px;height: 100px" class="float-right"/>
+                    </div>
+                </div>
+                
+                <p class="mt64">
+                    <b>Comment(If Any):</b>
+                    <br/>
+                    <span t-esc="doc.note"/>
+                </p>
+                <p class="mt16">
+                    <b>Doctor’s Stamp/Signature</b>
+                    <br/>
+                    <t t-if="doc.physician_id and doc.physician_id.signature">
+                        <span t-field="doc.physician_id.signature" t-options="{'widget': 'image', 'class': 'img-rounded', 'style':'max-height: 100px !important'}"/>
+                    </t>
+                </p>
+                <p t-if="doc.disclaimer" class="mt64">
+                    <b>Disclaimer: </b>
+                    <span t-field="doc.disclaimer"/>
+                </p>
+                
+            </div>
+        </t>
+    </template>
+
+    <template id="report_acs_imaging_test">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="acs_imaging.report_acs_imaging_test_document" t-lang="doc.patient_id.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_report_acs_imaging_test" model="ir.actions.report">
+        <field name="name">Imaging Report</field>
+        <field name="model">patient.imaging.test</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">acs_imaging.report_acs_imaging_test</field>
+        <field name="report_file">acs_imaging.report_acs_imaging_test</field>
+        <field name="print_report_name">(object.name or 'ImagingReport').replace('/','_') + '_ImagingReport'</field>
+        <field name="binding_model_id" ref="model_patient_imaging_test"/>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

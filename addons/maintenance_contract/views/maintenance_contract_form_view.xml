@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="maintenance_contract_form_view" model="ir.ui.view">
+            <field name="name">maintenance.contract.form</field>
+            <field name="model">maintenance.contract</field>
+            <field name="arch" type="xml">
+                <form string="Current Contract">
+                    <header>
+                        <button name="action_open" string="En cours" states='draft' type="object" class="btn btn-primary"/>
+                        <button name="reactive_contract" string="renouveler" type="object" class="btn btn-primary"
+                            attrs="{'invisible': [('is_expired', '=', False)]}"
+                        />
+                        <button name="action_cancel" string="Annuler" states='draft,open' type="object"/>
+                        <field name="state" widget="statusbar" options="{'clickable': '0'}"/>
+                    </header>
+                    <sheet>
+
+                        <div class="oe_button_box" name="button_box">
+                            <button
+                                type="object"
+                                name="action_view_documents"
+                                class="oe_stat_button"
+                                icon="fa-paperclip">
+                                <field name="attachment_count" widget="statinfo" string="Documents"/>
+                            </button>
+                        </div>
+
+                        <widget name="web_ribbon" title="Actif" bg_color="bg-success" attrs="{'invisible': [('is_running', '=', False),('state', '!=', 'open')]}"/>
+                        <widget name="web_ribbon" title="Expiré" bg_color="bg-danger" attrs="{'invisible': [('is_expired', '=', False)]}"/>
+                        <h2>
+                            <field name="name" string="Name"/>
+                        </h2>
+                        <group>
+                            <group name="contract_information">
+                                <field name="contract_type"/>
+                                <field name="date_start" string="Date de début de contrat"/>
+                                <field name="date_end" string="Date de fin de contrat"/>
+                                <field name="first_contract_date"/>
+                                <field name="is_running" invisible="1"/>
+                                <field name="is_expired" string="Expiré"/>
+                            </group>
+                            <group name="company_information">
+                                <field name="company_id" groups="base.group_multi_company"/>
+                                <field name="department_id"/>
+                                <field name="equipment_id"/>
+                                <field name="system_code"/>
+                                <field name="description"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="maintenance_contract_kanban_view" model="ir.ui.view">
+            <field name="name">maintenance.contract.kanban</field>
+            <field name="model">maintenance.contract</field>
+            <field name="type">kanban</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="state" quick_create="true" sample="1">
+                    <field name="date_start"/>
+                    <field name="date_end"/>
+                    <field name="is_expired"/>
+                    <field name="is_running"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_res_partner_kanban">
+                                <div>
+                                    <h3><field name="name"/></h3>
+                                </div>
+                                <div>
+                                    <strong><field name="contract_type"/></strong>
+                                </div>
+                                <div>
+                                    <p style="margin-bottom:0 !important;"><strong>Début : </strong><field name="date_start"/></p>
+                                    <p style="margin-bottom:0 !important;"><strong>Fin : </strong><field name="date_end"/></p>
+                                </div>
+                                <div>
+                                    <strong class="text-primary"><field name="equipment_id"/></strong>
+                                </div>
+                                <div>
+                                    <t t-if="record.is_expired.raw_value">
+                                        <h3 style="text-align: right;"><span class="badge badge-pill badge-danger">Expiré</span></h3>
+                                    </t>
+                                    <t t-if="record.is_running.raw_value">
+                                        <h3 style="text-align: right;"><span class="badge badge-pill badge-success">En cours</span></h3>
+                                    </t>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+    </data>
+</odoo>

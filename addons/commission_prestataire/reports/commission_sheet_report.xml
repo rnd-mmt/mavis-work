@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="coprest_sheet_report_document">
+        <t t-call="web.external_layout">
+            <div class="page">
+                <div class="oe_structure"/>
+
+<!--                <table class="table table-bordered mt64">-->
+<!--                    <tr>-->
+<!--                        <td style="text-align:center">-->
+<!--                            <strong style="font-size: 20px;">-->
+<!--                                <span>Feuille de commission prestataire: </span>-->
+<!--                                <span t-field="doc.name"/>-->
+<!--                            </strong>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                </table>-->
+                <div class="prest_info">
+                    <div>
+                        <span  style="font-weight:bold;">Réference prestataire :</span>
+                        <span t-field="doc.partner_id.ref"/>
+                   </div>
+                   <div>
+                        <span  style="font-weight:bold;">Nom prestataire :</span>
+                        <span t-field="doc.partner_id.name"/>
+                   </div>
+                    <div>
+                        <span  style="font-weight:bold;">Adresse:</span>
+                        <span t-field="doc.partner_id.street"/><span t-field="doc.partner_id.city"/>
+                   </div>
+                    <div>
+                        <span  style="font-weight:bold;">Télephone :</span>
+                        <span t-field="doc.partner_id.phone"/>
+                   </div>
+                    <div>
+                        <span  style="font-weight:bold;">Genre:</span>
+                        <t t-if="doc.partner_id.gender == 'M'">
+                            <span>Homme</span>
+                        </t>
+                        <t t-else="">
+                            <span>Femme</span>
+                        </t>
+                   </div>
+                </div>
+                    <h3  style="margin:40px 0 !important;">
+                         <strong style="font-size: 28px; color:#4593B4; ">
+                                <span>Feuille </span>
+                                <span t-field="doc.name"/>
+                            </strong>
+                    </h3>
+                <div class="row">
+                    <div class="col-6">
+                        <strong>Période: </strong> Du <span t-field="doc.date_from"/> au <span t-field="doc.date_to"/><br/>
+                    </div>
+                    <div class="col-6">
+                        <strong>Prestataire: </strong> <span t-field="doc.partner_id"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <strong>Description: </strong> <span t-field="doc.description"/>
+                    </div>
+                </div>
+                <br/>
+
+                <table class="table table-bordered table-sm o_main_table" style="margin: 0;">
+                    <thead>
+                        <tr>
+                            <!--th>
+                                <strong>#</strong>
+                            </th-->
+                            <th style="width:22% !important;">
+                                <strong>Quote-part</strong>
+                            </th>
+                            <th>
+                                <strong>Facture client</strong>
+                            </th>
+                            <th>
+                                <strong>Date</strong>
+                            </th>
+                            <th class="text-right">
+                                <strong>Commission sur</strong>
+                            </th>
+                            
+                            <th class="text-right">
+                                <strong>Montant de la commission</strong>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border:0" t-foreach="doc.coprest_line_ids" t-as="line">
+                            <!--td>
+                                <span t-esc="line_index + 1"/>
+                            </td-->
+                            <td>
+                                <span t-field="line.name"/>
+                            </td>
+                            <td>
+                                <span t-field="line.invoice_id"/>
+                            </td>
+                            <td>
+                                <span t-field="line.create_date" widget="date"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-field="line.coprest_on"
+                                    t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                            </td>
+                            <td class="text-right">
+                                <span t-field="line.coprest_amount"
+                                    t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="clearfix">
+                    <div class="row" name="total">
+                        <div t-attf-class="#{'col-4' if report_type != 'html' else 'col-sm-7 col-md-5'} ml-auto">
+                            <table class="table table-sm;page-break-inside: avoid;">                                
+                                <tr class="border-black">
+                                    <td><strong>Total</strong></td>
+                                    <td class="text-right">
+                                        <span t-field="doc.amount_total"
+                                            t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+<!--                <p class="mt32">-->
+<!--                    Conservez ce document comme référence pour la suite de la communication et de la procédure.-->
+<!--                    Si vous avez des questions, n'hésitez pas à nous contacter.<br/><br/>-->
+<!--                    Cordialement,<br/>-->
+<!--                </p>-->
+                
+                <div class="oe_structure"/>
+                <p style="page-break-before:always;"> </p>
+            </div>
+        </t>
+    </template>
+
+    <template id="coprest_sheet_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="commission_prestataire.coprest_sheet_report_document" t-lang="doc.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_coprest_sheet_report" model="ir.actions.report">
+        <field name="name">Feuille de commission prestataire</field>
+        <field name="model">commission.prestataire.sheet</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">commission_prestataire.coprest_sheet_report</field>
+        <field name="report_file">commission_prestataire.coprest_sheet_report</field>
+        <field name="print_report_name">(object.name or 'CoPrestSheet').replace('/','_')</field>
+        <field name="binding_model_id" ref="model_commission_prestataire_sheet"/>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<odoo>
+    <template id="odx_assets_backend" name="HMS Dashboard assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/odx_m2m_attachment_preview/static/src/js/odx_document_viewer_legacy.js"></script>
+            <script type="text/javascript" src="/odx_m2m_attachment_preview/static/src/js/odx_many2many_attachment_preview.js" />
+        </xpath>
+    </template>
+</odoo>

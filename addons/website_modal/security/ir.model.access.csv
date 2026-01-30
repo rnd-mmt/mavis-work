@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_website_modal,access_website_modal,model_website_modal,,1,0,0,0
+access_website_modal_designer,access_website_modal_designer,model_website_modal,website.group_website_designer,1,1,1,1

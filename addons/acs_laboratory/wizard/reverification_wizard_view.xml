@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<record id="view_labo_reverificaiton_reason" model="ir.ui.view">
+        <field name="name">labo.editable.reason</field>
+        <field name="model">labo.editable.reason</field>
+        <field name="arch" type="xml">
+            <form string="Motif de la revérification">
+                <group>
+                    <field name="editable_reason" readonly="0"/>
+                </group>
+                <footer>
+                    <button name="editable_state" string="Confirmer" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_labo_reverificaiton_reason" model="ir.actions.act_window">
+        <field name="name">Motif de la reverification</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">labo.editable.reason</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data noupdate="0">
+    <!-- détails produits -->
+    <record id="report_produits_details" model="account.financial.report">
+      <field name="name">Détails produits</field>
+      <field name="type_financial_report_mg">product_details</field>
+    </record>
+
+    <record id="report_produit_ordinaire" model="account.financial.report">
+      <field name="name">TOTAL DES PRODUITS ORDINAIRES</field>
+      <field name="code">PRODORD</field>
+      <field name="financial_report_id" ref="report_produits_details"/>
+      <field name="parent_id" ref="report_produits_details"/>
+      <field name="formulas">balance = RPROPV.balance + CAFF.balance + PRODSD.balance + PRODIMM.balance + SUBEX.balance
+        + APO.balance + PRODFI.balance
+      </field>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="0"/>
+      <field name="type">product_details</field>
+      <field name="style_overwrite">0</field>
+    </record>
+    <record id="report_chiffre_d_affaire" model="account.financial.report">
+      <field name="name">CHIFFRES D'AFFAIRES</field>
+      <field name="code">CAFF</field>
+      <field name="parent_id" ref="report_produit_ordinaire"/>
+      <field name="formulas">balance = PRODAACC.balance + PRODAAFAR.balance + VPSERV.balance + VPRODPROF.balance +
+        VPRODF.balance + VAM.balance
+      </field>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="1"/>
+      <field name="type">product_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_vente_net_rabais" model="account.financial.report">
+      <field name="name">Ventes nets des Rabais remises ristournes Accordés</field>
+      <field name="code">VNRRRA</field>
+      <field name="parent_id" ref='report_chiffre_d_affaire'/>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="2"/>
+      <field name="type">product_details</field>
+      <field name="style_overwrite">2</field>
+    </record>
+    <record id="report_vente_produit_locaux" model="account.financial.report">
+      <field name="name">Vente produits locaux</field>
+      <field name="code">VPRODF</field>
+      <field name="parent_id" ref='report_vente_net_rabais'/>
+      <field name="domain" eval="[('code', '=like', '701%')]"/>
+      <field name="formulas">balance = -sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="3"/>
+      <field name="type">product_details</field>
+      <field name="style_overwrite">3</field>
+    </record>
+    <record id="report_vente_produit_intermediaire" model="account.financial.report">
+      <field name="name">Vente produits intermédiaires</field>
+      <field name="code">VPRODPROF</field>
+      <field name="parent_id" ref='report_vente_net_rabais'/>
+      <field name="domain"
+             eval="['|','|','|','|','|','|','|','|','|',('code', '=like', '702%'),('code', '=like', '703%'),('code', '=like', '704%'),('code', '=like', '705%'),('code', '=like', '7070000%'),('code', '=like', '7072000%'),('code', '=like', '7073000%'),('code', '=like', '7074000%'),('code', '=like', '7075000%'),('code', '=like', '7076000%')]"/>
+      <field name="formulas">balance = -sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="3"/>
+      <field name="type">product_details</field>
+      <field name="style_overwrite">3</field>
+    </record>
+    <record id="report_vente_prestation_service" model="account.financial.report">
+      <field name="name">Vente prestations de service</field>
+      <field name="code">VPSERV</field>
+      <field name="parent_id" ref='report_vente_net_rabais'/>
+      <field name="domain" eval="[('code', '=like', '706%')]"/>
+      <field name="formulas">balance = -sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="3"/>
+      <field name="level" eval="3"/>
+      <field name="type">product_details</field>
+      <field name="style_overwrite">3</field>
+    </record>
+    <record id="report_vente_autres_marchandises" model="account.financial.report">
+      <field name="name">Autres ventes de marchandises</field>
+      <field name="code">VAM</field>
+      <field name="parent_id" ref='report_vente_net_rabais'/>
+      <field name="domain" eval="[('code', '=like', '7071000%')]"/>
+      <field name="formulas">balance = -sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="4"/>
+      <field name="level" eval="3"/>
+      <field name="type">product_details</field>
+      <field name="style_overwrite">3</field>
+    </record>
+
+    <record id="report_activite_annexe" model="account.financial.report">
+      <field name="name">Produits des activités annexes</field>
+      <field name="code">PRODAA</field>
+      <field name="parent_id" ref='report_chiffre_d_affaire'/>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="2"/>
+      <field name="type">product_details</field>
+      <field name="style_overwrite">2</field>
+    </record>
+    <record id="report_commissions_courtages" model="account.financial.report">
+      <field name="name">Commissions et courtages</field>
+      <field name="code">PRODAACC</field>
+      <field name="parent_id" ref='report_activite_annexe'/>
+      <field name="domain" eval="[('code', '=like', '7082000%')]"/>
+      <field name="formulas">balance = -sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="3"/>
+      <field name="style_overwrite">3</field>
+      <field name="type">product_details</field>
+    </record>
+    <record id="report_frais_accesories" model="account.financial.report">
+      <field name="name">Frais accessoires refacturés</field>
+      <field name="code">PRODAAFAR</field>
+      <field name="parent_id" ref='report_activite_annexe'/>
+      <field name="domain" eval="[('code', '=like', '7085000%')]"/>
+      <field name="formulas">balance = -sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="3"/>
+      <field name="type">product_details</field>
+      <field name="style_overwrite">3</field>
+    </record>
+
+    <record id="report_production_stockee_destockee" model="account.financial.report">
+      <field name="name">PRODUCTION STOCKEE (ou destockage)</field>
+      <field name="code">PRODSD</field>
+      <field name="parent_id" ref="report_produit_ordinaire"/>
+      <field name="formulas">balance = VARSPRODF.balance + VSTEC.balance + VARSPROD.balance</field>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="1"/>
+      <field name="type">product_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_variation_stock_produit_fini" model="account.financial.report">
+      <field name="name">Variation de stock produit fini</field>
+      <field name="code">VARSPRODF</field>
+      <field name="parent_id" ref='report_production_stockee_destockee'/>
+      <field name="domain" eval="[('code', '=like', '7135500%')]"/>
+      <field name="formulas">balance = -sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="2"/>
+      <field name="type">product_details</field>
+      <field name="style_overwrite">2</field>
+    </record>
+    <record id="report_variation_stock_produit" model="account.financial.report">
+      <field name="name">Variation de stock de produit</field>
+      <field name="code">VARSPROD</field>
+      <field name="parent_id" ref='report_production_stockee_destockee'/>
+      <field name="domain" eval="[('code', '=like', '7140000%')]"/>
+      <field name="formulas">balance = -sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="2"/>
+      <field name="type">product_details</field>
+      <field name="style_overwrite">2</field>
+    </record>
+
+    <record id="report_variation_stock_en_cours" model="account.financial.report"><!-- OK -->
+      <field name="name">Variation de stock encours</field>
+      <field name="code">VSTEC</field>
+      <field name="parent_id" ref='report_production_stockee_destockee'/>
+      <field name="domain" eval="[('code', '=like', '7130000%')]"/>
+      <field name="formulas">balance = -sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="3"/>
+      <field name="level" eval="2"/>
+      <field name="type">product_details</field>
+      <field name="style_overwrite">2</field>
+    </record>
+
+    <record id="report_production_immobilisee" model="account.financial.report">
+      <field name="name">PRODUCTION IMMOBILISEE</field>
+      <field name="code">PRODIMM</field>
+      <field name="parent_id" ref="report_produit_ordinaire"/>
+      <field name="formulas">balance = PRODIMMB.balance</field>
+      <field name="sequence" eval="3"/>
+      <field name="level" eval="1"/>
+      <field name="type">product_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_production_immobilisee_sous" model="account.financial.report">
+      <field name="name">Production immobilisée</field>
+      <field name="code">PRODIMMB</field>
+      <field name="parent_id" ref='report_production_immobilisee'/>
+      <field name="domain" eval="[('code', '=like', '72%')]"/>
+      <field name="formulas">balance = -sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="2"/>
+      <field name="type">product_details</field>
+      <field name="style_overwrite">2</field>
+    </record>
+
+    <record id="report_subvention_exploitation" model="account.financial.report">
+      <field name="name">SUBVENTION D'EXPLOITATION</field>
+      <field name="code">SUBEX</field>
+      <field name="parent_id" ref="report_produit_ordinaire"/>
+      <field name="formulas">balance = ASUBEX.balance + SUBEQ.balance</field>
+      <field name="sequence" eval="4"/>
+      <field name="level" eval="1"/>
+      <field name="type">product_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_subvention_equilibre" model="account.financial.report">
+      <field name="name">Subvention d'équilibre</field>
+      <field name="code">SUBEQ</field>
+      <field name="parent_id" ref='report_subvention_exploitation'/>
+      <field name="domain" eval="[('code', '=like', '741%')]"/>
+      <field name="formulas">balance = -sum.balance</field>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="2"/>
+      <field name="type">product_details</field>
+      <field name="style_overwrite">2</field>
+    </record>
+    <record id="report_autre_subvention_exploitation" model="account.financial.report">
+      <field name="name">Autres subventions d'exploitation</field>
+      <field name="code">ASUBEX</field>
+      <field name="parent_id" ref='report_subvention_exploitation'/>
+      <field name="domain" eval="[('code', '=like', '748%')]"/>
+      <field name="formulas">balance = -sum.balance</field>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="2"/>
+      <field name="type">product_details</field>
+      <field name="style_overwrite">2</field>
+    </record>
+
+    <record id="report_autre_produit_operationnel" model="account.financial.report">
+      <field name="name">AUTRES PRODUITS OPERATIONNELS</field>
+      <field name="code">APO</field>
+      <field name="parent_id" ref="report_produit_ordinaire"/>
+      <field name="formulas">balance = APRODGC.balance + PEXOG.balance + LPRCA.balance + QPSUBIVRE.balance +
+        JETPRAG.balance + PVALCANC.balance + RCBLLOGVS.balance
+      </field>
+      <field name="sequence" eval="5"/>
+      <field name="level" eval="1"/>
+      <field name="type">product_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_redevance_concession_brevet" model="account.financial.report">
+      <field name="name">Redevances pour concessions, brevets, licence, logiciels et valeurs similaires</field>
+      <field name="code">RCBLLOGVS</field>
+      <field name="parent_id" ref='report_autre_produit_operationnel'/>
+      <field name="domain" eval="[('code', '=like', '751%')]"/>
+      <field name="formulas">balance = -sum.balance</field>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="2"/>
+      <field name="style_overwrite">2</field>
+    </record>
+    <record id="report_plus_values_cession_actif_non_courant" model="account.financial.report">
+      <field name="name">Plues values sur cession d'actifs non courants</field>
+      <field name="code">PVALCANC</field>
+      <field name="parent_id" ref='report_autre_produit_operationnel'/>
+      <field name="domain" eval="[('code', '=like', '7520000%')]"/>
+      <field name="formulas">balance = -sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="2"/>
+      <field name="type">product_details</field>
+      <field name="style_overwrite">2</field>
+    </record>
+    <record id="report_jeton_presence_remuneration_gerant" model="account.financial.report">
+      <field name="name">Jetons de présences et rémunérations d'administrateurs ou de gérant</field>
+      <field name="code">JETPRAG</field>
+      <field name="parent_id" ref='report_autre_produit_operationnel'/>
+      <field name="domain" eval="[('code', '=like', '753%')]"/>
+      <field name="formulas">balance = -sum.balance</field>
+      <field name="sequence" eval="3"/>
+      <field name="level" eval="2"/>
+      <field name="type">product_details</field>
+      <field name="style_overwrite">2</field>
+    </record>
+    <record id="report_quote_part_subvention" model="account.financial.report">
+      <field name="name">Quote-part des subventions d'investissement virée au résultat de l'exercice</field>
+      <field name="code">QPSUBIVRE</field>
+      <field name="parent_id" ref='report_autre_produit_operationnel'/>
+      <field name="domain" eval="[('code', '=like', '754%')]"/>
+      <field name="formulas">balance = -sum.balance</field>
+      <field name="sequence" eval="4"/>
+      <field name="level" eval="2"/>
+      <field name="type">product_details</field>
+      <field name="style_overwrite">2</field>
+    </record>
+    <record id="report_liberalite_percue" model="account.financial.report">
+      <field name="name">Libéralités perçues, rentrées sur créances amorties</field>
+      <field name="code">LPRCA</field>
+      <field name="parent_id" ref='report_autre_produit_operationnel'/>
+      <field name="domain" eval="[('code', '=like', '756%')]"/>
+      <field name="formulas">balance = -sum.balance</field>
+      <field name="sequence" eval="5"/>
+      <field name="level" eval="2"/>
+      <field name="type">product_details</field>
+      <field name="style_overwrite">2</field>
+    </record>
+    <record id="report_produit_exceptionnel_gestion" model="account.financial.report">
+      <field name="name">Produits exceptionnels sur opérations de gestion</field>
+      <field name="code">PEXOG</field>
+      <field name="parent_id" ref='report_autre_produit_operationnel'/>
+      <field name="domain" eval="[('code', '=like', '757%')]"/>
+      <field name="formulas">balance = -sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="6"/>
+      <field name="level" eval="2"/>
+      <field name="type">product_details</field>
+      <field name="style_overwrite">2</field>
+    </record>
+    <record id="report_autre_produit_gestion_courante" model="account.financial.report">
+      <field name="name">Autres produits de gestion courante</field>
+      <field name="code">APRODGC</field>
+      <field name="parent_id" ref='report_autre_produit_operationnel'/>
+      <field name="domain" eval="[('code', '=like', '758%')]"/>
+      <field name="formulas">balance = -sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="7"/>
+      <field name="level" eval="2"/>
+      <field name="type">product_details</field>
+      <field name="style_overwrite">2</field>
+    </record>
+
+    <record id="report_produit_financier" model="account.financial.report">
+      <field name="name">PRODUITS FINANCIERS</field>
+      <field name="code">PRODFI</field>
+      <field name="parent_id" ref="report_produit_ordinaire"/>
+      <field name="formulas">balance = APRODFIN.balance + PNETVMP.balance + GCH.balance + RPVALVMP.balance +
+        REVAC.balance + PAIFI.balance + PRODPART.balance
+      </field>
+      <field name="sequence" eval="6"/>
+      <field name="level" eval="1"/>
+      <field name="type">product_details</field>
+      <field name="style_overwrite">1</field>
+    </record>
+    <record id="report_produit_participation" model="account.financial.report">
+      <field name="name">Produits de participations</field>
+      <field name="code">PRODPART</field>
+      <field name="parent_id" ref='report_produit_financier'/>
+      <field name="domain" eval="[('code', '=like', '761%')]"/>
+      <field name="formulas">balance = -sum.balance</field>
+      <field name="sequence" eval="1"/>
+      <field name="level" eval="2"/>
+      <field name="type">product_details</field>
+      <field name="style_overwrite">2</field>
+    </record>
+    <record id="report_produit_autre_immobilisation_fi" model="account.financial.report">
+      <field name="name">Produits des autres immobilisations financières</field>
+      <field name="code">PAIFI</field>
+      <field name="parent_id" ref='report_produit_financier'/>
+      <field name="domain" eval="[('code', '=like', '762%')]"/>
+      <field name="formulas">balance = -sum.balance</field>
+      <field name="sequence" eval="2"/>
+      <field name="level" eval="2"/>
+      <field name="type">product_details</field>
+      <field name="style_overwrite">2</field>
+    </record>
+    <record id="report_revenu_autre_creance" model="account.financial.report">
+      <field name="name">Revenu des autres créances</field>
+      <field name="code">REVAC</field>
+      <field name="parent_id" ref='report_produit_financier'/>
+      <field name="domain" eval="[('code', '=like', '763%')]"/>
+      <field name="formulas">balance = -sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="3"/>
+      <field name="level" eval="2"/>
+      <field name="type">product_details</field>
+      <field name="style_overwrite">2</field>
+    </record>
+    <record id="report_revenu_plus_values_mobiliere" model="account.financial.report">
+      <field name="name">Revenu et plus values des valeurs mobilières de placement</field>
+      <field name="code">RPVALVMP</field>
+      <field name="parent_id" ref='report_produit_financier'/>
+      <field name="domain" eval="[('code', '=like', '764%')]"/>
+      <field name="formulas">balance = -sum.balance</field>
+      <field name="sequence" eval="4"/>
+      <field name="level" eval="2"/>
+      <field name="type">product_details</field>
+      <field name="style_overwrite">2</field>
+    </record>
+    <record id="report_gain_change" model="account.financial.report">
+      <field name="name">Gains de change</field>
+      <field name="code">GCH</field>
+      <field name="parent_id" ref='report_produit_financier'/>
+      <field name="domain" eval="[('code', '=like', '766%')]"/>
+      <field name="formulas">balance = -sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="5"/>
+      <field name="level" eval="2"/>
+      <field name="type">product_details</field>
+      <field name="style_overwrite">2</field>
+    </record>
+    <record id="report_produit_net_cession_mobiliere" model="account.financial.report">
+      <field name="name">Produits nets sur cession de valeurs mobilières de placement</field>
+      <field name="code">PNETVMP</field>
+      <field name="parent_id" ref='report_produit_financier'/>
+      <field name="domain" eval="[('code', '=like', '767%')]"/>
+      <field name="formulas">balance = -sum.balance</field>
+      <field name="sequence" eval="6"/>
+      <field name="level" eval="2"/>
+      <field name="type">product_details</field>
+      <field name="style_overwrite">2</field>
+    </record>
+    <record id="report_autre_produit_financier" model="account.financial.report">
+      <field name="name">Autres produits financiers</field>
+      <field name="code">APRODFIN</field>
+      <field name="parent_id" ref='report_produit_financier'/>
+      <field name="domain" eval="[('code', '=like', '768%')]"/>
+      <field name="formulas">balance = -sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="7"/>
+      <field name="level" eval="2"/>
+      <field name="type">product_details</field>
+      <field name="style_overwrite">2</field>
+    </record>
+
+    <record id="reprise_provision_perte_valeur" model="account.financial.report">
+      <field name="name">REPRISES SUR PROVISIONS ET PERTES DE VALEUR</field>
+      <field name="code">RPROPV</field>
+      <field name="parent_id" ref='report_produit_ordinaire'/>
+      <field name="domain" eval="[('code', '=like', '78%')]"/>
+      <field name="formulas">balance = -sum.balance</field>
+      <field name="groupby">account_id</field>
+      <field name="sequence" eval="7"/>
+      <field name="level" eval="2"/>
+      <field name="type">product_details</field>
+      <field name="style_overwrite">2</field>
+    </record>
+
+
+  </data>
+</odoo>

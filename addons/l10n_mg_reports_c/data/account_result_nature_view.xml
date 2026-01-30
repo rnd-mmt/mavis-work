@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data noupdate="0">
+		<!-- Compte de résultat par nature -->
+		<record id="report_compte_resultat_nature" model="account.financial.report">
+			<field name="name">Compte de résultat par nature</field>
+			<field name='type_financial_report_mg'>income_statement</field>
+			<field name="type">sum_mg</field>
+		</record>
+		<record id="report_production_exercice" model="account.financial.report">
+			<field name="name">I - PRODUCTION DE L'EXERCICE</field>
+			<field name="code">PE</field>
+			<field name="financial_report_id" ref="report_compte_resultat_nature" />
+			<field name="parent_id" ref="report_compte_resultat_nature" />
+			<field name="formulas">balance = CANATURE.balance + PRODIMMN.balance + PSN.balance</field>
+			<field name="sequence" eval="1" />
+			<field name="level" eval="1" />
+			<field name="type">report_mg_pl</field>
+			<field name="style_overwrite">0</field>
+		</record>
+		<record id="report_nature_chiffre_affaire" model="account.financial.report">
+			<field name="name">Chiffre d'affaire</field>
+			<field name="code">CANATURE</field>
+			<field name="parent_id" ref='report_production_exercice'/>
+			<field name="domain" eval="[('code', '=like', '70%')]"/>
+			<field name="formulas">balance = -sum.balance</field>
+			<field name="groupby">account_id</field>
+			<field name="sequence" eval="1" />
+			<field name="level" eval="2" />
+			<field name="type">report_mg_pl</field>
+			<field name="style_overwrite">1</field>
+		</record>
+		<record id="report_nature_production_stockee" model="account.financial.report">
+			<field name="name">Production stockée</field>
+			<field name="code">PSN</field>
+			<field name="parent_id" ref='report_production_exercice' />
+			<field name="domain" eval="[('code','=like','71%')]" />
+<!--			<field name="domain" eval="['|',('code','=like','713%'),('code','=like','714%')]" />-->
+			<field name="formulas">balance = -sum.balance</field>
+			<field name="groupby">account_id</field>
+			<field name="sequence" eval="2" />
+			<field name="level" eval="2" />
+			<field name="type">report_mg_pl</field>
+			<field name="style_overwrite">1</field>
+		</record>
+		<record id="report_nature_production_immobilisee" model="account.financial.report">
+			<field name="name">Production immobilisée</field>
+			<field name="code">PRODIMMN</field>
+			<field name="parent_id" ref='report_production_exercice' />
+			<field name="formulas">balance = PRODIMM.balance</field>
+			<field name="groupby">account_id</field>
+			<field name="sequence" eval="3" />
+			<field name="level" eval="2" />
+			<field name="type">report_mg_pl</field>
+			<field name="style_overwrite">1</field>
+		</record>
+		<record id="report_nature_conso_exercice" model="account.financial.report">
+			<field name="name">II - CONSOMMATION DE L'EXERCICE</field>
+			<field name="code">CEN</field>
+			<field name="financial_report_id" ref="report_compte_resultat_nature" />
+			<field name="parent_id" ref="report_compte_resultat_nature" />
+			<field name="formulas">balance = NATUREACONS.balance + NATURESEAC.balance</field>
+			<field name="sequence" eval="2" />
+			<field name="level" eval="1" />
+			<field name="type">report_mg_pl</field>
+			<field name="style_overwrite">0</field>
+		</record>
+<!--		<record id="nature_report_achat_conso" model="account.financial.report">-->
+<!--			<field name="name">Achats consommés</field>-->
+<!--			<field name="code">NATUREACONS</field>-->
+<!--			<field name="parent_id" ref='report_nature_conso_exercice'/>-->
+<!--			<field name="formulas">balance = -ACONS.balance</field>-->
+<!--			<field name="groupby">account_id</field>-->
+<!--			<field name="sequence" eval="1"/>-->
+<!--			<field name="level" eval="2"/>-->
+<!--			<field name="type">report_mg_pl</field>-->
+<!--			<field name="style_overwrite">1</field>-->
+<!--		</record>-->
+		<record id="nature_report_achat_conso" model="account.financial.report">
+			<field name="name">Achats consommés</field>
+			<field name="code">NATUREACONS</field>
+			<field name="parent_id" ref='report_nature_conso_exercice'/>
+			<field name="formulas">balance = -sum.balance</field>
+			 <field name="domain" eval="[('code', '=like', '60%')]"/>
+			<field name="groupby">account_id</field>
+			<field name="sequence" eval="1"/>
+			<field name="level" eval="2"/>
+			<field name="type">report_mg_pl</field>
+			<field name="style_overwrite">1</field>
+		</record>
+<!--		<record id="nature_report_service_exterieur_autre_conso" model="account.financial.report">-->
+<!--			<field name="name">Services extérieures et autres consommations</field>-->
+<!--			<field name="code">NATURESEAC</field>-->
+<!--			<field name="parent_id" ref='report_nature_conso_exercice' />-->
+<!--			<field name="formulas">balance = -SEACONS.balance</field>-->
+<!--			<field name="groupby">account_id</field>-->
+<!--			<field name="sequence" eval="2"/>-->
+<!--			<field name="level" eval="2"/>-->
+<!--			<field name="type">report_mg_pl</field>-->
+<!--			<field name="style_overwrite">1</field>-->
+<!--		</record>-->
+		<record id="nature_report_service_exterieur_autre_conso" model="account.financial.report">
+			<field name="name">Services extérieures et autres consommations</field>
+			<field name="code">NATURESEAC</field>
+			<field name="parent_id" ref='report_nature_conso_exercice' />
+			<field name="formulas">balance = -sum.balance</field>
+				 <field name="domain" eval="['|',('code', '=like', '61%'),('code', '=like', '62%')]"/>
+			<field name="groupby">account_id</field>
+			<field name="sequence" eval="2"/>
+			<field name="level" eval="2"/>
+			<field name="type">report_mg_pl</field>
+			<field name="style_overwrite">1</field>
+		</record>
+		<record id="report_nature_valeur_ajoutee" model="account.financial.report">
+			<field name="name">III - VALEUR AJOUTEE (I - II)</field>
+			<field name="code">VAN</field>
+			<field name="financial_report_id" ref="report_compte_resultat_nature" />
+			<field name="parent_id" ref="report_compte_resultat_nature" />
+			<field name="formulas">balance = PE.balance + CEN.balance</field>
+			<field name="sequence" eval="3" />
+			<field name="level" eval="1" />
+			<field name="type">report_mg_pl</field>
+			<field name="style_overwrite">0</field>
+		</record>
+<!--		<record id="report_nature_subvention_exploit" model="account.financial.report">-->
+<!--			<field name="name">Subvention d'exploitation</field>-->
+<!--			<field name="code">SDEN</field>-->
+<!--			<field name="financial_report_id" ref="report_compte_resultat_nature" />-->
+<!--			<field name="parent_id" ref="report_compte_resultat_nature" />-->
+<!--			<field name="formulas">balance = -SUBEX.balance</field>-->
+<!--			<field name="sequence" eval="4" />-->
+<!--			<field name="level" eval="2" />-->
+<!--			<field name="type">report_mg_pl</field>-->
+<!--		</record>-->
+			<record id="report_nature_subvention_exploit" model="account.financial.report">
+			<field name="name">Subvention d'exploitation</field>
+			<field name="code">SDEN</field>
+			<field name="financial_report_id" ref="report_compte_resultat_nature" />
+			<field name="parent_id" ref="report_compte_resultat_nature" />
+			<field name="formulas">balance = -sum.balance</field>
+				<field name="domain" eval="[('code', '=like', '74%')]"/>
+			<field name="sequence" eval="4" />
+			<field name="level" eval="2" />
+			<field name="type">report_mg_pl</field>
+		</record>
+<!--		<record id="report_nature_impot_taxe_versement_assimile" model="account.financial.report">-->
+<!--			<field name="name">Impôts, taxes et versements assimilés</field>-->
+<!--			<field name="code">ITVA</field>-->
+<!--			<field name="financial_report_id" ref="report_compte_resultat_nature" />-->
+<!--			<field name="parent_id" ref="report_compte_resultat_nature" />-->
+<!--			<field name="formulas">balance = -IMPTVA.balance</field>-->
+<!--			<field name="groupby">account_id</field>-->
+<!--			<field name="sequence" eval="5" />-->
+<!--			<field name="level" eval="2" />-->
+<!--			<field name="type">report_mg_pl</field>-->
+<!--			<field name="style_overwrite">1</field>-->
+<!--		</record>-->
+		<record id="report_nature_impot_taxe_versement_assimile" model="account.financial.report">
+			<field name="name">Impôts, taxes et versements assimilés</field>
+			<field name="code">ITVA</field>
+			<field name="financial_report_id" ref="report_compte_resultat_nature" />
+			<field name="parent_id" ref="report_compte_resultat_nature" />
+			<field name="formulas">balance = -sum.balance</field>
+			<field name="domain" eval="[('code', '=like', '63%')]"/>
+			<field name="groupby">account_id</field>
+			<field name="sequence" eval="5" />
+			<field name="level" eval="2" />
+			<field name="type">report_mg_pl</field>
+			<field name="style_overwrite">1</field>
+		</record>
+<!--		<record id="report_nature_charge_personnel" model="account.financial.report">-->
+<!--			<field name="name">Charges de personnel</field>-->
+<!--			<field name="code">CDP</field>-->
+<!--			<field name="financial_report_id" ref="report_compte_resultat_nature" />-->
+<!--			<field name="parent_id" ref="report_compte_resultat_nature" />-->
+<!--			<field name="formulas">balance = -CPERS.balance</field>-->
+<!--			<field name="groupby">account_id</field>-->
+<!--			<field name="sequence" eval="6" />-->
+<!--			<field name="level" eval="2" />-->
+<!--			<field name="type">report_mg_pl</field>-->
+<!--			<field name="style_overwrite">1</field>-->
+<!--		</record>-->
+		<record id="report_nature_charge_personnel" model="account.financial.report">
+			<field name="name">Charges de personnel</field>
+			<field name="code">CDP</field>
+			<field name="financial_report_id" ref="report_compte_resultat_nature" />
+			<field name="parent_id" ref="report_compte_resultat_nature" />
+			<field name="formulas">balance = -sum.balance</field>
+			<field name="domain" eval="[('code', '=like', '64%')]"/>
+			<field name="groupby">account_id</field>
+			<field name="sequence" eval="6" />
+			<field name="level" eval="2" />
+			<field name="type">report_mg_pl</field>
+			<field name="style_overwrite">1</field>
+		</record>
+		<record id="report_nature_excedent_brut" model="account.financial.report">
+			<field name="name">IV - EXCEDENT BRUT D'EXPLOITATION</field>
+			<field name="code">EBEN</field>
+			<field name="financial_report_id" ref="report_compte_resultat_nature" />
+			<field name="parent_id" ref="report_compte_resultat_nature" />
+			<field name="formulas">balance = VAN.balance + SDEN.balance + ITVA.balance + CDP.balance</field>
+			<field name="sequence" eval="7" />
+			<field name="level" eval="1" />
+			<field name="type">report_mg_pl</field>
+			<field name="style_overwrite">0</field>
+		</record>
+		<record id="report_resultat_operationnel_nature" model="account.financial.report">
+			<field name="name">V - RESULTAT OPERATIONNEL</field>
+			<field name="code">ROPN</field>
+			<field name="financial_report_id" ref="report_compte_resultat_nature" />
+			<field name="parent_id" ref="report_compte_resultat_nature" />
+			<field name="formulas">balance = APON.balance + ACON.balance + DAPPV.balance + RPROPVN.balance + EBEN.balance</field>
+			<field name="sequence" eval="8" />
+			<field name="level" eval="1" />
+			<field name="type">report_mg_pl</field>
+			<field name="style_overwrite">0</field>
+		</record>
+		<record id="report_autres_produits_operationnels_nature" model="account.financial.report">
+			<field name="name">Autres produits opérationnels</field>
+			<field name="code">APON</field>
+			<field name="parent_id" ref='report_resultat_operationnel_nature' />
+			<field name="formulas">balance = APO.balance</field>
+			<field name="groupby">account_id</field>
+			<field name="sequence" eval="1" />
+			<field name="level" eval="2" />
+			<field name="type">report_mg_pl</field>
+			<field name="style_overwrite">1</field>
+		</record>
+		<record id="report_autres_charges_operationnels_nature" model="account.financial.report">
+			<field name="name">Autres charges opérationnels</field>
+			<field name="code">ACON</field>
+			<field name="parent_id" ref='report_resultat_operationnel_nature' />
+			<field name="domain" eval="[('code', '=like', '65%')]" />
+			<field name="formulas">balance = -sum.balance</field>
+			<field name="groupby">account_id</field>
+			<field name="sequence" eval="2" />
+			<field name="level" eval="2" />
+			<field name="type">report_mg_pl</field>
+			<field name="style_overwrite">1</field>
+		</record>
+		<record id="report_dotation_amort_provision_perte_valeur"
+			model="account.financial.report">
+			<field name="name">Dotation aux amortis/provisions et pertes de valeurs</field>
+			<field name="code">DAPPV</field>
+			<field name="parent_id" ref='report_resultat_operationnel_nature' />
+			<field name="formulas">balance = -DAPPVAL.balance</field>
+			<field name="groupby">account_id</field>
+			<field name="sequence" eval="3" />
+			<field name="level" eval="2" />
+			<field name="type">report_mg_pl</field>
+			<field name="style_overwrite">1</field>
+		</record>
+		<record id="report_reprise_provision_perte_valeur_nature" model="account.financial.report">
+			<field name="name">Reprise sur provisions et pertes de valeurs</field>
+			<field name="code">RPROPVN</field>
+			<field name="parent_id" ref='report_resultat_operationnel_nature' />
+			<field name="formulas">balance = RPROPV.balance</field>
+			<field name="sequence" eval="4" />
+			<field name="level" eval="2" />
+			<field name="type">report_mg_pl</field>
+			<field name="style_overwrite">1</field>
+		</record>
+		<record id="report_resultat_financier_nature" model="account.financial.report">
+			<field name="name">VI - RESULTAT FINANCIER</field>
+			<field name="code">RFIN</field>
+			<field name="financial_report_id" ref="report_compte_resultat_nature" />
+			<field name="parent_id" ref="report_compte_resultat_nature" />
+			<field name="formulas">balance = PFI.balance + CFI.balance</field>
+			<field name="sequence" eval="9" />
+			<field name="level" eval="1" />
+			<field name="type">report_mg_pl</field>
+			<field name="style_overwrite">0</field>
+		</record>
+<!--		<record id="report_produits_financiers" model="account.financial.report">-->
+<!--			<field name="name">Produits financiers</field>-->
+<!--			<field name="code">PFI</field>-->
+<!--			<field name="parent_id" ref='report_resultat_financier_nature' />-->
+<!--			<field name="formulas">balance = PRODFI.balance</field>-->
+<!--			<field name="groupby">account_id</field>-->
+<!--			<field name="sequence" eval="1" />-->
+<!--			<field name="level" eval="2" />-->
+<!--			<field name="type">report_mg_pl</field>-->
+<!--			<field name="style_overwrite">1</field>-->
+<!--		</record>-->
+		<record id="report_produits_financiers" model="account.financial.report">
+			<field name="name">Produits financiers</field>
+			<field name="code">PFI</field>
+			<field name="parent_id" ref='report_resultat_financier_nature' />
+			<field name="formulas">balance = -sum.balance</field>
+			<field name="domain" eval="[('code', '=like', '76%')]" />
+			<field name="groupby">account_id</field>
+			<field name="sequence" eval="1" />
+			<field name="level" eval="2" />
+			<field name="type">report_mg_pl</field>
+			<field name="style_overwrite">1</field>
+		</record>
+<!--		<record id="report_charges_financieres" model="account.financial.report">-->
+<!--			<field name="name">Charges financières</field>-->
+<!--			<field name="code">CFI</field>-->
+<!--			<field name="parent_id" ref='report_resultat_financier_nature' />-->
+<!--			<field name="formulas">balance = -CFINAN.balance</field>-->
+<!--			<field name="groupby">account_id</field>-->
+<!--			<field name="sequence" eval="2" />-->
+<!--			<field name="level" eval="2" />-->
+<!--			<field name="type">report_mg_pl</field>-->
+<!--			<field name="style_overwrite">1</field>-->
+<!--		</record>-->
+		<record id="report_charges_financieres" model="account.financial.report">
+			<field name="name">Charges financières</field>
+			<field name="code">CFI</field>
+			<field name="parent_id" ref='report_resultat_financier_nature' />
+			<field name="formulas">balance = -sum.balance</field>
+			<field name="domain" eval="[('code', '=like', '66%')]" />
+			<field name="groupby">account_id</field>
+			<field name="sequence" eval="2" />
+			<field name="level" eval="2" />
+			<field name="type">report_mg_pl</field>
+			<field name="style_overwrite">1</field>
+		</record>
+		<!-- DONE -->
+		<record id="report_nature_resultat_avant_impots_nature" model="account.financial.report">
+			<field name="name">VII - RESULTAT AVANT IMPOTS (V + VI)</field>
+			<field name="code">RAIMPN</field>
+			<field name="financial_report_id" ref="report_compte_resultat_nature" />
+			<field name="parent_id" ref="report_compte_resultat_nature" />
+			<field name="formulas">balance = ROPN.balance + RFIN.balance</field>
+			<field name="sequence" eval="10" />
+			<field name="level" eval="1" />
+			<field name="type">report_mg_pl</field>
+			<field name="style_overwrite">0</field>
+		</record>
+		
+		<record id="report_nature_impot_exigible" model="account.financial.report">
+			<field name="name">Impôts exigibles sur résultat</field>
+			<field name="code">IESRN</field>
+			<field name="financial_report_id" ref="report_compte_resultat_nature" />
+			<field name="parent_id" ref="report_compte_resultat_nature" />
+			<field name="formulas">balance = -IMPSR.balance</field>
+			<field name="groupby">account_id</field>
+			<field name="sequence" eval="11" />
+			<field name="level" eval="2" />
+			<field name="type">report_mg_pl</field>
+			<field name="style_overwrite">1</field>
+		</record>
+
+		<record id="report_nature_impot_differe_variation" model="account.financial.report">
+			<field name="name">Impôts différés (variations)</field>
+			<field name="code">IDIFFV</field>
+			<field name="financial_report_id" ref="report_compte_resultat_nature" />
+			<field name="parent_id" ref="report_compte_resultat_nature" />
+			<field name="formulas">balance = -IMPDIFF.balance</field>
+			<field name="groupby">account_id</field>
+			<field name="sequence" eval="12" />
+			<field name="level" eval="2" />
+			<field name="type">report_mg_pl</field>
+			<field name="style_overwrite">1</field>
+		</record>
+		<record id="report_resultat_net_ordinaire" model="account.financial.report">
+			<field name="name">VIII - RESULTAT NET DES ACTIVITES ORDINAIRES</field>
+			<field name="code">RNETAO</field>
+			<field name="financial_report_id" ref="report_compte_resultat_nature" />
+			<field name="parent_id" ref="report_compte_resultat_nature" />
+			<field name="formulas">balance = TPAO.balance + TDCOR.balance</field>
+			<field name="sequence" eval="13" />
+			<field name="level" eval="1" />
+			<field name="type">report_mg_pl</field>
+			<field name="style_overwrite">0</field>
+		</record>
+<!--		<record id="report_total_produit_ordinaire" model="account.financial.report">-->
+<!--			<field name="name">TOTAL DES PRODUITS DES ACTIVITES ORDINAIRES</field>-->
+<!--			<field name="code">TPAO</field>-->
+<!--			<field name="formulas">balance = PE.balance + APON.balance + RPROPVN.balance + PFI.balance</field>-->
+<!--			<field name="parent_id" ref='report_resultat_net_ordinaire' />-->
+<!--			<field name="sequence" eval="1" />-->
+<!--			<field name="level" eval="2" />-->
+<!--			<field name="type">report_mg_pl</field>-->
+<!--			<field name="style_overwrite">1</field>-->
+<!--		</record>-->
+		<record id="report_total_produit_ordinaire" model="account.financial.report">
+			<field name="name">TOTAL DES PRODUITS DES ACTIVITES ORDINAIRES</field>
+			<field name="code">TPAO</field>
+			<field name="formulas">balance = -sum.balance</field>
+			<field name="parent_id" ref='report_resultat_net_ordinaire' />
+			<field name="domain" eval="[('code', '=like', '7%')]" />
+			<field name="sequence" eval="1" />
+			<field name="level" eval="2" />
+			<field name="type">report_mg_pl</field>
+			<field name="style_overwrite">1</field>
+		</record>
+<!--		<record id="report_total_charge_activite_ordinaire" model="account.financial.report">-->
+<!--			<field name="name">TOTAL DES CHARGES DES ACTIVITES ORDINAIRES</field>-->
+<!--			<field name="code">TDCOR</field>-->
+<!--			<field name="formulas">balance = CEN.balance + ITVA.balance + ACON.balance + CDP.balance + DAPPV.balance + CFI.balance + IDIFFV.balance + IESRN.balance</field>-->
+<!--			<field name="parent_id" ref='report_resultat_net_ordinaire' />-->
+<!--			<field name="sequence" eval="2" />-->
+<!--			<field name="level" eval="2" />-->
+<!--			<field name="type">report_mg_pl</field>-->
+<!--			<field name="style_overwrite">1</field>-->
+<!--		</record>-->
+
+			<record id="report_total_charge_activite_ordinaire" model="account.financial.report">
+			<field name="name">TOTAL DES CHARGES DES ACTIVITES ORDINAIRES</field>
+			<field name="code">TDCOR</field>
+			<field name="formulas">balance = -sum.balance</field>
+			<field name="parent_id" ref='report_resultat_net_ordinaire' />
+				<field name="domain" eval="[('code', '=like', '6%')]" />
+			<field name="sequence" eval="2" />
+			<field name="level" eval="2" />
+			<field name="type">report_mg_pl</field>
+			<field name="style_overwrite">1</field>
+		</record>
+
+		<record id="report_resultat_extraordinaire_nature" model="account.financial.report">
+			<field name="name">IX - RESULTAT EXTRAORDINAIRE</field>
+			<field name="code">REXN</field>
+			<field name="financial_report_id" ref="report_compte_resultat_nature" />
+			<field name="parent_id" ref="report_compte_resultat_nature" />
+			<field name="formulas">balance = EEP.balance + EEC.balance</field>
+			<field name="sequence" eval="14" />
+			<field name="level" eval="1" />
+			<field name="type">report_mg_pl</field>
+			<field name="style_overwrite">0</field>
+		</record>
+		<record id="report_extraordinaire_produit" model="account.financial.report">
+			<field name="name">Elements extraordinaires produits -(à préciser)</field>
+			<field name="code">EEP</field>
+			<field name="parent_id" ref='report_resultat_extraordinaire_nature' />
+			<field name="sequence" eval="1" />
+			<field name="level" eval="2" />
+			<field name="type">report_mg_pl</field>
+			<field name="style_overwrite">1</field>
+		</record>
+		<record id="report_extraordinaire_charge" model="account.financial.report">
+			<field name="name">Elements extraordinaires charges -(à préciser)</field>
+			<field name="code">EEC</field>
+			<field name="parent_id" ref='report_resultat_extraordinaire_nature' />
+			<field name="sequence" eval="2" />
+			<field name="level" eval="2" />
+			<field name="type">report_mg_pl</field>
+			<field name="style_overwrite">1</field>
+		</record>
+
+		<record id="report_nature_resultat_net_exercice" model="account.financial.report">
+			<field name="name">X - RESULTAT NET DE L'EXERCICE</field>
+			<field name="code">RNET</field>
+			<field name="financial_report_id" ref="report_compte_resultat_nature" />
+			<field name="parent_id" ref="report_compte_resultat_nature" />
+			<field name="formulas">balance = RNETAO.balance + REXN.balance</field>
+			<field name="sequence" eval="15" />
+			<field name="level" eval="1" />
+			<field name="type">report_mg_pl</field>
+			<field name="style_overwrite">0</field>
+		</record>
+		<!-- add action and menu -->
+	    <record id="action_account_report_compte_resultat_nature" model="ir.actions.act_window">
+	        <field name="name">Compte de résultat par nature</field>
+	        <field name="res_model">accounting.report</field>
+	        <field name="type">ir.actions.act_window</field>
+	        <field name="view_mode">form</field>
+	        <field name="view_id" ref="accounting_pdf_reports.accounting_report_view"/>
+	        <field name="target">new</field>
+	        <field name="context" eval="{'default_account_report_id':ref('report_compte_resultat_nature')}"/>
+	    </record>
+
+	    <menuitem id="menu_action_account_report_compte_resultat_nature"
+	              name="Compte de résultat par nature"
+	              sequence="0"
+	              action="action_account_report_compte_resultat_nature"
+	              parent="l10n_mg_reports_c.account_reports_mg_statements_menu"
+	              groups="account.group_account_user,account.group_account_manager"/>
+	</data>
+</odoo>

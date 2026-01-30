@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <report
+            id="report_purchase_requisition"
+            model="material.purchase.requisition"
+            string="Demande de fourniture"
+            report_type="qweb-pdf"
+            name="material_purchase_requisitions.purchase_requisition"
+            file="material_purchase_requisitions.purchase_requisition"
+        />
+
+<!--        <record id="report_purchase_requisition" model="ir.actions.report">-->
+<!--            <field name="name">Demande de fourniture</field>-->
+<!--            <field name="model">material.purchase.requisition</field>-->
+<!--            <field name="report_type">qweb-pdf</field>-->
+<!--            <field name="report_name">material_purchase_requisitions.purchase_requisition</field>-->
+<!--            <field name="report_file">material_purchase_requisitions.purchase_requisition</field>-->
+<!--            <field name="binding_model_id" ref="model_material_purchase_requisition"/>-->
+<!--            <field name="binding_type">report</field>-->
+<!--        </record>-->
+
+        <template id="purchase_requisition">
+            <t t-call="web.html_container">
+               <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                         <div class="page">
+                             <div class="row">
+                                <div class="col-7 text-center">
+                                    <strong><p>BESOIN LOGISTIQUE DE FOURNITURES ET MATERIELS </p></strong>
+                                </div>
+                                <div class="col-4 text-right">
+                                    <strong><p>N°: <span t-field="doc.name"/></p></strong>
+                                </div>
+                            </div>
+                             <div class="row mt-4 mb-4">
+                                <div class="col-auto col-3 mw-100 mb-2" t-if="doc.employee_id">
+                                    <strong>Nom du demandeur:</strong>
+                                    <p class="m-0" t-field="doc.employee_id"/>
+                                </div>
+                                <div class="col-auto col-3 mw-100 mb-2" t-if="doc.request_date">
+                                    <strong>Date de la demande:</strong>
+                                    <p class="m-0" t-field="doc.request_date"/>
+                                </div>
+                                <div class="col-auto col-3 mw-100 mb-2" t-if="doc.department_id.name">
+                                    <strong>Département:</strong>
+                                    <p class="m-0" t-field="doc.department_id.name"/>
+                                </div>
+                                <div class="col-auto col-3 mw-100 mb-2" t-if="doc.receive_date">
+                                    <strong>Reçu le:</strong>
+                                    <p class="m-0" t-field="doc.receive_date"/>
+                                </div>
+                            </div>
+                             <div class="row mt-4 mb-4">
+                                <div class="col-auto col-3 mw-100 mb-2" t_if="doc.requisiton_responsible_id.sudo().name">
+                                    <strong>Responsable de la demande:</strong>
+                                    <p class="m-0" t-field="doc.requisiton_responsible_id.sudo().name"/>
+                                </div>
+                                <div class="col-auto col-3 mw-100 mb-2" t-if="doc.date_end">
+                                    <strong>Date limite de la demande:</strong>
+                                    <p class="m-0" t-field="doc.date_end"/>
+                                </div>
+                                <div class="col-auto col-3 mw-100 mb-2" t-if="doc.company_id.name">
+                                    <strong>Société:</strong>
+                                    <p class="m-0" t-field="doc.company_id.name"/>
+                                </div>
+                                <div class="col-auto col-3 mw-100 mb-2" t-if="doc.analytic_account_id.name">
+                                    <strong>Compte analytique</strong>
+                                    <p class="m-0" t-field="doc.analytic_account_id.name"/>
+                                </div>
+                            </div>
+
+                             <strong><h3>Liste de la demande</h3></strong>
+                            <table class="table table-bordered table-sm o_main_table">
+                               <tr>
+<!--                                    <td><strong>Requisition Action</strong></td>-->
+                                    <td><strong>Produit</strong></td>
+                                    <td><strong>Description</strong></td>
+                                    <td><strong>Quantité</strong></td>
+                                    <td><strong>Unité de Measure</strong></td>
+<!--                                    <td><strong>Vendeurs</strong></td>-->
+                                    <td><strong>Numéro de série</strong></td>
+                               </tr>
+                               <t t-foreach ="doc.requisition_line_ids" t-as="line">
+                                   <tr>
+<!--                                    <td><span t-field="line.requisition_type"/></td>-->
+                                    <td><span t-field="line.product_id.name"/></td>
+                                    <td><span t-esc="line.description"/></td>
+                                    <td class="text-right"><span t-esc="line.qty"/></td>
+                                    <td class="text-right"><span t-esc="line.uom.name"/></td>
+<!--                                    <td><t t-foreach ="line.partner_id" t-as="vendore"><span t-field="vendore.name"/>,</t></td>-->
+                                    <td>
+                                        <t t-if="line.product_id.barcode">
+                                            <img alt="Barcode" t-if="len(line.product_id.barcode) == 13" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('EAN13', quote_plus(line.product_id.barcode or ''), 600, 150)" style="width:75%;height::1rem;"/>
+                                            <img alt="Barcode" t-elif="len(line.product_id.barcode) == 8" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('EAN8', quote_plus(line.product_id.barcode or ''), 600, 150)" style="width:75%;height::1rem;"/>
+                                            <img alt="Barcode" t-else="" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', quote_plus(line.product_id.barcode or ''), 600, 150)" style="width:75%;height::1rem;"/>
+                                            <p style="font-size:12px; margin-left:50px"><span t-field="line.product_id.barcode" /></p>
+                                        </t>
+                                        <t t-else=""><span class="text-muted">Pas de code-barres disponible</span></t>
+                                    </td>
+                               </tr>
+                               </t>
+                            </table>
+
+                             <t t-if="doc.reason">
+                                <strong><h3>Motif de la demande</h3></strong>
+                                <table class="table table-responsive">
+                                   <tr style="border: 2px solid black;">
+                                       <td> <span t-field="doc.reason"/></td>
+                                   </tr>
+                                </table>
+                            </t>
+
+                            <strong><h3>Autres information</h3></strong>
+                             <div class="row">
+                                <div class="col-6">
+
+<!--                                    <strong>Confirmé par: </strong><span t-field="doc.employee_confirm_id"/><br/>-->
+<!--                                    <strong>Responsable de département: </strong><span t-field="doc.approve_manager_id"/><br/>-->
+<!--                                    <strong>Approuvé par: </strong><span t-field="doc.approve_employee_id"/><br/>-->
+                                    <strong>Refusé par: </strong><span t-field="doc.reject_employee_id"/><br/>
+                                    <strong>Emplacement source: </strong><span t-field="doc.location_id.name"/><br/>
+                                    <strong>Internal Picking: </strong><span t-field="doc.delivery_picking_id.name"/><br/>
+                                </div>
+                                <div class="col-6">
+<!--                                    <strong>Confirmé le: </strong><span t-field="doc.confirm_date"/><br/>-->
+<!--                                    <strong>Date d'approbation du département: </strong><span t-field="doc.managerapp_date"/><br/>-->
+<!--                                    <strong>Approuvé le: </strong><span t-field="doc.userrapp_date"/><br/>-->
+                                    <strong>Refusé le: </strong><span t-field="doc.userreject_date"/><br/>
+                                    <strong>Emplacement de destination: </strong><span t-field="doc.dest_location_id.name"/><br/>
+                                </div>
+                            </div>
+                             <br/><br/>
+
+                            <div class="row">
+                                <div class="col-3">
+                                    <b>Le Demandeur</b>
+                                    <br/>
+                                    <b>Date: </b><span t-field="doc.confirm_date"/>
+                                    <br/>
+                                    <t t-if="doc.employee_id and doc.employee_id.signature">
+                                        <span t-field="doc.employee_id.signature" t-options="{'widget': 'image', 'class': 'img-rounded', 'style':'max-height: 100px !important'}"/>
+                                    </t>
+                                    <br/>
+                                    <span t-field="doc.employee_confirm_id"/>
+                                </div>
+
+                                <div class="col-5">
+                                    <b>Le Responsable de département</b>
+                                    <br/>
+                                    <b>Date: </b><span t-field="doc.managerapp_date"/>
+                                    <br/>
+                                    <t t-if="doc.approve_manager_id and doc.approve_manager_id.signature">
+                                        <span t-field="doc.approve_manager_id.signature" t-options="{'widget': 'image', 'class': 'img-rounded', 'style':'max-height: 100px !important'}"/>
+                                    </t>
+                                    <br/>
+                                    <span t-field="doc.approve_manager_id"/>
+                                </div>
+
+                                <div class="col-3">
+                                    <b>L'Approbateur</b>
+                                    <br/>
+                                    <b>Date: </b><span t-field="doc.userrapp_date"/>
+                                    <br/>
+                                    <t t-if="doc.approve_employee_id and doc.approve_employee_id.signature">
+                                        <span t-field="doc.approve_employee_id.signature" t-options="{'widget': 'image', 'class': 'img-rounded', 'style':'max-height: 100px !important'}"/>
+                                    </t>
+                                    <br/>
+                                    <span t-field="doc.approve_employee_id"/>
+                                </div>
+                            </div>
+                         </div>
+
+<!--                         <div class="row mt32 mb32">-->
+<!--                             <div class="col-6">-->
+<!--                                <strong>Signature de l'employé:____________________</strong>-->
+<!--                             </div>-->
+<!--                             <div class="col-6">-->
+<!--                                <strong>Date:____________________</strong>-->
+<!--                             </div>-->
+<!--                         </div>-->
+<!--                          <div class="row mt32 mb32">-->
+<!--                             <div class="col-6">-->
+<!--                                <strong>Signature du responsable de département:____________________</strong>-->
+<!--                             </div>-->
+<!--                             <div class="col-6">-->
+<!--                                <strong>Date:____________________</strong>-->
+<!--                             </div>-->
+<!--                         </div>-->
+<!--                         <div class="row mt32 mb32">-->
+<!--                             <div class="col-6">-->
+<!--                                <strong>Signature de l'approbateur:____________________</strong>-->
+<!--                             </div>-->
+<!--                             <div class="col-6">-->
+<!--                                <strong>Date:____________________</strong>-->
+<!--                             </div>-->
+<!--                         </div>-->
+<!--                        </div>-->
+                    </t>
+               </t>
+           </t>
+        </template>
+        
+  </data>
+</odoo>

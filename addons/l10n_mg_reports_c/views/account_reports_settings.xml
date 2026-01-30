@@ -1,0 +1,32 @@
+<odoo>
+  <data>
+    <record id="view_account_financial_report_form_inherit" model="ir.ui.view">
+      <field name="name">account.financial.report.form</field>
+      <field name="model">account.financial.report</field>
+      <field name="inherit_id" ref="accounting_pdf_reports.view_account_financial_report_form"/>
+      <field name="arch" type="xml">
+        <field name="style_overwrite" position="after">
+          <field name="code"/>
+          <field name="formulas"/>
+          <field name="domain"/>
+          <field name="type"/>
+          <field name="first_parent_id"/>
+        </field>
+        <field name="account_type_ids" position="after">
+          <field name="children_ids"/>
+        </field>
+      </field>
+    </record>
+
+    <record id="view_account_financial_report_tree_inherit" model="ir.ui.view">
+      <field name="name">account.financial.report.tree</field>
+      <field name="model">account.financial.report</field>
+      <field name="inherit_id" ref="accounting_pdf_reports.view_account_financial_report_tree"/>
+      <field name="arch" type="xml">
+        <field name="account_report_id" position="after">
+          <field name="first_parent_id"/>
+        </field>
+      </field>
+    </record>
+  </data>
+</odoo>

@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+fcm_device_token,fcm.device.token,model_fcm_device_token,base.group_erp_manager,1,1,1,1
+fcm_device_token_group_user,fcm.device.token.group_user,model_fcm_device_token,base.group_user,1,0,0,0
+fcm_test,fcm.test,model_fcm_test,base.group_erp_manager,1,1,1,1

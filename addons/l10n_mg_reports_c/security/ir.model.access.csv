@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+acces_evcp_view,ecvp_view_security,model_evcp_view,base.group_user,1,1,1,1
+access_cash_flow_wizard,cash_flow_wizar_name,model_cash_flow_wizard,base.group_user,1,1,1,1

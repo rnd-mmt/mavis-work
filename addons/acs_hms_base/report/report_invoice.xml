@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_invoice_document_inherit" inherit_id="account.report_invoice_document">
+<!--        <xpath expr="//div[@name='reference']" position="after">-->
+<!--            <div class="col-auto col-3 mw-100 mb-2" t-if="o.patient_id and o.patient_id.partner_id!=o.partner_id" name="patient">-->
+<!--                <strong>Patient Name:</strong>-->
+<!--                <p class="m-0" t-field="o.patient_id"/>-->
+<!--            </div>-->
+
+<!--            <div class="col-auto col-3 mw-100 mb-2" t-if="o.patient_id" name="patient_code">-->
+<!--                <strong>Patient Code:</strong>-->
+<!--                <p class="m-0" t-field="o.patient_id.code"/>-->
+<!--            </div>-->
+
+<!--        </xpath>-->
+        <xpath expr="//div[@id='info_patient']" position="inside">
+           <t t-set="patient">
+                <patient t-if="o.patient_id">
+                    <span>Code:</span><span t-field="o.patient_id.code"/><br/>
+                    <span>Patient :</span><span t-field="o.patient_id"/><br/>
+                    <span>DOB :</span><span t-field="o.patient_id.birthday"/><br/>
+                    <span>Genre :</span><span t-field="o.patient_id.gender"/><br/>
+                    <span>Téléphone :</span><span t-field="o.patient_id.mobile"/><br/>
+                </patient>
+           </t>
+        </xpath>
+    </template>
+
+    <template id="report_invoice_surgery_document_inherit" inherit_id="account.report_invoice_surgery_document">
+        <xpath expr="//div[@id='info_patient']" position="inside">
+           <t t-set="patient">
+                <patient t-if="o.patient_id">
+                    <span>Code:</span><span t-field="o.patient_id.code"/><br/>
+                    <span>Patient :</span><span t-field="o.patient_id"/><br/>
+                    <span>DOB :</span><span t-field="o.patient_id.birthday"/><br/>
+                    <span>Genre :</span><span t-field="o.patient_id.gender"/><br/>
+                    <span>Téléphone :</span><span t-field="o.patient_id.mobile"/><br/>
+                </patient>
+           </t>
+        </xpath>
+    </template>
+
+    <template id="report_invoice_header_document_inherit" inherit_id="account.header_footer">
+        <xpath expr="//div[@id='info_patient']" position="inside">
+           <div name="patient">
+                <strong>Nom et prénom:</strong><span class="m-0" t-field="o.patient_id"/>
+            </div>
+            <div class="row">
+                <div class="col-4" t-if="o.patient_id">
+                    <strong>Date de naissance: </strong><span class="m-0" t-field="o.patient_id.birthday"/>
+                </div>
+                <div class="col-2" t-if="o.patient_id">
+                    <strong>Sexe: </strong><span class="m-0" t-field="o.patient_id.gender"/>
+                </div>
+                <div class="col-6 float-left" t-if="o.patient_id">
+                    <strong>Contact: </strong><span class="m-0" t-field="o.patient_id.mobile"/>
+                </div>
+            </div>
+            <div>
+                <strong>Adresse: </strong><span class="m-0" t-field="o.patient_id.street"/><br/>
+                <strong t-if="o.patient_id.pension">Numéro pension: </strong><span class="m-0" t-if="o.patient_id.pension" t-field="o.patient_id.pension"/>
+            </div>
+        </xpath>
+    </template>
+</odoo>

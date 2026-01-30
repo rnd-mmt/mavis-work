@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Commission Role-->
+    <record id="view_coprest_role_tree" model="ir.ui.view">
+        <field name="name">commission.prestataire.role.tree</field>
+        <field name="model">commission.prestataire.role</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_coprest_role_form" model="ir.ui.view">
+        <field name="name">commission.prestataire.role.form</field>
+        <field name="model">commission.prestataire.role</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                    <field name="coprest_rule_ids" context="{'default_rule_type': 'role', 'default_rule_id': active_id}">
+                        <tree editable="bottom">
+                            <field name="sequence" widget="handle"/>
+                            <field name="rule_type" invisible="1"/>
+                            <field name="role_id" invisible="1"/>
+                            <field name="rule_on"/>
+                            <field name="product_category_id" attrs="{'invisible': [('rule_on','!=','product_category')], 'required': [('rule_on','=','product_category')]}"/>
+                            <field name="product_id" attrs="{'invisible': [('rule_on','!=','product')], 'required': [('rule_on','=','product')]}"/>
+                            <field name="percentage"/>
+                            <field name="get_number"/>
+                            <field name="part_prest"/>
+                        </tree>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_coprest_role" model="ir.actions.act_window">
+        <field name="name">Role de la commission prestataire</field>
+        <field name="res_model">commission.prestataire.role</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                
+            </p>
+        </field>
+    </record>
+
+    <!-- Commission Rules-->
+    <record id="view_coprest_rule_form" model="ir.ui.view">
+        <field name="name">commission.prestataire.rule.form</field>
+        <field name="model">commission.prestataire.rule</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="rule_type"/>
+                            <field name="role_id" attrs="{'invisible': [('rule_type','!=','role')], 'required': [('rule_type','=','role')]}"/>
+                            <field name="user_id" attrs="{'invisible': [('rule_type','!=','user')]}"/>
+                            <field name="partner_id" attrs="{'invisible': [('rule_type','!=','user')]}"/>
+                            <field name="physician_id" attrs="{'invisible': [('rule_type','!=','user')]}"/>
+                        </group>
+                        <group>
+                            <field name="rule_on"/>
+                            <field name="product_category_id" attrs="{'invisible': [('rule_on','!=','product_category')], 'required': [('rule_on','=','product_category')]}"/>
+                            <field name="product_id" attrs="{'invisible': [('rule_on','!=','product')], 'required': [('rule_on','=','product')]}"/>
+                            <field name="percentage"/>
+                        </group>
+                    </group>
+                    <field name="description"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Commission -->
+    <record id="coprest_search_view" model="ir.ui.view">
+        <field name="name">commission.prestataire.search</field>
+        <field name="model">commission.prestataire</field>
+        <field name="arch" type="xml">
+            <search string="Commission prestataire">
+                <field name="name" string="Commissions prestataire"/>
+                <field name="partner_id" string="Prestataire"/>
+                <field name="coprest_sheet_id"/>
+                <filter name="not_invoiced" string="Non facturé" domain="[('invoice_line_id','=',False)]"/>
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter name="group_by_partner" string="Prestataire" domain="[]" context="{'group_by':'partner_id'}"/>
+                    <filter name="group_by_state" string="Status" domain="[]" context="{'group_by':'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="coprest_form_view" model="ir.ui.view">
+        <field name="name">commission.prestataire.form</field>
+        <field name="model">commission.prestataire</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_done" string="Fait" type="object" class="btn-primary" states="draft"/>
+                    <button name="action_draft" string="Remettre en brouillon" type="object" states="cancel,done"/>
+                    <button name="action_cancel" string="Annulé" type="object" states="draft"/>
+                    <field name="state" widget="statusbar" statusbar_visible=""/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="e.g. Commission prestataire"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="coprest_on"/>
+                            <field name="coprest_amount"/>
+                            <field name="invoice_id"/>
+                            <field name="service_state" force_save="1"/>
+                            <field name="create_date"/>
+                            <field name="coprest_sheet_id"/>
+                        </group>
+                        <group>
+                            <field name="invoice_line_id"/>
+                            <field name="payment_invoice_id"/>
+                            <field name="payment_status"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <field name="note"/>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="coprest_list_view" model="ir.ui.view">
+        <field name="name">commission.prestataire.list</field>
+        <field name="model">commission.prestataire</field>
+        <field name="priority">1</field>
+        <field name="arch" type="xml">
+            <tree string="Commission prestataire" decoration-info="state=='draft'" decoration-muted="state=='canceled'">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="coprest_on"/>
+                <field name="coprest_amount"/>
+                <field name="coprest_sheet_id"/>
+                <field name="state"/>
+                <field name="invoice_id"/>
+                <field name="payment_invoice_id"/>
+                <field name="payment_status"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="coprest_action" model="ir.actions.act_window">
+        <field name="name">Commission prestataire</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">commission.prestataire</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Aucun enregistrement trouvé
+            </p>
+            <p>
+                Cliquez pour ajouter une nouvelle commission prestataire.
+            </p>
+        </field>
+    </record>
+
+</odoo>

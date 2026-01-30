@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_users_form_barcode_token" model="ir.ui.view">
+        <field name="name">res.users.form.barcode.token</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Token / Carte">
+                    <group>
+                        <field name="current_token" readonly="1"/>
+                        <field name="token_active"/>
+                        <button name="action_regenerate_token"
+                            string="Régénérer"
+                            type="object"
+                            class="oe_highlight"
+                            confirm="Êtes-vous sûr de vouloir générer un nouveau token ? L'ancien sera supprimé."/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

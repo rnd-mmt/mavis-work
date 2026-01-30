@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="ward_round_tree_view" model="ir.ui.view">
+        <field name="name">acs.nurse.ward.round.tree</field>
+            <field name="model">acs.nurse.ward.round</field>
+            <field name="arch" type="xml">
+            <tree string="Tree" decoration-danger="warning==True">
+                <field name="name"/>
+                <field name="nurse_id"/>
+                <field name="patient_id"/>   
+                <field name="date"/>
+                <field name="state"/>
+                <field name="warning" invisible="1"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+             </tree>
+        </field>
+    </record>
+
+    <record id="ward_round_form_view" model="ir.ui.view">
+        <field name="name">acs.nurse.ward.round.from</field>
+        <field name="model">acs.nurse.ward.round</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_done" states="draft" string="Done" type="object" class="oe_highlight"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,done" statusbar_colors='{"done":"red"}'/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>        
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="hospitalization_id"/>
+                            <field name="patient_id"/>
+                            <field name="nurse_id" domain="[('department_id.department_type','=','nurse')]"/>
+                        </group>
+                        <group>
+                            <label string="Evaluation" for="evaluation_id"/>
+                            <div name="evaluation_id">
+                                <div class="oe_inline" style="display: inline;" >
+                                    <field name="evaluation_id" class="oe_inline"/>
+                                    <button name="action_create_evaluation" type="object" string="Create Evaluation" class=" oe_link oe_inline" attrs="{'invisible': ['|',('evaluation_id','!=',False),('state','=','done')]}"/>
+                                </div>
+                            </div>
+                            <field name="date"/>
+                            <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                        </group>    
+                    </group>
+                    <notebook> 
+                        <page name="general_info" string="General Information">
+                            <div>NOTE: Details are shown based on Patient Evaluation</div>
+                            <group>
+                                <group>
+                                    <field name="weight"/>
+                                    <field name="height"/>
+                                    <field name="temp"/>
+                                    <field name="hr"/>
+                                </group>
+                                <group>
+                                    <field name="rr"/>
+                                    <label string="Systolic/Diastolic BP Gauche" for="systolic_bp"/>
+                                    <div name="systolic_bp">
+                                        <div class="oe_inline" style="display: inline;" >
+                                            <field name="systolic_bp" class="oe_inline"/>/<field name="diastolic_bp" class="oe_inline"/>
+                                        </div>
+                                    </div>
+                                    <label string="Systolic/Diastolic BP Droite" for="systolic_bp_droite"/>
+                                    <div name="systolic_bp_droite">
+                                        <div class="oe_inline" style="display: inline;" >
+                                            <field name="systolic_bp_droite" class="oe_inline"/>/<field name="diastolic_bp_droite" class="oe_inline"/>
+                                        </div>
+                                    </div>
+                                    <field name="spo2"/>
+                                </group>
+                                <group>
+                                    <field name="bmi"/>
+                                </group>
+                                <group>
+                                    <field name="bmi_state"/>
+                                </group>
+                            </group>
+
+                            <group>
+                                <group>
+                                    <field name="depression"/>
+                                    <field name="personal_needs"/>
+                                    <field name="pain"/>
+                                    <field name="pain_level"/>
+                                    <field name="position"/>
+                                    <field name="potty"/>
+                                    <field name="proximity"/>
+                                </group>
+                                <group>
+                                    <field name="pump"/>
+                                    <field name="urinary_catheter"/>
+                                    <field name="glycemia"/>
+                                    <field name="diuresis"/>
+                                    <field name="evolution"/>
+                                    <field name="warning"/>
+                                </group>
+                            </group>
+                            <group>
+                                <field name="round_summary"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="ward_round_pivot_view">
+        <field name="name">acs.nurse.ward.round.pivot</field>
+        <field name="model">acs.nurse.ward.round</field>
+        <field name="arch" type="xml">
+            <pivot string="Ward Rounds">
+                <field name="nurse_id" type="measure"/>
+                <field name="patient_id" type="row"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="ward_round_search_view" model="ir.ui.view">
+        <field name="name">acs.nurse.ward.round.search</field>
+        <field name="model">acs.nurse.ward.round</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <search string="ACS Ward Rounds">
+                <field name="nurse_id"/>
+                <field name="patient_id"/>
+                <field name="hospitalization_id"/>
+                <field name="name"/>
+                <newline/>
+                <group expand="0" string="Group By...">
+                    <filter string="Nurse Id" name="nurse_id" domain="[]" context="{'group_by':'nurse_id'}"/>
+                    <filter string="Patient Id" name="patient_id" domain="[]" context="{'group_by':'patient_id'}"/> 
+                    <filter string="Hospitalization Id" name="hospitalization_id" domain="[]" context="{'group_by':'hospitalization_id'}"/>
+                    <filter string="Name" name="name" domain="[]" context="{'group_by':'name'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="hms_ward_round_action" model="ir.actions.act_window">
+        <field name="name">Ward Rounds</field>
+        <field name="res_model">acs.nurse.ward.round</field>
+        <field name="view_mode">tree,form,pivot</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create the first cash rounding</p>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="soins_infirmier_form">
+        <field name="name">Soins infirmier</field>
+        <field name="model">acs.soins.infirmier</field>
+        <field name="arch" type="xml">
+            <form string="Soins infirmier">
+                <header>
+					<button name="action_draft" string="Remettre en brouillon" attrs="{'invisible': [('state', '!=', 'confirm')]}" type="object"/>
+                    <button name="action_confirm" string="Valider" attrs="{'invisible': [('state', '!=', 'draft')]}" type="object"/>
+                    <button name="generate_service" string="Créer un service santé" attrs="{'invisible': ['|', ('check_btn_service', '=', True), ('state', '!=', 'confirm')]}" type="object"
+                            confirm="Voulez vous créer un service santé?" class="oe_highlight"/>
+                    <button name="action_done" states="cancel" string="Fait" attrs="{'invisible': [('state', '=', 'done')]}" type="object"/>
+                    <button name="button_cancel" string="Annulé" groups="acs_hms.group_superviseur" type="object" class="oe_highlight"/>
+                    <button name="set_editable" string="Rendre editable" groups="acs_hms.group_superviseur" type="object" states="done" class="oe_highlight"/>
+                    <button name="re_done" string="Fait" groups="" type="object" states="editable" class="oe_highlight"/>
+                                      
+                    
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirm,done"/>
+                </header>
+                <sheet>
+                    <h1>
+                        <field name="name" class="oe_inline"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="patient_id" options="{'no_create': True}"/>
+                            <field name="birthday" force_save="1"/>
+                            <field name="date"/>
+                            <field name="nurse_id"/>
+                        </group>
+                        <group>
+                            <field name="hospitalization_id" />
+                            <field name="consultation_id" />
+                            <field name="health_service_id" />
+							<field name="company_id" />
+                            <field name="product_id" />
+                            <field name="check_btn_service" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+						<page name="consumed_products" string="Consumed Products/Services">
+                            <field name="consumable_line_ids" nolabel="1" colspan="4">
+                                <tree string="Line" editable="top">
+                                    <field name="product_id" expand="1" required="1" domain="[('tracking','=','none')]"/>
+                                    <field name="product_uom" required="1"/>
+                                    <field name="qty" required="1"/>
+                                    <field name="date" required="1"/>
+                                    <field name="move_id" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <field name="notes" placeholder="Notes" nolabel="1" colspan="4"/>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="soins_infirmier_tree">
+        <field name="name">Service santé</field>
+        <field name="model">acs.soins.infirmier</field>
+        <field name="arch" type="xml">
+            <tree string="Service Santé" name="request_tree">
+                <field name="name"/>
+                <field name="patient_id"/>
+                <field name="date"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="state" string="Status"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_soins_infirmier_search" model="ir.ui.view">
+        <field name="name">acs.soins.infirmier.search</field>
+        <field name="model">acs.soins.infirmier</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <search string="Soins infirmer">
+                <field name="patient_id"/>
+                <field name="name"/>
+                <field name="nurse_id"/>
+                <filter name="draft" string="Draft" domain="[('state','=','draft')]"/>
+                <filter name="confirm" string="Confirm" domain="[('state','=','confirm')]"/>
+                <filter name="done" string="Done" domain="[('state','=','done')]"/>
+                <filter name="today" string="Soins ce jour" domain="[('date','&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0))), ('date','&lt;=', datetime.datetime.combine(context_today(), datetime.time(23,59,59)))]"/>
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter name="group_by_patient_id" string="Patient" context="{'group_by':'patient_id'}"/>
+                    <filter name="group_by_date" string="Date" context="{'group_by':'date'}"/>
+                    <filter name="group_by_nurse" string="Infirmier" context="{'group_by':'nurse_id'}"/>
+                    <filter name="group_by_company" string="Institution" context="{'group_by':'company_id'}"/>
+                    <filter name="group_by_state" string="Status" context="{'group_by':'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="hms_action_soins_infirmier">
+        <field name="name">Soins infirmier</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">acs.soins.infirmier</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_today': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Record Found
+            </p>
+        </field>
+    </record>
+
+</odoo>

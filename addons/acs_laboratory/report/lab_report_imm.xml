@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="report_lab_result_imm_table">
+        <style>
+            table {
+                width: 100% !important;
+                border-collapse: collapse !important;
+            }
+            thead {
+                border:solid 1px;
+            }
+            th {
+                padding: 5px !important;
+                border: none !important;
+                font-size: 16px !important;
+                font-weight: bold !important;
+                font-family: Arial !important;
+                /*font-size: 18px !important;*/
+            }
+            td {
+                padding: 5px !important;
+                border: none !important;
+                font-family: Arial !important;
+                /*font-size: 18px !important;*/
+            }
+            .th_parameter , .td_parameter {
+                width: 600px !important;
+                text-align: start !important;
+            }
+            .th_unite , td_unite {
+                width: 50px !important;
+            }
+            .th_percentage , .td_percentage {
+                width: 25px !important;
+            }
+            .th_results ,  td_results {
+                width: 30px !important;
+            }
+            .th_ant_results ,  td_ant_results {
+                width: 0px !important;
+            }
+
+            .th_remark ,  td_remark {
+                width: 100px !important;
+                text-align: start !important;
+            }
+            .th_values ,  .td_values {
+                width: 100px !important;
+            }
+            .td_name {
+                text-align: start !important;
+            }
+
+            .html-field table tr, .html-field table tbody td {
+                            padding-top: 4px !important;
+                            padding-bottom: 4px !important;
+                            padding-left: 4px !important;
+                            padding-right: 4px !important;
+                            height: 15px !important !important;
+                            max-height: 15px !important !important;
+                            border: solid 1px #0000 !important;
+                            border-color: #000000 !important;
+                            max-width: none !important;
+                            min-width: unset !important;
+                        }
+                        .html-field table.table, .html-field table{
+                            border-collapse: collapse !important;
+                            table-layout: auto !important;
+                            width: auto !important;
+                            max-width: auto !important;
+                            min-width: unset !important;
+                        }
+                        #html-field p, #html-field p span {
+            margin-bottom: 0 !important;
+            }
+            #html-field p:empty {
+            display: none !important;
+            }
+            #html-field td * {
+            font-size: 1em !important;
+            }
+
+        </style>
+        
+        <table style="border:none;" class="table table-borderless">
+            <thead>
+                <tr>   <!--style="border:none;"-->
+                    <th class="th_parameter"><span>PARAMETRES</span></th>
+                    <th class="th_results"><span>RESULTATS</span></th>
+                    <th class="th_percentage" ><span>%</span></th>
+                    <th class="th_unite" ><span>UNITE</span></th>
+                    <th class="th_values" ><span>VALEURS DE REFERENCE</span></th>
+                    <th class="th_remark" ><span>REMARQUE</span></th>
+                    <th class="th_ant_results" ><span>RESULTATS ANTERIEURS</span></th>
+<!--                    <th style="border:none;">DATE EXAMENS ANTERIEUR</th>-->
+
+                </tr>
+            </thead>
+            <tbody style="border:none;">
+                <tr style="border:none;">
+                    <t t-if="doc.aspect_sang">
+                        <td class="td_parameter">
+                            <span>Aspect macroscopique sang</span>
+                        </td>
+                        <td style="border:none;margin-left:5px !important;" colspan="6" class="td_results">
+                            <span t-field="doc.aspect_sang"/>
+                        </td>
+
+                    </t>
+                </tr>
+                <tr style="border:none;">
+                    <t t-if="doc.aspect_urine">
+                        <td class="td_parameter">
+                            <span>Aspect macroscopique urine</span>
+                        </td>
+                        <td class="td_results" colspan="6">
+                            <span t-field="doc.aspect_urine"/>
+                        </td>
+                    </t>
+                </tr>
+
+                <t t-set="culture_count" t-value="0"/>
+
+
+                <t t-foreach="lab_test.critearea_ids" t-as="line">
+                    <tr style="border:none;margin-left:5px !important;" t-att-class="'bg-200 font-weight-b o_line_section' if line.display_type == 'line_section' else ''">
+                        <t t-if="not line.display_type">
+                            <t t-if="line.result">
+                                <td style="border:none;margin-left:5px !important;" t-attf-class="#{'text-danger' if line.result_type in ['high','low','warning'] else ''} td_parameter">
+                                    <span t-esc="line.name"/>
+                                </td>
+                                <td style="border:none;margin-left:5px !important;" t-attf-class="#{'text-danger' if line.result_type in ['high','low','warning'] else ''} td_results">
+                                    <span t-esc="line.result"/>
+                                </td>
+                                <td style="border:none;margin-left:5px !important;"  t-attf-class="#{'text-danger' if line.result_type in ['high','low','warning'] else ''} td_percentage">
+                                    <span t-if="line.lab_uom_id != 0" t-esc="line.pourcentage"/>
+
+                                </td>
+                                <td style="border:none;margin-left:5px !important;"  t-attf-class="#{'text-danger' if line.result_type in ['high','low','warning'] else ''} td_unite">
+                                    <span t-if="line.lab_uom_id" t-field="line.lab_uom_id"/>
+                                </td>
+                                <td style="border:none;margin-left:5px !important;"  t-attf-class="#{'text-danger' if line.result_type in ['high','low','warning'] else ''} td_values">
+                                    <span t-esc="line.normal_range"/>
+                                </td>
+                                <td style="border:none;margin-left:5px !important;"  t-attf-class="#{'text-danger' if line.result_type in ['high','low','warning'] else ''} td_remark">
+                                    <span t-esc="line.remark"/>
+                                </td>
+                                <td style="border:none;margin-left:5px !important;"  t-attf-class="#{'text-danger' if line.result_type in ['high','low','warning'] else ''} td_ant_results">
+                                    <span t-esc="line.prev_result"/>
+                                </td>
+<!--                                <td style="border:none;margin-left:5px !important;" t-attf-class="#{'text-danger' if line.result_type in ['high','low'] else ''}">-->
+<!--                                    <span t-esc="line.date_anterieur"/>-->
+<!--                                </td>-->
+
+                            </t>
+                            
+                        </t>
+                        <t t-if="line.display_type == 'line_section'">
+                            <td style="border:none;" colspan="7">
+                               <span style="font-weight: bold !important;"><span t-field="line.name"/></span>
+                            </td>
+                        </t>
+                        <t t-if="line.display_type == 'line_note'">
+                            <td style="border:none;" colspan="7">
+                               <pre><span t-field="line.name"/></pre>
+                            </td>
+                        </t>
+                        <t t-if="line.display_type == 'line_conclusion'">
+                            <td style="border:none;" colspan="7">
+                                <strong>Conclusion: </strong><br/>
+                               <pre><span t-field="line.name"/></pre>
+                            </td>
+                        </t>
+                    </tr>
+                    <t t-if="culture_count == 1 and not line.display_type and line.name == 'Culture'">
+                        <tr>
+                            <td colspan="7">
+                                <span>Antibiogramme (1)</span><br/>
+                                <div class="html-field">
+                                    <span t-raw="doc.antibiogramme_1"/>
+                                </div>
+                            </td>
+                        </tr>
+                    </t>
+                    <t t-if="culture_count == 2 and not line.display_type and line.name == 'Culture'">
+                        <tr>
+                            <td colspan="7">
+                                <span>Antibiogramme (2)</span><br/>
+                                <div class="html-field">
+                                    <span t-raw="doc.antibiogramme_2"/>
+                                </div>
+                            </td>
+                        </tr>
+                    </t>
+                    <t t-if="culture_count == 3 and not line.display_type and line.name == 'Culture'">
+                        <tr>
+                            <td colspan="7">
+                                <span>Antibiogramme (3)</span><br/>
+                                <div class="html-field">
+                                    <span t-raw="doc.antibiogramme_3"/>
+                                </div>
+                            </td>
+                        </tr>
+                    </t>
+                    <t t-if="culture_count == 4 and not line.display_type and line.name == 'Culture'">
+                        <tr>
+                            <td colspan="7">
+                                <span>Antibiogramme (4)</span><br/>
+                                <div class="html-field">
+                                    <span t-raw="doc.antibiogramme_4"/>
+                                </div>
+                            </td>
+                        </tr>
+                    </t>
+
+                </t>
+            </tbody>
+        </table>
+    </template>
+
+    <template id="info_patient_external_layout" inherit_id="web.external_layout_lab_imm">
+        <xpath expr="//div[contains(@class, 'header')]" position="inside">
+            <div class="container">
+                <t t-if="len(docs) == 1">
+                    <div>
+                        <strong>Résultats de: </strong><span t-field="docs.patient_id"/>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <strong>Date de naissance: </strong> <span t-field="docs.patient_id.birthday"/>
+                        </div>
+                        <div class="col-2">
+                            <strong>Sexe: </strong><span t-field="docs.patient_id.gender" />
+                        </div>
+                        <div class="col-6">
+                            <span>Mme/Mlle/Mr: </span><strong><span t-field="docs.patient_id"/></strong>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <strong>Prescripteur: </strong> <span  t-field="doc.prescripteur"/>
+                        </div>
+                        <div class="col-6">
+                            <strong>Dossier N°: </strong><span t-field="doc.name"/>
+                        </div>
+                    </div>
+                    <div>
+                        <strong>RC: </strong><span t-field="doc.clinic_info"/>
+                    </div>
+                </t>
+                <t t-else="">
+                    <div class="header-infos-patient">
+                        <t t-if="current_doc">
+                            <div class="container">
+                                <div>
+                                    <strong>Résultats de: </strong><span t-field="current_doc.patient_id"/>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <strong>Date de naissance: </strong> <span t-field="current_doc.patient_id.birthday"/>
+                                    </div>
+                                    <div class="col-2">
+                                        <strong>Sexe: </strong><span t-field="current_doc.patient_id.gender" />
+                                    </div>
+                                    <div class="col-6">
+                                        <span>Mme/Mlle/Mr: </span><strong><span t-field="current_doc.patient_id"/></strong>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <strong>Prescripteur: </strong> <span  t-field="current_doc.prescripteur"/>
+                                    </div>
+                                    <div class="col-6">
+                                        <strong>Dossier N°: </strong><span t-field="current_doc.name"/>
+                                    </div>
+                                </div>
+                                <div>
+                                    <strong>RC: </strong><span t-field="current_doc.clinic_info"/>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </t>               
+            </div>
+            <style>
+                .header {
+                    min-height: 250px !important;
+                    max-height: 250px !important;
+                    z-index: 1000 !important;
+                    /*border-bottom: solid 1px #efefef !important;*/
+                    background-color: #ffffff !important;
+                }
+            </style>
+
+        </xpath>
+    </template>
+
+    <template id="report_acs_lab_test_imm_document">
+        <!-- Just for Portal Isuse -->
+        <t t-set="doc" t-value="doc.sudo()"/>
+        <t t-call="web.external_layout_lab_imm">
+            <t t-set="doc" t-value="doc.with_context({'lang':doc.patient_id.lang})"/>
+            <div class="page" style="">
+                <div class="oe_structure"/>
+                <br/><br/>
+                <!-- <div>
+                    <strong>Résultats de: </strong><span t-field="doc.patient_id"/>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <strong>Date de naissance: </strong> <span t-field="doc.patient_id.birthday"/>
+                    </div>
+                    <div class="col-2">
+                        <strong>Sexe: </strong><span t-field="doc.patient_id.gender" />
+                    </div>
+                    <div class="col-6">
+                        <span>Mme/Mlle/Mr: </span><strong><span t-field="doc.patient_id"/></strong>
+                    </div>
+                </div> -->
+                <!-- <div class="row">
+                    <div class="col-6">
+                        <strong>Prescripteur: </strong> <span  t-field="doc.physician_id"/>
+                    </div>
+                    <div class="col-6">
+                        <strong>Dossier N°: </strong><span t-field="doc.name"/>
+                    </div>
+                </div>
+                <div>
+                    <strong>RC: </strong><span t-field="doc.clinic_info"/>
+                </div> -->
+                <p style="padding: 5px !important; border: solid 1px; border-radius: 5px !important"><strong><span t-field="doc.cat_analyse"/></strong></p>
+
+
+                <t t-call="acs_laboratory.report_lab_result_imm_table">
+                    <t t-set="lab_test" t-value="doc"/>
+                </t>
+
+                <div class="html-field" style="width: 100% !important">
+
+                        <t t-raw="doc.antibiogramme"/>
+                </div>
+
+<!--                <pre><span t-field="doc.antibiogramme"/></pre>-->
+                <!-- <t t-call="web.basic_layout">
+                <t t-call="web.html_container">
+                    <div class="html-field">
+                        <t t-raw="doc.antibiogramme"/>
+                    </div>
+                    <style>
+                        .html-field table tbody tr, .html-field table tbody td {
+                            padding-top: 4px !important;
+                            padding-bottom: 4px !important;
+                            padding-left: 4px !important;
+                            padding-right: 4px !important;
+                            height: 15px !important !important;
+                            max-height: 15px !important !important;
+                            border: solid 1px #efefef !important;
+                        }
+                        .html-field table{
+                            border-collapse: collapse;
+                        }
+                        .html-field p {
+                            margin-bottom: 0 !important;
+                        }
+                    </style>
+                </t>
+            </t> -->
+
+                        
+
+
+                <p class="mt64" t-if="doc.diagnosis">
+                    <strong style="text-decoration: underline;">Diagnostic:</strong>
+                    <br/>
+                    <span t-esc="doc.diagnosis"/>
+                </p>
+                <p class="mt64" t-if="doc.note">
+                    <strong style="text-decoration: underline;">Conclusion:</strong>
+                    <br/>
+                    <span t-esc="doc.note"/>
+                </p>
+                <p class="mt64" t-if="doc.disclaimer">
+                    <strong style="text-decoration: underline;">Disclaimer:</strong>
+                    <br/>
+                    <span t-esc="doc.disclaimer"/>
+                </p>
+<!--                <p class="mt64">-->
+<!--                    Validé par <span style="font-weight: bold !important;">Pr Luc RAKOTOVAO</span>-->
+<!--                </p>-->
+                <p class="mt16 pull-right">
+                    <span>Antananarivo, le </span><span t-field="doc.date_analysis"/><br/>
+                    <span class="font-weight-bold" style="font-weight: bold !important;">Signature</span>
+                    <br/>
+<!--                    <img src="/acs_laboratory/static/description/sign.png" style="width: 100px;height: 100px" class="float-right"/>-->
+<!--                    <t t-if="doc.group_medlab and doc.physician_id.signature">-->
+<!--                        <span t-field="doc.physician_id.signature" t-options="{'widget': 'image', 'class': 'img-rounded', 'style':'max-height: 100px !important'}"/>-->
+<!--                    </t>-->
+                    <t t-set="foo" t-value="False"/>
+                    <t t-foreach="doc.group_medlab" t-as="line">
+                        <t t-if="foo == False">
+                            <span t-field="line.signature" t-options="{'widget': 'image', 'class': 'img-rounded', 'style':'max-height: 100px !important;max-width: 100px !important; border: none !important;'}"/>
+                        </t>
+                        <t t-set="foo" t-value="True"/>
+                    </t>
+                </p>
+
+
+            </div>
+        </t>
+    </template>
+
+    <template id="report_acs_lab_test_imm">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="acs_laboratory.report_acs_lab_test_imm_document" t-lang="doc.patient_id.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_report_acs_lab_test_imm" model="ir.actions.report">
+        <field name="name">Lab Report IMM</field>
+        <field name="model">patient.laboratory.test</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">acs_laboratory.report_acs_lab_test_imm</field>
+        <field name="report_file">acs_laboratory.report_acs_lab_test_imm</field>
+        <field name="print_report_name">(object.name or 'LabReport').replace('/','_') + '_LabReport'</field>
+        <field name="binding_model_id" ref="model_patient_laboratory_test"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <report
+            id="custom_external_layout_action"
+            model="patient.laboratory.test"
+            string="Laboratory Test Report"
+            report_type="qweb-pdf"
+            name="acs_laboratory.info_patient_external_layout"
+            file="acs_laboratory.info_patient_external_layout"
+    />
+
+</odoo>

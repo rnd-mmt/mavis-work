@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="view_company_form" model="ir.ui.view">
+            <field name="name">res.company.form.sms</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page[@name='general_info']" position="after">
+                    <page string="SMS Orange">
+                                <span class="o_form_label">Client ID</span>
+                                <div>
+                                    <field name="client_id" class="oe_inline"/>
+                                </div>
+                                <span class="o_form_label">Client Secret</span>
+                                <div>
+                                    <field name="client_secret" class="oe_inline"/>
+                                </div>
+                                <span class="o_form_label">Auth_Token</span>
+                                <div>
+                                    <field name="auth_token" class="oe_inline"/>
+                                </div>
+                                 <span class="o_form_label">Sender Name</span>
+                                <div>
+                                    <field name="senderName" class="oe_inline"/>
+                                </div>
+                                <span class="o_form_label">From Number</span>
+                                <div>
+                                    <field name="dev_phone_number" class="oe_inline"/>
+                                </div>
+                                <br/>
+                                <span class="o_form_label">Overwrite Odoo SMS </span>
+                                <field name="overwrite_odoo_sms" class="oe_inline"/>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+    <!-- <data>
+        
+        <record id="res_config_settings_view_form_inherit_for_twilio" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.for.twilio</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@id='multi_company']" position="after">
+                    <h2 class="mt32">SMS Settings</h2>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Auth_Token</span>
+                                <div>
+                                    <field name="auth_token" class="oe_inline"/>
+                                </div>
+                                 <span class="o_form_label">Dev App</span>
+                                <div>
+                                    <field name="senderName" class="oe_inline"/>
+                                </div>
+                                <span class="o_form_label">From Number</span>
+                                <div>
+                                    <field name="dev_phone_number" class="oe_inline"/>
+                                </div>
+                                <br/>
+                                <span class="o_form_label">Overwrite Odoo SMS </span>
+                                <field name="overwrite_odoo_sms" class="oe_inline"/>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+    </data> -->
+</odoo>

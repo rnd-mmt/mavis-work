@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="maintenance_contract.action_maintenance_contract_list" model="ir.actions.act_window">
+            <field name="name">Contrat de maintenance</field>
+            <field name="res_model">maintenance.contract</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="view_id" ref="maintenance_contract.maintenance_contract_kanban_view"/>
+        </record>
+
+        <menuitem
+                id="menu_maintenance_contract_list"
+                name="Contrats de maintenance"
+                parent="maintenance.menu_maintenance_configuration"
+                action="maintenance_contract.action_maintenance_contract_list"
+                sequence="0"/>
+    </data>
+</odoo>

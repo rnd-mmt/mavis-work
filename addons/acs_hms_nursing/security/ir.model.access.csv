@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_acs_nurse_ward_round,access_acs_nurse_ward_round,model_acs_nurse_ward_round,base.group_user,1,1,1,1
+access_acs_soins_infirmier,access_acs_soins_infirmier,model_acs_soins_infirmier,acs_hms.group_hms_nurse,1,1,1,0
+access_acs_soins_infirmier2,access_acs_soins_infirmier,model_acs_soins_infirmier,acs_hms.group_acs_hms_appointment_user,1,1,0,0
+access_acs_soins_infirmier3,access_acs_soins_infirmier,model_acs_soins_infirmier,acs_hms.group_hms_doctor_smi,1,0,0,0

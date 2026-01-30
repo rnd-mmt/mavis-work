@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="website_modal_view_tree" model="ir.ui.view">
+        <field name="name">website.modal</field>
+        <field name="model">website.modal</field>
+        <field name="priority" eval="16"/>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="website_modal_view_form" model="ir.ui.view">
+        <field name="name">website.modal</field>
+        <field name="model">website.modal</field>
+        <field name="priority" eval="16"/>
+        <field name="arch" type="xml">
+            <form string="Popups">
+                <group>
+                    <field name="name"/>
+                    <field name="size"/>
+                </group>
+                <group string="Raise popup when">
+
+                    <div class="oe_inline" colspan="2">
+                        <label string="Visiting page" for="appear_visit"/>
+                        <field name="appear_visit" nolabel="1"/>
+                        <span attrs="{'invisible': [('appear_visit', '=', False)]}">
+                            (only once <field nolabel="1" name="appear_visit_first"/>)
+                            <field placeholder="/shop" name="appear_visit_url" attrs="{'required': [('appear_visit', '=', True)]}"/>
+                        </span>
+                    </div>
+                    <br/>
+                    <br/>
+                    <div class="oe_inline" colspan="2">
+                        <label string="Intending to exit page" for="appear_exit"/>
+                        <field name="appear_exit" nolabel="1"/>
+                        <span attrs="{'invisible': [('appear_exit', '=', False)]}">
+                            (only once <field nolabel="1" name="appear_exit_first"/>)
+                            <field placeholder="/shop/cart" name="appear_exit_url" attrs="{'required': [('appear_exit', '=', True)]}"/>
+                        </span>
+                    </div>
+                    <br/>
+                    <br/>
+                    <div class="oe_inline" colspan="2">
+                        <label string="Scroll to Bottom of Page" for="appear_scroll"/>
+                        <field name="appear_scroll" nolabel="1"/>
+                        <span attrs="{'invisible': [('appear_scroll', '=', False)]}">
+                            (only once <field nolabel="1" name="appear_scroll_first"/>)
+                            <field placeholder="/" name="appear_scroll_url" attrs="{'required': [('appear_scroll', '=', True)]}"/>
+                        </span>
+                    </div>
+                    <br/>
+                    <br/>
+                    <div class="oe_inline" colspan="2">
+                        <label string="Stay on page" for="appear_time"/>
+                        <field name="appear_time" nolabel="1"/>
+                        <span attrs="{'invisible': [('appear_time', '=', False)]}">
+                            (only once <field nolabel="1" name="appear_time_first"/>)
+                        </span>
+                        <span attrs="{'invisible': [('appear_time', '=', False)]}">
+                            for <field class="oe_inline" nolabel="1" name="appear_time_val" attrs="{'required': [('appear_time', '=', True)]}"/> seconds 
+                            <field placeholder="/shop" name="appear_time_url" attrs="{'required': [('appear_time', '=', True)]}"/>
+                        </span>
+                    </div>
+
+                    <div>
+                        <br/>
+                        <p><strong>Note:</strong> To enable popup on all pages use <strong>*</strong> for url.</p>
+                    </div>
+                </group>
+                <group>
+                    <field name="plain_html"/>
+                </group>
+                <group string="Popup HTML Content">
+                    <field name="html_text" widget="ace" nolabel="1" colspan="4" attrs="{'invisible': [('plain_html', '=', False)]}"/>
+                    <field name="html" nolabel="1" colspan="4" attrs="{'invisible': [('plain_html', '=', True)]}"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="act_window_website_modal" model="ir.actions.act_window">
+        <field name="name">Popups</field>
+        <field name="res_model">website.modal</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+    </record>
+
+    <menuitem id="menu_website_modal"
+              action="act_window_website_modal"
+              parent="website.menu_website_configuration"
+              name="Popups"
+              sequence="99"/>
+
+</odoo>
