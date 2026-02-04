@@ -28,13 +28,19 @@ odoo.define('auto_logout.AutoLogout', function (require) {
         _autoLogoutSetup: function () {
             console.log('auto_logout: _autoLogoutSetup');
             var self = this;
+            // éviter l'initialisation multiple (init + start peuvent appeler)
+            if (this._autoLogoutSetupDone) {
+                console.log('auto_logout: already initialized, skipping');
+                return;
+            }
+            this._autoLogoutSetupDone = true;
             var timeoutMinutes = 30; // valeur par défaut
 
             // lire le paramètre système web.auto_logout_minutes
             rpc.query({
-                model: 'ir.config_parameter',
-                method: 'get_param',
-                args: ['web.auto_logout_minutes', false],
+                model: 'auto_logout.config',
+                method: 'get_auto_logout_minutes',
+                args: [],
             }).then(function (value) {
                 console.log('auto_logout: got param value:', value);
                 if (value) {
@@ -49,8 +55,17 @@ odoo.define('auto_logout.AutoLogout', function (require) {
                     console.log('auto_logout: timeout disabled or invalid');
                     return;
                 }
-                console.log('auto_logout: calling _startIdleTimer with', timeoutMinutes);
-                self._startIdleTimer(timeoutMinutes);
+                // console.log('auto_logout: calling _startIdleTimer with', timeoutMinutes);
+                // self._startIdleTimer(timeoutMinutes);
+                var session = require('web.session');
+                session.user_has_group('base.group_system').then(function (isAdmin) {
+                    if (isAdmin) {
+                        console.log('auto_logout: admin group → disabled');
+                        return;
+                    }
+                    self._startIdleTimer(timeoutMinutes);
+                });
+
             }).catch(function (error) {
                 console.log('auto_logout: error reading param', error);
             });

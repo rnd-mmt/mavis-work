@@ -4,7 +4,7 @@
         <!-- Default auto logout timeout in minutes -->
         <record id="web_auto_logout_minutes" model="ir.config_parameter">
             <field name="key">web.auto_logout_minutes</field>
-            <field name="value">1</field>
+            <field name="value">5</field>
         </record>
     </data>
 </odoo>

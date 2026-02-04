@@ -16,7 +16,7 @@ class IrConfigParameter(models.Model):
         
         if not timeout:
             # Créer le paramètre s'il n'existe pas
-            self.set_param(param_key, '1')
-            timeout = '1'
+            self.set_param(param_key, '5')
+            timeout = '5'
         
         return timeout
