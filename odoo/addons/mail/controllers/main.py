@@ -471,13 +471,26 @@ class MailController(http.Controller):
         # Selon votre logique métier, vous pouvez choisir :
         
         # Option A: Toutes les activités actives
-        unread_count = request.env['mail.activity'].sudo().search_count([
+        # activities = request.env['mail.activity'].sudo().search([
+        #     ('user_id', '=', request.env.user.id),
+        #     ('date_deadline', '!=', False),
+        #     ('active', '=', True),
+        # ])
+
+        # unread_count = len(activities.filtered(lambda a: a.state != 'done'))
+        
+        activities = request.env['mail.activity'].sudo().search([
             ('user_id', '=', request.env.user.id),
             ('date_deadline', '!=', False),
-            ('state', '!=', 'done'),  # Non terminées
-            ('state', '!=', 'cancelled')  # Non annulées
         ])
-        
+
+        # Filtrage côté Python (state est OK ici)
+        unread_activities = activities.filtered(
+            lambda a: a.state not in ('done', 'cancelled')
+        )
+
+        unread_count = len(unread_activities)
+
         # Option B: Basé sur votre propre logique de "non lu"
         # unread_count = request.env['mail.activity'].sudo().search_count([
         #     ('user_id', '=', request.env.user.id),
