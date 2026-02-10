@@ -53,7 +53,7 @@ class BarcodeAuthController(http.Controller):
             json.dumps({
                 'success': True,
                 'uid': user.id,
-                'name': user.name
+                'name': user.name,
             }),
             content_type='application/json',
             status=200

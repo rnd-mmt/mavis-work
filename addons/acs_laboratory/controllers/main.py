@@ -110,11 +110,15 @@ class ACSHms(http.Controller):
     @http.route('/laboratory/collect_sample', type='json', auth='public', methods=['POST'])
     def collect_sample(self):
         request_lab_data = request.jsonrequest.get('lab_request_ref')
+        user_company = request.env.user.company_id.id
+        _logger.info(f"---* Received collect_sample request with lab_request_ref: {request_lab_data} for company_id: {user_company}")
         laboratory_requests = request.env['acs.patient.laboratory.sample'].sudo().search([
             ('request_id', '=', request_lab_data), 
-            ('state', '=', 'draft')
+            ('state', '=', 'draft'),
+            ('company_id', '=', user_company)
         ])
         
+        _logger.info(f"---* Collecting sample for request: {request_lab_data}, found {len(laboratory_requests)} samples")
         results = []
         for sample in laboratory_requests:
             sample_data = sample.read(['id', 'name', 'patient_id', 'request_id', 'sample_type_id'])[0]  
@@ -125,21 +129,6 @@ class ACSHms(http.Controller):
             formatted_consumables = []
             if sample_data['sample_type_id']:
                 sample_type = request.env['acs.laboratory.sample.type'].sudo().browse(sample_data['sample_type_id'][0])
-                #consumable_lines = sample_type.consumable_line_ids.read(['product_id', 'qty'])
-                formatted_type_consumables = []
-                # for line in consumable_lines:
-                #     formatted_type_consumables.append({
-                #         'product_id': line['product_id'][0],
-                #         'product_name': line['product_id'][1],
-                #         'qty': line['qty']
-                #     })
-                
-                
-                # formatted_consumables.append({
-                #     'product_name': sample_type.product_id.name,
-                #     'product_id': sample_type.product_id.id,
-                #     'qty': 1,
-                # })
                 
                 for product in sample_type.product_ids:
                     formatted_consumables.append({
@@ -150,12 +139,7 @@ class ACSHms(http.Controller):
                 
             else:
                 formatted_type_consumables = []  
-            
-            # for line in consumable_lines:
-            #     formatted_consumables.append({
-            #         'product_id': line['product_id'][1],
-            #         'qty': line['qty']
-            #     })
+
             formatted_sample = {
                 'id' : sample_data['id'],
                 'name': sample_data['name'],
